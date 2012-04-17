@@ -1,0 +1,168 @@
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Newspaper'
+WHERE	(campaign LIKE '%NEW%') 
+		OR
+		(campaign LIKE '%NWSP%')
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Newspaper'
+WHERE	(campaign = '')
+AND		(
+		(adkey LIKE '[a-z][a-z][a-z][a-z][0-9]%')
+		OR	(adkey LIKE 'BCSTX[0-9]%')
+		OR	(adkey LIKE 'BDPCA[0-9]%')
+		OR	(adkey LIKE 'BOMMA[0-9]%')
+		OR	(adkey LIKE 'CHDHIL[0-9]%')
+		OR	(adkey LIKE 'FWBFL[0-9]%')
+		OR	(adkey LIKE 'HCCMA[0-9]%')
+		OR	(adkey LIKE 'CHDHIL[0-9]%')
+		OR	(adkey LIKE 'LATCA[0-9]%')
+		OR	(adkey LIKE 'LBPTCA[0-9]%')
+		OR	(adkey LIKE 'MECATN[0-9]%')
+		OR	(adkey LIKE 'MIPPM[0-9]%')
+		OR	(adkey LIKE 'MIPPMN[0-9]%')
+		OR	(adkey LIKE 'MISTMN[0-9]%')
+		OR	(adkey LIKE 'NATTN[0-9]%')
+		OR	(adkey LIKE 'NYMNY[0-9]%')
+		OR	(adkey LIKE 'NYPNY[0-9]%')
+		OR	(adkey LIKE 'NYSNY[0-9]%')
+		OR	(adkey LIKE 'OCRCA[0-9]%')
+		OR	(adkey LIKE 'PBDNFL[0-9]%')
+		OR	(adkey LIKE 'PHIPA[0-9]%')
+		OR	(adkey LIKE 'PHMPA[0-9]%')
+		OR	(adkey LIKE 'PHTRAZ[0-9]%')
+		OR	(adkey LIKE 'POMEI')
+		OR	(adkey LIKE 'PTUAZ[0-9]%')
+		OR	(adkey LIKE 'QBPCT[0-9]%')
+		OR	(adkey LIKE 'QCIOH[0-9]%')
+		OR	(adkey LIKE 'QHAPA[0-9]%')
+		OR	(adkey LIKE 'QKCMO[0-9]%')
+		OR	(adkey LIKE 'QVECA[0-9]%')
+		OR	(adkey LIKE 'SCLCA[0-9]%')
+		OR	(adkey LIKE 'SMOCA[0-9]%')
+		OR	(adkey LIKE 'STAFL[0-9]%')
+		OR	(adkey LIKE 'STMCA[0-9]%')
+		)
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Newspaper'
+WHERE	campaign = 'TABL'
+AND		(
+		adkey LIKE 'CHTIL[0-9]%'
+		OR	(adkey LIKE 'NLNY[0-9]%')
+		)
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'TV'
+WHERE	(campaign LIKE 'TV%') 
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'TV'
+WHERE	(campaign <> 'TV') 
+AND		(adkey LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9]%')
+
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Magazine'
+WHERE	(campaign LIKE 'MAG%') 
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Magazine'
+WHERE	(campaign LIKE '') 
+AND		(
+		(adkey LIKE 'AY[0-9]%')
+		OR (adkey LIKE 'KLH[0-9]%')
+		OR (adkey LIKE 'NBY[0-9]%')
+		OR (adkey LIKE 'SRL[0-9]%')
+		OR (adkey LIKE 'USA[0-9]%')
+		OR (adkey LIKE 'VFW[0-9]%')
+		)
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Mail'
+WHERE	(campaign LIKE 'MAIL%') 
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Mail'
+WHERE	(campaign ='' OR campaign ='GAESET') 
+AND		(
+		(adkey LIKE 'HL%')
+		OR (adkey LIKE 'PHM[0-9]%')
+		OR (adkey LIKE 'QHM[0-9]%')
+		OR (adkey ='CM')
+		)
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'DMT'
+WHERE	(adkey LIKE 'DMT%') 
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Outbound'
+WHERE	(campaign LIKE 'OB%') 
+		OR
+		(campaign LIKE 'OUTB%') 
+		OR
+		(campaign = 'GR') 
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Outbound'
+WHERE	(campaign = '') 
+AND		(adkey LIKE 'OB%')		
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Outbound'
+WHERE	(campaign <> 'Outbound') 
+AND		(adkey LIKE 'OB%')	
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Radio'
+WHERE	(adkey LIKE 'RDBFL%')	
+OR		(adkey LIKE 'RKBNP%')
+OR		(adkey LIKE 'RKFNX%')
+OR		(adkey LIKE 'RKWIK%')
+OR		(adkey LIKE 'RWBIS%')
+OR		(adkey LIKE 'RWBNW%')
+OR		(adkey LIKE 'RWHNZ%')
+OR		(adkey LIKE 'RWIXL%')
+OR		(adkey LIKE 'RWJCR%')
+OR		(adkey LIKE 'RWWDB%')
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Gift'
+WHERE	adkey LIKE '%Gift'
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'eMail'
+WHERE	adkey IN ('RCCCNY', 'RCCCUS')
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Inbound'
+WHERE	adkey = 'IBWOM'
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Web'
+WHERE	campaign =''
+AND		(
+		(adkey LIKE 'Web%')
+		OR (adkey LIKE 'W[0-9][0-9]%')
+		OR (adkey = 'ABWEB')
+		)
+
+
+UPDATE	Results_DBF_AdCodes
+SET		campaign = 'Missing'
+WHERE	campaign IS NULL 
+		OR campaign =''
+
+
+TRUNCATE TABLE [tbl_DBF_CMS]
+
+TRUNCATE TABLE [tbl_DBF_Cust]
+
+TRUNCATE TABLE [tbl_DBF_Items]
+
+TRUNCATE TABLE [tbl_DBF_Stock]
+
+
+

@@ -1,0 +1,100 @@
+
+SELECT     
+'Missing Ad Code Customer Initial Purchases' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('Missing Ad Code')
+
+UNION ALL
+
+SELECT     
+'Newspaper Customer Initial Purchases' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('Newspaper')
+
+UNION ALL
+
+
+SELECT     
+'TV Customer Purchases' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('TV')
+
+UNION ALL
+
+SELECT     
+'Magazine Customer Purchases' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('Magazine')
+
+UNION ALL
+
+SELECT     
+'Radio Customer Purchases' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('Radio')
+
+UNION ALL
+
+SELECT     
+'DMT Customer Purchases' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('DMT')
+
+UNION ALL
+
+SELECT     
+'Other Customer Purchases' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('eMail', 'EMPL', 'Inbound', 'Internet', 'Outbound', 'Promo', 'RMA')
+
+
+

@@ -1,0 +1,27 @@
+USE [USRC_Main]
+GO
+IF  EXISTS 
+(SELECT * FROM sys.objects 
+WHERE object_id = OBJECT_ID(N'[dbo].[MOM_PICKS]') 
+AND type in (N'U'))
+DROP TABLE [dbo].[MOM_PICKS]
+GO
+
+
+USE [USRC_Main]
+GO
+SELECT
+StockNumber AS Stock_ID,
+StockDescription AS Stock_Desc,
+'XXXXXX' AS Product_Code
+INTO dbo.MOM_PICKS
+FROM [USRC_SIMSSERVER].SIMS.dbo.MasterTable
+WHERE Tier ='1'
+GO
+
+
+USE [USRC_Main]
+GO
+CREATE CLUSTERED INDEX MOM_PICKS_Product_Code
+ON MOM_PICKS (Product_Code)
+GO

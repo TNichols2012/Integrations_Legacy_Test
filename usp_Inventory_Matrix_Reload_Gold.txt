@@ -1,0 +1,1731 @@
+--*************
+-- GOLD 1986 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1986'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1986', '$5', '86A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1986', '$10', '86A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1986', '$25', '86A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1986', '$50', '86A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1986'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1986', '$5', '86A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1986', '$10', '86A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1986', '$25', '86A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1986', '$50', '86A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1986'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1986', '$5', '86A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1986', '$10', '86A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1986', '$25', '86A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1986', '$50', '86A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1986'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1986', '$5', '86A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1986', '$10', '86A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1986', '$25', '86A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1986', '$50', '86A4P0'
+
+--*************
+-- GOLD 1987 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1987'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1987', '$5', '87A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1987', '$10', '87A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1987', '$25', '87A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1987', '$50', '87A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1987'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1987', '$5', '87A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1987', '$10', '87A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1987', '$25', '87A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1987', '$50', '87A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1987'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1987', '$5', '87A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1987', '$10', '87A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1987', '$25', '87A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1987', '$50', '87A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1987'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1987', '$5', '87A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1987', '$10', '87A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1987', '$25', '87A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1987', '$50', '87A4P0'
+
+--*************
+-- GOLD 1988 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1988'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1988', '$5', '88A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1988', '$10', '88A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1988', '$25', '88A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1988', '$50', '88A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1988'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1988', '$5', '88A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1988', '$10', '88A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1988', '$25', '88A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1988', '$50', '88A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1988'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1988', '$5', '88A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1988', '$10', '88A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1988', '$25', '88A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1988', '$50', '88A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1988'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1988', '$5', '88A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1988', '$10', '88A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1988', '$25', '88A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1988', '$50', '88A4P0'
+
+--*************
+-- GOLD 1989 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1989'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1989', '$5', '89A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1989', '$10', '89A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1989', '$25', '89A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1989', '$50', '89A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1989'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1989', '$5', '89A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1989', '$10', '89A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1989', '$25', '89A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1989', '$50', '89A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1989'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1989', '$5', '89A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1989', '$10', '89A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1989', '$25', '89A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1989', '$50', '89A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1989'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1989', '$5', '89A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1989', '$10', '89A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1989', '$25', '89A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1989', '$50', '89A4P0'
+
+--*************
+-- GOLD 1990 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1990'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1990', '$5', '90A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1990', '$10', '90A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1990', '$25', '90A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1990', '$50', '90A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1990'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1990', '$5', '90A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1990', '$10', '90A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1990', '$25', '90A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1990', '$50', '90A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1990'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1990', '$5', '90A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1990', '$10', '90A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1990', '$25', '90A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1990', '$50', '90A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1990'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1990', '$5', '90A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1990', '$10', '90A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1990', '$25', '90A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1990', '$50', '90A4P0'
+
+--*************
+-- GOLD 1991 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1991'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1991', '$5', '91A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1991', '$10', '91A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1991', '$25', '91A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1991', '$50', '91A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1991'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1991', '$5', '91A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1991', '$10', '91A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1991', '$25', '91A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1991', '$50', '91A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1991'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1991', '$5', '91A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1991', '$10', '91A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1991', '$25', '91A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1991', '$50', '91A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1991'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1991', '$5', '91A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1991', '$10', '91A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1991', '$25', '91A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1991', '$50', '91A4P0'
+
+--*************
+-- GOLD 1992 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1992'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1992', '$5', '92A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1992', '$10', '92A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1992', '$25', '92A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1992', '$50', '92A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1992'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1992', '$5', '92A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1992', '$10', '92A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1992', '$25', '92A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1992', '$50', '92A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1992'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1992', '$5', '92A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1992', '$10', '92A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1992', '$25', '92A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1992', '$50', '92A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1992'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1992', '$5', '92A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1992', '$10', '92A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1992', '$25', '92A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1992', '$50', '92A4P0'
+
+--*************
+-- GOLD 1993 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1993'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1993', '$5', '93A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1993', '$10', '93A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1993', '$25', '93A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1993', '$50', '93A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1993'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1993', '$5', '93A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1993', '$10', '93A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1993', '$25', '93A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1993', '$50', '93A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1993'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1993', '$5', '93A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1993', '$10', '93A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1993', '$25', '93A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1993', '$50', '93A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1993'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1993', '$5', '93A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1993', '$10', '93A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1993', '$25', '93A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1993', '$50', '93A4P0'
+
+--*************
+-- GOLD 1994 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1994'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1994', '$5', '94A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1994', '$10', '94A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1994', '$25', '94A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1994', '$50', '94A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1994'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1994', '$5', '94A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1994', '$10', '94A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1994', '$25', '94A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1994', '$50', '94A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1994'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1994', '$5', '94A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1994', '$10', '94A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1994', '$25', '94A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1994', '$50', '94A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1994'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1994', '$5', '94A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1994', '$10', '94A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1994', '$25', '94A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1994', '$50', '94A4P0'
+
+--*************
+-- GOLD 1995 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1995'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1995', '$5', '95A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1995', '$10', '95A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1995', '$25', '95A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1995', '$50', '95A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1995'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1995', '$5', '95A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1995', '$10', '95A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1995', '$25', '95A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1995', '$50', '95A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1995'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1995', '$5', '95A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1995', '$10', '95A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1995', '$25', '95A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1995', '$50', '95A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1995'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1995', '$5', '95A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1995', '$10', '95A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1995', '$25', '95A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1995', '$50', '95A4P0'
+
+--*************
+-- GOLD 1996 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1996'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1996', '$5', '96A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1996', '$10', '96A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1996', '$25', '96A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1996', '$50', '96A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1996'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1996', '$5', '96A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1996', '$10', '96A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1996', '$25', '96A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1996', '$50', '96A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1996'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1996', '$5', '96A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1996', '$10', '96A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1996', '$25', '96A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1996', '$50', '96A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1996'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1996', '$5', '96A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1996', '$10', '96A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1996', '$25', '96A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1996', '$50', '96A4P0'
+
+--*************
+-- GOLD 1997 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1997'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1997', '$5', '97A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1997', '$10', '97A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1997', '$25', '97A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1997', '$50', '97A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1997'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1997', '$5', '97A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1997', '$10', '97A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1997', '$25', '97A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1997', '$50', '97A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1997'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1997', '$5', '97A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1997', '$10', '97A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1997', '$25', '97A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1997', '$50', '97A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1997'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1997', '$5', '97A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1997', '$10', '97A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1997', '$25', '97A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1997', '$50', '97A4P0'
+
+--*************
+-- GOLD 1998 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1998'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1998', '$5', '98A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1998', '$10', '98A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1998', '$25', '98A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1998', '$50', '98A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1998'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1998', '$5', '98A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1998', '$10', '98A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1998', '$25', '98A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1998', '$50', '98A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1998'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1998', '$5', '98A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1998', '$10', '98A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1998', '$25', '98A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1998', '$50', '98A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1998'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1998', '$5', '98A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1998', '$10', '98A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1998', '$25', '98A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1998', '$50', '98A4P0'
+
+--*************
+-- GOLD 1999 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1999'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1999', '$5', '99A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1999', '$10', '99A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1999', '$25', '99A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1999', '$50', '99A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1999'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1999', '$5', '99A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1999', '$10', '99A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1999', '$25', '99A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1999', '$50', '99A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1999'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1999', '$5', '99A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1999', '$10', '99A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1999', '$25', '99A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1999', '$50', '99A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1999'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1999', '$5', '99A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1999', '$10', '99A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1999', '$25', '99A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1999', '$50', '99A4P0'
+
+--***************
+-- GOLD 1999-W --
+--***************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1999-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1999-W', '$5', '99W1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1999-W', '$10', '99W2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1999-W', '$25', '99W3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1999-W', '$50', '99W4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1999-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1999-W', '$5', '99W1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1999-W', '$10', '99W2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1999-W', '$25', '99W3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1999-W', '$50', '99W4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1999-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1999-W', '$5', '99W1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1999-W', '$10', '99W2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1999-W', '$25', '99W3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1999-W', '$50', '99W4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1999-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1999-W', '$5', '99W1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1999-W', '$10', '99W2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1999-W', '$25', '99W3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1999-W', '$50', '99W4P0'
+
+--*************
+-- GOLD 2000 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2000'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2000', '$5', '00A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2000', '$10', '00A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2000', '$25', '00A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2000', '$50', '00A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2000'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2000', '$5', '00A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2000', '$10', '00A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2000', '$25', '00A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2000', '$50', '00A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2000'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2000', '$5', '00A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2000', '$10', '00A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2000', '$25', '00A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2000', '$50', '00A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2000'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2000', '$5', '00A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2000', '$10', '00A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2000', '$25', '00A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2000', '$50', '00A4P0'
+
+--*************
+-- GOLD 2001 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2001'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2001', '$5', '01A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2001', '$10', '01A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2001', '$25', '01A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2001', '$50', '01A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2001'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2001', '$5', '01A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2001', '$10', '01A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2001', '$25', '01A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2001', '$50', '01A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2001'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2001', '$5', '01A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2001', '$10', '01A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2001', '$25', '01A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2001', '$50', '01A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2001'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2001', '$5', '01A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2001', '$10', '01A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2001', '$25', '01A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2001', '$50', '01A4P0'
+
+--*************
+-- GOLD 2002 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2002'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2002', '$5', '02A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2002', '$10', '02A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2002', '$25', '02A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2002', '$50', '02A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2002'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2002', '$5', '02A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2002', '$10', '02A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2002', '$25', '02A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2002', '$50', '02A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2002'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2002', '$5', '02A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2002', '$10', '02A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2002', '$25', '02A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2002', '$50', '02A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2002'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2002', '$5', '02A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2002', '$10', '02A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2002', '$25', '02A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2002', '$50', '02A4P0'
+
+
+--*************
+-- GOLD 2003 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2003'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2003', '$5', '03A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2003', '$10', '03A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2003', '$25', '03A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2003', '$50', '03A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2003'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2003', '$5', '03A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2003', '$10', '03A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2003', '$25', '03A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2003', '$50', '03A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2003'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2003', '$5', '03A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2003', '$10', '03A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2003', '$25', '03A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2003', '$50', '03A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2003'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2003', '$5', '03A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2003', '$10', '03A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2003', '$25', '03A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2003', '$50', '03A4P0'
+
+--*************
+-- GOLD 2004 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2004'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2004', '$5', '04A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2004', '$10', '04A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2004', '$25', '04A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2004', '$50', '04A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2004'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2004', '$5', '04A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2004', '$10', '04A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2004', '$25', '04A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2004', '$50', '04A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2004'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2004', '$5', '04A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2004', '$10', '04A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2004', '$25', '04A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2004', '$50', '04A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2004'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2004', '$5', '04A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2004', '$10', '04A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2004', '$25', '04A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2004', '$50', '04A4P0'
+
+--*************
+-- GOLD 2005 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2005'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2005', '$5', '05A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2005', '$10', '05A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2005', '$25', '05A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2005', '$50', '05A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2005'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2005', '$5', '05A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2005', '$10', '05A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2005', '$25', '05A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2005', '$50', '05A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2005'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2005', '$5', '05A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2005', '$10', '05A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2005', '$25', '05A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2005', '$50', '05A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2005'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2005', '$5', '05A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2005', '$10', '05A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2005', '$25', '05A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2005', '$50', '05A4P0'
+
+--*************
+-- GOLD 2006 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2006'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006', '$5', '06A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006', '$10', '06A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006', '$25', '06A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006', '$50', '06A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2006'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006', '$5', '06A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006', '$10', '06A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006', '$25', '06A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006', '$50', '06A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2006'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006', '$5', '06A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006', '$10', '06A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006', '$25', '06A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006', '$50', '06A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2006'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006', '$5', '06A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006', '$10', '06A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006', '$25', '06A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006', '$50', '06A4P0'
+
+--***************
+-- GOLD 2006-W --
+--***************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2006-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006-W', '$5', '06W1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006-W', '$10', '06W2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006-W', '$25', '06W3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006-W', '$50', '06W4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2006-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006-W', '$5', '06W1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006-W', '$10', '06W2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006-W', '$25', '06W3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006-W', '$50', '06W4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2006-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006-W', '$5', '06W1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006-W', '$10', '06W2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006-W', '$25', '06W3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006-W', '$50', '06W4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2006-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006-W', '$5', '06W1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006-W', '$10', '06W2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006-W', '$25', '06W3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006-W', '$50', '06W4P0'
+
+--*******************
+-- GOLD 2006-W Set --
+--*******************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2006-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006-W Set', '$5', '06W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006-W Set', '$10', '06W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006-W Set', '$25', '06W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006-W Set', '$50', '06W5M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2006-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006-W Set', '$5', '06W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006-W Set', '$10', '06W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006-W Set', '$25', '06W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006-W Set', '$50', '06W5M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2006-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006-W Set', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006-W Set', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006-W Set', '$25', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006-W Set', '$50', 'N/A'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2006-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006-W Set', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006-W Set', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006-W Set', '$25', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006-W Set', '$50', 'N/A'
+
+--*************
+-- GOLD 2007 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2007'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007', '$5', '07A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007', '$10', '07A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007', '$25', '07A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007', '$50', '07A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2007'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007', '$5', '07A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007', '$10', '07A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007', '$25', '07A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007', '$50', '07A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2007'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007', '$5', '07A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007', '$10', '07A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007', '$25', '07A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007', '$50', '07A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2007'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007', '$5', '07A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007', '$10', '07A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007', '$25', '07A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007', '$50', '07A4P0'
+
+--***************
+-- GOLD 2007-W --
+--***************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2007-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W', '$5', '07W1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W', '$10', '07W2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W', '$25', '07W3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W', '$50', '07W4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2007-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W', '$5', '07W1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W', '$10', '07W2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W', '$25', '07W3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W', '$50', '07W4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2007-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W', '$5', '07W1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W', '$10', '07W2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W', '$25', '07W3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W', '$50', '07W4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2007-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W', '$5', '07W1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W', '$10', '07W2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W', '$25', '07W3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W', '$50', '07W4P0'
+
+
+--*********************
+-- GOLD 2007-W Error --
+--*********************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2007-W Error'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W Error', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W Error', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W Error', '$25', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W Error', '$50', 'N/A'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2007-W Error'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W Error', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W Error', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W Error', '$25', '07W3ME'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W Error', '$50', 'N/A'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2007-W Error'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W Error', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W Error', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W Error', '$25', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W Error', '$50', 'N/A'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2007-W Error'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W Error', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W Error', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W Error', '$25', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W Error', '$50', 'N/A'
+
+
+--*******************
+-- GOLD 2007-W SET --
+--*******************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2007-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W Set', '$5', '07W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W Set', '$10', '07W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W Set', '$25', '07W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W Set', '$50', '07W5M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2007-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W Set', '$5', '07W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W Set', '$10', '07W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W Set', '$25', '07W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W Set', '$50', '07W5M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2007-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W Set', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W Set', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W Set', '$25', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W Set', '$50', 'N/A'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2007-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W Set', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W Set', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W Set', '$25', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W Set', '$50', 'N/A'
+
+
+--*************
+-- GOLD 2008 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2008'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2008', '$5', '08A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2008', '$10', '08A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2008', '$25', '08A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2008', '$50', '08A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2008'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2008', '$5', '08A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2008', '$10', '08A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2008', '$25', '08A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2008', '$50', '08A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2008'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2008', '$5', '08A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2008', '$10', '08A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2008', '$25', '08A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2008', '$50', '08A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2008'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2008', '$5', '08A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2008', '$10', '08A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2008', '$25', '08A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2008', '$50', '08A4P0'
+
+
+--***************
+-- GOLD 2008-W --
+--***************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2008-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2008-W', '$5', '08W1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2008-W', '$10', '08W2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2008-W', '$25', '08W3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2008-W', '$50', '08W4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2008-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2008-W', '$5', '08W1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2008-W', '$10', '08W2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2008-W', '$25', '08W3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2008-W', '$50', '08W4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2008-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2008-W', '$5', '08W1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2008-W', '$10', '08W2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2008-W', '$25', '08W3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2008-W', '$50', '08W4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2008-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2008-W', '$5', '08W1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2008-W', '$10', '08W2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2008-W', '$25', '08W3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2008-W', '$50', '08W4P0'
+
+--*******************
+-- GOLD 2008-W SET --
+--*******************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2008-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2008-W Set', '$5', '08W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2008-W Set', '$10', '08W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2008-W Set', '$25', '08W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2008-W Set', '$50', '08W5M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2008-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2008-W Set', '$5', '08W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2008-W Set', '$10', '08W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2008-W Set', '$25', '08W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2008-W Set', '$50', '08W5M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2008-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2008-W Set', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2008-W Set', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2008-W Set', '$25', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2008-W Set', '$50', 'N/A'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2008-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2008-W Set', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2008-W Set', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2008-W Set', '$25', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2008-W Set', '$50', 'N/A'
+
+--*************
+-- GOLD 2009 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2009'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2009', '$5', '09A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2009', '$10', '09A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2009', '$25', '09A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2009', '$50', '09A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2009'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2009', '$5', '09A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2009', '$10', '09A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2009', '$25', '09A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2009', '$50', '09A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2009'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2009', '$5', '09A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2009', '$10', '09A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2009', '$25', '09A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2009', '$50', '09A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2009'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2009', '$5', '09A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2009', '$10', '09A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2009', '$25', '09A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2009', '$50', '09A4P0'
+
+
+--***************
+-- GOLD 2009-W --
+--***************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2009-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2009-W', '$5', '09W1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2009-W', '$10', '09W2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2009-W', '$25', '09W3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2009-W', '$50', '09W4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2009-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2009-W', '$5', '09W1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2009-W', '$10', '09W2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2009-W', '$25', '09W3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2009-W', '$50', '09W4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2009-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2009-W', '$5', '09W1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2009-W', '$10', '09W2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2009-W', '$25', '09W3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2009-W', '$50', '09W4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2009-W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2009-W', '$5', '09W1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2009-W', '$10', '09W2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2009-W', '$25', '09W3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2009-W', '$50', '09W4P0'
+
+
+--*************
+-- GOLD 2010 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2010'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2010', '$5', '10A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2010', '$10', '10A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2010', '$25', '10A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2010', '$50', '10A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2010'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2010', '$5', '10A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2010', '$10', '10A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2010', '$25', '10A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2010', '$50', '10A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2010'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2010', '$5', '10A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2010', '$10', '10A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2010', '$25', '10A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2010', '$50', '10A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2010'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2010', '$5', '10A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2010', '$10', '10A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2010', '$25', '10A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2010', '$50', '10A4P0'
+
+
+--*************
+-- GOLD 2011 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2011'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2011', '$5', '11A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2011', '$10', '11A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2011', '$25', '11A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2011', '$50', '11A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2011'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2011', '$5', '11A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2011', '$10', '11A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2011', '$25', '11A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2011', '$50', '11A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2011'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2011', '$5', '11A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2011', '$10', '11A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2011', '$25', '11A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2011', '$50', '11A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2011'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2011', '$5', '11A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2011', '$10', '11A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2011', '$25', '11A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2011', '$50', '11A4P0'
+
+
+--*************
+-- GOLD 2012 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2012', '$5', '12A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2012', '$10', '12A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2012', '$25', '12A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2012', '$50', '12A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2012', '$5', '12A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2012', '$10', '12A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2012', '$25', '12A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2012', '$50', '12A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2012', '$5', '12A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2012', '$10', '12A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2012', '$25', '12A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2012', '$50', '12A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2012', '$5', '12A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2012', '$10', '12A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2012', '$25', '12A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2012', '$50', '12A4P0'
+
+--*************
+-- GOLD 2013 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2013'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2013', '$5', '13A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2013', '$10', '13A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2013', '$25', '13A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2013', '$50', '13A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2013'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2013', '$5', '13A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2013', '$10', '13A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2013', '$25', '13A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2013', '$50', '13A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2013'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2013', '$5', '13A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2013', '$10', '13A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2013', '$25', '13A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2013', '$50', '13A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2013'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2013', '$5', '13A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2013', '$10', '13A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2013', '$25', '13A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2013', '$50', '13A4P0'
+
+--*************
+-- GOLD 2014 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2014'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2014', '$5', '14A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2014', '$10', '14A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2014', '$25', '14A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2014', '$50', '14A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2014'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2014', '$5', '14A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2014', '$10', '14A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2014', '$25', '14A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2014', '$50', '14A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2014'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2014', '$5', '14A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2014', '$10', '14A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2014', '$25', '14A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2014', '$50', '14A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2014'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2014', '$5', '14A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2014', '$10', '14A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2014', '$25', '14A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2014', '$50', '14A4P0'
+
+--*************
+-- GOLD 2015 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2015'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2015', '$5', '15A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2015', '$10', '15A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2015', '$25', '15A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2015', '$50', '15A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2015'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2015', '$5', '15A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2015', '$10', '15A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2015', '$25', '15A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2015', '$50', '15A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2015'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2015', '$5', '15A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2015', '$10', '15A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2015', '$25', '15A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2015', '$50', '15A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2015'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2015', '$5', '15A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2015', '$10', '15A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2015', '$25', '15A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2015', '$50', '15A4P0'
+
+
+--*************
+-- GOLD 2016 --
+--*************
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2016'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2016', '$5', '16A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2016', '$10', '16A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2016', '$25', '16A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2016', '$50', '16A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2016'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2016', '$5', '16A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2016', '$10', '16A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2016', '$25', '16A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2016', '$50', '16A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2016'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2016', '$5', '16A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2016', '$10', '16A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2016', '$25', '16A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2016', '$50', '16A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2016'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2016', '$5', '16A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2016', '$10', '16A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2016', '$25', '16A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2016', '$50', '16A4P0'
+
+

@@ -1,0 +1,19 @@
+SELECT     TOP 100 PERCENT 
+CUST.entrydate, 
+CUST.firstname, 
+CUST.lastname, 
+CUST.custnum, 
+SbCbY.Order_Count, 
+SbCbY.Total_Sales, 
+SbCbY.Y2000, 
+SbCbY.Y2001, 
+SbCbY.Y2002, 
+SbCbY.Y2003, 
+SbCbY.Y2004, 
+SbCbY.Y2005, 
+SbCbY.Y2006TD
+FROM         dbo.Results_MOM_CUST CUST 
+LEFT OUTER JOIN
+             dbo.vw_Sales_by_Custnum_by_Year SbCbY ON CUST.custnum = SbCbY.custnum
+WHERE     (CUST.entrydate < '1/1/2002') AND (CUST.entrydate >= '1/1/2001')
+ORDER BY CUST.entrydate

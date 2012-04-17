@@ -1,0 +1,22 @@
+SELECT    
+[order] AS Order_ID, 
+item_id AS Item_ID, 
+item AS Item, 
+item_state AS Item_State,
+sales_id AS Sales_ID,
+advert AS Ad_Code, 
+it_uncost AS Item_Cost, 
+it_unlist AS Item_Price,
+(CASE WHEN Item_State = 'RT' AND quanto > 0 
+	THEN quanto * - 1 
+	ELSE quanto END) AS Quantity_Ordered, 
+(CASE WHEN Item_State = 'RT' AND it_unlist > 0 
+	THEN quanto * it_unlist * - 1 
+	ELSE quanto * it_unlist END) AS Value_Ordered, 
+(CASE WHEN Item_State = 'RT' AND quants > 0 
+	THEN quants * - 1 
+	ELSE quants END) AS Quantity_Shipped, 
+(CASE WHEN Item_State = 'RT' AND it_unlist > 0 
+	THEN quants * it_unlist * - 1 
+	ELSE quants * it_unlist END) AS Value_Shipped
+FROM         Results_DBF_Items

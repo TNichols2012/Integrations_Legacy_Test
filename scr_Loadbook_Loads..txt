@@ -1,0 +1,44 @@
+USE [USRC_Main]
+GO
+IF  EXISTS 
+(SELECT * FROM sys.objects 
+WHERE object_id = OBJECT_ID(N'[dbo].[MOM_CustItems]') 
+AND type in (N'U'))
+DROP TABLE [dbo].[MOM_CustItems]
+GO
+
+
+USE [USRC_Main]
+GO
+
+SELECT *
+INTO MOM_CustItems
+FROM vw_GetMOM_CustItems
+
+
+
+USE [USRC_Main]
+GO
+
+CREATE CLUSTERED INDEX MOM_CustItems_Sales_ID
+ON MOM_CustItems (sales_id)
+GO
+
+CREATE NONCLUSTERED INDEX MOM_CustItems_Number
+ON MOM_CustItems (number)
+GO
+
+CREATE NONCLUSTERED INDEX MOM_CustItems_Description
+ON MOM_CustItems ([desc])
+GO
+
+
+
+
+
+SELECT     dbo.MOM_CUST.sales_id, dbo.MOM_CMS.custnum, dbo.MOM_ITEMS.[order], dbo.MOM_STOCK.number, dbo.MOM_STOCK.[desc]
+FROM         dbo.MOM_CUST INNER JOIN
+                      dbo.MOM_CMS ON dbo.MOM_CUST.custnum = dbo.MOM_CMS.custnum INNER JOIN
+                      dbo.MOM_ITEMS ON dbo.MOM_CMS.[order] = dbo.MOM_ITEMS.[order] INNER JOIN
+                      dbo.MOM_STOCK ON dbo.MOM_ITEMS.item = dbo.MOM_STOCK.number
+WHERE     (dbo.MOM_ITEMS.trans_id <> 0) AND (dbo.MOM_CMS.order_st2 <> 'CN') AND (dbo.MOM_CMS.ordertype <> 'CXL')

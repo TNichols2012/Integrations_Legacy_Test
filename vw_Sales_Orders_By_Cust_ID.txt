@@ -1,0 +1,71 @@
+SELECT     TOP 100 PERCENT 
+Cust_ID, 
+SUM(ISNULL(Value_Shipped, 0)) AS Ttl_Net_Sales_Value, 
+SUM(CASE WHEN Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Ttl_Net_Sales_Bullion, 
+SUM(CASE WHEN (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Ttl_Net_Sales_Non_Bullion,
+
+SUM(CASE WHEN Item_State IN ('PS', 'SH') THEN ISNULL(Value_Shipped, 0) ELSE 0 END) AS Ttl_Shipped_Value, 
+SUM(CASE WHEN Item_State IN ('PS', 'SH') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Ttl_Bullion_Shipped, 
+SUM(CASE WHEN Item_State IN ('PS', 'SH') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Ttl_Non_Bullion_Shipped,
+SUM(CASE WHEN Item_State IN ('RT') THEN ISNULL(Value_Shipped, 0) ELSE 0 END) AS Ttl_Returned_Value, 
+SUM(CASE WHEN Item_State IN ('RT') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Ttl_Bullion_Returned, 
+SUM(CASE WHEN Item_State IN ('RT') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Ttl_Non_Bullion_Returned,
+
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' AND Item_State IN ('PS', 'SH') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2001_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' AND Item_State IN ('PS', 'SH') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2001_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' AND Item_State IN ('PS', 'SH') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2001_Non_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' AND Item_State IN ('RT') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2001_Ttl_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' AND Item_State IN ('RT') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2001_Bullion_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' AND Item_State IN ('RT') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2001_Non_Bullion_Returned, 
+ 
+SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' AND Item_State IN ('PS', 'SH') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2002_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' AND Item_State IN ('PS', 'SH') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2002_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' AND Item_State IN ('PS', 'SH') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2002_Non_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' AND Item_State IN ('RT') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2002_Ttl_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' AND Item_State IN ('RT') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2002_Bullion_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' AND Item_State IN ('RT') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2002_Non_Bullion_Returned, 
+ 
+SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' AND Item_State IN ('PS', 'SH') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2003_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' AND Item_State IN ('PS', 'SH') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2003_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' AND Item_State IN ('PS', 'SH') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2003_Non_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' AND Item_State IN ('RT') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2003_Ttl_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' AND Item_State IN ('RT') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2003_Bullion_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' AND Item_State IN ('RT') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2003_Non_Bullion_Returned, 
+ 
+SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' AND Item_State IN ('PS', 'SH') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2004_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' AND Item_State IN ('PS', 'SH') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2004_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' AND Item_State IN ('PS', 'SH') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2004_Non_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' AND Item_State IN ('RT') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2004_Ttl_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' AND Item_State IN ('RT') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2004_Bullion_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' AND Item_State IN ('RT') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2004_Non_Bullion_Returned, 
+ 
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' AND Item_State IN ('PS', 'SH') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2005_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' AND Item_State IN ('PS', 'SH') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2005_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' AND Item_State IN ('PS', 'SH') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2005_Non_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' AND Item_State IN ('RT') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2005_Ttl_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' AND Item_State IN ('RT') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2005_Bullion_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' AND Item_State IN ('RT') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2005_Non_Bullion_Returned, 
+ 
+SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' AND Item_State IN ('PS', 'SH') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2006_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' AND Item_State IN ('PS', 'SH') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2006_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' AND Item_State IN ('PS', 'SH') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2006_Non_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' AND Item_State IN ('RT') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2006_Ttl_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' AND Item_State IN ('RT') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2006_Bullion_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' AND Item_State IN ('RT') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2006_Non_Bullion_Returned, 
+ 
+SUM(CASE WHEN Order_Date >= '1/1/2007' AND Order_Date < '1/1/2008' AND Item_State IN ('PS', 'SH') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2007_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2007' AND Order_Date < '1/1/2008' AND Item_State IN ('PS', 'SH') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2007_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2007' AND Order_Date < '1/1/2008' AND Item_State IN ('PS', 'SH') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2007_Non_Bullion_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2007' AND Order_Date < '1/1/2008' AND Item_State IN ('RT') THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2007_Ttl_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2007' AND Order_Date < '1/1/2008' AND Item_State IN ('RT') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2007_Bullion_Returned, 
+SUM(CASE WHEN Order_Date >= '1/1/2007' AND Order_Date < '1/1/2008' AND Item_State IN ('RT') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2007_Non_Bullion_Returned, 
+
+(CASE 
+WHEN (SUM(CASE WHEN Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 AND (SUM(CASE WHEN Stock_Type <> 'Bullion' OR Stock_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END)) = 0 THEN 'B1' 
+WHEN (SUM(CASE WHEN Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END)) = 0 AND (SUM(CASE WHEN Stock_Type <> 'Bullion' OR Stock_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 THEN 'B2' 
+WHEN (SUM(CASE WHEN Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 AND (SUM(CASE WHEN Stock_Type <> 'Bullion' OR Stock_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 THEN 'B3' 
+ELSE 'NB ' END) AS Customer_Buyer_Type
+FROM         dbo.vw_Sales_Orders
+WHERE     (dbo.vw_Sales_Orders.Item_State IN ('PS','SH', 'RT' ))
+GROUP BY Cust_ID
+ORDER BY Cust_ID

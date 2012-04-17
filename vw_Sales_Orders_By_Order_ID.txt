@@ -1,0 +1,26 @@
+SELECT     TOP 100 PERCENT 
+Order_ID, 
+Order_Date,
+Ad_Code AS Order_Ad_Code,
+SUM(ISNULL(Value_Shipped, 0)) AS Net_Order_Value, 
+SUM(CASE WHEN Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Net_Order_Bullion_Value, 
+SUM(CASE WHEN (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Net_Order_Non_Bullion_Value,
+
+SUM(CASE WHEN Item_State IN ('PS', 'SH') THEN ISNULL(Value_Shipped, 0) ELSE 0 END) AS Shipped_Value, 
+SUM(CASE WHEN Item_State IN ('PS', 'SH') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Bullion_Shipped_Value, 
+SUM(CASE WHEN Item_State IN ('PS', 'SH') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Non_Bullion_Shipped_Value,
+
+SUM(CASE WHEN Item_State IN ('RT') THEN ISNULL(Value_Shipped, 0) ELSE 0 END) AS Returned_Value, 
+SUM(CASE WHEN Item_State IN ('RT') AND Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Bullion_Returned_Value, 
+SUM(CASE WHEN Item_State IN ('RT') AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Non_Bullion_Returned_Value,
+
+(CASE 
+WHEN (SUM(CASE WHEN Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 AND (SUM(CASE WHEN Stock_Type <> 'Bullion' OR Stock_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END)) = 0 THEN 'B1' 
+WHEN (SUM(CASE WHEN Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END)) = 0 AND (SUM(CASE WHEN Stock_Type <> 'Bullion' OR Stock_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 THEN 'B2' 
+WHEN (SUM(CASE WHEN Stock_Type = 'Bullion' THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 AND (SUM(CASE WHEN Stock_Type <> 'Bullion' OR Stock_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 THEN 'B3' 
+WHEN Ship_List = 'USF' THEN 'GR'
+ELSE 'NB' END) AS Order_Buyer_Type
+FROM         dbo.vw_Sales_Orders
+WHERE     (dbo.vw_Sales_Orders.Item_State IN ('PS','SH', 'RT' ))
+GROUP BY Order_ID, Order_Date, Ad_Code, Ship_List
+--ORDER BY Order_ID

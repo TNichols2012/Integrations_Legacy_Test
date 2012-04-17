@@ -1,0 +1,75 @@
+USE [Data_Warehouse]
+GO
+/****** Object:  UserDefinedFunction [dbo].[ufn_Show_Time_Format]    Script Date: 10/01/2010 13:17:48 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+ALTER FUNCTION [dbo].[ufn_Show_Time_Format](@In_Seconds float)
+RETURNS varchar(25) AS
+BEGIN
+
+DECLARE @Answer varchar(25)
+SET @Answer ='00:00:00:00'
+
+DECLARE @Seconds float = 0
+DECLARE @Minutes float = 0
+DECLARE @Hours float = 0
+DECLARE @Days float = 0
+
+IF (@In_Seconds >= 0)
+BEGIN 
+	SET @Seconds = @In_Seconds
+
+	WHILE @Seconds >= 60
+		BEGIN
+		SET @Minutes = @Minutes + 1
+		SET @Seconds = @Seconds - 60
+		END
+
+	WHILE @Minutes >= 60
+		BEGIN
+		SET @Hours = @Hours + 1
+		SET @Minutes = @Minutes - 60
+		END
+
+	WHILE @Hours >= 24
+		BEGIN
+		SET @Days = @Days + 1
+		SET @Hours = @Hours - 24
+		END
+
+	DECLARE @str_Days varchar(5)
+	DECLARE @str_Hours varchar(2)
+	DECLARE @str_Minutes varchar(2)
+	DECLARE @str_Seconds varchar(2)
+
+	IF (LEN(@Days) = 1)
+		SET @str_Days = (SELECT '0' + CONVERT(varchar(5), @Days))
+	ELSE SET @str_Days =(SELECT CONVERT(varchar(5), @Days))
+
+	IF (LEN(@Hours) = 1)
+		SET @str_Hours = (SELECT '0' + CONVERT(varchar(5), @Hours))
+	ELSE SET @str_Hours =(SELECT CONVERT(varchar(5), @Hours))
+
+	IF (LEN(@Minutes) = 1)
+		SET @str_Minutes = (SELECT '0' + CONVERT(varchar(5), @Minutes))
+	ELSE SET @str_Minutes =(SELECT CONVERT(varchar(5), @Minutes))
+
+	IF (LEN(@Seconds) = 1)
+		SET @str_Seconds = (SELECT '0' + CONVERT(varchar(5), @Seconds))
+	ELSE SET @str_Seconds =(SELECT CONVERT(varchar(5), @Seconds))
+
+	SET @Answer = (SELECT @str_Days + ':' + @str_Hours + ':' + @str_Minutes + ':' + @str_Seconds)
+
+END
+	
+
+	
+RETURN @Answer	
+	
+END
+
+

@@ -1,0 +1,24 @@
+SELECT     TOP (100) 
+PERCENT dbo.tbl_DBF_CMS.Order_ID, 
+dbo.tbl_DBF_CMS.Order_Date, 
+dbo.tbl_DBF_CMS.Sales_ID, 
+dbo.tbl_DBF_Cust.First_Name, 
+dbo.tbl_DBF_Cust.Last_Name, 
+dbo.tbl_DBF_CMS.Ad_Code, 
+dbo.tbl_Sales_Teams.Sales_Manager, 
+dbo.tbl_Sales_Teams.Site
+FROM		dbo.tbl_DBF_CMS 
+INNER JOIN	dbo.tbl_Sales_Teams 
+ON		dbo.tbl_DBF_CMS.Sales_ID = dbo.tbl_Sales_Teams.Login 
+INNER JOIN	dbo.tbl_DBF_Cust 
+ON dbo.tbl_DBF_CMS.Cust_ID = dbo.tbl_DBF_Cust.Cust_ID
+GROUP BY 
+dbo.tbl_DBF_CMS.Order_ID, 
+dbo.tbl_DBF_CMS.Order_Date, 
+dbo.tbl_DBF_CMS.Sales_ID, 
+dbo.tbl_DBF_Cust.First_Name, 
+dbo.tbl_DBF_Cust.Last_Name, 
+dbo.tbl_DBF_CMS.Ad_Code, 
+dbo.tbl_Sales_Teams.Sales_Manager, 
+dbo.tbl_Sales_Teams.Site
+ORDER BY dbo.tbl_DBF_CMS.Order_ID DESC

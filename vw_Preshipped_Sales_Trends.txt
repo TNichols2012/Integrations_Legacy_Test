@@ -1,0 +1,13 @@
+SELECT     
+'Ttl_Preshipped_Order_Value' AS 'Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' THEN Ttl_Ordered_Value ELSE 0 END) AS Ttl_Ordered_Value_2001,
+SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' THEN Ttl_Ordered_Value ELSE 0 END) AS Ttl_Ordered_Value_2002,
+SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' THEN Ttl_Ordered_Value ELSE 0 END) AS Ttl_Ordered_Value_2003,
+SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' THEN Ttl_Ordered_Value ELSE 0 END) AS Ttl_Ordered_Value_2004,
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' THEN Ttl_Ordered_Value ELSE 0 END) AS Ttl_Ordered_Value, 
+SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' THEN Ttl_Ordered_Value ELSE 0 END) AS Ttl_Ordered_Value
+FROM         vw_Ttl_Shipped_Sales_by_Custnum_00_PreShipped
+
+
+UNION ALL

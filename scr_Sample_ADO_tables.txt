@@ -1,0 +1,418 @@
+'*********************************************************************************************************************************************
+'  Visual Basic ActiveX Script
+'*********************************************************************************************************************************************
+Function Main()
+
+	Call Process_Daily_Sales()
+	'Call Send_Email ("Test", "tnichols@usmoneyreserve.com", "hello")
+
+
+
+	Main = DTSTaskExecResult_Success
+End Function
+
+'*********************************************************************************************************************************************
+Function Send_Email (subject, rcpt, msgHTML)
+
+	'Simple Mail Transfer Protocol (SMTP) Server Name
+	Const SMTP_SERVER = "usmoney.usmoneyreserve.local"
+
+	'Email Address and Text for the sender's email
+	Const SENDER_EMAIL = """SQL Server Admin"" <sserveradmin@usmoneyreserve.com>"
+
+	Dim iMsg 
+	Dim iConf 
+	Dim Flds 
+
+	'We will use CDO Send Using Pickup in this example
+	Const cdoSendUsingPickup = 1
+	Const cdoSendUsingPort = 2
+
+	'Use COM to create Message and Configuration Objects
+	set iMsg = CreateObject("CDO.Message")
+	set iConf = CreateObject("CDO.Configuration")
+
+	'Now Set the field to the configuration objects fields
+	Set Flds = iConf.Fields
+
+	'Set the field namespaces to the relevant variables/constants
+	With Flds
+	    .Item("http://schemas.microsoft.com/cdo/configuration/sendusing") = cdoSendUsingPort
+	    .Item("http://schemas.microsoft.com/cdo/configuration/smtpserver") = SMTP_SERVER
+	    .Item("http://schemas.microsoft.com/cdo/configuration/smtpconnectiontimeout") = 10  
+	    .Update
+	End With
+
+	' Apply the settings to the message.
+	With iMsg
+	    Set .Configuration = iConf
+	    .To = "tnichols@usmoneyreserve.com"
+	    .From =  "tnichols@usmoneyreserve.com"
+	    .Subject = "Test"
+	    .HTMLBody = msgHTML 'HTML Report is embedded here
+	    .Send 'Finally Send the message
+	End With
+
+	' Clean up variables.
+	Set iMsg = Nothing
+	Set iConf = Nothing
+	Set Flds = Nothing
+
+End Function
+
+'*********************************************************************************************************************************************
+
+Sub Process_Daily_Sales()
+
+'*********************************************************************************************************************************************	
+	'ORIGINAL Email
+	Dim obj_FSO, str_Data_File
+	Set obj_FSO = CreateObject("Scripting.FileSystemObject") 
+
+	If obj_FSO.FileExists("\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_SIMS_Total.txt") Then 
+		obj_FSO.DeleteFile "\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_SIMS_Total.txt"  
+	End If
+
+	Set str_Data_File= obj_FSO.OpenTextFile("\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_SIMS_Total.txt", 8, True) 
+	'str_Data_File.WriteLine("Site" & vbtab & "IB" & vbtab & "OB"  & vbtab & "Total")
+
+	'str_Data_File.WriteLine(DTSGlobalVariables("gv_AU_Site").Value) & vbtab & _
+	str_Data_File.WriteLine( "AU IB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_AU_IB").Value, Groupdigits) )
+	str_Data_File.WriteLine( "AU OB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_AU_OB").Value, Groupdigits) )
+	'str_Data_File.WriteLine("----------------------------------")
+	str_Data_File.WriteLine( "AU TL" & vbtab & FormatCurrency(DTSGlobalVariables("gv_AU_Total").Value, Groupdigits) )
+	str_Data_File.WriteLine
+
+	str_Data_File.WriteLine( "BM IB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_BM_IB").Value, Groupdigits) )
+	str_Data_File.WriteLine( "BM OB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_BM_OB").Value, Groupdigits) )
+	'str_Data_File.WriteLine("----------------------------------")
+	str_Data_File.WriteLine( "BM TL" & vbtab & FormatCurrency(DTSGlobalVariables("gv_BM_Total").Value, Groupdigits) )
+	str_Data_File.WriteLine
+
+	str_Data_File.WriteLine( "C3 IB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_C3_IB").Value, Groupdigits) )
+	str_Data_File.WriteLine( "C3 OB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_C3_OB").Value, Groupdigits) )
+	'str_Data_File.WriteLine("----------------------------------")
+	str_Data_File.WriteLine( "C3 TL" & vbtab & FormatCurrency(DTSGlobalVariables("gv_C3_Total").Value, Groupdigits) )
+	str_Data_File.WriteLine
+
+	str_Data_File.WriteLine( "TL IB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_Ttl_IB").Value, Groupdigits) )
+	str_Data_File.WriteLine( "TL OB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_Ttl_OB").Value, Groupdigits) )
+	'str_Data_File.WriteLine("----------------------------------")
+	str_Data_File.WriteLine( "TOTAL" & vbtab & FormatCurrency(DTSGlobalVariables("gv_Ttl_Total").Value, Groupdigits) )
+	str_Data_File.WriteLine
+	str_Data_File.WriteLine
+
+
+'*********************************************************************************************************************************************	
+'		AUSTIN
+'*********************************************************************************************************************************************	
+	Dim int_AU_Count
+	Dim str_AU_Sales	
+	Dim str_AU_Count	
+	Dim rst_AU  
+	Dim rst_AU_Sales
+	Dim Todays_Date
+
+	'Todays_Date = "'" & Date() & "'"  'Not all databases have sales for today
+	'Todays_Date = "'9/14/1994'" 	'PUBS comes sales data for this date with default
+	Todays_Date = 	DTSGlobalVariables ("gv_Daily_Month").Value  & "/" & DTSGlobalVariables ("gv_Daily_Date").Value  & "/" & DTSGlobalVariables ("gv_Daily_Year").Value 
+
+	'Get list of Agents with Sales
+	str_AU_Sales =	"SELECT " & _
+			"TT.Username, " & _
+			"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.ConfirmationCode LIKE 'AU%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS Total,  " & _
+			"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.CallType = 'Inbound') AND (TT.ConfirmationCode LIKE 'AU%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS IB_Value,  " & _
+			"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.CallType = 'Outbound') AND (TT.ConfirmationCode LIKE 'AU%') AND (TT.ID <> '-1') THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS OB_Value " & _
+			"FROM TransactionTable TT " & _
+			"INNER JOIN LoginTable LT " & _
+			"ON TT.Username=LT.RealName " & _
+			"WHERE LT.LastLogin >= dbo.Get_TheDate( GetDate() )   " & _
+			"AND TT.DateTime >= dbo.Get_TheDate ( GetDate() ) " & _
+			"AND LT.Manager IS NOT NULL " & _
+			"AND LT.SecurityLevel LIKE '%Austin%Sales%' " & _
+			"GROUP BY TT.Username  " & _
+			"ORDER BY (ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.ConfirmationCode LIKE 'AU%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 )) DESC  " 
+	
+	'Get the ADO Recordset
+	Set rst_AU = ExecuteSQL(str_AU_Sales)
+
+	'If the Recordset is not empty then proceed
+	If Not (rst_AU.Eof and rst_AU.Bof ) Then 			
+		str_Data_File.WriteLine("#################")
+		str_Data_File.WriteLine("#AU SALES AGENTS#")
+		str_Data_File.WriteLine("#################")
+		While Not rst_AU.Eof 'AND int_AU_Count > 0 'Loop through all Sales Agents with sales
+			
+			str_AU_Sales =	"SELECT " & _
+					"TT.Username, " & _
+					"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.ConfirmationCode LIKE 'AU%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS Total,  " & _
+					"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.CallType = 'Inbound') AND (TT.ConfirmationCode LIKE 'AU%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS IB_Value,  " & _
+					"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.CallType = 'Outbound') AND (TT.ConfirmationCode LIKE 'AU%') AND (TT.ID <> '-1') THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS OB_Value " & _
+					"FROM TransactionTable TT " & _
+					"INNER JOIN LoginTable LT " & _
+					"ON TT.Username=LT.RealName " & _
+					"WHERE LT.LastLogin >= dbo.Get_TheDate( GetDate() )   " & _
+					"AND TT.DateTime >= dbo.Get_TheDate ( GetDate() ) " & _
+					"AND LT.Manager IS NOT NULL " & _
+					"AND LT.SecurityLevel LIKE '%Austin%Sales%' " & _
+					"GROUP BY TT.Username  " & _
+					"ORDER BY (ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.ConfirmationCode LIKE 'AU%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 )) DESC  " 
+
+			'ADO Recordset with Authors and Sales for Todays Date with Store Name, Order Number, Quantity, Payment Terms and Title
+			Set rst_AU_Sales = ExecuteSQL(str_AU_Sales )
+
+				str_Data_File.WriteLine( rst_AU("username") )
+				str_Data_File.WriteLine( "IB    " & vbtab & FormatCurrency( rst_AU("IB_Value"), Groupdigits) )
+				str_Data_File.WriteLine( "OB    " & vbtab & FormatCurrency( rst_AU("OB_Value"), Groupdigits) )
+				str_Data_File.WriteLine( "Total " & vbtab & FormatCurrency( rst_AU("Total"), Groupdigits) )
+				str_Data_File.WriteLine
+
+			'Now construct the body of the message with Authors name and address
+			'strTable = rstAuthors("au_fname") & " " & rstAuthors("au_lname") & "<br>" & rstAuthors("Address") & _
+			'	"<br>" & rstAuthors("city") & ", " & rstAuthors("state") & " " & rstAuthors("Zip") 
+			'Add the HTML table to the message body.  Format the ADO Recordset into HTML table.
+			'strTable = strTable & FormatRecordset(rstSales) 
+			'Now send the email with HTML message to the Author
+			'Call send_email("Book Sales Report For: " & Todays_Date, rstAuthors("au_email"), strTable)
+
+			'Move on to to the next author
+			rst_AU.MoveNext		
+
+	    Wend
+	 End If 
+
+	'Clean up variables 
+             Set rst_AU = Nothing
+	Set rst_AU_Sales = Nothing
+
+'*********************************************************************************************************************************************	
+'		BEAUMONT
+'*********************************************************************************************************************************************	
+	Dim int_BM_Count
+	Dim str_BM_Sales	
+	Dim str_BM_Count	
+	Dim rst_BM  
+	Dim rst_BM_Sales
+
+	'Get list of Agents with Sales
+	str_BM_Sales =	"SELECT " & _
+			"TT.Username, " & _
+			"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.ConfirmationCode LIKE 'BM%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS Total,  " & _
+			"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.CallType = 'Inbound') AND (TT.ConfirmationCode LIKE 'BM%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS IB_Value,  " & _
+			"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.CallType = 'Outbound') AND (TT.ConfirmationCode LIKE 'BM%') AND (TT.ID <> '-1') THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS OB_Value " & _
+			"FROM TransactionTable TT " & _
+			"INNER JOIN LoginTable LT " & _
+			"ON TT.Username=LT.RealName " & _
+			"WHERE LT.LastLogin >= dbo.Get_TheDate( GetDate() )   " & _
+			"AND TT.DateTime >= dbo.Get_TheDate ( GetDate() ) " & _
+			"AND LT.Manager IS NOT NULL " & _
+			"AND LT.SecurityLevel LIKE '%Beaumont%Sales%' " & _
+			"GROUP BY TT.Username  " & _
+			"ORDER BY (ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.ConfirmationCode LIKE 'BM%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 )) DESC  " 
+	
+	'Get the ADO Recordset
+	Set rst_BM = ExecuteSQL(str_BM_Sales)
+
+	'If the Recordset is not empty then proceed
+	If Not (rst_BM.Eof and rst_BM.Bof ) Then 			
+		str_Data_File.WriteLine("#################")
+		str_Data_File.WriteLine("#BM SALES AGENTS#")
+		str_Data_File.WriteLine("#################")
+		While Not rst_BM.Eof 'AND int_BM_Count > 0 'Loop through all Sales Agents with sales
+			
+			str_BM_Sales =	"SELECT " & _
+					"TT.Username, " & _
+					"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.ConfirmationCode LIKE 'BM%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS Total,  " & _
+					"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.CallType = 'Inbound') AND (TT.ConfirmationCode LIKE 'BM%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS IB_Value,  " & _
+					"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.CallType = 'Outbound') AND (TT.ConfirmationCode LIKE 'BM%') AND (TT.ID <> '-1') THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS OB_Value " & _
+					"FROM TransactionTable TT " & _
+					"INNER JOIN LoginTable LT " & _
+					"ON TT.Username=LT.RealName " & _
+					"WHERE LT.LastLogin >= dbo.Get_TheDate( GetDate() )   " & _
+					"AND TT.DateTime >= dbo.Get_TheDate ( GetDate() ) " & _
+					"AND LT.Manager IS NOT NULL " & _
+					"AND LT.SecurityLevel LIKE 'Beaumont%' " & _
+					"GROUP BY TT.Username  " & _
+					"ORDER BY (ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.ConfirmationCode LIKE 'BM%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 )) DESC  " 
+		
+			'ADO Recordset with Authors and Sales for Todays Date with Store Name, Order Number, Quantity, Payment Terms and Title
+			Set rst_BM_Sales = ExecuteSQL(str_BM_Sales )
+
+				str_Data_File.WriteLine( rst_BM("username") )
+				str_Data_File.WriteLine( "IB    " & vbtab & FormatCurrency( rst_BM("IB_Value"), Groupdigits) )
+				str_Data_File.WriteLine( "OB    " & vbtab & FormatCurrency( rst_BM("OB_Value"), Groupdigits) )
+				str_Data_File.WriteLine( "Total " & vbtab & FormatCurrency( rst_BM("Total"), Groupdigits) )
+				str_Data_File.WriteLine
+
+			'Move on to to the next record
+			rst_BM.MoveNext		
+
+	    Wend
+	 End If 
+
+             Set rst_BM = Nothing
+	Set rst_BM_Sales = Nothing
+
+
+'*********************************************************************************************************************************************	
+'		C3
+'*********************************************************************************************************************************************	
+	Dim int_C3_Count
+	Dim str_C3_Sales	
+	Dim str_C3_Count	
+	Dim rst_C3  
+	Dim rst_C3_Sales
+
+	'Get list of Agents with Sales
+	str_C3_Sales =	"SELECT " & _
+			"TT.Username, " & _
+			"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.ConfirmationCode LIKE 'C3%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS Total,  " & _
+			"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.CallType = 'Inbound') AND (TT.ConfirmationCode LIKE 'C3%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS IB_Value,  " & _
+			"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.CallType = 'Outbound') AND (TT.ConfirmationCode LIKE 'C3%') AND (TT.ID <> '-1') THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS OB_Value " & _
+			"FROM TransactionTable TT " & _
+			"INNER JOIN LoginTable LT " & _
+			"ON TT.Username=LT.RealName " & _
+			"WHERE LT.LastLogin >= dbo.Get_TheDate( GetDate() )   " & _
+			"AND TT.DateTime >= dbo.Get_TheDate ( GetDate() ) " & _
+			"AND LT.Manager IS NOT NULL " & _
+			"AND LT.SecurityLevel LIKE '%C3%Sales%' " & _
+			"GROUP BY TT.Username  " & _
+			"ORDER BY (ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.ConfirmationCode LIKE 'C3%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 )) DESC  " 
+	
+	'Get the ADO Recordset
+	Set rst_C3 = ExecuteSQL(str_C3_Sales)
+
+	'If the Recordset is not empty then proceed
+	If Not (rst_C3.Eof and rst_C3.Bof ) Then 			
+		str_Data_File.WriteLine("#################")
+		str_Data_File.WriteLine("#C3 SALES AGENTS#")
+		str_Data_File.WriteLine("#################")
+		While Not rst_C3.Eof 'AND int_C3_Count > 0 'Loop through all Sales Agents with sales
+			
+			str_C3_Sales =	"SELECT " & _
+					"TT.Username, " & _
+					"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.ConfirmationCode LIKE 'C3%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS Total,  " & _
+					"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.CallType = 'Inbound') AND (TT.ConfirmationCode LIKE 'C3%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS IB_Value,  " & _
+					"ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.CallType = 'Outbound') AND (TT.ConfirmationCode LIKE 'C3%') AND (TT.ID <> '-1') THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 ) AS OB_Value " & _
+					"FROM TransactionTable TT " & _
+					"INNER JOIN LoginTable LT " & _
+					"ON TT.Username=LT.RealName " & _
+					"WHERE LT.LastLogin >= dbo.Get_TheDate( GetDate() )   " & _
+					"AND TT.DateTime >= dbo.Get_TheDate ( GetDate() ) " & _
+					"AND LT.Manager IS NOT NULL " & _
+					"AND LT.SecurityLevel LIKE '%C3%Sales%' " & _
+					"GROUP BY TT.Username  " & _
+					"ORDER BY (ISNULL ( SUM (CASE WHEN (TT.Action = 'Acquired') AND (TT.Released = 'False') AND (TT.ConfirmationCode LIKE 'C3%') AND (TT.ID <> '-1')  THEN (TT.Retail * TT.Quantity) ELSE 0 END), 0 )) DESC  " 
+		
+			'ADO Recordset with Authors and Sales for Todays Date with Store Name, Order Number, Quantity, Payment Terms and Title
+			Set rst_C3_Sales = ExecuteSQL(str_C3_Sales )
+
+				str_Data_File.WriteLine( rst_C3("username") )
+				str_Data_File.WriteLine( "IB    " & vbtab & FormatCurrency( rst_C3("IB_Value"), Groupdigits) )
+				str_Data_File.WriteLine( "OB    " & vbtab & FormatCurrency( rst_C3("OB_Value"), Groupdigits) )
+				str_Data_File.WriteLine( "Total " & vbtab & FormatCurrency( rst_C3("Total"), Groupdigits) )
+				str_Data_File.WriteLine
+
+			'Move on to to the next record
+			rst_C3.MoveNext		
+
+	    Wend
+	 End If 
+
+
+	 'Clean up variables 
+             Set rst_C3 = Nothing
+	Set rst_C3_Sales = Nothing
+
+'*********************************************************************************************************************************************	
+'		Inventory Sales
+'*********************************************************************************************************************************************	
+	Dim int_IS_Count
+	Dim str_IS_Sales	
+	Dim str_IS_Count	
+	Dim rst_IS  
+	Dim rst_IS_Sales
+
+	'Get list of Agents with Sales
+	str_IS_Sales =	"SELECT " & _
+			"Object AS Stock_Desc, " & _
+			"SUM(Quantity) AS Quantity, " & _
+			"Retail, " & _
+			"SUM(Quantity * Retail) AS Total " & _
+			"FROM TransactionTable " & _
+			"WHERE (DateTime > CONVERT(nvarchar, DATEADD(dd, -0, GETDATE()), 101)) " & _
+			"AND (DateTime < CONVERT(nvarchar, DATEADD(dd, 1, GETDATE()), 101)) " & _
+			"AND (Action = 'Acquired') " & _
+			"AND (Released = 'False') " & _
+			"AND (ID <> '-1') " & _
+			"GROUP BY ID, Object, Retail " & _
+			"ORDER BY SUM(Quantity * Retail) DESC " 
+
+	'Get the ADO Recordset
+	Set rst_IS = ExecuteSQL(str_IS_Sales)
+
+	'If the Recordset is not empty then proceed
+	If Not (rst_IS.Eof and rst_IS.Bof ) Then 			
+		str_Data_File.WriteLine("#################")
+		str_Data_File.WriteLine("#INVENTORY SALES#")
+		str_Data_File.WriteLine("#################")
+		While Not rst_IS.Eof 'AND int_IS_Count > 0 'Loop through all Sales Agents with sales
+			
+			str_IS_Sales =	"SELECT " & _
+					"Object AS Stock_Desc, " & _
+					"SUM(Quantity) AS Quantity, " & _
+					"Retail, " & _
+					"SUM(Quantity * Retail) AS Total " & _
+					"FROM TransactionTable " & _
+					"WHERE (DateTime > CONVERT(nvarchar, DATEADD(dd, -0, GETDATE()), 101)) " & _
+					"AND (DateTime < CONVERT(nvarchar, DATEADD(dd, 1, GETDATE()), 101)) " & _
+					"AND (Action = 'Acquired') " & _
+					"AND (Released = 'False') " & _
+					"AND (ID <> '-1') " & _
+					"GROUP BY ID, Object, Retail " & _
+					"ORDER BY SUM(Quantity * Retail) DESC " 
+
+			'ADO Recordset with Authors and Sales for Todays Date with Store Name, Order Number, Quantity, Payment Terms and Title
+			Set rst_IS_Sales = ExecuteSQL(str_IS_Sales )
+
+				str_Data_File.WriteLine( rst_IS("Stock_Desc") )
+				str_Data_File.WriteLine("QTY   " & vbtab & rst_IS("Quantity") )
+				str_Data_File.WriteLine( "RTL   " & vbtab & FormatCurrency( rst_IS("Retail"), Groupdigits) )
+				str_Data_File.WriteLine( "Total " & vbtab & FormatCurrency( rst_IS("Total"), Groupdigits) )
+				str_Data_File.WriteLine
+
+			'Move on to to the next record
+			rst_IS.MoveNext		
+
+	    Wend
+	 End If 
+
+
+	 'Clean up variables 
+             Set rst_IS = Nothing
+	Set rst_IS_Sales = Nothing
+
+
+	str_Data_File.Close
+
+End Sub
+
+
+Function ExecuteSQL(mySQLCmdText)
+
+	'ADO Connection String to the Inventory
+	Const DB_CONNECT_STRING = "Provider=SQLOLEDB.1;Data Source=USRC_Fileserver; Initial Catalog=Inventory;user id = 'SQL_admin';password='AustinDat@'  "
+
+	' instantiate the ADO objects
+	  Dim myConn
+	  Dim myRecordset
+
+	  set myConn = CreateObject("ADODB.Connection")
+	  set myRecordset = CreateObject("ADODB.Recordset" )
+
+	' set the connection properties to point to the Pubs database using the constant
+	  myConn.Open = DB_CONNECT_STRING
+	  myRecordset.Open mySQLCmdText, myConn
+	  
+	  Set ExecuteSQL = myRecordset
+End Function		

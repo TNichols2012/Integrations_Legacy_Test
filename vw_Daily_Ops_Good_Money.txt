@@ -1,0 +1,22 @@
+SELECT     TOP (100) PERCENT 
+dbo.vw_Daily_DBF_TB_Sales.Order_Date, 
+dbo.vw_Daily_DBF_TB_Sales.Site, 
+dbo.vw_Daily_Date_By_Sales_Agent.Sales_Manager, 
+dbo.vw_Daily_DBF_TB_Sales.Name, 
+dbo.vw_Daily_DBF_TB_Sales.Sales_ID, 
+dbo.vw_Daily_DBF_TB_Sales.Ttl_Net_Sales AS Good_Money, 
+dbo.vw_Daily_Sales_Orders_On_Hold.Ttl_Sales_Orders_On_Hold AS On_Hold, 
+dbo.vw_Daily_Sales_Orders_Returned.Return_Value
+FROM         	dbo.vw_Daily_Date_By_Sales_Agent 
+LEFT OUTER JOIN dbo.vw_Daily_Sales_Orders_Returned 
+ON dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date = dbo.vw_Daily_Sales_Orders_Returned.Return_Date 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Name = dbo.vw_Daily_Sales_Orders_Returned.Sales_Agent 
+LEFT OUTER JOIN dbo.vw_Daily_Sales_Orders_On_Hold 
+ON dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date = dbo.vw_Daily_Sales_Orders_On_Hold.Order_Date 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Name = dbo.vw_Daily_Sales_Orders_On_Hold.Name 
+LEFT OUTER JOIN dbo.vw_Daily_DBF_TB_Sales 
+ON dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date = dbo.vw_Daily_DBF_TB_Sales.Order_Date 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Name = dbo.vw_Daily_DBF_TB_Sales.Name
+
+WHERE     (dbo.vw_Daily_DBF_TB_Sales.Order_Date IS NOT NULL)
+ORDER BY dbo.vw_Daily_DBF_TB_Sales.Order_Date DESC

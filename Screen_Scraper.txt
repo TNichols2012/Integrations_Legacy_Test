@@ -1,0 +1,104 @@
+{
+string s, string1, string2; 
+
+FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read);
+StreamReader sr = new StreamReader(file);
+
+do
+	{
+	do
+		{
+		s = sr.ReadLine();
+		if (s == null)
+			{
+			break;
+			} 
+		}
+	while (s.Contains("<div class=\"bizName\">") == false);
+	if (s != null)
+		{
+		s = s.Trim();
+		string1 = s.Split('<')[2];
+		string2 = string1.Split('>')[1];
+		name = string2.Replace("&amp;", "&");
+		do
+			{
+			s = sr.ReadLine();
+			if (s == null)
+			Environment.Exit(103);
+			}
+		while (s.Contains("<div class=\"phoneDigits\">") == false);
+		s = sr.ReadLine();
+		s = s.Trim();
+		string1 = s.Split('<')[2];
+		string2 = string1.Split('>')[1];
+		phonenumber = string2;
+		if (phonenumber == "")
+			{
+			string1 = s.Split('<')[1];
+			string2 = string1.Split('>')[1];
+			phonenumber = string2;
+			}
+
+		do
+			{
+			s = sr.ReadLine();
+			if (s == null)
+			Environment.Exit(103);
+			}
+		while (s.Contains("<div class=\"bizAddr\">") == false);
+		s = s.Trim();
+		string1 = s.Split('<')[4];
+		string2 = string1.Split('>')[1];
+		address = string2;
+		string1 = s.Split('<')[6];
+		string2 = string1.Split('>')[1];
+		citystatezip = string2;
+		city = citystatezip.Split(',')[0];
+		try
+			{
+			string1 = citystatezip.Split(',')[1].Trim();
+			}
+		catch
+			{
+			string1 = "";
+			}
+		if (city == "Astn")
+			{
+			city = "Austin";
+			}
+
+		try
+			{
+			state = string1.Split(' ')[0];
+			}
+		catch
+			{
+			state = "";
+			}
+		try
+			{
+			postalcode = string1.Split(' ')[1];
+			}
+		catch
+			{
+			postalcode = "";
+			}
+		Console.WriteLine("Name = " + name);
+		Console.WriteLine("PhoneNumber = " + phonenumber);
+		Console.WriteLine("Address = " + address);
+		Console.WriteLine("CityStateZip = " + citystatezip);
+		Console.WriteLine("City = " + city);
+		Console.WriteLine("State = " + state);
+		Console.WriteLine("Postal Code = " + postalcode);
+		Console.WriteLine("");
+		--WriteToDatabase();
+		}
+	}
+
+while (sr.ReadLine() != null);
+sr.Close();
+file.Close();
+File.Delete(filename);
+
+}

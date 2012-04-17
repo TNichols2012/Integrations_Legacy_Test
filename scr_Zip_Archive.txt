@@ -1,0 +1,33 @@
+'=======================================================================
+Function Archive_Report()
+'=======================================================================
+Dim obj_FSO
+Dim str_FilePathRoot, str_FilePathNew, str_FilePathNew2
+Dim str_FilePath_AU, str_FilePath_BM, str_FilePath_C3, str_FilePath_Company
+Dim str_FileName, str_FilePathName, str_FilePathWeb
+Dim str_File1a, str_File2a, str_File3a, str_File4a, str_File5a, str_File6a, str_File7a, str_BatFilea, str_FTPfile1a
+Dim str_File1b, str_File2b, str_File3b, str_File4b, str_File5b, str_File6b, str_File7b, str_BatFileb, str_FTPfile1b
+
+	Set obj_FSO=CreateObject("Scripting.FileSystemObject")
+
+'=======================================================================
+'	Global Variables used to define the archive parameters
+
+	str_FilePathRoot		= "\\Usrcfileserver\SQL_Server\Client_USMR\Reports\"
+	str_FilePath_Company		= "\\Usrcfileserver\Reports\Web_Company\Managers\"
+	str_FilePath_AU			= "\\Usrcfileserver\Reports\Web_AU\Managers\"
+	str_FilePath_BM			= "\\Usrcfileserver\Reports\Web_BM\Managers\"
+	str_FilePath_C3			= "\\Usrcfileserver\Reports\Web_C3\Managers\"
+
+	' Report Pre-Processing
+	If obj_FSO.FileExists(str_FilePathRoot & "1001_USRCBR_Daily_Rollover_Template.bat") Then 
+		obj_FSO.DeleteFile(str_FilePathRoot & "1001_USRCBR_Daily_Rollover_Template.bat")
+	End If 
+
+
+		' Zip the archive file
+		Set str_File1a= obj_FSO.OpenTextFile(str_FilePathRoot & "1001_USRCBR_Daily_Rollover_Template.bat", 8, True) 
+		str_File1a.writeline("c:\winzip\wzzip.exe " & _
+			str_FilePath_AU & "USRCBR_" & str_Daily_Year & "Archive_BM_" & str_Daily_Month & str_Daily_Month_Name & ".zip " & _
+			str_FilePath_AU & "USRCBR_" & str_Daily_Year & "Daily_Sales_Rep_Summary_BM_"  & str_Daily_Month & str_Daily_Date & ".xls")
+		str_File1a.close

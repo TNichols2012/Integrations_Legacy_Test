@@ -1,0 +1,20 @@
+str_Path = "http://wwwapps.ups.com/etracking/tracking.cgi?TypeOfInquiryNumber=T&InquiryNumber1=" + Results1.Tables["tbl_UPS_Tracking"].Rows[0]["Tracking_Number"].ToString();
+System.Diagnostics.Process.Start(str_Path);
+
+
+CREATE PROCEDURE [dbo].[usp_CheckLogin] @Login varchar (3), @Password varchar (140), @Answer bit Output
+AS
+
+SET NOCOUNT ON
+DECLARE @count int
+
+SELECT @count=Count(*) 
+FROM dbo.Users 
+WHERE RTRIM(Login)= @Login
+AND RTRIM(Password) = @Password
+
+IF(@count > 0)
+	SET @Answer = 1
+ELSE
+	SET @Answer = 0
+RETURN

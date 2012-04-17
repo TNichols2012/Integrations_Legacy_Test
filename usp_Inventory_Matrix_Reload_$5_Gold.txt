@@ -1,0 +1,243 @@
+--******************
+-- $5 MODERN GOLD --
+--******************
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1986 S.O.L W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1986 S.O.L W', 'MS69', '86SLM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1986 S.O.L W', 'MS70', '86SLM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1986 S.O.L W', 'PR69', '86SLP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1986 S.O.L W', 'PR70', '86SLP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1987 CONSTITUTION W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1987 CONSTITUTION W', 'MS69', '87CSM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1987 CONSTITUTION W', 'MS70', '87CSM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1987 CONSTITUTION W', 'PR69', '87CSP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1987 CONSTITUTION W', 'PR70', '87CSP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1988 OLYMPIC W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1988 OLYMPIC W', 'MS69', '88OLM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1988 OLYMPIC W', 'MS70', '88OLM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1988 OLYMPIC W', 'PR69', '88OLP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1988 OLYMPIC W', 'PR70', '88OLP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1989 CONGRESS W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1989 CONGRESS W', 'MS69', '89CGM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1989 CONGRESS W', 'MS70', '89CGM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1989 CONGRESS W', 'PR69', '89CGP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1989 CONGRESS W', 'PR70', '89CGP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1991 MT. RUSHMORE W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1991 MT. RUSHMORE W', 'MS69', '91MRM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1991 MT. RUSHMORE W', 'MS70', '91MRM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1991 MT. RUSHMORE W', 'PR69', '91MRP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1991 MT. RUSHMORE W', 'PR70', '91MRP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1992 OLYMPIC W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1992 OLYMPIC W', 'MS69', '92OLM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1992 OLYMPIC W', 'MS70', '92OLM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1992 OLYMPIC W', 'PR69', '92OLP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1992 OLYMPIC W', 'PR70', '92OLP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1992 COLUMBUS W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1992 COLUMBUS W', 'MS69', '92CLM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1992 COLUMBUS W', 'MS70', '92CLM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1992 COLUMBUS W', 'PR69', '92CLP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1992 COLUMBUS W', 'PR70', '92CLP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1993 BILL OF RIGHTS W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1993 BILL OF RIGHTS W', 'MS69', '93BRM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1993 BILL OF RIGHTS W', 'MS70', '93BRM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1993 BILL OF RIGHTS W', 'PR69', '93BRP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1993 BILL OF RIGHTS W', 'PR70', '93BRP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1993 WORLD WAR II W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1993 WORLD WAR II W', 'MS69', '93WWM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1993 WORLD WAR II W', 'MS70', '93WWM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1993 WORLD WAR II W', 'PR69', '93WWP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1993 WORLD WAR II W', 'PR70', '93WWP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1994 WORLD CUP W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1994 WORLD CUP W', 'MS69', '94WCM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1994 WORLD CUP W', 'MS70', '94WCM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1994 WORLD CUP W', 'PR69', '94WCP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1994 WORLD CUP W', 'PR70', '94WCP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1995 CIVIL WAR W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1995 CIVIL WAR W', 'MS69', '95CWM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1995 CIVIL WAR W', 'MS70', '95CWM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1995 CIVIL WAR W', 'PR69', '95CWP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1995 CIVIL WAR W', 'PR70', '95CWP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1995 OLYMPIC STADIUM W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1995 OLYMPIC STADIUM W', 'MS69', '95OSM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1995 OLYMPIC STADIUM W', 'MS70', '95OSM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1995 OLYMPIC STADIUM W', 'PR69', '95OSP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1995 OLYMPIC STADIUM W', 'PR70', '95OSP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1995 OLYMPIC TORCH RUNNER W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1995 OLYMPIC TORCH RUNNER W', 'MS69', '95OTM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1995 OLYMPIC TORCH RUNNER W', 'MS70', '95OTM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1995 OLYMPIC TORCH RUNNER W', 'PR69', '95OTP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1995 OLYMPIC TORCH RUNNER W', 'PR70', '95OTP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1996 OLYMPIC CAULDRON W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1996 OLYMPIC CAULDRON W', 'MS69', '96OCM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1996 OLYMPIC CAULDRON W', 'MS70', '96OCM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1996 OLYMPIC CAULDRON W', 'PR69', '96OCP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1996 OLYMPIC CAULDRON W', 'PR70', '96OCP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1996 OLYMPIC FLAG W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1996 OLYMPIC FLAG W', 'MS69', '96OFM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1996 OLYMPIC FLAG W', 'MS70', '96OFM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1996 OLYMPIC FLAG W', 'PR69', '96OFP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1996 OLYMPIC FLAG W', 'PR70', '96OFP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1996 SMITHSONIAN W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1996 SMITHSONIAN W', 'MS69', '96SMM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1996 SMITHSONIAN W', 'MS70', '96SMM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1996 SMITHSONIAN W', 'PR69', '96SMP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1996 SMITHSONIAN W', 'PR70', '96SMP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1997 F.D.R. W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1997 F.D.R. W', 'MS69', '97FDM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1997 F.D.R. W', 'MS70', '97FDM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1997 F.D.R. W', 'PR69', '97FDP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1997 F.D.R. W', 'PR70', '97FDP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1997 JACKIE ROBINSON W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1997 JACKIE ROBINSON W', 'MS69', '97JRM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1997 JACKIE ROBINSON W', 'MS70', '97JRM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1997 JACKIE ROBINSON W', 'PR69', '97JRP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1997 JACKIE ROBINSON W', 'PR70', '97JRP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '1999 WASHINGTON W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1999 WASHINGTON W', 'MS69', '99WAM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1999 WASHINGTON W', 'MS70', '99WAM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1999 WASHINGTON W', 'PR69', '99WAP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '1999 WASHINGTON W', 'PR70', '99WAP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '2001 CAPITAL VISIT CTR W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2001 CAPITAL VISIT CTR W', 'MS69', '01CVM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2001 CAPITAL VISIT CTR W', 'MS70', '01CVM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2001 CAPITAL VISIT CTR W', 'PR69', '01CVP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2001 CAPITAL VISIT CTR W', 'PR70', '01CVP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '2002 S.L.C. OLYMPIC W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2002 S.L.C. OLYMPIC W', 'MS69', '02SAM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2002 S.L.C. OLYMPIC W', 'MS70', '02SAM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2002 S.L.C. OLYMPIC W', 'PR69', '02SAP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2002 S.L.C. OLYMPIC W', 'PR70', '02SAP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '2006-S SAN FRANCISCO OLD MINT'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2006-S SAN FRANCISCO OLD MINT', 'MS69', '06SFM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2006-S SAN FRANCISCO OLD MINT', 'MS70', '06SFM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2006-S SAN FRANCISCO OLD MINT', 'PR69', '06SFP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2006-S SAN FRANCISCO OLD MINT', 'PR70', '06SFP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '2007 JAMESTOWN'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2007 JAMESTOWN', 'MS69', '07JSM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2007 JAMESTOWN', 'MS70', '07JSM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2007 JAMESTOWN', 'PR69', '07JSP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2007 JAMESTOWN', 'PR70', '07JSP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$5 MODERN GOLD', '2008 BALD EAGLE'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2008 BALD EAGLE', 'MS69', '08BEM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2008 BALD EAGLE', 'MS70', '08BEM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2008 BALD EAGLE', 'PR69', '08BEP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$5 MODERN GOLD', '2008 BALD EAGLE', 'PR70', '08BEP0'
+

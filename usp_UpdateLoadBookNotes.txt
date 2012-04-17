@@ -1,0 +1,12 @@
+ALTER PROCEDURE [dbo].[usp_UpdateLoadBookNotes]
+@custnum varchar(20),
+@notes text
+ AS
+
+if (exists(select custnum from dbo.LoadBookNotes where custnum = @custnum))
+	update dbo.LoadBookNotes
+	set notes = @notes
+	where custnum = @custnum;
+else
+	insert into dbo.LoadBookNotes (custnum, notes)
+	values (@custnum, @notes);

@@ -1,0 +1,69 @@
+Rep ID
+First name
+Last Name
+Address Line 1
+Address Line 2 
+City
+State
+Zip
+Phone #
+Alt Phone #
+Priority
+Last Contact Date
+Gross Sales
+Last Ship Date
+Last Disposition
+Cust ID
+Transfer Date
+Entry Date
+Original Ad
+Last Ad
+Email
+Coin Interest/Request
+Salutation
+Honorific
+1st Type
+2nd Type
+3rd Type
+
+
+
+
+
+
+Rep ID
+Order
+Description
+Status
+Unit Price
+Quantity
+Ext Price
+Order Total
+Ship Date
+Stock Item
+Order Date
+Ad Code
+Entry Date
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

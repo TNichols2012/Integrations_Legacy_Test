@@ -1,0 +1,61 @@
+Function Main()
+
+Dim obj_FSO
+Dim str_FilePathRoot,  str_FilePathNew
+Dim str_FileName, str_FilePathName, str_FilePathArchive
+Dim str_File1, str_File2, str_File3, str_File4, str_File5,str_File6,str_File7, str_BatFile, str_FTPfile1
+
+	Set obj_FSO=CreateObject("Scripting.FileSystemObject")
+
+
+'**************************************************************************************
+'	Global Variables used to define the archive parameters
+
+	'str_FilePathRoot= DTSGlobalVariables("gv_FilePathRoot").Value
+	'str_FilePathNew= DTSGlobalVariables("gv_FilePathNew").Value
+
+	'  Report Post-Processing
+
+	str_FileName= "USRCBR_Monthly_Product_Mix_Report.xls"
+	str_FilePathRoot="\\Usrc_fileserver\SQL_Server\Client_USMR\Work\"
+	str_FilePathNew="\\Usrc_fileserver\Reports\Web_Company\Managers\"
+
+	' Check to see if primary file exists before proceeding  to archive report
+	If obj_FSO.FileExists(str_FilePathRoot & str_FileName) Then
+		Set str_File1 = obj_FSO.GetFile(str_FilePathRoot & str_FileName)
+				
+		' Copies file to subfolder for zipping and network directory for archiving
+		str_File1.Copy(str_FilePathNew & DTSGlobalVariables("gv_Client_Name").Value & "_" & DTSGlobalVariables("gv_Monthly_Year").Value & _
+			DTSGlobalVariables("gv_Client_Interval").Value & "_Product_Mix_"  & _
+			DTSGlobalVariables("gv_Monthly_Suffix").Value & ".xls")
+
+		' Create the Subject for File 1 email
+		DTSGlobalVariables("gv_Email_Subject1").Value = _
+			DTSGlobalVariables("gv_Client_Name").Value & " " & DTSGlobalVariables("gv_Client_Interval").Value & " " & _
+			"Product Mix Report"  & " for the Month Ending "  & _
+			DTSGlobalVariables("gv_Monthly_Name").Value  & " " & DTSGlobalVariables("gv_Monthly_Year").Value 
+
+		' Generate the UNC file location for ZIP Process
+		DTSGlobalVariables("gv_UNC_File_Name1").Value = _
+			str_FilePathNew & DTSGlobalVariables("gv_Client_Name").Value & "_" & DTSGlobalVariables("gv_Monthly_Year").Value & _
+			DTSGlobalVariables("gv_Client_Interval").Value & "_Product_Mix_" & _
+			DTSGlobalVariables("gv_Monthly_Suffix").Value & ".xls"
+		
+		' Set global variables for gv_File_Name1 and gv_Zip_Parameters
+		DTSGlobalVariables("gv_ZIP_File_Name1").Value = _
+			str_FilePathNew & DTSGlobalVariables("gv_Client_Name").Value & "_" & DTSGlobalVariables("gv_Monthly_Year").Value & _
+			DTSGlobalVariables("gv_Client_Interval").Value & "_Product_Mix_" & _
+			DTSGlobalVariables("gv_Monthly_Suffix").Value & ".zip"
+
+		DTSGlobalVariables("gv_ZIP_Parameters1").Value = chr(34) & "C:\Program Files\Winzip\wzzip.exe"  & chr(34)  & " " _
+			& DTSGlobalVariables("gv_ZIP_File_Name1").Value  & " " _ 
+			& DTSGlobalVariables("gv_UNC_File_Name1").Value 
+
+	End if
+
+
+
+	Set obj_FSO=Nothing
+
+	Main = DTSTaskExecResult_Success
+End Function

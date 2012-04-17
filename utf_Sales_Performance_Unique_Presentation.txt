@@ -1,0 +1,643 @@
+USE [Data_Warehouse]
+GO
+/****** Object:  UserDefinedFunction [dbo].[utf_Sales_Performance_Unique_Presentations]    Script Date: 02/13/2012 14:14:49 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER FUNCTION [dbo].[utf_Sales_Performance_Unique_Presentations] (@str_Call_Type VARCHAR(25), @dt_Start_Time DATETIME, @dt_Stop_Time DATETIME) 
+RETURNS @rtn_Table TABLE
+(
+Sales_Rep varchar(50), 
+Sales_ID varchar(15), 
+Unique_Presentations NUMERIC(8,0)
+)
+AS 
+BEGIN
+
+--**********  REQUIRED VARIABLES  **********
+--DECLARE @str_Call_Type VARCHAR(25) = 'TTL_Calls'
+--DECLARE @str_Call_Type VARCHAR(25) = 'IB_Calls'
+--DECLARE @str_Call_Type VARCHAR(25) = 'OB_LB_Dials'
+--DECLARE @str_Call_Type VARCHAR(25) = 'OB_Other_LB_Dials'
+--DECLARE @str_Call_Type VARCHAR(25) = 'OB_Bucket_Dials'
+--DECLARE @str_Call_Type VARCHAR(25) = 'CC_Calls'
+--DECLARE @str_Call_Type VARCHAR(25) = ''
+--DECLARE @dt_Start_Time DATETIME = dbo.Get_TheDate(GetDate()-10)
+--DECLARE @dt_Stop_Time DATETIME = dbo.Get_TheDate(GetDate()+1)
+
+DECLARE @str_Sales_ID VARCHAR(15) = '%'
+DECLARE @str_Sales_Manager VARCHAR(50) = '%'
+DECLARE @str_Super_Team VARCHAR(50) = '%'
+DECLARE @str_Site VARCHAR(15) = '%'
+
+DECLARE @tbl_Unique_Presentations TABLE (
+Sales_Rep VARCHAR(50),
+Sales_ID VARCHAR(15),
+Unique_Presentations NUMERIC(8,0),
+Contact_Number VARCHAR(50),
+Cust_ID VARCHAR(50),
+Contact_Phone_Slot VARCHAR(50)
+)
+
+--***********  BASE CRITERIA  **********
+--WHERE (tSCR.CallType IN (3, 4))
+--AND (tSCR.ContactNumber <> '')
+--AND (tSCR.Call_Start_Time >= @dt_Start_Time)
+--AND (tSCR.Call_Start_Time < @dt_Stop_Time)
+--AND (tST.[Login] LIKE @str_Sales_ID)
+--AND (tST.Sales_Manager LIKE @str_Sales_Manager)
+--AND (tST.Super_Team LIKE @str_Super_Team)
+--AND (tST.[Site] LIKE @str_Site)
+--AND (tSCR.Call_Talk_Time >= 120) -- Presentations
+--AND (tSCR.Voice_Mail_Box IS NULL) -- Exclude Voicemails
+
+IF (@str_Call_Type = 'TTL_Calls') -- Counts once, for IB_Calls which later become CC_Calls
+BEGIN 
+	INSERT INTO @tbl_Unique_Presentations (Sales_Rep, Sales_ID, Unique_Presentations, Contact_Number, Cust_ID, Contact_Phone_Slot)
+	SELECT  
+	tST.[Name] AS Sales_Rep,
+	tST.[Login] AS Sales_ID,
+	COUNT(*) AS Unique_Presentations,
+	tSCR.ContactNumber,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC1.Cust_ID)
+	WHEN tMC2.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC2.Cust_ID) 
+	WHEN tMC3.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC3.Cust_ID) 
+	WHEN tMC4.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC4.Cust_ID) 
+	ELSE 'Unknown' + tSCR.ContactNumber END AS Cust_ID,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN '1'
+	WHEN tMC2.Cust_ID IS NOT NULL THEN '2'
+	WHEN tMC3.Cust_ID IS NOT NULL THEN '3'
+	WHEN tMC4.Cust_ID IS NOT NULL THEN '4'
+	ELSE 'Unknown' + tSCR.ContactNumber END AS ContactNumber
+	FROM dbo.tbl_Sales_Teams tST 
+	LEFT JOIN tbl_ShoreTel_Call_Results tSCR
+	ON tST.[Name] = tSCR.Notes
+	LEFT JOIN dbo.tbl_ShoreTel_Call_Results_Options tSCRO 
+	ON tSCR.PBX_Call_GUID= tSCRO.PBX_Call_GUID
+	LEFT JOIN dbo.tbl_Bucket_List tBL 
+	ON tSCRO.isLoadbook_Call = tBL.Bucket_Name
+	LEFT JOIN tbl_MOM_Cust tMC1
+	ON tSCR.ContactNumber = tMC1.Contact_Number1
+	LEFT JOIN tbl_MOM_Cust tMC2
+	ON tSCR.ContactNumber = tMC2.Contact_Number2
+	LEFT JOIN tbl_MOM_Cust tMC3
+	ON tSCR.ContactNumber = tMC3.Contact_Number3
+	LEFT JOIN tbl_MOM_Cust tMC4
+	ON tSCR.ContactNumber = tMC4.Contact_Number4
+	WHERE (tSCR.CallType IN (3, 4))
+	--AND (tSCR.ContactNumber <> '') -- Blocked Callers will count, as one
+	AND (tSCR.Call_Start_Time >= @dt_Start_Time)
+	AND (tSCR.Call_Start_Time < @dt_Stop_Time)
+	AND (tST.[Login] LIKE @str_Sales_ID)
+	AND (tST.Sales_Manager LIKE @str_Sales_Manager)
+	AND (tST.Super_Team LIKE @str_Super_Team)
+	AND (tST.[Site] LIKE @str_Site)
+	AND (tSCR.Call_Talk_Time >= 120) -- Presentations
+	AND (tSCR.Voice_Mail_Box IS NULL) -- Exclude Voicemails
+	--AND (tSCR.CallType = 3 AND tSCR.PoolFK <> '408') -- IB Calls
+	--AND (tSCR.CallType = 4 AND tSCRO.isLoadbook_Call = 'Yes') -- OB_LB_Dials
+	--AND (tSCR.CallType = 4 AND tSCRO.isLoadbook_Call NOT IN ('Yes', 'No') AND tBL.Bucket_Name IS NOT NULL) -- OB_Bucket_Dials
+	--AND (tSCR.CallType = 4 AND tSCRO.isLoadbook_Call NOT IN ('Yes', 'No') AND tBL.Bucket_Name IS NULL) -- OB_Other_LB_Dials
+	--AND ((tSCR.CallType = 4 AND tSCRO.isLoadbook_Call = 'No') OR (tSCR.CallType = 4 AND tSCRO.isLoadbook_Call IS NULL)) -- OB_Other_Dials
+	--AND (tSCR.CallType = 3 AND tSCR.PoolFK = '408' ) -- CC_Calls
+	GROUP BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber,
+	tMC1.Cust_ID,
+	tMC2.Cust_ID,
+	tMC3.Cust_ID,
+	tMC4.Cust_ID
+	ORDER BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber
+
+	--SELECT * FROM @tbl_Unique_Presentations ORDER BY Sales_Rep, Cust_ID
+
+	INSERT INTO @rtn_Table (Sales_Rep, Sales_ID, Unique_Presentations)
+	SELECT
+	Sales_Rep,
+	Sales_ID,
+	Count(*) AS Unique_Presentations 
+	FROM (SELECT 
+	Sales_Rep,
+	Sales_ID,
+	Cust_ID
+	FROM @tbl_Unique_Presentations
+	GROUP BY 
+	Sales_Rep, 
+	Sales_ID,
+	Cust_ID
+	) AS vw1
+	GROUP BY
+	Sales_Rep, 
+	Sales_ID
+	ORDER BY 
+	Sales_Rep 
+END -- IF (@str_Call_Type = 'TTL_Calls') 
+
+IF (@str_Call_Type = 'IB_Calls') -- (tSCR.CallType = 3 AND tSCR.PoolFK <> '408')
+BEGIN 
+	INSERT INTO @tbl_Unique_Presentations (Sales_Rep, Sales_ID, Unique_Presentations, Contact_Number, Cust_ID, Contact_Phone_Slot)
+	SELECT  
+	tST.[Name] AS Sales_Rep,
+	tST.[Login] AS Sales_ID,
+	COUNT(*) AS Unique_Presentations,
+	tSCR.ContactNumber,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC1.Cust_ID)
+	WHEN tMC2.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC2.Cust_ID) 
+	WHEN tMC3.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC3.Cust_ID) 
+	WHEN tMC4.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC4.Cust_ID) 
+	ELSE 'Unknown' + tSCR.ContactNumber END AS Cust_ID,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN '1'
+	WHEN tMC2.Cust_ID IS NOT NULL THEN '2'
+	WHEN tMC3.Cust_ID IS NOT NULL THEN '3'
+	WHEN tMC4.Cust_ID IS NOT NULL THEN '4'
+	ELSE 'Unknown' + tSCR.ContactNumber END AS ContactNumber
+	FROM dbo.tbl_Sales_Teams tST 
+	LEFT JOIN tbl_ShoreTel_Call_Results tSCR
+	ON tST.[Name] = tSCR.Notes
+	LEFT JOIN dbo.tbl_ShoreTel_Call_Results_Options tSCRO 
+	ON tSCR.PBX_Call_GUID= tSCRO.PBX_Call_GUID
+	LEFT JOIN dbo.tbl_Bucket_List tBL 
+	ON tSCRO.isLoadbook_Call = tBL.Bucket_Name
+	LEFT JOIN tbl_MOM_Cust tMC1
+	ON tSCR.ContactNumber = tMC1.Contact_Number1
+	LEFT JOIN tbl_MOM_Cust tMC2
+	ON tSCR.ContactNumber = tMC2.Contact_Number2
+	LEFT JOIN tbl_MOM_Cust tMC3
+	ON tSCR.ContactNumber = tMC3.Contact_Number3
+	LEFT JOIN tbl_MOM_Cust tMC4
+	ON tSCR.ContactNumber = tMC4.Contact_Number4
+	WHERE (tSCR.CallType IN (3, 4))
+	--AND (tSCR.ContactNumber <> '') -- Blocked Callers will count, as one caller
+	AND (tSCR.Call_Start_Time >= @dt_Start_Time)
+	AND (tSCR.Call_Start_Time < @dt_Stop_Time)
+	AND (tST.[Login] LIKE @str_Sales_ID)
+	AND (tST.Sales_Manager LIKE @str_Sales_Manager)
+	AND (tST.Super_Team LIKE @str_Super_Team)
+	AND (tST.[Site] LIKE @str_Site)
+	AND (tSCR.Call_Talk_Time >= 120) -- Presentations
+	AND (tSCR.Voice_Mail_Box IS NULL) -- Exclude Voicemails
+	AND (tSCR.CallType = 3 AND tSCR.PoolFK <> '408') -- IB Calls
+	GROUP BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber,
+	tMC1.Cust_ID,
+	tMC2.Cust_ID,
+	tMC3.Cust_ID,
+	tMC4.Cust_ID
+	ORDER BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber
+
+	--SELECT * FROM @tbl_Unique_Presentations 
+	--ORDER BY Sales_Rep, Cust_ID
+
+	INSERT INTO @rtn_Table (Sales_Rep, Sales_ID, Unique_Presentations)
+	SELECT
+	Sales_Rep,
+	Sales_ID,
+	Count(*) AS Unique_Presentations 
+	FROM (SELECT 
+	Sales_Rep,
+	Sales_ID,
+	Cust_ID
+	FROM @tbl_Unique_Presentations
+	GROUP BY 
+	Sales_Rep, 
+	Sales_ID,
+	Cust_ID
+	) AS vw1
+	GROUP BY
+	Sales_Rep, 
+	Sales_ID
+	ORDER BY 
+	Sales_Rep 
+
+END -- IF (@str_Call_Type = 'IB_Calls') 
+
+IF (@str_Call_Type = 'OB_LB_Dials') -- (tSCR.CallType = 4 AND tSCRO.isLoadbook_Call = 'Yes')
+BEGIN 
+	INSERT INTO @tbl_Unique_Presentations (Sales_Rep, Sales_ID, Unique_Presentations, Contact_Number, Cust_ID, Contact_Phone_Slot)
+	SELECT  
+	tST.[Name] AS Sales_Rep,
+	tST.[Login] AS Sales_ID,
+	COUNT(*) AS Unique_Presentations,
+	tSCR.ContactNumber,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC1.Cust_ID)
+	WHEN tMC2.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC2.Cust_ID) 
+	WHEN tMC3.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC3.Cust_ID) 
+	WHEN tMC4.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC4.Cust_ID) 
+	ELSE 'Unknown' + tSCR.ContactNumber END AS Cust_ID,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN '1'
+	WHEN tMC2.Cust_ID IS NOT NULL THEN '2'
+	WHEN tMC3.Cust_ID IS NOT NULL THEN '3'
+	WHEN tMC4.Cust_ID IS NOT NULL THEN '4'
+	ELSE 'Unknown' + tSCR.ContactNumber END AS ContactNumber
+	FROM dbo.tbl_Sales_Teams tST 
+	LEFT JOIN tbl_ShoreTel_Call_Results tSCR
+	ON tST.[Name] = tSCR.Notes
+	LEFT JOIN dbo.tbl_ShoreTel_Call_Results_Options tSCRO 
+	ON tSCR.PBX_Call_GUID= tSCRO.PBX_Call_GUID
+	LEFT JOIN dbo.tbl_Bucket_List tBL 
+	ON tSCRO.isLoadbook_Call = tBL.Bucket_Name
+	LEFT JOIN tbl_MOM_Cust tMC1
+	ON tSCR.ContactNumber = tMC1.Contact_Number1
+	LEFT JOIN tbl_MOM_Cust tMC2
+	ON tSCR.ContactNumber = tMC2.Contact_Number2
+	LEFT JOIN tbl_MOM_Cust tMC3
+	ON tSCR.ContactNumber = tMC3.Contact_Number3
+	LEFT JOIN tbl_MOM_Cust tMC4
+	ON tSCR.ContactNumber = tMC4.Contact_Number4
+	WHERE (tSCR.CallType IN (3, 4))
+	AND (tSCR.ContactNumber <> '')
+	AND (tSCR.Call_Start_Time >= @dt_Start_Time)
+	AND (tSCR.Call_Start_Time < @dt_Stop_Time)
+	AND (tST.[Login] LIKE @str_Sales_ID)
+	AND (tST.Sales_Manager LIKE @str_Sales_Manager)
+	AND (tST.Super_Team LIKE @str_Super_Team)
+	AND (tST.[Site] LIKE @str_Site)
+	AND (tSCR.Call_Talk_Time >= 120) -- Presentations
+	AND (tSCR.Voice_Mail_Box IS NULL) -- Exclude Voicemails
+	AND (tSCR.CallType = 4 AND tSCRO.isLoadbook_Call = 'Yes') -- OB_LB_Dials
+	GROUP BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber,
+	tMC1.Cust_ID,
+	tMC2.Cust_ID,
+	tMC3.Cust_ID,
+	tMC4.Cust_ID
+	ORDER BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber
+
+	--SELECT * FROM @tbl_Unique_Presentations ORDER BY Sales_Rep, Cust_ID
+	
+	INSERT INTO @rtn_Table (Sales_Rep, Sales_ID, Unique_Presentations)
+	SELECT
+	Sales_Rep,
+	Sales_ID,
+	Count(*) AS Unique_Presentations 
+	FROM (SELECT 
+	Sales_Rep,
+	Sales_ID,
+	Cust_ID
+	FROM @tbl_Unique_Presentations
+	GROUP BY 
+	Sales_Rep, 
+	Sales_ID,
+	Cust_ID
+	) AS vw1
+	GROUP BY
+	Sales_Rep, 
+	Sales_ID
+	ORDER BY 
+	Sales_Rep 
+END -- IF (@str_Call_Type = 'OB_LB_Dials') 
+
+IF (@str_Call_Type = 'OB_Other_LB_Dials') -- (tSCR.CallType = 4 AND tSCRO.isLoadbook_Call NOT IN ('Yes', 'No') AND tBL.Bucket_Name IS NULL) 
+BEGIN 
+	INSERT INTO @tbl_Unique_Presentations (Sales_Rep, Sales_ID, Unique_Presentations, Contact_Number, Cust_ID, Contact_Phone_Slot)
+	SELECT  
+	tST.[Name] AS Sales_Rep,
+	tST.[Login] AS Sales_ID,
+	COUNT(*) AS Unique_Presentations,
+	tSCR.ContactNumber,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC1.Cust_ID)
+	WHEN tMC2.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC2.Cust_ID) 
+	WHEN tMC3.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC3.Cust_ID) 
+	WHEN tMC4.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC4.Cust_ID) 
+	ELSE 'Unknown' + tSCR.ContactNumber END AS Cust_ID,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN '1'
+	WHEN tMC2.Cust_ID IS NOT NULL THEN '2'
+	WHEN tMC3.Cust_ID IS NOT NULL THEN '3'
+	WHEN tMC4.Cust_ID IS NOT NULL THEN '4'
+	ELSE 'Unknown' + tSCR.ContactNumber END AS ContactNumber
+	FROM dbo.tbl_Sales_Teams tST 
+	LEFT JOIN tbl_ShoreTel_Call_Results tSCR
+	ON tST.[Name] = tSCR.Notes
+	LEFT JOIN dbo.tbl_ShoreTel_Call_Results_Options tSCRO 
+	ON tSCR.PBX_Call_GUID= tSCRO.PBX_Call_GUID
+	LEFT JOIN dbo.tbl_Bucket_List tBL 
+	ON tSCRO.isLoadbook_Call = tBL.Bucket_Name
+	LEFT JOIN tbl_MOM_Cust tMC1
+	ON tSCR.ContactNumber = tMC1.Contact_Number1
+	LEFT JOIN tbl_MOM_Cust tMC2
+	ON tSCR.ContactNumber = tMC2.Contact_Number2
+	LEFT JOIN tbl_MOM_Cust tMC3
+	ON tSCR.ContactNumber = tMC3.Contact_Number3
+	LEFT JOIN tbl_MOM_Cust tMC4
+	ON tSCR.ContactNumber = tMC4.Contact_Number4
+	WHERE (tSCR.CallType IN (3, 4))
+	AND (tSCR.ContactNumber <> '')
+	AND (tSCR.Call_Start_Time >= @dt_Start_Time)
+	AND (tSCR.Call_Start_Time < @dt_Stop_Time)
+	AND (tST.[Login] LIKE @str_Sales_ID)
+	AND (tST.Sales_Manager LIKE @str_Sales_Manager)
+	AND (tST.Super_Team LIKE @str_Super_Team)
+	AND (tST.[Site] LIKE @str_Site)
+	AND (tSCR.Call_Talk_Time >= 120) -- Presentations
+	AND (tSCR.Voice_Mail_Box IS NULL) -- Exclude Voicemails
+	AND (tSCR.CallType = 4 AND tSCRO.isLoadbook_Call NOT IN ('Yes', 'No') AND tBL.Bucket_Name IS NULL) -- OB_Other_LB_Dials
+	GROUP BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber,
+	tMC1.Cust_ID,
+	tMC2.Cust_ID,
+	tMC3.Cust_ID,
+	tMC4.Cust_ID
+	ORDER BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber
+
+	--SELECT * FROM @tbl_Unique_Presentations ORDER BY Sales_Rep, Cust_ID
+
+	INSERT INTO @rtn_Table (Sales_Rep, Sales_ID, Unique_Presentations)
+	SELECT
+	Sales_Rep,
+	Sales_ID,
+	Count(*) AS Unique_Presentations 
+	FROM (SELECT 
+	Sales_Rep,
+	Sales_ID,
+	Cust_ID
+	FROM @tbl_Unique_Presentations
+	GROUP BY 
+	Sales_Rep, 
+	Sales_ID,
+	Cust_ID
+	) AS vw1
+	GROUP BY
+	Sales_Rep, 
+	Sales_ID
+	ORDER BY 
+	Sales_Rep 
+END -- IF (@str_Call_Type = 'OB_Other_LB_Dials') 
+
+IF (@str_Call_Type = 'OB_Bucket_Dials') -- (tSCR.CallType = 4 AND tSCRO.isLoadbook_Call NOT IN ('Yes', 'No') AND tBL.Bucket_Name IS NOT NULL)
+BEGIN 
+	INSERT INTO @tbl_Unique_Presentations (Sales_Rep, Sales_ID, Unique_Presentations, Contact_Number, Cust_ID, Contact_Phone_Slot)
+	SELECT  
+	tST.[Name] AS Sales_Rep,
+	tST.[Login] AS Sales_ID,
+	COUNT(*) AS Unique_Presentations,
+	tSCR.ContactNumber,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC1.Cust_ID)
+	WHEN tMC2.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC2.Cust_ID) 
+	WHEN tMC3.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC3.Cust_ID) 
+	WHEN tMC4.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC4.Cust_ID) 
+	ELSE 'Unknown' + tSCR.ContactNumber END AS Cust_ID,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN '1'
+	WHEN tMC2.Cust_ID IS NOT NULL THEN '2'
+	WHEN tMC3.Cust_ID IS NOT NULL THEN '3'
+	WHEN tMC4.Cust_ID IS NOT NULL THEN '4'
+	ELSE 'Unknown' + tSCR.ContactNumber END AS ContactNumber
+	FROM dbo.tbl_Sales_Teams tST 
+	LEFT JOIN tbl_ShoreTel_Call_Results tSCR
+	ON tST.[Name] = tSCR.Notes
+	LEFT JOIN dbo.tbl_ShoreTel_Call_Results_Options tSCRO 
+	ON tSCR.PBX_Call_GUID= tSCRO.PBX_Call_GUID
+	LEFT JOIN dbo.tbl_Bucket_List tBL 
+	ON tSCRO.isLoadbook_Call = tBL.Bucket_Name
+	LEFT JOIN tbl_MOM_Cust tMC1
+	ON tSCR.ContactNumber = tMC1.Contact_Number1
+	LEFT JOIN tbl_MOM_Cust tMC2
+	ON tSCR.ContactNumber = tMC2.Contact_Number2
+	LEFT JOIN tbl_MOM_Cust tMC3
+	ON tSCR.ContactNumber = tMC3.Contact_Number3
+	LEFT JOIN tbl_MOM_Cust tMC4
+	ON tSCR.ContactNumber = tMC4.Contact_Number4
+	WHERE (tSCR.CallType IN (3, 4))
+	AND (tSCR.ContactNumber <> '')
+	AND (tSCR.Call_Start_Time >= @dt_Start_Time)
+	AND (tSCR.Call_Start_Time < @dt_Stop_Time)
+	AND (tST.[Login] LIKE @str_Sales_ID)
+	AND (tST.Sales_Manager LIKE @str_Sales_Manager)
+	AND (tST.Super_Team LIKE @str_Super_Team)
+	AND (tST.[Site] LIKE @str_Site)
+	AND (tSCR.Call_Talk_Time >= 120) -- Presentations
+	AND (tSCR.Voice_Mail_Box IS NULL) -- Exclude Voicemails
+	AND (tSCR.CallType = 4 AND tSCRO.isLoadbook_Call NOT IN ('Yes', 'No') AND tBL.Bucket_Name IS NOT NULL) -- OB_Bucket_Dials
+	GROUP BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber,
+	tMC1.Cust_ID,
+	tMC2.Cust_ID,
+	tMC3.Cust_ID,
+	tMC4.Cust_ID
+	ORDER BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber
+
+	--SELECT * FROM @tbl_Unique_Presentations ORDER BY Sales_Rep, Cust_ID
+
+	INSERT INTO @rtn_Table (Sales_Rep, Sales_ID, Unique_Presentations)
+	SELECT
+	Sales_Rep,
+	Sales_ID,
+	Count(*) AS Unique_Presentations 
+	FROM (SELECT 
+	Sales_Rep,
+	Sales_ID,
+	Cust_ID
+	FROM @tbl_Unique_Presentations
+	GROUP BY 
+	Sales_Rep, 
+	Sales_ID,
+	Cust_ID
+	) AS vw1
+	GROUP BY
+	Sales_Rep, 
+	Sales_ID
+	ORDER BY 
+	Sales_Rep 
+END -- IF (@str_Call_Type = 'OB_Bucket_Dials') 
+
+IF (@str_Call_Type = 'OB_Other_Dials') -- (tSCR.CallType = 4 AND tSCRO.isLoadbook_Call = 'No')
+BEGIN 
+	INSERT INTO @tbl_Unique_Presentations (Sales_Rep, Sales_ID, Unique_Presentations, Contact_Number, Cust_ID, Contact_Phone_Slot)
+	SELECT  
+	tST.[Name] AS Sales_Rep,
+	tST.[Login] AS Sales_ID,
+	COUNT(*) AS Unique_Presentations,
+	tSCR.ContactNumber,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC1.Cust_ID)
+	WHEN tMC2.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC2.Cust_ID) 
+	WHEN tMC3.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC3.Cust_ID) 
+	WHEN tMC4.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC4.Cust_ID) 
+	ELSE 'Unknown' + tSCR.ContactNumber END AS Cust_ID,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN '1'
+	WHEN tMC2.Cust_ID IS NOT NULL THEN '2'
+	WHEN tMC3.Cust_ID IS NOT NULL THEN '3'
+	WHEN tMC4.Cust_ID IS NOT NULL THEN '4'
+	ELSE 'Unknown' + tSCR.ContactNumber END AS ContactNumber
+	FROM dbo.tbl_Sales_Teams tST 
+	LEFT JOIN tbl_ShoreTel_Call_Results tSCR
+	ON tST.[Name] = tSCR.Notes
+	LEFT JOIN dbo.tbl_ShoreTel_Call_Results_Options tSCRO 
+	ON tSCR.PBX_Call_GUID= tSCRO.PBX_Call_GUID
+	LEFT JOIN dbo.tbl_Bucket_List tBL 
+	ON tSCRO.isLoadbook_Call = tBL.Bucket_Name
+	LEFT JOIN tbl_MOM_Cust tMC1
+	ON tSCR.ContactNumber = tMC1.Contact_Number1
+	LEFT JOIN tbl_MOM_Cust tMC2
+	ON tSCR.ContactNumber = tMC2.Contact_Number2
+	LEFT JOIN tbl_MOM_Cust tMC3
+	ON tSCR.ContactNumber = tMC3.Contact_Number3
+	LEFT JOIN tbl_MOM_Cust tMC4
+	ON tSCR.ContactNumber = tMC4.Contact_Number4
+	WHERE (tSCR.CallType IN (3, 4))
+	AND (tSCR.ContactNumber <> '')
+	AND (tSCR.Call_Start_Time >= @dt_Start_Time)
+	AND (tSCR.Call_Start_Time < @dt_Stop_Time)
+	AND (tST.[Login] LIKE @str_Sales_ID)
+	AND (tST.Sales_Manager LIKE @str_Sales_Manager)
+	AND (tST.Super_Team LIKE @str_Super_Team)
+	AND (tST.[Site] LIKE @str_Site)
+	AND (tSCR.Call_Talk_Time >= 120) -- Presentations
+	AND (tSCR.Voice_Mail_Box IS NULL) -- Exclude Voicemails
+	AND (tSCR.CallType = 4 AND tSCRO.isLoadbook_Call = 'No') -- OB_Other_Dials
+	GROUP BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber,
+	tMC1.Cust_ID,
+	tMC2.Cust_ID,
+	tMC3.Cust_ID,
+	tMC4.Cust_ID
+	ORDER BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber
+
+	--SELECT * FROM @tbl_Unique_Presentations ORDER BY Sales_Rep, Cust_ID
+
+	INSERT INTO @rtn_Table (Sales_Rep, Sales_ID, Unique_Presentations)
+	SELECT
+	Sales_Rep,
+	Sales_ID,
+	Count(*) AS Unique_Presentations 
+	FROM (SELECT 
+	Sales_Rep,
+	Sales_ID,
+	Cust_ID
+	FROM @tbl_Unique_Presentations
+	GROUP BY 
+	Sales_Rep, 
+	Sales_ID,
+	Cust_ID
+	) AS vw1
+	GROUP BY
+	Sales_Rep, 
+	Sales_ID
+	ORDER BY 
+	Sales_Rep 
+END -- IF (@str_Call_Type = 'OB_Other_Dials') 
+
+IF (@str_Call_Type = 'CC_Calls') -- (tSCR.CallType = 3 AND tSCR.PoolFK = '408' )
+BEGIN 
+	INSERT INTO @tbl_Unique_Presentations (Sales_Rep, Sales_ID, Unique_Presentations, Contact_Number, Cust_ID, Contact_Phone_Slot)
+	SELECT  
+	tST.[Name] AS Sales_Rep,
+	tST.[Login] AS Sales_ID,
+	COUNT(*) AS Unique_Presentations,
+	tSCR.ContactNumber,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC1.Cust_ID)
+	WHEN tMC2.Cust_ID IS NOT NULL THEN CONVERT(varchar(15), tMC2.Cust_ID) 
+	WHEN tMC3.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC3.Cust_ID) 
+	WHEN tMC4.Cust_ID IS NOT NULL THEN CONVERT(varchar(15),tMC4.Cust_ID) 
+	ELSE 'Unknown' + tSCR.ContactNumber END AS Cust_ID,
+	CASE WHEN tMC1.Cust_ID IS NOT NULL THEN '1'
+	WHEN tMC2.Cust_ID IS NOT NULL THEN '2'
+	WHEN tMC3.Cust_ID IS NOT NULL THEN '3'
+	WHEN tMC4.Cust_ID IS NOT NULL THEN '4'
+	ELSE 'Unknown' + tSCR.ContactNumber END AS ContactNumber
+	FROM dbo.tbl_Sales_Teams tST 
+	LEFT JOIN tbl_ShoreTel_Call_Results tSCR
+	ON tST.[Name] = tSCR.Notes
+	LEFT JOIN dbo.tbl_ShoreTel_Call_Results_Options tSCRO 
+	ON tSCR.PBX_Call_GUID= tSCRO.PBX_Call_GUID
+	LEFT JOIN dbo.tbl_Bucket_List tBL 
+	ON tSCRO.isLoadbook_Call = tBL.Bucket_Name
+	LEFT JOIN tbl_MOM_Cust tMC1
+	ON tSCR.ContactNumber = tMC1.Contact_Number1
+	LEFT JOIN tbl_MOM_Cust tMC2
+	ON tSCR.ContactNumber = tMC2.Contact_Number2
+	LEFT JOIN tbl_MOM_Cust tMC3
+	ON tSCR.ContactNumber = tMC3.Contact_Number3
+	LEFT JOIN tbl_MOM_Cust tMC4
+	ON tSCR.ContactNumber = tMC4.Contact_Number4
+	WHERE (tSCR.CallType IN (3, 4))
+	--AND (tSCR.ContactNumber <> '')  --  Blocked callers will count, as one
+	AND (tSCR.Call_Start_Time >= @dt_Start_Time)
+	AND (tSCR.Call_Start_Time < @dt_Stop_Time)
+	AND (tST.[Login] LIKE @str_Sales_ID)
+	AND (tST.Sales_Manager LIKE @str_Sales_Manager)
+	AND (tST.Super_Team LIKE @str_Super_Team)
+	AND (tST.[Site] LIKE @str_Site)
+	AND (tSCR.Call_Talk_Time >= 120) -- Presentations
+	AND (tSCR.Voice_Mail_Box IS NULL) -- Exclude Voicemails
+	AND (tSCR.CallType = 3 AND tSCR.PoolFK = '408' ) -- CC_Calls
+	GROUP BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber,
+	tMC1.Cust_ID,
+	tMC2.Cust_ID,
+	tMC3.Cust_ID,
+	tMC4.Cust_ID
+	ORDER BY 
+	tST.[Name],
+	tST.[Login],
+	tSCR.ContactNumber
+
+	--SELECT * FROM @tbl_Unique_Presentations ORDER BY Sales_Rep, Cust_ID
+
+	INSERT INTO @rtn_Table (Sales_Rep, Sales_ID, Unique_Presentations)
+	SELECT
+	Sales_Rep,
+	Sales_ID,
+	Count(*) AS Unique_Presentations 
+	FROM (SELECT 
+	Sales_Rep,
+	Sales_ID,
+	Cust_ID
+	FROM @tbl_Unique_Presentations
+	GROUP BY 
+	Sales_Rep, 
+	Sales_ID,
+	Cust_ID
+	) AS vw1
+	GROUP BY
+	Sales_Rep, 
+	Sales_ID
+	ORDER BY 
+	Sales_Rep 
+END -- IF (@str_Call_Type = 'CC_Calls') 
+
+IF (@str_Call_Type NOT IN ('TTL_Calls', 'IB_Calls', 'OB_LB_Dials', 'OB_Other_LB_Dials', 'OB_Bucket_Dials', 'OB_Other_Dials', 'CC_Calls'))
+BEGIN
+	INSERT INTO @rtn_Table (Sales_Rep, Sales_ID, Unique_Presentations)
+	SELECT  
+	tST.[Name] AS Sales_Rep,
+	tST.[Login] AS Sales_ID,
+	0 AS Unique_Presentations
+	FROM tbl_Sales_Teams tST
+	WHERE Active = 1
+	AND Sales_Manager <> 'Remmy Castillo'	
+END	-- (@str_Call_Type NOT IN ('TTL_Calls', 'IB_Calls', 'OB_LB_Dials', 'OB_Other_LB_Dials', 'OB_Bucket_Dials', 'CC_Calls'))
+
+RETURN
+
+END

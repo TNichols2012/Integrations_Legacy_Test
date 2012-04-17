@@ -1,0 +1,90 @@
+DECLARE @Sales_ID AS varchar(3)
+DECLARE @Gross_Start AS float
+DECLARE @Gross_Stop AS float
+DECLARE @Days_Ago AS float
+DECLARE @Counter AS float
+DECLARE @Counter_Offset AS float
+DECLARE @How_Many AS float
+DECLARE @Table_Count AS float
+DECLARE @Variable_Count AS Float
+
+SET @Sales_ID = '50'
+SET @Gross_Start = 3000.00
+SET @Gross_Stop = 12000.00
+SET @Days_Ago = 720
+SET @Counter = 0
+SET @Counter_Offset = 0
+SET @How_Many = 300
+
+--IF EXISTS	(
+--		SELECT TABLE_NAME
+--		FROM Information_Schema.Tables
+--		WHERE Table_Name='#tmp_Sample'
+--		)
+--DROP TABLE #tmp_Sample
+
+CREATE TABLE #tmp_Sample (
+	[Counter] [decimal](18, 0) IDENTITY(1,1) NOT NULL,
+	[Answer] [decimal](18, 5)  NULL,
+	[Cust_ID] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[First_Name] [varchar](75) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[Last_Name] [varchar](75) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[Gross] [decimal](18, 0) NULL,
+	[Sales_ID] [varchar](3) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[Order_Date] smalldatetime,
+	[Address_1] [varchar](100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[Address_2] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[City] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[State] [varchar](5) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[Zip_Code] [varchar](15) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+) ON [PRIMARY]
+
+INSERT INTO #tmp_Sample 
+( 
+[Cust_ID],
+[First_Name],
+[Last_Name],
+[Gross],
+[Sales_ID],
+[Order_Date],
+[Address_1],
+[Address_2],
+[City],
+[State],
+[Zip_Code])
+SELECT     TOP (100) PERCENT 
+custnum, 
+firstname, 
+lastname, 
+gross, 
+sales_id, 
+odr_date, 
+addr, 
+addr2, 
+city, 
+state, 
+zipcode
+FROM         dbo.Results_DBF_CUST
+WHERE     (sales_id = @Sales_ID) 
+AND (gross >= @Gross_Start AND gross < @Gross_Stop) 
+AND (odr_date >= dbo.Get_TheDate(GETDATE() - @Days_Ago))
+ORDER BY gross DESC
+
+SET @Table_Count= (SELECT Count(*) FROM #tmp_Sample)
+SET @Variable_Count = (ROUND ((@Table_Count / @How_Many), 0)) - 1
+
+UPDATE #tmp_Sample
+SET Answer = Counter/@Variable_Count
+
+SELECT 
+[Cust_ID],
+[First_Name],
+[Last_Name],
+[Gross],
+[Sales_ID],
+[Order_Date]
+--counter, answer, cust_ID 
+FROM #tmp_Sample
+WHERE Right(Answer, 5) = '00000' OR (Counter = 1 + @Counter_Offset)
+
+DROP TABLE #tmp_Sample

@@ -1,0 +1,8 @@
+
+
+ALTER PROCEDURE [dbo].[usp_InventoryMatrix_GetHeader]	(@HeaderId int)
+AS
+SELECT	[Text]
+FROM	InventoryMatrixHeaders
+WHERE	([Id] = @HeaderId)
+

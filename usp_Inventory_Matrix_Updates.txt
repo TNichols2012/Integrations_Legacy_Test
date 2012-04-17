@@ -1,0 +1,1128 @@
+-- First Lady Updates
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2008 JACKSONS LIBERTY'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 JACKSONS LIBERTY', 'MS69', '08JLM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 JACKSONS LIBERTY', 'PR69', '08JLP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 JACKSONS LIBERTY', 'MS70', '08JLM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 JACKSONS LIBERTY', 'PR70', '08JLP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2008 LOUISA ADAMS'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 LOUISA ADAMS', 'MS69', '08LAM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 LOUISA ADAMS', 'PR69', '08LAP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 LOUISA ADAMS', 'MS70', '08LAM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 LOUISA ADAMS', 'PR70', '08LAP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2008 ELIZABETH MONROE'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 ELIZABETH MONROE', 'MS69', '08EMM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 ELIZABETH MONROE', 'PR69', '08EMP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 ELIZABETH MONROE', 'MS70', '08EMM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 ELIZABETH MONROE', 'PR70', '08EMP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2008 VAN BURENS LIBERTY'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 VAN BURENS LIBERTY', 'MS69', '08VBM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 VAN BURENS LIBERTY', 'PR69', '08VBP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 VAN BURENS LIBERTY', 'MS70', '08VBM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 VAN BURENS LIBERTY', 'PR70', '08VBP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2009 ANNA HARRISON'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 ANNA HARRISON', 'MS69', '09AHM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 ANNA HARRISON', 'PR69', '09AHP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 ANNA HARRISON', 'MS70', '09AHM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 ANNA HARRISON', 'PR70', '09AHP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2009 JULIA TYLER'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 JULIA TYLER', 'MS69', '09JTM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 JULIA TYLER', 'PR69', '09JTP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 JULIA TYLER', 'MS70', '09JTM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 JULIA TYLER', 'PR70', '09JTP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2009 LETITIA TYLER'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 LETITIA TYLER', 'MS69', '09LTM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 LETITIA TYLER', 'PR69', '09LTP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 LETITIA TYLER', 'MS70', '09LTM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 LETITIA TYLER', 'PR70', '09LTP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2009 SARAH POLK'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 SARAH POLK', 'MS69', '09SPM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 SARAH POLK', 'PR69', '09SPP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 SARAH POLK', 'MS70', '09SPM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 SARAH POLK', 'PR70', '09SPP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2009 MARGARET TAYLOR'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 MARGARET TAYLOR', 'MS69', '09MTM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 MARGARET TAYLOR', 'PR69', '09MTP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 MARGARET TAYLOR', 'MS70', '09MTM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 MARGARET TAYLOR', 'PR70', '09MTP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2010 BUCHANANS LIBERTY'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 BUCHANANS LIBERTY', 'MS69', '10BLM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 BUCHANANS LIBERTY', 'PR69', '10BLP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 BUCHANANS LIBERTY', 'MS70', '10BLM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 BUCHANANS LIBERTY', 'PR70', '10BLP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2010 JANE PIERCE'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 JANE PIERCE', 'MS69', '10JPM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 JANE PIERCE', 'PR69', '10JPP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 JANE PIERCE', 'MS70', '10JPM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 JANE PIERCE', 'PR70', '10JPP0'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', '$10 MODERN GOLD', '2007 DOLLEY MADISON'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 DOLLEY MADISON', 'MS69', '07DMM9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 DOLLEY MADISON', 'PR69', '07DMP9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 DOLLEY MADISON', 'MS70', '07DMM0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 DOLLEY MADISON', 'PR70', '07DMP0'
+
+
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', '$10 MODERN GOLD', '2007 ABIGAIL ADAMS'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 ABIGAIL ADAMS', 'MS69', '07AAM9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 ABIGAIL ADAMS', 'PR69', '07AAP9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 ABIGAIL ADAMS', 'MS70', '07AAM0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 ABIGAIL ADAMS', 'PR70', '07AAP0'
+
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', '$10 MODERN GOLD', '2007 MARTHA WASHINGTON'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 MARTHA WASHINGTON', 'MS69', '07MWM9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 MARTHA WASHINGTON', 'PR69', '07MWP9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 MARTHA WASHINGTON', 'MS70', '07MWM0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 MARTHA WASHINGTON', 'PR70', '07MWP0'
+
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', '$10 MODERN GOLD', '2007 JEFFERSONS LIBERTY'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 JEFFERSONS LIBERTY', 'MS69', '07JLM9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 JEFFERSONS LIBERTY', 'PR69', '07JLP9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 JEFFERSONS LIBERTY', 'MS70', '07JLM0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '2007 JEFFERSONS LIBERTY', 'PR70', '07JLP0'
+
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', '$5 MODERN GOLD', '2007 JAMESTOWN'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '2007 JAMESTOWN', 'MS69', '07JSM9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '2007 JAMESTOWN', 'MS70', '07JSM0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '2007 JAMESTOWN', 'PR69', '07JSP9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '2007 JAMESTOWN', 'PR70', '07JSP0'
+
+
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', '$5 MODERN GOLD', '2008 BALD EAGLE'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '2008 BALD EAGLE', 'MS69', '08BEM9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '2008 BALD EAGLE', 'MS70', '08BEM0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '2008 BALD EAGLE', 'PR69', '08BEP9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '2008 BALD EAGLE', 'PR70', '08BEP0'
+
+
+
+-- OLYMPIC UPDATES
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC P', 'PR69', '84OPP9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC P', 'PR70', '84OPP0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC P', 'MS69', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC P', 'MS70', 'N/A'
+
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC D', 'PR69', '84OPD9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC D', 'PR70', '84OPD0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC D', 'MS69', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC D', 'MS70', 'N/A'
+
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC S', 'PR69', '84OSP9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC S', 'PR70', '84OSP0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC S', 'MS69', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC S', 'MS70', 'N/A'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC W', 'MS69', '84OWM9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC W', 'MS70', '84OWM0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC W', 'PR69', '84OWP9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$10 MODERN GOLD', '1984 OLYMPIC W', 'PR70', '84OWP0'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '1988 OLYMPIC W', 'MS69', '88OLM9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '1988 OLYMPIC W', 'MS70', '88OLM0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '1988 OLYMPIC W', 'PR69', '88OLP9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '1988 OLYMPIC W', 'PR70', '88OLP0'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '1999 WASHINGTON W', 'MS69', '99WAM9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '1999 WASHINGTON W', 'MS70', '99WAM0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '1999 WASHINGTON W', 'PR69', '99WAP9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '1999 WASHINGTON W', 'PR70', '99WAP0'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '2006-S SAN FRANCISCO MINT', 'MS69', '06SFM9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '2006-S SAN FRANCISCO MINT', 'MS70', '06SFM0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '2006-S SAN FRANCISCO MINT', 'PR69', '06SFP9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', '$5 MODERN GOLD', '2006-S SAN FRANCISCO MINT', 'PR70', '06SFP0'
+
+-- 2006-Ws
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'MS 69', '2006-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2006-W', '$5', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2006-W', '$10', '06W2M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2006-W', '$25', '06W3M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2006-W', '$50', 'N/A'
+
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'PR 69', '2006-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2006-W', '$5', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2006-W', '$10', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2006-W', '$25', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2006-W', '$50', 'N/A'
+
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'MS 70', '2006-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2006-W', '$5', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2006-W', '$10', '06W2M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2006-W', '$25', '06W3M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2006-W', '$50', 'N/A'
+
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'PR 70', '2006-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2006-W', '$5', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2006-W', '$10', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2006-W', '$25', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2006-W', '$50', 'N/A'
+
+
+-- Buffaloes
+
+--EXEC usp_InventoryMatrix_GetMatrix 56876, 3, 8
+--EXEC usp_InventoryMatrix_GetMatrix 212267, 3, 8
+
+/*
+dbo.InventoryMatrixHeaderSectionMapping
+	Header	Section	Layout
+ID	ID	ID	ID
+12	3	8	2
+
+dbo.InventoryMatrixColumnMappings
+		Header
+	Column	Section
+ID	ID	ID	Position
+42	6	12	1
+43	7	12	2
+44	9	12	3
+45	10	12	4
+
+EXEC usp_InventoryMatrix_AddColumn 'COMMEMS', 'BUFFALOES', 'MS69'
+EXEC usp_InventoryMatrix_AddColumn 'COMMEMS', 'BUFFALOES', 'PR69'
+EXEC usp_InventoryMatrix_AddColumn 'COMMEMS', 'BUFFALOES', 'MS70'
+EXEC usp_InventoryMatrix_AddColumn 'COMMEMS', 'BUFFALOES', 'PR70'
+*/
+
+/*
+dbo.InventoryMatrixRows
+ID	Text
+54	2006 $50 American Buffalo
+55	2006 $50 1st Day Release Buffalo
+56	2006 $50 1st Month Release Buffalo
+57	2006 $50 1st Year Release Buffalo
+
+dbo.InventoryMatrixRowMappings
+		Header
+		Section
+	Row	Mapping
+ID	ID	ID	Postion
+163	54	12	1
+164	55	12	2
+165	56	12	3
+166	57	12	4
+
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', 'BUFFALOES', '2006 $50 AMERICAN BUFFALO'
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', 'BUFFALOES', '2006 $50 1ST DAY RELEASE BUFFALO'
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', 'BUFFALOES', '2006 $50 1ST MONTH RELEASE BUFFALO'
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', 'BUFFALOES', '2006 $50 1ST YEAR RELEASE BUFFALO'
+*/
+
+/*
+dbo.InventoryMatrixMappings
+	Product		Row	Column
+	Classification	Mapping	Mapping
+ID	Code		ID	ID
+649	06D1M9		163	42
+650	06D1P9		163	43
+651	06D1M0		163	44
+652	06D1P0		163	45
+653	06D2M9		164	42
+654	06D2P9		164	43		
+655	06D2M0		164	44
+656	06D2P0		164	45
+657	06D3M9		165	42
+658	06D3P9		165	43
+659	06D3M0		165	44
+660	06D3P0		165	45
+661	06D4M9		166	42
+662	06D4P9		166	43
+663	06D4M0		166	44
+664	06D4P0		166	45
+
+*/
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 AMERICAN BUFFALO', 'MS69', '06D1M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 AMERICAN BUFFALO', 'PR69', '06D1P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 AMERICAN BUFFALO', 'MS70', '06D1M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 AMERICAN BUFFALO', 'PR70', '06D1P0'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST DAY RELEASE BUFFALO', 'MS69', '06D2M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST DAY RELEASE BUFFALO', 'PR69', '06D2P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST DAY RELEASE BUFFALO', 'MS70', '06D2M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST DAY RELEASE BUFFALO', 'PR70', '06D2P0'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST MONTH RELEASE BUFFALO', 'MS69', '06D3M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST MONTH RELEASE BUFFALO', 'PR69', '06D3P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST MONTH RELEASE BUFFALO', 'MS70', '06D3M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST MONTH RELEASE BUFFALO', 'PR70', '06D3P0'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST YEAR RELEASE BUFFALO', 'MS69', '06D4M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST YEAR RELEASE BUFFALO', 'PR69', '06D4P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST YEAR RELEASE BUFFALO', 'MS70', '06D4M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST YEAR RELEASE BUFFALO', 'PR70', '06D4P0'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 AMERICAN BUFFALO', 'MS69', '06E1M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 AMERICAN BUFFALO', 'PR69', '06E1P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 AMERICAN BUFFALO', 'MS70', '06E1M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 AMERICAN BUFFALO', 'PR70', '06E1P0'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST DAY RELEASE BUFFALO', 'MS69', '06E2M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST DAY RELEASE BUFFALO', 'PR69', '06E2P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST DAY RELEASE BUFFALO', 'MS70', '06E2M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST DAY RELEASE BUFFALO', 'PR70', '06E2P0'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST MONTH RELEASE BUFFALO', 'MS69', '06E3M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST MONTH RELEASE BUFFALO', 'PR69', '06E3P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST MONTH RELEASE BUFFALO', 'MS70', '06E3M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST MONTH RELEASE BUFFALO', 'PR70', '06E3P0'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST YEAR RELEASE BUFFALO', 'MS69', '06E4M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST YEAR RELEASE BUFFALO', 'PR69', '06E4P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST YEAR RELEASE BUFFALO', 'MS70', '06E4M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 1ST YEAR RELEASE BUFFALO', 'PR70', '06E4P0'
+
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 AMERICAN BUFFALO', 'MS69', '06A4M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 AMERICAN BUFFALO', 'PR69', '06A4P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 AMERICAN BUFFALO', 'MS70', '06A4M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2006 $50 AMERICAN BUFFALO', 'PR70', '06A4P0'
+
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', 'BUFFALOES', '2007 $50 AMERICAN BUFFALO'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2007 $50 AMERICAN BUFFALO', 'MS69', '07D1M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2007 $50 AMERICAN BUFFALO', 'PR69', '07D1P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2007 $50 AMERICAN BUFFALO', 'MS70', '07D1M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2007 $50 AMERICAN BUFFALO', 'PR70', '07D1P0'
+
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', 'BUFFALOES', '2008 $50 AMERICAN BUFFALO'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2008 $50 AMERICAN BUFFALO', 'MS69', '08D1M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2008 $50 AMERICAN BUFFALO', 'PR69', '08D1P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2008 $50 AMERICAN BUFFALO', 'MS70', '08D1M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2008 $50 AMERICAN BUFFALO', 'PR70', '08D1P0'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2007 $50 AMERICAN BUFFALO', 'MS69', '07E1M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2007 $50 AMERICAN BUFFALO', 'PR69', '07E1P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2007 $50 AMERICAN BUFFALO', 'MS70', '07E1M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2007 $50 AMERICAN BUFFALO', 'PR70', '07E1P0'
+
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2008 $50 AMERICAN BUFFALO', 'MS69', '08E1M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2008 $50 AMERICAN BUFFALO', 'PR69', '08E1P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2008 $50 AMERICAN BUFFALO', 'MS70', '08E1M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2008 $50 AMERICAN BUFFALO', 'PR70', '08E1P0'
+
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', 'BUFFALOES', '2009 $50 AMERICAN BUFFALO'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2009 $50 AMERICAN BUFFALO', 'MS69', '09E1M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2009 $50 AMERICAN BUFFALO', 'PR69', '09E1P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2009 $50 AMERICAN BUFFALO', 'MS70', '09E1M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2009 $50 AMERICAN BUFFALO', 'PR70', '09E1P0'
+
+--Blank Space
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', 'BUFFALOES', ''
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '', 'MS69', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '', 'PR69', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '', 'MS70', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '', 'PR70', 'N/A'
+
+--Ultra High Relief
+EXEC usp_InventoryMatrix_AddRow 'COMMEMS', 'BUFFALOES', '2009 $20 Ultra High Relief'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2009 $20 Ultra High Relief', 'MS69', '09UHM9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2009 $20 Ultra High Relief', 'PR69', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2009 $20 Ultra High Relief', 'MS70', '09UHM0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'COMMEMS', 'BUFFALOES', '2009 $20 Ultra High Relief', 'PR70', 'N/A'
+
+
+
+--- PLATINUM 2007
+EXEC usp_InventoryMatrix_AddRow 'PLATINUM', 'PR 70', '2007'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 70', '2007', '$10', '07C1P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 70', '2007', '$25', '07C2P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 70', '2007', '$50', '07C3P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 70', '2007', '$100', '07C4P0'
+
+EXEC usp_InventoryMatrix_AddRow 'PLATINUM', 'PR 69', '2007'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 69', '2007', '$10', '07C1P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 69', '2007', '$25', '07C2P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 69', '2007', '$50', '07C3P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 69', '2007', '$100', '07C4P9'
+
+EXEC usp_InventoryMatrix_AddRow 'PLATINUM', 'MS 69', '2007'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 69', '2007', '$10', '07C1M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 69', '2007', '$25', '07C2M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 69', '2007', '$50', '07C3M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 69', '2007', '$100', '07C4M9'
+
+EXEC usp_InventoryMatrix_AddRow 'PLATINUM', 'MS 70', '2007'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 70', '2007', '$10', '07C1M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 70', '2007', '$25', '07C2M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 70', '2007', '$50', '07C3M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 70', '2007', '$100', '07C4M0'
+
+
+
+--- PLATINUM 2008
+EXEC usp_InventoryMatrix_AddRow 'PLATINUM', 'PR 70', '2008'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 70', '2008', '$10', '08C1P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 70', '2008', '$25', '08C2P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 70', '2008', '$50', '08C3P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 70', '2008', '$100', '08C4P0'
+
+EXEC usp_InventoryMatrix_AddRow 'PLATINUM', 'PR 69', '2008'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 69', '2008', '$10', '08C1P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 69', '2008', '$25', '08C2P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 69', '2008', '$50', '08C3P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 69', '2008', '$100', '08C4P9'
+
+EXEC usp_InventoryMatrix_AddRow 'PLATINUM', 'MS 69', '2008'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 69', '2008', '$10', '08C1M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 69', '2008', '$25', '08C2M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 69', '2008', '$50', '08C3M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 69', '2008', '$100', '08C4M9'
+
+EXEC usp_InventoryMatrix_AddRow 'PLATINUM', 'MS 70', '2008'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 70', '2008', '$10', '08C1M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 70', '2008', '$25', '08C2M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 70', '2008', '$50', '08C3M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 70', '2008', '$100', '08C4M0'
+
+--- PLATINUM 2009
+EXEC usp_InventoryMatrix_AddRow 'PLATINUM', 'PR 70', '2009'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 70', '2009', '$10', '09C1P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 70', '2009', '$25', '09C2P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 70', '2009', '$50', '09C3P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 70', '2009', '$100', '09C4P0'
+
+EXEC usp_InventoryMatrix_AddRow 'PLATINUM', 'PR 69', '2009'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 69', '2009', '$10', '09C1P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 69', '2009', '$25', '09C2P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 69', '2009', '$50', '09C3P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'PR 69', '2009', '$100', '09C4P9'
+
+EXEC usp_InventoryMatrix_AddRow 'PLATINUM', 'MS 69', '2009'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 69', '2009', '$10', '09C1M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 69', '2009', '$25', '09C2M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 69', '2009', '$50', '09C3M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 69', '2009', '$100', '09C4M9'
+
+EXEC usp_InventoryMatrix_AddRow 'PLATINUM', 'MS 70', '2009'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 70', '2009', '$10', '09C1M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 70', '2009', '$25', '09C2M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 70', '2009', '$50', '09C3M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'PLATINUM', 'MS 70', '2009', '$100', '09C4M0'
+
+--- GOLD 2008
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'MS 69', '2008'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2008', '$5', '08A1M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2008', '$10', '08A2M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2008', '$25', '08A3M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2008', '$50', '08A4M9'
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'MS 70', '2008'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2008', '$5', '08A1M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2008', '$10', '08A2M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2008', '$25', '08A3M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2008', '$50', '08A4M0'
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'PR 69', '2008'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2008', '$5', '08A1P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2008', '$10', '08A2P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2008', '$25', '08A3P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2008', '$50', '08A4P9'
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'PR 70', '2008'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2008', '$5', '08A1P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2008', '$10', '08A2P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2008', '$25', '08A3P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2008', '$50', '08A4P0'
+
+--- GOLD 2009
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'MS 69', '2009'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2009', '$5', '09A1M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2009', '$10', '09A2M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2009', '$25', '09A3M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2009', '$50', '09A4M9'
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'MS 70', '2009'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2009', '$5', '09A1M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2009', '$10', '09A2M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2009', '$25', '09A3M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2009', '$50', '09A4M0'
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'PR 69', '2009'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2009', '$5', '09A1P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2009', '$10', '09A2P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2009', '$25', '09A3P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2009', '$50', '09A4P9'
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'PR 70', '2009'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2009', '$5', '09A1P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2009', '$10', '09A2P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2009', '$25', '09A3P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2009', '$50', '09A4P0'
+
+-- 2007-Ws
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'MS 69', '2007-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2007-W', '$5', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2007-W', '$10', '07W2M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2007-W', '$25', '07W3M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2007-W', '$50', 'N/A'
+
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'PR 69', '2007-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2007-W', '$5', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2007-W', '$10', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2007-W', '$25', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2007-W', '$50', 'N/A'
+
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'MS 70', '2007-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2007-W', '$5', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2007-W', '$10', '07W2M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2007-W', '$25', '07W3M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2007-W', '$50', 'N/A'
+
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'PR 70', '2007-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2007-W', '$5', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2007-W', '$10', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2007-W', '$25', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2007-W', '$50', 'N/A'
+
+
+-- 2008-Ws
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'MS 69', '2008-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2008-W', '$5', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2008-W', '$10', '08W2M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2008-W', '$25', '08W3M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2008-W', '$50', 'N/A'
+
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'PR 69', '2008-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2008-W', '$5', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2008-W', '$10', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2008-W', '$25', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2008-W', '$50', 'N/A'
+
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'MS 70', '2008-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2008-W', '$5', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2008-W', '$10', '08W2M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2008-W', '$25', '08W3M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2008-W', '$50', 'N/A'
+
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'PR 70', '2008-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2008-W', '$5', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2008-W', '$10', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2008-W', '$25', 'N/A'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2008-W', '$50', 'N/A'
+
+-- 2009-Ws
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'MS 69', '2009-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2009-W', '$5', '09W1M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2009-W', '$10', '09W2M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2009-W', '$25', '09W3M9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 69', '2009-W', '$50', '09W4M9'
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'MS 70', '2009-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2009-W', '$5', '09W1M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2009-W', '$10', '09W2M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2009-W', '$25', '09W3M0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'MS 70', '2009-W', '$50', '09W4M0'
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'PR 69', '2009-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2009-W', '$5', '09W1P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2009-W', '$10', '09W2P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2009-W', '$25', '09W3P9'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 69', '2009-W', '$50', '09W4P9'
+
+
+EXEC usp_InventoryMatrix_AddRow 'GOLD', 'PR 70', '2009-W'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2009-W', '$5', '09W1P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2009-W', '$10', '09W2P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2009-W', '$25', '09W3P0'
+EXEC usp_InventoryMatrix_AddProductClassificationCode 
+'GOLD', 'PR 70', '2009-W', '$50', '09W4P0'
+
+--2006-W Set
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2006-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006-W Set', '$5', '06W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006-W Set', '$10', '06W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006-W Set', '$25', '06W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2006-W Set', '$50', '06W5M9'
+
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2007-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W Set', '$5', '07W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W Set', '$10', '07W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W Set', '$25', '07W5M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2007-W Set', '$50', '07W5M9'
+
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2007-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006-W Set', '$5', '06W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006-W Set', '$10', '06W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006-W Set', '$25', '06W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2006-W Set', '$50', '06W5M0'
+
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2007-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W Set', '$5', '07W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W Set', '$10', '07W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W Set', '$25', '07W5M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2007-W Set', '$50', '07W5M0'
+
+-- Proofs N/A
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2006-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006-W Set', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006-W Set', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006-W Set', '$25', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2006-W Set', '$50', 'N/A'
+
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2007-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W Set', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W Set', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W Set', '$25', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2007-W Set', '$50', 'N/A'
+
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2006-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006-W Set', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006-W Set', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006-W Set', '$25', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2006-W Set', '$50', 'N/A'
+
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2007-W Set'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W Set', '$5', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W Set', '$10', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W Set', '$25', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2007-W Set', '$50', 'N/A'
+
+--- GOLD 2010
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2010'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2010', '$5', '10A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2010', '$10', '10A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2010', '$25', '10A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2010', '$50', '10A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2010'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2010', '$5', '10A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2010', '$10', '10A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2010', '$25', '10A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2010', '$50', '10A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2010'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2010', '$5', '10A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2010', '$10', '10A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2010', '$25', '10A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2010', '$50', '10A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2010'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2010', '$5', '10A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2010', '$10', '10A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2010', '$25', '10A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2010', '$50', '10A4P0'
+--- GOLD 2011
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2011'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2011', '$5', '11A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2011', '$10', '11A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2011', '$25', '11A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2011', '$50', '11A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2011'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2011', '$5', '11A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2011', '$10', '11A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2011', '$25', '11A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2011', '$50', '11A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2011'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2011', '$5', '11A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2011', '$10', '11A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2011', '$25', '11A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2011', '$50', '11A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2011'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2011', '$5', '11A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2011', '$10', '11A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2011', '$25', '11A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2011', '$50', '11A4P0'
+
+--- GOLD 2012
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2012', '$5', '12A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2012', '$10', '12A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2012', '$25', '12A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '2012', '$50', '12A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2012', '$5', '12A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2012', '$10', '12A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2012', '$25', '12A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '2012', '$50', '12A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2012', '$5', '12A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2012', '$10', '12A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2012', '$25', '12A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '2012', '$50', '12A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2012', '$5', '12A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2012', '$10', '12A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2012', '$25', '12A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '2012', '$50', '12A4P0'
+
+
+
+--- PLATINUM 2012
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2012', '$10', '12A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2012', '$25', '12A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2012', '$50', '12A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2012', '$100', '12A4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2012', '$10', '12A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2012', '$25', '12A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2012', '$50', '12A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2012', '$100', '12A4M0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2012', '$10', '12A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2012', '$25', '12A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2012', '$50', '12A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2012', '$100', '12A4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2012', '$10', '12A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2012', '$25', '12A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2012', '$50', '12A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2012', '$100', '12A4P0'
+

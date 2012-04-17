@@ -1,0 +1,56 @@
+
+-- Loadbook Contact 
+SELECT     
+dbo.tbl_DBF_Cust.Sales_ID, 
+dbo.tbl_Sales_Teams.Name, 
+COUNT(dbo.tbl_DBF_Cust.Sales_ID) AS Total, 
+SUM(CASE WHEN gross = 0 THEN 1 ELSE 0 END) AS '0', 
+SUM(CASE WHEN gross > 0 AND gross < 1000 THEN 1 ELSE 0 END) AS '0_To_999', 
+SUM(CASE WHEN gross >= 1000 AND gross < 5000 THEN 1 ELSE 0 END) AS '1000_To_4999', 
+SUM(CASE WHEN gross >= 5000 AND gross < 10000 THEN 1 ELSE 0 END) AS '5000_To_9999', 
+SUM(CASE WHEN gross >= 10000 AND gross < 15000 THEN 1 ELSE 0 END) AS '10000_To_14999', 
+SUM(CASE WHEN gross >= 15000 THEN 1 ELSE 0 END) AS '15000+'
+FROM         dbo.tbl_DBF_Cust 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_DBF_Cust.Sales_ID = dbo.tbl_Sales_Teams.Login 
+INNER JOIN   dbo.vw_Last_Contact_Dates 
+ON dbo.tbl_DBF_Cust.Contact_Number = dbo.vw_Last_Contact_Dates.ContactNumber
+WHERE     (dbo.vw_Last_Contact_Dates.Last_Contact_Date >= dbo.Get_TheDate(GETDATE() - 1))
+GROUP BY dbo.tbl_DBF_Cust.Sales_ID, dbo.tbl_Sales_Teams.Name
+
+
+-- Loadbook GROSS
+SELECT     
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_DBF_Cust.Sales_ID, 
+COUNT(dbo.tbl_DBF_Cust.Sales_ID) AS Total, 
+SUM(CASE WHEN gross = 0 THEN 1 ELSE 0 END) AS '0', 
+SUM(CASE WHEN gross > 0 AND gross < 1000 THEN 1 ELSE 0 END) AS '1_To_999', 
+SUM(CASE WHEN gross >= 1000 AND gross < 5000 THEN 1 ELSE 0 END) AS '1000_To_4999', 
+SUM(CASE WHEN gross >= 5000 AND gross < 10000 THEN 1 ELSE 0 END) AS '5000_To_9999', 
+SUM(CASE WHEN gross >= 10000 AND gross < 15000 THEN 1 ELSE 0 END) AS '10000_To_14999', 
+SUM(CASE WHEN gross >= 15000 THEN 1 ELSE 0 END) AS '15000+', 
+SUM(dbo.tbl_DBF_Cust.Gross) AS 'Ttl_Gross'
+FROM         dbo.tbl_DBF_Cust INNER JOIN
+                      dbo.tbl_Sales_Teams ON dbo.tbl_DBF_Cust.Sales_ID = dbo.tbl_Sales_Teams.Login
+GROUP BY dbo.tbl_DBF_Cust.Sales_ID, dbo.tbl_Sales_Teams.Name
+
+
+-- Loadbook Sales
+SELECT     
+dbo.tbl_Sales_Teams.Name,
+dbo.tbl_DBF_Cust.Sales_ID, 
+COUNT(dbo.tbl_DBF_Cust.Sales_ID) AS Total, 
+SUM(CASE WHEN gross = 0 THEN 1 ELSE 0 END) AS '0', 
+SUM(CASE WHEN gross > 0 AND gross < 1000 THEN 1 ELSE 0 END) AS '0_To_999', 
+SUM(CASE WHEN gross >= 1000 AND gross < 5000 THEN 1 ELSE 0 END) AS '1000_To_4999', 
+SUM(CASE WHEN gross >= 5000 AND gross < 10000 THEN 1 ELSE 0 END) AS '5000_To_9999', 
+SUM(CASE WHEN gross >= 10000 AND gross < 15000 THEN 1 ELSE 0 END) AS '10000_To_14999', 
+SUM(CASE WHEN gross >= 15000 THEN 1 ELSE 0 END) AS '15000+'
+FROM         dbo.tbl_DBF_Cust 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_DBF_Cust.Sales_ID = dbo.tbl_Sales_Teams.Login 
+INNER JOIN   dbo.tbl_DBF_CMS 
+ON dbo.tbl_DBF_Cust.Cust_ID = dbo.tbl_DBF_CMS.Cust_ID
+WHERE     (dbo.tbl_DBF_CMS.Order_Date >= dbo.Get_TheDate(GETDATE()-1))
+GROUP BY dbo.tbl_DBF_Cust.Sales_ID, dbo.tbl_Sales_Teams.Name

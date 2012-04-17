@@ -1,0 +1,29 @@
+USE [Data_Warehouse]
+GO
+/****** Object:  UserDefinedFunction [dbo].[Check_File_Exists]    Script Date: 10/01/2010 13:18:51 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		Tony Nichols
+-- Create date: 4/18/2008
+-- Description:	Used in QA Interface to Check MP3 Creation
+-- =============================================
+ALTER FUNCTION [dbo].[Check_File_Exists] (@in_Path_File varchar(255))
+RETURNS varchar (3) AS
+BEGIN
+	DECLARE @File_Exists int
+	DECLARE @Answer varchar(3)
+
+	EXEC Master.dbo.xp_fileexist @in_Path_File, @File_Exists OUT
+
+	IF	@File_Exists=1
+			SET @Answer = 'Yes'
+	ELSE	SET @Answer = 'No'
+
+RETURN @Answer
+END
+
+

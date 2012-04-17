@@ -1,0 +1,14 @@
+SELECT cntr_value, *  
+FROM sys.dm_os_performance_counters  
+WHERE counter_name = 'transactions/sec'  
+--AND OBJECT_NAME = 'SQLServer:Databases'  
+--AND instance_name = 'database_name'  
+    
+WAITFOR DELAY '00:00:10'  
+    
+SELECT cntr_value, *  
+FROM sys.dm_os_performance_counters  
+WHERE counter_name = 'transactions/sec'  
+--AND OBJECT_NAME = 'SQLServer:Databases'  
+--AND instance_name = 'database_name'  
+

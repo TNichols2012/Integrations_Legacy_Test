@@ -1,0 +1,140 @@
+-- ORIGINAL
+
+SELECT     TOP (100) PERCENT 
+dbo.tbl_CCS_Data.Call_Start_Time AS Call_Start_Date, 
+dbo.tbl_Sales_Teams.PKUsers AS Amcat_Login, 
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_Sales_Teams.Login AS MOM_Login, 
+SUM(CASE WHEN (Call_Category <> 'Transfer' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN 1 ELSE 0 END) AS Ttl_Calls_Handled, 
+SUM(CASE WHEN (AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN Call_Talk_Time ELSE 0 END) AS Ttl_Talk_Time, 
+SUM(CASE WHEN (AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN Call_Wrap_Time ELSE 0 END) AS Ttl_Wrap_Time, 
+SUM(CASE WHEN (AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN Call_Queue_Time ELSE 0 END) AS Ttl_Queue_Time, 
+SUM(CASE WHEN (AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12) AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34)) THEN 1 ELSE 0 END) AS Ttl_Pres, 
+SUM(CASE WHEN (AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12, 34) AND CallResultDescription LIKE 'Sale%') THEN 1 ELSE 0 END) AS Ttl_Sales, 
+SUM(CASE WHEN (Call_Category = 'Inbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN 1 ELSE 0 END) AS IB_Calls_Handled, 
+SUM(CASE WHEN (Call_Category = 'Inbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN Call_Talk_Time ELSE 0 END) AS IB_Talk_Time, 
+SUM(CASE WHEN (Call_Category = 'Inbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12) AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34)) THEN 1 ELSE 0 END) AS IB_Pres, 
+SUM(CASE WHEN (Call_Category = 'Inbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12, 34) AND CallResultDescription LIKE 'Sale%') THEN 1 ELSE 0 END) AS IB_Sales, 
+SUM(CASE WHEN (Call_Category = 'Outbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN 1 ELSE 0 END) AS OB_Calls_Handled, 
+SUM(CASE WHEN (Call_Category = 'Outbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN Call_Talk_Time ELSE 0 END) AS OB_Talk_Time, 
+SUM(CASE WHEN (Call_Category = 'Outbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12) AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34)) THEN 1 ELSE 0 END) AS OB_Pres, 
+SUM(CASE WHEN (Call_Category = 'Outbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12, 34) AND CallResultDescription LIKE 'Sale%') THEN 1 ELSE 0 END) AS OB_Sales, 
+SUM(CASE WHEN (Call_Category = 'Transfer' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN 1 ELSE 0 END) AS TR_Calls_Handled, 
+SUM(CASE WHEN (Call_Category = 'Transfer' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN Call_Talk_Time ELSE 0 END) AS TR_Talk_Time, 
+SUM(CASE WHEN (Call_Category = 'Transfer' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12) AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34)) THEN 1 ELSE 0 END) AS TR_Pres, 
+SUM(CASE WHEN (Call_Category = 'Transfer' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12, 34) AND CallResultDescription LIKE 'Sale%') THEN 1 ELSE 0 END) AS TR_Sales, 
+--dbo.tbl_Sales_Teams.Sales_Manager, dbo.tbl_Sales_Teams.Site, 28800 AS Talk_Time_Basis
+FROM         dbo.tbl_CCS_Data INNER JOIN
+                      dbo.tbl_Sales_Teams ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers LEFT OUTER JOIN
+                      dbo.tbl_Lookup_Call_Campaign ON dbo.tbl_CCS_Data.PoolFK = dbo.tbl_Lookup_Call_Campaign.Campaign_ID LEFT OUTER JOIN
+                      dbo.tbl_Lookup_Call_Type ON dbo.tbl_CCS_Data.CallType = dbo.tbl_Lookup_Call_Type.Call_Type_ID LEFT OUTER JOIN
+                      dbo.tbl_Lookup_Call_Disposition ON dbo.tbl_CCS_Data.AgentExitCode = dbo.tbl_Lookup_Call_Disposition.CallResultCode
+WHERE dbo.tbl_Lookup_Call_Disposition.CountAsContact = 'True'
+GROUP BY dbo.tbl_CCS_Data.Call_Start_Time, dbo.tbl_Sales_Teams.Name, dbo.tbl_Sales_Teams.Sales_Manager, dbo.tbl_Sales_Teams.Site, 
+                      dbo.tbl_Sales_Teams.PKUsers, dbo.tbl_Sales_Teams.Login
+HAVING      (dbo.tbl_Sales_Teams.Site <> '')
+ORDER BY Call_Start_Date DESC
+
+-- BEFORE 08/24/2007
+
+SELECT     TOP (100) PERCENT 
+dbo.tbl_CCS_Data.Call_Start_Time AS Call_Start_Date, 
+dbo.tbl_Sales_Teams.PKUsers AS Amcat_Login, 
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_Sales_Teams.Login AS MOM_Login, 
+SUM(CASE WHEN (Call_Category <> 'Transfer') THEN 1 ELSE 0 END) AS Ttl_Calls_Handled, 
+SUM(CASE WHEN (Call_Category <> 'Transfer') AND (Call_Talk_Time > 120) THEN 1 ELSE 0 END) AS Ttl_Calls_Handled_Above_2min, 
+SUM(dbo.tbl_CCS_Data.Call_Talk_Time) AS Ttl_Talk_Time, SUM(dbo.tbl_CCS_Data.Call_Wrap_Time) AS Ttl_Wrap_Time, 
+SUM(dbo.tbl_CCS_Data.Call_Queue_Time) AS Ttl_Queue_Time, 
+SUM(CASE WHEN (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) THEN 1 ELSE 0 END) AS Ttl_Pres, 
+SUM(CASE WHEN (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) AND (Call_Talk_Time > 120) THEN 1 ELSE 0 END) AS Ttl_Pres_Above_2min, 
+SUM(CASE WHEN (AgentExitCode NOT IN (34) AND CallResultDescription LIKE 'Sale%') THEN 1 ELSE 0 END) AS Ttl_Sales, 
+SUM(CASE WHEN (Call_Category = 'Inbound') THEN 1 ELSE 0 END) AS IB_Calls_Handled, 
+SUM(CASE WHEN (Call_Category = 'Inbound') AND (Call_Talk_Time > 120) THEN 1 ELSE 0 END) AS IB_Calls_Handled_Above_2min, 
+SUM(CASE WHEN (Call_Category = 'Inbound') THEN Call_Talk_Time ELSE 0 END) AS IB_Talk_Time, 
+SUM(CASE WHEN (Call_Category = 'Inbound') AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) THEN 1 ELSE 0 END) AS IB_Pres, 
+SUM(CASE WHEN (Call_Category = 'Inbound') AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) AND (Call_Talk_Time > 120) THEN 1 ELSE 0 END) AS IB_Pres_Above_2min, 
+SUM(CASE WHEN (Call_Category = 'Inbound') AND AgentExitCode NOT IN (34) AND CallResultDescription LIKE 'Sale%' THEN 1 ELSE 0 END) AS IB_Sales, 
+SUM(CASE WHEN (Call_Category = 'Outbound') THEN 1 ELSE 0 END) AS OB_Calls_Handled, 
+SUM(CASE WHEN (Call_Category = 'Outbound') AND (Call_Talk_Time > 120) THEN 1 ELSE 0 END) AS OB_Calls_Handled_Above_2min, 
+SUM(CASE WHEN (Call_Category = 'Outbound') AND (Call_Talk_Time < 120) THEN 1 ELSE 0 END) AS OB_Calls_Handled_Below_2min, 
+SUM(CASE WHEN (Call_Category = 'Outbound') THEN Call_Talk_Time ELSE 0 END) AS OB_Talk_Time, 
+SUM(CASE WHEN (Call_Category = 'Outbound') AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) THEN 1 ELSE 0 END) AS OB_Pres, 
+SUM(CASE WHEN (Call_Category = 'Outbound') AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) AND (Call_Talk_Time > 120) THEN 1 ELSE 0 END) AS OB_Pres_Above_2min, 
+SUM(CASE WHEN (Call_Category = 'Outbound' AND AgentExitCode NOT IN (34) AND CallResultDescription LIKE 'Sale%') THEN 1 ELSE 0 END) AS OB_Sales, 
+SUM(CASE WHEN (Call_Category = 'Transfer') THEN 1 ELSE 0 END) AS TR_Calls_Handled, 
+SUM(CASE WHEN (Call_Category = 'Transfer') THEN Call_Talk_Time ELSE 0 END) AS TR_Talk_Time, 
+SUM(CASE WHEN (Call_Category = 'Transfer') AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) THEN 1 ELSE 0 END) AS TR_Pres, 
+SUM(CASE WHEN (Call_Category = 'Transfer') AND AgentExitCode NOT IN (34) AND CallResultDescription LIKE 'Sale%' THEN 1 ELSE 0 END) AS TR_Sales
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+LEFT OUTER JOIN dbo.tbl_Lookup_Call_Campaign 
+ON dbo.tbl_CCS_Data.PoolFK = dbo.tbl_Lookup_Call_Campaign.Campaign_ID 
+LEFT OUTER JOIN dbo.tbl_Lookup_Call_Type 
+ON dbo.tbl_CCS_Data.CallType = dbo.tbl_Lookup_Call_Type.Call_Type_ID 
+LEFT OUTER JOIN dbo.tbl_Lookup_Call_Disposition 
+ON dbo.tbl_CCS_Data.AgentExitCode = dbo.tbl_Lookup_Call_Disposition.CallResultCode
+WHERE     (dbo.tbl_Lookup_Call_Disposition.CountAsContact = 'True')
+GROUP BY 
+dbo.tbl_CCS_Data.Call_Start_Time, 
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_Sales_Teams.Sales_Manager, 
+dbo.tbl_Sales_Teams.Site, 
+dbo.tbl_Sales_Teams.PKUsers, 
+dbo.tbl_Sales_Teams.Login
+HAVING      (dbo.tbl_Sales_Teams.Site <> '')
+ORDER BY Call_Start_Date DESC
+
+
+-- After 08/24/2007
+-- Corrected for Transferred Presentations
+
+SELECT     TOP (100) PERCENT 
+dbo.tbl_CCS_Data.Call_Start_Time AS Call_Start_Date, 
+dbo.tbl_Sales_Teams.PKUsers AS Amcat_Login, 
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_Sales_Teams.Login AS MOM_Login, 
+SUM(CASE WHEN (Call_Category <> 'Transfer') THEN 1 ELSE 0 END) AS Ttl_Calls_Handled, 
+SUM(CASE WHEN (Call_Category <> 'Transfer') AND (Call_Talk_Time > 120) THEN 1 ELSE 0 END) AS Ttl_Calls_Handled_Above_2min, 
+SUM(dbo.tbl_CCS_Data.Call_Talk_Time) AS Ttl_Talk_Time, SUM(dbo.tbl_CCS_Data.Call_Wrap_Time) AS Ttl_Wrap_Time, 
+SUM(dbo.tbl_CCS_Data.Call_Queue_Time) AS Ttl_Queue_Time, 
+SUM(CASE WHEN (Call_Category <> 'Transfer') AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) THEN 1 ELSE 0 END) AS Ttl_Pres, 
+SUM(CASE WHEN (Call_Category <> 'Transfer') AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) AND (Call_Talk_Time > 120) THEN 1 ELSE 0 END) AS Ttl_Pres_Above_2min, 
+SUM(CASE WHEN (Call_Category <> 'Transfer') AND (AgentExitCode NOT IN (34) AND CallResultDescription LIKE 'Sale%') THEN 1 ELSE 0 END) AS Ttl_Sales, 
+SUM(CASE WHEN (Call_Category = 'Inbound') THEN 1 ELSE 0 END) AS IB_Calls_Handled, 
+SUM(CASE WHEN (Call_Category = 'Inbound') AND (Call_Talk_Time > 120) THEN 1 ELSE 0 END) AS IB_Calls_Handled_Above_2min, 
+SUM(CASE WHEN (Call_Category = 'Inbound') THEN Call_Talk_Time ELSE 0 END) AS IB_Talk_Time, 
+SUM(CASE WHEN (Call_Category = 'Inbound') AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) THEN 1 ELSE 0 END) AS IB_Pres, 
+SUM(CASE WHEN (Call_Category = 'Inbound') AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) AND (Call_Talk_Time > 120) THEN 1 ELSE 0 END) AS IB_Pres_Above_2min, 
+SUM(CASE WHEN (Call_Category = 'Inbound') AND AgentExitCode NOT IN (34) AND CallResultDescription LIKE 'Sale%' THEN 1 ELSE 0 END) AS IB_Sales, 
+SUM(CASE WHEN (Call_Category = 'Outbound') THEN 1 ELSE 0 END) AS OB_Calls_Handled, 
+SUM(CASE WHEN (Call_Category = 'Outbound') AND (Call_Talk_Time > 120) THEN 1 ELSE 0 END) AS OB_Calls_Handled_Above_2min, 
+SUM(CASE WHEN (Call_Category = 'Outbound') AND (Call_Talk_Time < 120) THEN 1 ELSE 0 END) AS OB_Calls_Handled_Below_2min, 
+SUM(CASE WHEN (Call_Category = 'Outbound') THEN Call_Talk_Time ELSE 0 END) AS OB_Talk_Time, 
+SUM(CASE WHEN (Call_Category = 'Outbound') AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) THEN 1 ELSE 0 END) AS OB_Pres, 
+SUM(CASE WHEN (Call_Category = 'Outbound') AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) AND (Call_Talk_Time > 120) THEN 1 ELSE 0 END) AS OB_Pres_Above_2min, 
+SUM(CASE WHEN (Call_Category = 'Outbound' AND AgentExitCode NOT IN (34) AND CallResultDescription LIKE 'Sale%') THEN 1 ELSE 0 END) AS OB_Sales, 
+SUM(CASE WHEN (Call_Category = 'Transfer') THEN 1 ELSE 0 END) AS TR_Calls_Handled, 
+SUM(CASE WHEN (Call_Category = 'Transfer') THEN Call_Talk_Time ELSE 0 END) AS TR_Talk_Time, 
+SUM(CASE WHEN (Call_Category = 'Transfer') AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34) THEN 1 ELSE 0 END) AS TR_Pres, 
+SUM(CASE WHEN (Call_Category = 'Transfer') AND AgentExitCode NOT IN (34) AND CallResultDescription LIKE 'Sale%' THEN 1 ELSE 0 END) AS TR_Sales
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+LEFT OUTER JOIN dbo.tbl_Lookup_Call_Campaign 
+ON dbo.tbl_CCS_Data.PoolFK = dbo.tbl_Lookup_Call_Campaign.Campaign_ID 
+LEFT OUTER JOIN dbo.tbl_Lookup_Call_Type 
+ON dbo.tbl_CCS_Data.CallType = dbo.tbl_Lookup_Call_Type.Call_Type_ID 
+LEFT OUTER JOIN dbo.tbl_Lookup_Call_Disposition 
+ON dbo.tbl_CCS_Data.AgentExitCode = dbo.tbl_Lookup_Call_Disposition.CallResultCode
+WHERE     (dbo.tbl_Lookup_Call_Disposition.CountAsContact = 'True')
+GROUP BY 
+dbo.tbl_CCS_Data.Call_Start_Time, 
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_Sales_Teams.Sales_Manager, 
+dbo.tbl_Sales_Teams.Site, 
+dbo.tbl_Sales_Teams.PKUsers, 
+dbo.tbl_Sales_Teams.Login
+HAVING      (dbo.tbl_Sales_Teams.Site <> '')
+ORDER BY Call_Start_Date DESC

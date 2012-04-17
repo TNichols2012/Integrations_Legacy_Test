@@ -1,0 +1,55 @@
+'3a) Update Secondary ContactPhoneNumbers Table
+'with current MOM data phone number
+
+
+UPDATE ContactPhoneNumbers
+SET ContactNumber = RTRIM(replace(replace(replace(replace(phone2, '-', ''), ' ', ''), ')', ''), '(', ''))
+FROM ContactPhoneNumbers, ContactInfo, MOM_Cust
+WHERE ContactInfoFK = PKCustomerRecord
+AND ContactInfo.custnum = CAST(MOM_CUST.custnum as varchar)
+AND PhoneTypeFK=2
+
+-- UPDATE
+
+SELECT
+RTRIM(replace(replace(replace(replace(phone2, '-', ''), ' ', ''), ')', ''), '(', '')) AS Phone_Number
+FROM Contactphonenumbers, contactinfo, mom_cust
+WHERE ContactInfoFK = PKCustomerRecord
+AND ContactInfo.custnum = CAST(MOM_CUST.custnum as varchar)
+AND PhoneTypeFK=2
+
+
+/*
+INSERT INTO dbo.ContactPhoneNumbers(ContactInfoFK, ContactNumber, PhoneTypeFK)
+SELECT     
+dbo.ContactInfo.PKCustomerRecord, 
+RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(dbo.MOM_CUST.phone2, '-', ''), ' ', ''), ')', ''), '(', '')) AS Expr1, 
+2 AS Expr2
+FROM			dbo.ContactInfo 
+INNER JOIN		dbo.MOM_CUST 
+ON				dbo.ContactInfo.CustNum = CAST(dbo.MOM_CUST.custnum AS varchar) 
+LEFT OUTER JOIN	dbo.ContactPhoneNumbers 
+ON				RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(dbo.MOM_CUST.phone2, '-', ''), ' ', ''), ')', ''), '(', '')) = dbo.ContactPhoneNumbers.ContactNumber 
+AND				dbo.ContactInfo.PKCustomerRecord = dbo.ContactPhoneNumbers.ContactInfoFK
+WHERE			(dbo.ContactPhoneNumbers.ContactNumber IS NULL) 
+AND				(dbo.ContactPhoneNumbers.ContactInfoFK IS NULL)
+AND				(dbo.ContactPhoneNumbers.PhoneTypeFK IS NULL)
+AND				(RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(dbo.MOM_CUST.phone2, '-', ''), ' ', ''), ')', ''), '(', '')) <> '')
+*/
+
+SELECT     
+dbo.ContactInfo.PKCustomerRecord, 
+RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(dbo.MOM_CUST.phone2, '-', ''), ' ', ''), ')', ''), '(', '')) AS Expr1,                     
+2 AS Expr2, dbo.ContactPhoneNumbers.ContactNumber, 
+dbo.ContactPhoneNumbers.ContactInfoFK
+FROM			dbo.ContactInfo 
+INNER JOIN		dbo.MOM_CUST 
+ON				dbo.ContactInfo.CustNum = CAST(dbo.MOM_CUST.custnum AS varchar) 
+LEFT OUTER JOIN	dbo.ContactPhoneNumbers 
+ON				dbo.MOM_CUST.phone2 = dbo.ContactPhoneNumbers.ContactNumber 
+AND				dbo.ContactInfo.PKCustomerRecord = dbo.ContactPhoneNumbers.ContactInfoFK
+WHERE			(dbo.ContactPhoneNumbers.ContactNumber IS NULL) 
+AND				(dbo.ContactPhoneNumbers.ContactInfoFK IS NULL) 
+AND				(RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(dbo.MOM_CUST.phone2, '-', ''), ' ', ''), ')', ''), '(', '')) <> '')
+
+

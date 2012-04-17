@@ -1,0 +1,63 @@
+ALTER FUNCTION [dbo].[Get_TheMonth_Previous_00](@In_The_Full_Date datetime)
+RETURNS datetime AS
+BEGIN
+	Declare @To_Date datetime
+
+	Set @To_Date = convert(datetime, (convert(varchar, datepart(month, dateadd(month, -0, @In_The_Full_Date)))) + '/01/' + convert(varchar, datepart(year, dateadd(month, -0, @In_The_Full_Date))))
+
+	Return @To_Date
+END
+
+
+
+ALTER FUNCTION [dbo].[Get_TheDate](@In_The_Full_Date datetime)
+RETURNS datetime AS
+BEGIN
+	Declare @To_Date datetime
+
+	Set @To_Date = Convert(datetime, (Convert (char(10), (@In_The_Full_Date) , 110)))
+
+	Return @To_Date
+END
+
+
+
+
+
+ALTER FUNCTION [dbo].[Get_TheMonth_Previous_04](@In_The_Full_Date datetime)
+RETURNS datetime AS
+BEGIN
+	Declare @To_Date datetime
+
+	Set @To_Date = convert(datetime, (convert(varchar, datepart(month, dateadd(month, -4, @In_The_Full_Date)))) + '/01/' + convert(varchar, datepart(year, dateadd(month, -4, @In_The_Full_Date))))
+
+	Return @To_Date
+END
+
+
+
+ALTER FUNCTION [dbo].[Get_SunDate](@In_The_Date datetime)
+RETURNS datetime AS
+BEGIN
+	Declare @SunDate datetime
+	Declare @Adjust_Day int
+	Declare @Current_Day int
+
+	Set @Current_Day = DatePart(WeekDay, @In_The_Date)
+
+	If (@Current_Day= 0) 
+		Set @Adjust_Day = -1
+	
+	If (@Current_Day= 1) 
+		Set @Adjust_Day = 0
+
+	If (@Current_Day> 1) 
+		Set @Adjust_Day = DatePart( WeekDay, @In_The_Date - 1)
+
+
+	Set @SunDate = Convert(datetime, (Convert (char(10), (@In_The_Date - @Adjust_Day) , 110)))
+
+	Return @SunDate
+END
+
+

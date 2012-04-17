@@ -1,0 +1,14 @@
+SELECT     
+ContactNumber, 
+COUNT(ContactNumber) AS Times_Contacted, 
+SUM(CASE WHEN CallEndTime >= dbo.Get_TheDate(GetDate() - 1) AND CallEndTime < dbo.Get_TheDate(GetDate()) THEN 1 ELSE 0 END) AS Times_Contacted_Daily, 
+SUM(CASE WHEN CallEndTime >= dbo.Get_TheDate(GetDate() - 181) AND CallEndTime < dbo.Get_TheDate(GetDate()) THEN 1 ELSE 0 END) AS Times_Contacted_180Days, 
+SUM(CASE WHEN CallEndTime >= dbo.Get_TheDate(GetDate() - 91) AND CallEndTime < dbo.Get_TheDate(GetDate()) THEN 1 ELSE 0 END) AS Times_Contacted_90Days, 
+SUM(CASE WHEN CallEndTime >= dbo.Get_TheDate(GetDate() - 61) AND CallEndTime < dbo.Get_TheDate(GetDate()) THEN 1 ELSE 0 END) AS Times_Contacted_60Days, 
+SUM(CASE WHEN CallEndTime >= dbo.Get_TheDate(GetDate() - 31) AND CallEndTime < dbo.Get_TheDate(GetDate()) THEN 1 ELSE 0 END) AS Times_Contacted_30Days, 
+SUM(CASE WHEN CallEndTime >= dbo.Get_TheDate(GetDate() - 31) AND CallEndTime < dbo.Get_TheDate(GetDate()) THEN Call_Talk_Time ELSE 0 END) AS Talk_Time_30Days, 
+DATEDIFF(d, MAX(CallEndTime), GETDATE()) AS Last_Contact_Age, 
+MAX(CallEndTime) AS Last_Contact_Date
+FROM         dbo.tbl_CCS_Data
+WHERE     (AgentExitCode NOT IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)) AND (CallType NOT IN (2, 3))
+GROUP BY ContactNumber

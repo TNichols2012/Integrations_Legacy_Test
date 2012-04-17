@@ -1,0 +1,55 @@
+USE [Data_Warehouse]
+GO
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_ShoreTel_Dispositions_Audit'
+		)
+DROP TABLE tbl_ShoreTel_Dispositions_Audit;
+
+CREATE TABLE [dbo].[tbl_ShoreTel_Dispositions_Audit](
+	[PK_ID] bigint IDENTITY(1,1),
+	[Primary_Call_ID] [int] NULL,
+	[Disposition] [int] NULL,
+	[Call_Type] [varchar](25) NULL,
+	[Transfer_Name] [varchar] (30) null,
+	[User_ID] [varchar](25) NULL,
+	[Cust_ID] [varchar](25) NULL,
+	[Call_Connect_Time] [datetime] null,
+	[Call_Disconnect_Time] [datetime] null,
+	[Call_Disposition_Time] [datetime] NULL,
+	[Call_Duration] [int] NULL
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+--ALTER TABLE [dbo].[tbl_ShoreTel_Dispositions] ADD  CONSTRAINT [DF_tbl_ShoreTel_Dispositions_Time_Stamp]  DEFAULT (getdate()) FOR [Time_Stamp]
+--GO
+
+
+ALTER PROCEDURE [dbo].[usp_ShoreTel_Disposition_Edit]
+	@PCID int,
+	@Disposition int,
+	@Call_Type varchar(25),
+	@Transfer_Name varchar(50),
+	@User_Name varchar(50),
+	@Cust_ID varchar(25),
+	@Call_Connect_Time datetime,
+	@Call_Disconnect_Time datetime,
+	@Call_Disposition_Time datetime,
+	@Call_Duration int
+AS
+BEGIN
+SET NOCOUNT ON;
+
+INSERT INTO tbl_ShoreTel_Dispositions_Audit (Primary_Call_ID, Disposition, Call_Type, Transfer_Name, [User_Name], Cust_ID, Call_Connect_Time, Call_Disconnect_Time, Call_Disposition_Time, Call_Duration)
+VALUES (@PCID, @Disposition, @Call_Type, @Transfer_Name, @User_Name, @Cust_ID, @Call_Connect_Time, @Call_Disconnect_Time, @Call_Disposition_Time, @Call_Duration)
+
+END
+
+
+

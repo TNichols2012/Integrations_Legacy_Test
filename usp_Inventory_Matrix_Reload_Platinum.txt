@@ -1,0 +1,823 @@
+--- PLATINUM 1997
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '1997'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '1997', '$10', '97C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '1997', '$25', '97C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '1997', '$50', '97C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '1997', '$100', '97C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '1997'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '1997', '$10', '97C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '1997', '$25', '97C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '1997', '$50', '97C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '1997', '$100', '97C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '1997'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '1997', '$10', '97C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '1997', '$25', '97C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '1997', '$50', '97C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '1997', '$100', '97C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '1997'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '1997', '$10', '97C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '1997', '$25', '97C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '1997', '$50', '97C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '1997', '$100', '97C4M0'
+
+
+--- PLATINUM 1998
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '1998'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '1998', '$10', '98C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '1998', '$25', '98C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '1998', '$50', '98C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '1998', '$100', '98C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '1998'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '1998', '$10', '98C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '1998', '$25', '98C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '1998', '$50', '98C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '1998', '$100', '98C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '1998'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '1998', '$10', '98C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '1998', '$25', '98C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '1998', '$50', '98C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '1998', '$100', '98C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '1998'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '1998', '$10', '98C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '1998', '$25', '98C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '1998', '$50', '98C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '1998', '$100', '98C4M0'
+
+
+
+--- PLATINUM 1999
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '1999'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '1999', '$10', '99C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '1999', '$25', '99C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '1999', '$50', '99C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '1999', '$100', '99C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '1999'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '1999', '$10', '99C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '1999', '$25', '99C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '1999', '$50', '99C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '1999', '$100', '99C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '1999'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '1999', '$10', '99C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '1999', '$25', '99C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '1999', '$50', '99C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '1999', '$100', '99C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '1999'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '1999', '$10', '99C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '1999', '$25', '99C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '1999', '$50', '99C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '1999', '$100', '99C4M0'
+
+
+
+--- PLATINUM 2000
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2000'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2000', '$10', '00C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2000', '$25', '00C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2000', '$50', '00C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2000', '$100', '00C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2000'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2000', '$10', '00C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2000', '$25', '00C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2000', '$50', '00C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2000', '$100', '00C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2000'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2000', '$10', '00C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2000', '$25', '00C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2000', '$50', '00C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2000', '$100', '00C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2000'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2000', '$10', '00C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2000', '$25', '00C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2000', '$50', '00C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2000', '$100', '00C4M0'
+
+
+--- PLATINUM 2001
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2001'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2001', '$10', '01C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2001', '$25', '01C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2001', '$50', '01C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2001', '$100', '01C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2001'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2001', '$10', '01C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2001', '$25', '01C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2001', '$50', '01C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2001', '$100', '01C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2001'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2001', '$10', '01C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2001', '$25', '01C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2001', '$50', '01C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2001', '$100', '01C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2001'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2001', '$10', '01C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2001', '$25', '01C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2001', '$50', '01C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2001', '$100', '01C4M0'
+
+
+--- PLATINUM 2002
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2002'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2002', '$10', '02C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2002', '$25', '02C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2002', '$50', '02C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2002', '$100', '02C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2002'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2002', '$10', '02C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2002', '$25', '02C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2002', '$50', '02C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2002', '$100', '02C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2002'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2002', '$10', '02C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2002', '$25', '02C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2002', '$50', '02C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2002', '$100', '02C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2002'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2002', '$10', '02C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2002', '$25', '02C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2002', '$50', '02C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2002', '$100', '02C4M0'
+
+
+
+--- PLATINUM 2003
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2003'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2003', '$10', '03C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2003', '$25', '03C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2003', '$50', '03C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2003', '$100', '03C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2003'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2003', '$10', '03C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2003', '$25', '03C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2003', '$50', '03C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2003', '$100', '03C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2003'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2003', '$10', '03C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2003', '$25', '03C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2003', '$50', '03C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2003', '$100', '03C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2003'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2003', '$10', '03C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2003', '$25', '03C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2003', '$50', '03C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2003', '$100', '03C4M0'
+
+
+--- PLATINUM 2004
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2004'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2004', '$10', '04C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2004', '$25', '04C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2004', '$50', '04C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2004', '$100', '04C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2004'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2004', '$10', '04C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2004', '$25', '04C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2004', '$50', '04C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2004', '$100', '04C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2004'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2004', '$10', '04C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2004', '$25', '04C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2004', '$50', '04C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2004', '$100', '04C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2004'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2004', '$10', '04C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2004', '$25', '04C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2004', '$50', '04C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2004', '$100', '04C4M0'
+
+
+
+--- PLATINUM 2005
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2005'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2005', '$10', '05C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2005', '$25', '05C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2005', '$50', '05C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2005', '$100', '05C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2005'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2005', '$10', '05C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2005', '$25', '05C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2005', '$50', '05C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2005', '$100', '05C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2005'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2005', '$10', '05C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2005', '$25', '05C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2005', '$50', '05C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2005', '$100', '05C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2005'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2005', '$10', '05C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2005', '$25', '05C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2005', '$50', '05C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2005', '$100', '05C4M0'
+
+
+--- PLATINUM 2006
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2006'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2006', '$10', '06C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2006', '$25', '06C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2006', '$50', '06C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2006', '$100', '06C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2006'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2006', '$10', '06C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2006', '$25', '06C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2006', '$50', '06C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2006', '$100', '06C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2006'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2006', '$10', '06C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2006', '$25', '06C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2006', '$50', '06C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2006', '$100', '06C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2006'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2006', '$10', '06C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2006', '$25', '06C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2006', '$50', '06C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2006', '$100', '06C4M0'
+
+
+--- PLATINUM 2007
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2007'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2007', '$10', '07C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2007', '$25', '07C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2007', '$50', '07C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2007', '$100', '07C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2007'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2007', '$10', '07C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2007', '$25', '07C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2007', '$50', '07C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2007', '$100', '07C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2007'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2007', '$10', '07C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2007', '$25', '07C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2007', '$50', '07C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2007', '$100', '07C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2007'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2007', '$10', '07C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2007', '$25', '07C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2007', '$50', '07C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2007', '$100', '07C4M0'
+
+
+
+--- PLATINUM 2008
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2008'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2008', '$10', '08C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2008', '$25', '08C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2008', '$50', '08C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2008', '$100', '08C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2008'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2008', '$10', '08C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2008', '$25', '08C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2008', '$50', '08C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2008', '$100', '08C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2008'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2008', '$10', '08C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2008', '$25', '08C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2008', '$50', '08C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2008', '$100', '08C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2008'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2008', '$10', '08C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2008', '$25', '08C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2008', '$50', '08C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2008', '$100', '08C4M0'
+
+
+
+--- PLATINUM 2009
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2009'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2009', '$10', '09C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2009', '$25', '09C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2009', '$50', '09C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2009', '$100', '09C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2009'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2009', '$10', '09C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2009', '$25', '09C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2009', '$50', '09C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2009', '$100', '09C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2009'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2009', '$10', '09C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2009', '$25', '09C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2009', '$50', '09C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2009', '$100', '09C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2009'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2009', '$10', '09C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2009', '$25', '09C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2009', '$50', '09C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2009', '$100', '09C4M0'
+
+
+--- PLATINUM 2010
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2010'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2010', '$10', '10C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2010', '$25', '10C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2010', '$50', '10C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2010', '$100', '10C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2010'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2010', '$10', '10C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2010', '$25', '10C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2010', '$50', '10C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2010', '$100', '10C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2010'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2010', '$10', '10C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2010', '$25', '10C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2010', '$50', '10C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2010', '$100', '10C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2010'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2010', '$10', '10C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2010', '$25', '10C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2010', '$50', '10C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2010', '$100', '10C4M0'
+
+--*****************
+-- PLATINUM 2012 --
+--*****************
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2012', '$10', '12C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2012', '$25', '12C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2012', '$50', '12C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2012', '$100', '12C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2012', '$10', '12C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2012', '$25', '12C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2012', '$50', '12C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2012', '$100', '12C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2012', '$10', '12C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2012', '$25', '12C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2012', '$50', '12C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2012', '$100', '12C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2012'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2012', '$10', '12C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2012', '$25', '12C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2012', '$50', '12C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2012', '$100', '12C4M0'
+
+--*****************
+-- PLATINUM 2013 --
+--*****************
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2013'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2013', '$10', '13C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2013', '$25', '13C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2013', '$50', '13C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2013', '$100', '13C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2013'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2013', '$10', '13C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2013', '$25', '13C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2013', '$50', '13C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2013', '$100', '13C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2013'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2013', '$10', '13C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2013', '$25', '13C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2013', '$50', '13C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2013', '$100', '13C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2013'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2013', '$10', '13C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2013', '$25', '13C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2013', '$50', '13C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2013', '$100', '13C4M0'
+
+--*****************
+-- PLATINUM 2014 --
+--*****************
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2014'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2014', '$10', '14C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2014', '$25', '14C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2014', '$50', '14C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2014', '$100', '14C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2014'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2014', '$10', '14C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2014', '$25', '14C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2014', '$50', '14C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2014', '$100', '14C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2014'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2014', '$10', '14C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2014', '$25', '14C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2014', '$50', '14C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2014', '$100', '14C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2014'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2014', '$10', '14C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2014', '$25', '14C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2014', '$50', '14C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2014', '$100', '14C4M0'
+
+--*****************
+-- PLATINUM 2015 --
+--*****************
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2015'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2015', '$10', '15C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2015', '$25', '15C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2015', '$50', '15C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2015', '$100', '15C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2015'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2015', '$10', '15C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2015', '$25', '15C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2015', '$50', '15C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2015', '$100', '15C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2015'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2015', '$10', '15C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2015', '$25', '15C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2015', '$50', '15C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2015', '$100', '15C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2015'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2015', '$10', '15C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2015', '$25', '15C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2015', '$50', '15C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2015', '$100', '15C4M0'
+
+--*****************
+-- PLATINUM 2016 --
+--*****************
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 69', '2016'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2016', '$10', '16C1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2016', '$25', '16C2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2016', '$50', '16C3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 69', '2016', '$100', '16C4P9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'PR 70', '2016'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2016', '$10', '16C1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2016', '$25', '16C2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2016', '$50', '16C3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'PR 70', '2016', '$100', '16C4P0'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 69', '2016'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2016', '$10', '16C1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2016', '$25', '16C2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2016', '$50', '16C3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 69', '2016', '$100', '16C4M9'
+
+EXEC usp_IM_Add_Row 'PLATINUM', 'MS 70', '2016'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2016', '$10', '16C1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2016', '$25', '16C2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2016', '$50', '16C3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'PLATINUM', 'MS 70', '2016', '$100', '16C4M0'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

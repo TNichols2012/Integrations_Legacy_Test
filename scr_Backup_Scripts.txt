@@ -1,0 +1,78 @@
+BACKUP DATABASE [USRC_Main] 
+TO  DISK = N'\\asset01132\SQL_Data\USRC_AmcatSQL_Backup_USRC_Main.bak' 
+WITH NOFORMAT, INIT, NAME = N'USRC_Fileserver_Backup_USRC_Main', 
+SKIP, REWIND, NOUNLOAD,  STATS = 10
+GO
+
+DECLARE @backupSetId as int
+SELECT @backupSetId = position 
+FROM msdb..backupset 
+WHERE database_name=N'USRC_Main' 
+AND backup_set_id=(SELECT MAX(backup_set_id) FROM msdb..backupset WHERE database_name=N'USRC_Main' )
+
+IF @backupSetId IS NULL BEGIN RAISERROR(N'Verify failed. Backup information for database ''USRC_Main'' not found.', 16, 1) END
+
+RESTORE VERIFYONLY FROM  DISK = N'\\USRC_Fileserver\Backups\SQL_Server\USRC_AmcatSQL\USRC_AmcatSQL_Backup_USRC_Main.bak' 
+WITH  FILE = @backupSetId,  NOUNLOAD,  NOREWIND
+
+BACKUP DATABASE [USRC_Main] 
+TO  DISK = N'\\USRC_Fileserver\Backups\SQL_Server\USRC_AmcatSQL\USRC_AmcatSQL_Backup_USRC_Main.bak' 
+WITH NOFORMAT, INIT,  
+NAME = N'USRC_Fileserver_Backup_USRC_Main', SKIP, REWIND, NOUNLOAD,  STATS = 10
+GO
+
+
+
+
+BACKUP DATABASE [Data_Warehouse] 
+TO  DISK = N'\\usrcbkup01\Backups\SQL_Server\usrcrep02\USRCREP02_Backup_Data_Warehouse.bak' WITH NOFORMAT, INIT,  
+NAME = N'USRCREP02_Backup_Data_Warehouse', SKIP, REWIND, NOUNLOAD,  STATS = 10
+GO
+
+DECLARE @backupSetId as int
+SELECT @backupSetId = position 
+FROM msdb..backupset 
+WHERE database_name=N'Data_Warehouse' 
+AND backup_set_id=(SELECT MAX(backup_set_id) FROM msdb..backupset WHERE database_name=N'Data_Warehouse' )
+
+IF @backupSetId IS NULL BEGIN RAISERROR(N'Verify failed. Backup information for database ''Data_Warehouse'' not found.', 16, 1) END
+RESTORE VERIFYONLY FROM  DISK = N'\\usrcbkup01\backups\SQL_Server\USRCREP02\USRCREP02_Backup_Data_Warehouse.bak' 
+WITH  FILE = @backupSetId,  NOUNLOAD,  NOREWIND
+
+
+
+
+BACKUP LOG <database> WITH TRUNCATE_ONLY
+DBCC SHRINKDATABASE (<database>, TRUNCATEONLY)
+
+
+
+
+-- BACKUP ALL DATABASES
+DECLARE @name VARCHAR(50) -- database name  
+DECLARE @path VARCHAR(256) -- path for backup files  
+DECLARE @fileName VARCHAR(256) -- filename for backup  
+DECLARE @fileDate VARCHAR(20) -- used for file name 
+
+SET @path = 'C:\Backup\'  
+
+SELECT @fileDate = CONVERT(VARCHAR(20),GETDATE(),112) 
+
+DECLARE db_cursor CURSOR FOR  
+SELECT name 
+FROM master.dbo.sysdatabases 
+WHERE name NOT IN ('master','model','msdb','tempdb')  
+
+OPEN db_cursor   
+FETCH NEXT FROM db_cursor INTO @name   
+
+WHILE @@FETCH_STATUS = 0   
+BEGIN   
+       SET @fileName = @path + @name + '_' + @fileDate + '.BAK'  
+       BACKUP DATABASE @name TO DISK = @fileName  
+
+       FETCH NEXT FROM db_cursor INTO @name   
+END   
+
+CLOSE db_cursor   
+DEALLOCATE db_cursor 

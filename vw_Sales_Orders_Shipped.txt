@@ -1,0 +1,11 @@
+SELECT     TOP 100 PERCENT 
+Order_Date, 
+Order_ID, 
+SUM(ISNULL(Value_Shipped, 0)) AS Ttl_Shipped_Value, 
+SUM(CASE WHEN Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Bullion_Sale, 
+SUM(CASE WHEN Item_Type <> 'BULL' OR Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Non_Bullion_Sale
+FROM         dbo.vw_Sales_Orders_by_Item_State
+WHERE     (item_state IN ('SH', 'PS'))
+GROUP BY Order_Date, Order_ID
+HAVING      (Order_Date >= CONVERT(DATETIME, '2001-01-01 00:00:00', 102)) AND (Order_Date < CONVERT(DATETIME, '2007-01-01 00:00:00', 102))
+ORDER BY Order_Date

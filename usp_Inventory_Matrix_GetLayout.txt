@@ -1,0 +1,10 @@
+
+
+ALTER PROCEDURE [dbo].[usp_InventoryMatrix_GetLayout] (@HeaderId int, @SectionId int)
+AS
+SELECT		[Description]
+FROM		InventoryMatrixHeaderSectionMappings
+INNER JOIN	InventoryMatrixLayouts
+ON		InventoryMatrixHeaderSectionMappings.LayoutId = InventoryMatrixLayouts.[Id]
+WHERE		(HeaderId = @HeaderId)
+AND		(SectionId = @SectionId)

@@ -1,0 +1,44 @@
+set ANSI_NULLS ON
+set QUOTED_IDENTIFIER ON
+GO
+
+-- Provide the phrase before (ex. 'Worklog Related to'), the field searched (ex. UPDATE_ACTION), and 
+-- the phrase after (ex. ']').
+-- This function returns the string found after any phrase and before any phrase, within any field searched.
+
+ALTER FUNCTION [dbo].[Get_String_Within_Phrase](@in_Phrase_Before varchar(250),@in_Search_Field  text, @in_Phrase_After varchar(250)   ) 
+RETURNS varchar(250)
+  AS
+  BEGIN
+	Declare @str_String As varchar(250)
+	Set @str_String = null -- to clear the variable buffer
+
+	Set @in_Phrase_Before=char(37)+(LTrim(Rtrim(@in_Phrase_Before)))+ char(37) 
+	-- if 'Null', all strings will be returned
+  	
+	Set @in_Phrase_After=char(37)+ @in_Phrase_After + char(37) 
+	-- if 'Null', all strings after phrase will be returned
+
+	If (PatIndex(@in_Phrase_Before, @in_Search_Field)) > 0 --Checks to see if the phrase before is in the search field
+		Set @str_String=SubString(@in_Search_Field,( (PatIndex(@in_Phrase_Before, @in_Search_Field))+ (Len(@in_Phrase_Before)-2)), 8000)
+	--ELSE SET @str_String=SubString(@in_Search_Field,  1, 8000 )
+
+	If (PatIndex(@in_Phrase_After, @str_String)) >0 -- Checks to see if the phrase after is in the search field
+		Set @str_String=SubString(@str_String, 1, ((PatIndex(@in_Phrase_After, @str_String))-1))
+	--ELSE SET @str_String=@in_Search_Field
+
+  RETURN @str_String
+  
+  END
+
+
+
+
+
+
+
+
+
+
+
+

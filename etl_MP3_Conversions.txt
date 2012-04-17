@@ -1,0 +1,145 @@
+Dim obj_FSO, str_Data_File1, str_Data_File2
+Dim str_SQLquery
+Dim rst_SQLquery, rst_SQLquery_Check
+
+Function Main()
+Set obj_FSO = CreateObject("Scripting.FileSystemObject") 
+
+If obj_FSO.FileExists("\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_MP3_Conversion_A.bat") Then 
+	obj_FSO.DeleteFile "\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_MP3_Conversion_A.bat"  
+End If
+
+If obj_FSO.FileExists("\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_MP3_Conversion_B.bat") Then 
+	obj_FSO.DeleteFile "\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_MP3_Conversion_B.bat"  
+End If
+
+
+Set str_Data_File1= obj_FSO.OpenTextFile("\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_MP3_Conversion_A.bat", 8, True) 
+
+	'Get list of files to be converted
+	str_SQLquery =	"SELECT TOP 50 PERCENT " & _
+			"PKCallResults, New_File_Name, MP3_File_Name FROM tbl_Survey_Calls " & _
+			"WHERE (Converted IS NULL OR Converted <>'Yes') " & _
+			"AND Call_Start_Time >= dbo.Get_TheDate(GetDate())-3 "  & _  
+			"ORDER BY PKCallResults "
+				
+	'AND PKCallResults IN ('3050031', '3050028') " 
+
+	'Get the ADO Recordset
+	Set rst_SQLquery_Check = ExecuteSQL(str_SQLquery)
+
+	'If the Recordset is not empty then proceed
+	If Not (rst_SQLquery_Check.Eof and rst_SQLquery_Check.Bof ) Then 			
+			
+		'ADO Recordset 
+		Set rst_SQLquery = ExecuteSQL(str_SQLquery)
+
+		While Not rst_SQLquery.Eof 
+				'str_Data_File1.Write( rst_SQLquery("PKCallResults") )
+				str_Data_File1.Write("IF NOT EXIST ")
+				str_Data_File1.Write( rst_SQLquery("MP3_File_Name") )
+				str_Data_File1.Write( " " )
+				str_Data_File1.Write( "lame")
+				str_Data_File1.Write( " " )
+				str_Data_File1.Write( rst_SQLquery("New_File_Name") )
+				str_Data_File1.Write( " " )
+				str_Data_File1.Write( rst_SQLquery("MP3_File_Name") )
+				'str_Data_File1.Write( " >> c:\Lame_Test.log" )
+				str_Data_File1.WriteLine
+
+				str_Data_File1.Write("IF EXIST ")
+				str_Data_File1.Write( rst_SQLquery("MP3_File_Name") )
+				str_Data_File1.Write( " " )
+				str_Data_File1.Write( "del")
+				str_Data_File1.Write( " " )
+				str_Data_File1.Write( rst_SQLquery("New_File_Name") )
+				str_Data_File1.WriteLine
+
+			'Move on to to the next record
+			rst_SQLquery.MoveNext		
+
+		Wend
+
+	Else	str_Data_File1.WriteLine("dir")
+	End If 
+
+	str_Data_File1.WriteLine("dir")
+	str_Data_File1.Close
+
+Set str_Data_File2= obj_FSO.OpenTextFile("\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_MP3_Conversion_B.bat", 8, True) 
+
+	'Get list of files to be converted
+	str_SQLquery =	"SELECT TOP 50 PERCENT " & _
+			"PKCallResults, New_File_Name, MP3_File_Name FROM tbl_Survey_Calls " & _
+			"WHERE (Converted IS NULL OR Converted <>'Yes') " & _
+			"AND Call_Start_Time >= dbo.Get_TheDate(GetDate())-3 "  & _ 
+			"ORDER BY PKCallResults DESC "
+				
+	 'AND PKCallResults IN ('3050031', '3050028') " 
+
+	'Get the ADO Recordset
+	Set rst_SQLquery_Check = ExecuteSQL(str_SQLquery)
+
+	'If the Recordset is not empty then proceed
+	If Not (rst_SQLquery_Check.Eof and rst_SQLquery_Check.Bof ) Then 			
+			
+		'ADO Recordset 
+		Set rst_SQLquery = ExecuteSQL(str_SQLquery)
+
+		While Not rst_SQLquery.Eof 
+				'str_Data_File2.Write( rst_SQLquery("PKCallResults") )
+				str_Data_File2.Write("IF NOT EXIST ")
+				str_Data_File2.Write( rst_SQLquery("MP3_File_Name") )
+				str_Data_File2.Write( " " )
+				str_Data_File2.Write( "lame")
+				str_Data_File2.Write( " " )
+				str_Data_File2.Write( rst_SQLquery("New_File_Name") )
+				str_Data_File2.Write( " " )
+				str_Data_File2.Write( rst_SQLquery("MP3_File_Name") )
+				'str_Data_File.Write( " >> c:\Lame_Test.log" )
+				str_Data_File2.WriteLine
+
+				str_Data_File1.Write("IF EXIST ")
+				str_Data_File1.Write( rst_SQLquery("MP3_File_Name") )
+				str_Data_File1.Write( " " )
+				str_Data_File1.Write( "del")
+				str_Data_File1.Write( " " )
+				str_Data_File1.Write( rst_SQLquery("New_File_Name") )
+				str_Data_File1.WriteLine
+
+			'Move on to to the next record
+			rst_SQLquery.MoveNext		
+
+		Wend
+
+	Else	str_Data_File2.WriteLine("dir")
+	End If 
+
+	str_Data_File2.WriteLine("dir")
+	str_Data_File2.Close
+
+End Function
+
+
+
+
+
+
+Function ExecuteSQL(mySQLCmdText)
+
+	'ADO Connection String to the Inventory
+	Const DB_CONNECT_STRING = "Provider=SQLOLEDB.1;Data Source=USRC_FILESERVER; Initial Catalog=Data_Warehouse;user id = 'SQL_admin';password='AustinDat@'  "
+
+	' instantiate the ADO objects
+	  Dim myConn
+	  Dim myRecordset
+
+	  set myConn = CreateObject("ADODB.Connection")
+	  set myRecordset = CreateObject("ADODB.Recordset" )
+
+	' set the connection properties to point to the Pubs database using the constant
+	  myConn.Open = DB_CONNECT_STRING
+	  myRecordset.Open mySQLCmdText, myConn
+	  
+	  Set ExecuteSQL = myRecordset
+End Function		

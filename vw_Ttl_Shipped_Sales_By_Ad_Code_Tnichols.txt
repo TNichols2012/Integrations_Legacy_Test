@@ -1,0 +1,32 @@
+SELECT     TOP (100) PERCENT 
+dbo.Results_DBF_CMS.odr_date AS Order_Date, 
+dbo.tbl_Ad_Codes.Campaign, 
+dbo.Results_DBF_CMS.cl_key AS Ad_Code, 
+dbo.Results_DBF_Items.[order] AS Order_ID, 
+dbo.Results_DBF_Items.item_id AS Item_ID, 
+dbo.Results_DBF_Items.item AS Item_Name, 
+dbo.Results_DBF_Stock.assoc AS Item_Type, 
+dbo.Results_DBF_Stock.number AS Stock_Number, 
+dbo.Results_DBF_Stock.[desc] AS Item_Description, 
+(CASE WHEN dbo.Results_DBF_ITEMS.item_state = 'RT' AND dbo.Results_DBF_ITEMS.quants > 0 
+	THEN dbo.Results_DBF_ITEMS.quants * - 1 
+	ELSE dbo.Results_DBF_ITEMS.quants END) AS Quantity_Shipped, 
+(CASE WHEN dbo.Results_DBF_ITEMS.item_state = 'RT' AND dbo.Results_DBF_ITEMS.quanto > 0 
+	THEN dbo.Results_DBF_ITEMS.quanto * - 1 
+	ELSE dbo.Results_DBF_ITEMS.quanto END) AS Quantity_Ordered, 
+dbo.Results_DBF_Items.it_unlist AS Unit_List_Price, 
+(CASE WHEN dbo.Results_DBF_ITEMS.item_state = 'RT' AND dbo.Results_DBF_ITEMS.it_unlist > 0 
+	THEN dbo.Results_DBF_ITEMS.quanto * dbo.Results_DBF_ITEMS.it_unlist * - 1 
+	ELSE dbo.Results_DBF_ITEMS.quanto * dbo.Results_DBF_ITEMS.it_unlist END) AS Value_Ordered, 
+(CASE WHEN dbo.Results_DBF_ITEMS.item_state = 'RT' AND dbo.Results_DBF_ITEMS.it_unlist > 0 
+	THEN dbo.Results_DBF_ITEMS.quants * dbo.Results_DBF_ITEMS.it_unlist * - 1 
+	ELSE dbo.Results_DBF_ITEMS.quants * dbo.Results_DBF_ITEMS.it_unlist END) AS Value_Shipped, 
+dbo.Results_DBF_Items.item_state AS Item_State
+FROM         dbo.tbl_Ad_Codes 
+RIGHT OUTER JOIN      dbo.Results_DBF_CMS ON dbo.tbl_Ad_Codes.Ad_Code = dbo.Results_DBF_CMS.cl_key 
+LEFT OUTER JOIN       dbo.Results_DBF_CUST ON dbo.Results_DBF_CMS.custnum = dbo.Results_DBF_CUST.custnum 
+LEFT OUTER JOIN       dbo.Results_DBF_Items 
+LEFT OUTER JOIN       dbo.Results_DBF_Stock ON dbo.Results_DBF_Items.item = dbo.Results_DBF_Stock.number ON 
+                      dbo.Results_DBF_CMS.[order] = dbo.Results_DBF_Items.[order]
+WHERE     (dbo.Results_DBF_Items.item <> '') AND (dbo.Results_DBF_CMS.ordertype <> 'CXL')
+ORDER BY Order_ID

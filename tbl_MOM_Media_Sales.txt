@@ -1,0 +1,60 @@
+IF EXISTS (SELECT TABLE_NAME 
+	FROM Information_Schema.Tables
+	WHERE Table_Name='Results_Media_Code_Orders')
+DROP TABLE Results_Media_Code_Orders
+GO
+
+SELECT vw1.Ad_Code, 
+SUM (CASE WHEN (vw1.Net_Orders > 0) Then 1 ELSE 0 END) AS Orders,
+SUM (CASE WHEN (vw1.Net_B_Orders > 0) Then 1 ELSE 0 END) AS B_Orders,
+SUM (CASE WHEN (vw1.Net_nB_Orders > 0) Then 1 ELSE 0 END) AS nB_Orders,
+SUM (CASE WHEN (vw1.GR_Orders > 0) Then 1 ELSE 0 END) AS GR_Orders
+INTO Results_Media_Code_Orders
+FROM (
+		SELECT 
+		RTRIM(Ad_Code) AS Ad_Code,
+		Order_ID,
+		SUM (CASE WHEN Stock_Type ='Gold_Report' AND Item_State IN ('PS','SH') THEN 1 
+			WHEN Stock_Type ='Gold_Report' AND Item_State IN ('RT') THEN -1 ELSE 0 END) AS GR_Orders,
+		SUM (CASE WHEN Stock_Type <>'Gold_Report' AND Item_State IN ('PS','SH') THEN 1 
+			WHEN Stock_Type <>'Gold_Report' AND Item_State IN ('RT') THEN -1 ELSE 0 END) AS Net_Orders,
+		SUM (CASE WHEN (Stock_Type ='Bullion' AND Item_State IN ('PS','SH') ) THEN 1 
+			WHEN (Stock_Type ='Bullion' AND Item_State IN ('RT') ) THEN -1 ELSE 0 END) AS Net_B_Orders,
+		SUM (CASE WHEN (Stock_Type NOT IN ('Bullion', 'Gold_Report') AND Item_State IN ('PS','SH') ) THEN 1 
+			WHEN (Stock_Type NOT IN ('Bullion', 'Gold_Report') AND Item_State IN ('RT') ) THEN -1 ELSE 0 END) AS Net_nB_Orders
+		FROM vw_Sales_Orders
+		WHERE Item_State IN ('PS','SH', 'RT')
+		GROUP BY Ad_Code, Order_ID
+	) AS vw1
+GROUP BY vw1.Ad_Code
+GO
+
+
+CREATE CLUSTERED INDEX Results_Media_Code_Orders_Ad_Code
+ON Results_Media_Code_Orders (Ad_Code) 
+GO
+
+IF EXISTS (SELECT TABLE_NAME 
+	FROM Information_Schema.Tables
+	WHERE Table_Name='Results_Media_Code_Values')
+DROP TABLE Results_Media_Code_Values
+GO
+
+SELECT 
+Campaign, 
+Ad_Code,
+SUM (Value_Shipped) AS Ttl_Shipped_Value,
+SUM (CASE WHEN Stock_Type ='Bullion' THEN Value_Ordered ELSE 0 END) AS Ttl_Bullion,
+SUM (CASE WHEN Stock_Type <>'Bullion' THEN Value_Ordered ELSE 0 END) AS Ttl_Non_Bullion,
+SUM (CASE WHEN Stock_Type IS NULL THEN Value_Ordered ELSE 0 END) AS Ttl_Misc
+INTO Results_Media_Code_Values
+FROM vw_Sales_Orders
+WHERE Item_State IN ('PS','SH', 'RT')
+GROUP BY Campaign, Ad_Code
+GO
+
+CREATE CLUSTERED INDEX Results_Media_Code_Values_Ad_Code
+ON Results_Media_Code_Values (Ad_Code) 
+GO
+
+

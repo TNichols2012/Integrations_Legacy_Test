@@ -1,0 +1,14 @@
+SELECT     TOP (100) PERCENT 
+dbo.tbl_Dates.Daily_Date, 
+dbo.tbl_Sales_Teams.PKUsers, 
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_Sales_Teams.Login, 
+dbo.tbl_Sales_Teams.Sales_Manager, 
+dbo.tbl_Sales_Teams.Site
+FROM         dbo.tbl_Sales_Teams 
+CROSS JOIN   dbo.tbl_Dates
+WHERE     (dbo.tbl_Dates.Daily_Date > CONVERT(DATETIME, '2005-01-01 00:00:00', 102)) 
+AND (dbo.tbl_Dates.Daily_Date <= dbo.Get_TheDate(GETDATE()) - 1) 
+AND (dbo.tbl_Sales_Teams.Site <> '') 
+AND (dbo.tbl_Sales_Teams.Sales_Manager <> '')
+ORDER BY dbo.tbl_Dates.Daily_Date

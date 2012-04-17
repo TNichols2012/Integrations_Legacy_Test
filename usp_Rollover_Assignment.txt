@@ -1,0 +1,290 @@
+USE [Data_Warehouse]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_Rollover_Assignment]    Script Date: 10/01/2010 13:15:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[usp_Rollover_Assignment] 
+--@in_Count float 
+AS 
+BEGIN
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_MOM_Cust_History_Pending'
+		)
+DROP TABLE tbl_MOM_Cust_History_Pending
+
+SELECT     
+CUSTNUM AS Cust_ID
+INTO tbl_MOM_Cust_History_Pending
+FROM         Results_MOM_CMS 
+WHERE  (ORDERTYPE <> 'CXL') 
+AND (PERM_HOLD = 1) 
+AND (ORDER_ST2 <> 'CN') 
+AND (ORD_TOTAL > 0)
+GROUP BY CUSTNUM
+
+CREATE CLUSTERED INDEX [idx_tbl_MOM_Cust_History_Pending_Cust_ID]
+ON [dbo].[tbl_MOM_Cust_History_Pending] ([Cust_ID])
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_MOM_Cust_History_Summary'
+		)
+DROP TABLE tbl_MOM_Cust_History_Summary
+
+SELECT *
+INTO tbl_MOM_Cust_History_Summary
+FROM vw_MOM_Cust_History
+
+CREATE NONCLUSTERED INDEX [idx_tbl_MOM_Cust_History_Summary_Change_Date]
+ON [dbo].[tbl_MOM_Cust_History_Summary] ([Change_Date])
+INCLUDE ([Cust_ID])
+
+CREATE NONCLUSTERED INDEX [idx_tbl_MOM_Cust_History_Summary_Cust_ID]
+ON [dbo].[tbl_MOM_Cust_History_Summary] ([Cust_ID])
+INCLUDE ([Change_Date])
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_MOM_Cust_History_Exceptions'
+		)
+DROP TABLE tbl_MOM_Cust_History_Exceptions
+
+SELECT
+Cust_ID
+INTO tbl_MOM_Cust_History_Exceptions
+FROM tbl_MOM_Cust_History
+GROUP BY Cust_ID
+HAVING COUNT(*) >=3
+
+CREATE CLUSTERED INDEX [idx_tbl_MOM_Cust_History_Exceptions_Cust_ID]
+ON [dbo].[tbl_MOM_Cust_History_Exceptions] ([Cust_ID])
+
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_Rollover_49'
+		)
+DROP TABLE tbl_Rollover_49
+
+SELECT 
+IDENTITY(int, 1,1) AS Index_ID,
+tMC.Entry_Date,
+tMC.Cust_ID, 
+tMC.First_Name, 
+tMC.Last_Name, 
+tMC.Gross, 
+tMC.Sales_ID, 
+tST.[Name], 
+tST.[Site],
+tMCH.Change_Date AS LB_Rollover_Date,
+tMC.Last_Order_Date,
+'49' AS Assign_To
+INTO tbl_Rollover_49
+FROM tbl_MOM_Cust tMC
+LEFT OUTER JOIN tbl_Sales_Teams tST 
+ON tMC.Sales_ID = tST.[Login]
+LEFT OUTER JOIN vw_MOM_Cust_History tMCH
+ON tMC.Cust_ID=tMCH.Cust_ID
+LEFT OUTER JOIN tbl_MOM_Cust_History_Pending tMCHP
+ON tMC.Cust_ID=tMCHP.Cust_ID
+LEFT OUTER JOIN tbl_Rollover_Exclusions tRE
+ON tMC.Sales_ID=tRE.Sales_ID
+INNER JOIN Results_MOM_Cust rMC
+ON rMC.CUSTNUM=tMC.Cust_ID
+WHERE Site IN ('AU', 'Austin', 'Beaumont', 'BM', 'C3')
+AND tMC.Gross <50
+AND (tMC.Address_Type LIKE 'B%' OR tMC.Address_Type LIKE 'P%' OR tMC.Address_Type LIKE 'O%')
+AND rMC.COMMENT NOT LIKE '%Do%Not%Roll%'
+AND rMC.COMMENT2 NOT LIKE '%Do%Not%Roll%'
+AND rMC.NOFAX = 0
+AND tMC.Last_Order_Date < dbo.Get_TheDate(GetDate()-90)
+AND tMCH.Change_Date < dbo.Get_TheDate(GetDate()-90)
+AND tMCHP.Cust_ID IS NULL
+AND tRE.Sales_ID IS NULL
+ORDER BY tMC.Gross DESC 
+
+CREATE CLUSTERED INDEX idx_tbl_Rollover_49_Index_ID
+ON tbl_Rollover_49 (Index_ID)
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_Rollover_50'
+		)
+DROP TABLE tbl_Rollover_50
+
+SELECT 
+IDENTITY(int, 1,1) AS Index_ID,
+tMC.Entry_Date,
+tMC.Cust_ID, 
+tMC.First_Name, 
+tMC.Last_Name, 
+tMC.Gross, 
+tMC.Sales_ID, 
+tST.[Name], 
+tST.[Site],
+tMCH.Change_Date AS LB_Rollover_Date,
+tMC.Last_Order_Date,
+'50' AS Assign_To
+INTO tbl_Rollover_50
+FROM tbl_MOM_Cust tMC
+LEFT OUTER JOIN tbl_Sales_Teams tST 
+ON tMC.Sales_ID = tST.[Login]
+LEFT OUTER JOIN vw_MOM_Cust_History tMCH
+ON tMC.Cust_ID=tMCH.Cust_ID
+LEFT OUTER JOIN tbl_MOM_Cust_History_Pending tMCHP
+ON tMC.Cust_ID=tMCHP.Cust_ID
+LEFT OUTER JOIN tbl_Rollover_Exclusions tRE
+ON tMC.Sales_ID=tRE.Sales_ID
+INNER JOIN Results_MOM_Cust rMC
+ON rMC.CUSTNUM=tMC.Cust_ID
+WHERE Site IN ('AU', 'Austin', 'Beaumont', 'BM', 'C3')
+AND tMC.Gross >0
+AND tMC.Gross <25000
+AND (tMC.Address_Type LIKE 'B%' OR tMC.Address_Type LIKE 'P%' OR tMC.Address_Type LIKE 'O%')
+AND rMC.COMMENT NOT LIKE '%Do%Not%Roll%'
+AND rMC.COMMENT2 NOT LIKE '%Do%Not%Roll%'
+AND rMC.NOFAX = 0
+AND tMC.Last_Order_Date < dbo.Get_TheDate(GetDate()-90)
+AND tMCH.Change_Date < dbo.Get_TheDate(GetDate()-90)
+AND tMCHP.Cust_ID IS NULL
+AND tRE.Sales_ID IS NULL
+AND tMC.Cust_ID IN (
+				SELECT
+				Cust_ID
+				FROM tbl_MOM_Cust_History
+				GROUP BY Cust_ID
+				HAVING COUNT(*) >=3
+				)
+ORDER BY tMC.Gross DESC 
+
+
+CREATE CLUSTERED INDEX idx_tbl_Rollover_50_Index_ID
+ON tbl_Rollover_50 (Index_ID)
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_Rollover_List'
+		)
+DROP TABLE tbl_Rollover_List
+
+SELECT 
+IDENTITY(int, 1,1) AS Index_ID,
+tMC.Entry_Date,
+tMC.Cust_ID, 
+tMC.First_Name, 
+tMC.Last_Name, 
+tMC.Gross, 
+tMC.Sales_ID, 
+tST.[Name], 
+tST.[Site],
+tMCHS.Change_Date AS LB_Rollover_Date,
+tMC.Last_Order_Date,
+null AS Assign_To
+INTO tbl_Rollover_List
+FROM tbl_MOM_Cust tMC
+LEFT OUTER JOIN tbl_Sales_Teams tST 
+ON tMC.Sales_ID = tST.[Login]
+LEFT OUTER JOIN tbl_MOM_Cust_History_Summary tMCHS
+ON tMC.Cust_ID=tMCHS.Cust_ID
+LEFT OUTER JOIN tbl_MOM_Cust_History_Exceptions tMCHE
+ON tMC.Cust_ID = tMCHE.Cust_ID
+LEFT OUTER JOIN tbl_MOM_Cust_History_Pending tMCHP
+ON tMC.Cust_ID=tMCHP.Cust_ID
+LEFT OUTER JOIN tbl_Rollover_Exclusions tRE
+ON tMC.Sales_ID=tRE.Sales_ID
+INNER JOIN Results_MOM_Cust rMC
+ON rMC.CUSTNUM=tMC.Cust_ID
+WHERE Site IN ('AU', 'Austin', 'Beaumont', 'BM', 'C3')
+AND tMC.Gross >=50
+AND tMC.Gross <25000
+AND (tMC.Address_Type LIKE 'B%' OR tMC.Address_Type LIKE 'P%' OR tMC.Address_Type LIKE 'O%')
+AND rMC.COMMENT NOT LIKE '%Do%Not%Roll%'
+AND rMC.COMMENT2 NOT LIKE '%Do%Not%Roll%'
+AND rMC.NOFAX = 0
+AND tMC.Last_Order_Date < dbo.Get_TheDate(GetDate()-90)
+AND tMCHS.Change_Date < dbo.Get_TheDate(GetDate()-90)
+AND tMCHE.Cust_ID IS NULL
+AND tMCHP.Cust_ID IS NULL
+AND tRE.Sales_ID IS NULL
+ORDER BY tMC.Gross DESC 
+
+CREATE CLUSTERED INDEX idx_tbl_Rollover_List_Index_ID
+ON tbl_Rollover_List (Index_ID)
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_Rollover_Rank'
+		)
+DROP TABLE tbl_Rollover_Rank
+
+SELECT 
+Rollover_Rank AS Ranking,
+[Login]
+INTO tbl_Rollover_Rank
+FROM tbl_Sales_Teams
+WHERE Rollover_Rank IS NOT NULL 
+AND tbl_Sales_Teams.Active = 1
+ORDER BY Rollover_Rank, [Login]
+
+ALTER TABLE tbl_Rollover_Rank ADD Rollover_Rank Int Identity(1, 1)
+
+
+DECLARE @int_Increment int
+DECLARE @tmp_Count int
+
+SET @tmp_Count = (SELECT COUNT(*) FROM tbl_Rollover_List)
+SET @int_Increment = (SELECT COUNT(*) FROM tbl_Rollover_Rank) 
+
+IF @tmp_Count > 0 
+	BEGIN
+	DECLARE @var int
+	DECLARE @first int
+	DECLARE @second int
+
+	SET @first=1
+	SET @second=1
+
+	WHILE @first<=@int_Increment
+		BEGIN
+			SET @second=@first
+		
+			WHILE @second<=@tmp_count
+				BEGIN
+			
+			
+			
+					UPDATE [Data_Warehouse].[dbo].[tbl_Rollover_List]
+					SET Assign_To = @first
+					WHERE Index_ID=@second
+					AND (Assign_To <>'50' OR Assign_To IS NULL)
+
+					SET	@second=@second+@int_Increment
+	
+				END --WHILE @second<=@tmp_count
+			
+			SET @first=@first+1
+		
+		END --WHILE @first<=@int_Increment
+		
+		ALTER TABLE tbl_Rollover_List ALTER COLUMN Assign_To varchar(3)
+
+		UPDATE tbl_Rollover_List 
+		SET Assign_To = tbl_Rollover_Rank.[Login]
+		FROM tbl_Rollover_Rank 
+		WHERE tbl_Rollover_List.Assign_To = CONVERT(varchar(10), tbl_Rollover_Rank.Rollover_Rank)
+		
+	END --IF @tmp_Count > 0 
+
+END

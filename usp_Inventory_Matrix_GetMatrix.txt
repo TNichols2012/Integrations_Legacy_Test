@@ -1,0 +1,99 @@
+
+
+CREATE/ALTER PROCEDURE [dbo].[usp_InventORyMatrix_GetMatrix] (@custnum decimal(8, 0), @HeaderId int, @SectiONId int)
+AS
+DECLARE @MOM_CMS table ([ORder] decimal(8, 0))
+DECLARE @MOM_ITEMS table (item nvarchar(20), item_state nvarchar(2), quanto decimal(7, 2))
+DECLARE @ShippedItems table (item nvarchar(20), ShippedQuantity int)
+DECLARE @ReturnedItems table (item nvarchar(20), ReturnedQuantity int)
+DECLARE @Items table (item nvarchar(20), Quantity int)
+DECLARE @MOM_STOCK table (assoc nvarchar(6), Quantity int)
+DECLARE @InventORyMatrixHeaderSectiONMappings table ([Id] int)
+DECLARE @InventORyMatrixRowMappings table ([Id] int, [PositiON] int)
+DECLARE @InventORyMatrixColumnMappings table ([Id] int, [PositiON] int)
+
+-- Retrieve mom_cms recORds based ON customer number passed
+INSERT INTO	@MOM_CMS
+SELECT		[order]
+FROM		mom_cms
+WHERE (custnum = @custnum) AND (ORder_st2 <> 'CN') 
+
+-- Retrieve mom_items records based on order numbers for the selected customers 
+-- and making sure the trans_id field is not 0
+INSERT INTO	@MOM_ITEMS
+	SELECT 		item, item_state, quanto
+	FROM 		mom_items
+	WHERE		([order] in 
+				(SELECT [order]
+				FROM @MOM_CMS
+				)
+			)
+	AND		(trans_id <> 0)
+
+-- Retrieve ShippedItems records based on item_state field being 'SH' OR 'PS'
+INSERT INTO	@ShippedItems
+SELECT		item, sum(quanto)
+FROM		@MOM_ITEMS
+WHERE		(item_state = 'PS')
+OR		(item_state = 'SH')
+GROUP BY	item
+
+-- Retrieve ReturnedItems records based on item_state field being 'RT'
+INSERT INTO	@ReturnedItems
+SELECT		item, sum(quanto)
+FROM		@MOM_ITEMS
+WHERE		(item_state = 'RT')
+GROUP BY	item
+
+-- Retrieve Items records which is all items from the ShippedQuantity table 
+-- with a quantity of ShippedQuantity - ReturnedQuantity
+INSERT INTO	@Items
+SELECT		ShippedItems.item, ShippedQuantity - isnull(ReturnedQuantity, 0)
+FROM		@ShippedItems as ShippedItems
+LEFT OUTER JOIN	@ReturnedItems as ReturnedItems
+ON		ShippedItems.item = ReturnedItems.item
+
+-- Retrieve MOM_STOCK records for all the items in the Items table that match
+INSERT INTO	@MOM_STOCK
+SELECT		assoc, Quantity
+FROM		MOM_STOCK
+INNER JOIN	@Items as Items
+ON		MOM_STOCK.number = Items.item
+
+-- Retreive InventoryMatrixHeaderSectiONMappings records based on the HeaderId 
+-- and SectionId passed into the procedure
+INSERT INTO	@InventORyMatrixHeaderSectiONMappings
+SELECT		[Id]
+FROM		InventORyMatrixHeaderSectiONMappings
+WHERE		(HeaderId = @HeaderId)
+AND		(SectiONId = @SectiONId)
+
+-- Retrieve InventoryMatrixRowMappings records based on the HeaderSectionId retrieved
+INSERT INTO	@InventORyMatrixRowMappings
+SELECT		InventoryMatrixRowMappings.[Id], [Position]
+FROM		InventoryMatrixRowMappings
+INNER JOIN	@InventoryMatrixHeaderSectiONMappings as InventORyMatrixHeaderSectiONMappings
+ON		InventoryMatrixRowMappings.HeaderSectionMappingId = InventoryMatrixHeaderSectionMappings.[Id]
+
+-- Retrieve InventoryMatrixColumnMappings records based on the HeaderSectionId retrieved
+INSERT INTO	@InventoryMatrixColumnMappings
+SELECT		InventoryMatrixColumnMappings.[Id], [Position]
+FROM		InventoryMatrixColumnMappings
+INNER JOIN	@InventoryMatrixHeaderSectiONMappings as InventoryMatrixHeaderSectionMappings
+ON		InventoryMatrixColumnMappings.HeaderSectionMappingId = InventoryMatrixHeaderSectionMappings.[Id]
+
+-- Retreive final recORds cONsisiting of RowPositiONs, ColumnPositiONs AND Quantities
+SELECT		InventoryMatrixRowMappings.[PositiON] as RowPositiON, 
+		InventoryMatrixColumnMappings.[PositiON] as ColumnPositiON, 
+		isnull(Quantity, 0) as Quantity, 
+		ProductClassificatiONCode
+FROM		InventORyMatrixMappings
+LEFT OUTER JOIN	@MOM_STOCK as MOM_STOCK
+ON		InventoryMatrixMappings.ProductClassificationCode = MOM_STOCK.assoc
+INNER JOIN	@InventoryMatrixRowMappings as InventoryMatrixRowMappings
+ON		InventoryMatrixMappings.RowMappingId = InventoryMatrixRowMappings.[Id]
+INNER JOIN	@InventoryMatrixColumnMappings as InventoryMatrixColumnMappings
+ON		InventoryMatrixMappings.ColumnMappingId = InventoryMatrixColumnMappings.[Id]
+ORDER BY RowPosition, ColumnPosition
+
+

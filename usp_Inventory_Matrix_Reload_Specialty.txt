@@ -1,0 +1,174 @@
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2006 $50 AMERICAN BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 AMERICAN BUFFALO', 'MS69', '06E1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 AMERICAN BUFFALO', 'PR69', '06E1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 AMERICAN BUFFALO', 'MS70', '06E1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 AMERICAN BUFFALO', 'PR70', '06E1P0'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2006 $50 1ST DAY RELEASE BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 1ST DAY RELEASE BUFFALO', 'MS69', '06E2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 1ST DAY RELEASE BUFFALO', 'PR69', '06E2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 1ST DAY RELEASE BUFFALO', 'MS70', '06E2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 1ST DAY RELEASE BUFFALO', 'PR70', '06E2P0'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2006 $50 1ST MONTH RELEASE BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 1ST MONTH RELEASE BUFFALO', 'MS69', '06E3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 1ST MONTH RELEASE BUFFALO', 'PR69', '06E3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 1ST MONTH RELEASE BUFFALO', 'MS70', '06E3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 1ST MONTH RELEASE BUFFALO', 'PR70', '06E3P0'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2006 $50 1ST YEAR RELEASE BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 1ST YEAR RELEASE BUFFALO', 'MS69', '06E4M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 1ST YEAR RELEASE BUFFALO', 'PR69', '06E4P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 1ST YEAR RELEASE BUFFALO', 'MS70', '06E4M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2006 $50 1ST YEAR RELEASE BUFFALO', 'PR70', '06E4P0'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2007 $50 AMERICAN BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2007 $50 AMERICAN BUFFALO', 'MS69', '07E1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2007 $50 AMERICAN BUFFALO', 'PR69', '07E1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2007 $50 AMERICAN BUFFALO', 'MS70', '07E1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2007 $50 AMERICAN BUFFALO', 'PR70', '07E1P0'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2008 $50 AMERICAN BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2008 $50 AMERICAN BUFFALO', 'MS69', '08E1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2008 $50 AMERICAN BUFFALO', 'PR69', '08E1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2008 $50 AMERICAN BUFFALO', 'MS70', '08E1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2008 $50 AMERICAN BUFFALO', 'PR70', '08E1P0'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2009 $50 AMERICAN BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2009 $50 AMERICAN BUFFALO', 'MS69', '09E1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2009 $50 AMERICAN BUFFALO', 'PR69', '09E1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2009 $50 AMERICAN BUFFALO', 'MS70', '09E1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2009 $50 AMERICAN BUFFALO', 'PR70', '09E1P0'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2010 $50 AMERICAN BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2010 $50 AMERICAN BUFFALO', 'MS69', '10E1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2010 $50 AMERICAN BUFFALO', 'PR69', '10E1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2010 $50 AMERICAN BUFFALO', 'MS70', '10E1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2010 $50 AMERICAN BUFFALO', 'PR70', '10E1P0'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2011 $50 AMERICAN BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2011 $50 AMERICAN BUFFALO', 'MS69', '11E1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2011 $50 AMERICAN BUFFALO', 'PR69', '11E1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2011 $50 AMERICAN BUFFALO', 'MS70', '11E1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2011 $50 AMERICAN BUFFALO', 'PR70', '11E1P0'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2012 $50 AMERICAN BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2012 $50 AMERICAN BUFFALO', 'MS69', '12E1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2012 $50 AMERICAN BUFFALO', 'PR69', '12E1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2012 $50 AMERICAN BUFFALO', 'MS70', '12E1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2012 $50 AMERICAN BUFFALO', 'PR70', '12E1P0'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2013 $50 AMERICAN BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2013 $50 AMERICAN BUFFALO', 'MS69', '13E1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2013 $50 AMERICAN BUFFALO', 'PR69', '13E1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2013 $50 AMERICAN BUFFALO', 'MS70', '13E1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2013 $50 AMERICAN BUFFALO', 'PR70', '13E1P0'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2014 $50 AMERICAN BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2014 $50 AMERICAN BUFFALO', 'MS69', '14E1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2014 $50 AMERICAN BUFFALO', 'PR69', '14E1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2014 $50 AMERICAN BUFFALO', 'MS70', '14E1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2014 $50 AMERICAN BUFFALO', 'PR70', '14E1P0'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2015 $50 AMERICAN BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2015 $50 AMERICAN BUFFALO', 'MS69', '15E1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2015 $50 AMERICAN BUFFALO', 'PR69', '15E1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2015 $50 AMERICAN BUFFALO', 'MS70', '15E1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2015 $50 AMERICAN BUFFALO', 'PR70', '15E1P0'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2016 $50 AMERICAN BUFFALO'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2016 $50 AMERICAN BUFFALO', 'MS69', '16E1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2016 $50 AMERICAN BUFFALO', 'PR69', '16E1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2016 $50 AMERICAN BUFFALO', 'MS70', '16E1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2016 $50 AMERICAN BUFFALO', 'PR70', '16E1P0'
+
+
+
+--Blank Space
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', ''
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '', 'MS69', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '', 'PR69', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '', 'MS70', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '', 'PR70', 'N/A'
+
+--Ultra High Relief
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2009 $20 Ultra High Relief'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2009 $20 Ultra High Relief', 'MS69', '09UHM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2009 $20 Ultra High Relief', 'PR69', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2009 $20 Ultra High Relief', 'MS70', '09UHM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2009 $20 Ultra High Relief', 'PR70', 'N/A'
+
+EXEC usp_IM_Add_Row 'CMM', 'SPECIALTY', '2009 $20 Ultra High Relief Proof Like'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2009 $20 Ultra High Relief Proof Like', 'MS69', '09UHM9PL'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2009 $20 Ultra High Relief Proof Like', 'PR69', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2009 $20 Ultra High Relief Proof Like', 'MS70', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', 'SPECIALTY', '2009 $20 Ultra High Relief Proof Like', 'PR70', 'N/A'
+

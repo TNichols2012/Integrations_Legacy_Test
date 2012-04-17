@@ -1,0 +1,16 @@
+/****** Object:  Table [dbo].[tbl_Reports]    Script Date: 06/05/2008 09:44:10 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[tbl_Reports](
+	[Run_Date] [smalldatetime] NULL,
+	[Run_Time] [datetime] NULL,
+	[Report_Name] [varchar](50) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	[Report_Content] [text] COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF

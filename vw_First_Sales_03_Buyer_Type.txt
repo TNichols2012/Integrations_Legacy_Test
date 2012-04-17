@@ -1,0 +1,33 @@
+SELECT     
+vw1.Entry_Date, 
+vw1.Cust_ID, 
+vw1.First_Name, 
+vw1.Last_Name, 
+vw1.Ttl_Order_Count, 
+vw1.First_Order_ID, 
+vw1.Init_TB_Merch, 
+vw1.Init_Bullion_Shipped, 
+vw1.Init_nonBullion_Shipped, 
+(CASE 
+WHEN vw1.Ship_List <> 'USF' AND vw1.Init_TB_Merch > 0 AND vw1.Init_Bullion_Shipped > 0 AND vw1.Init_nonBullion_Shipped = 0 THEN 'B1' 
+WHEN vw1.Ship_List <> 'USF' AND vw1.Init_TB_Merch <= 0 AND vw1.Init_Bullion_Shipped > 0 AND vw1.Init_nonBullion_Shipped = 0 THEN 'B1c' 
+WHEN vw1.Ship_List <> 'USF' AND vw1.Init_TB_Merch = 0 AND vw1.Init_Bullion_Ordered > 0 AND vw1.Init_nonBullion_Ordered <=0 THEN 'B1_Pending' 
+
+WHEN vw1.Ship_List <> 'USF' AND vw1.Init_TB_Merch > 0 AND vw1.Init_Bullion_Shipped = 0 AND vw1.Init_nonBullion_Shipped > 0 THEN 'B2' 
+WHEN vw1.Ship_List <> 'USF' AND vw1.Init_TB_Merch <= 0 AND vw1.Init_Bullion_Shipped = 0 AND vw1.Init_nonBullion_Shipped > 0 THEN 'B2c' 
+WHEN vw1.Ship_List <> 'USF' AND vw1.Init_TB_Merch = 0 AND vw1.Init_Bullion_Ordered <= 0 AND vw1.Init_nonBullion_Ordered > 0 THEN 'B2_Pending'
+
+WHEN vw1.Ship_List <> 'USF' AND vw1.Init_TB_Merch > 0 AND vw1.Init_Bullion_Shipped > 0 AND vw1.Init_nonBullion_Shipped > 0 THEN 'B3' 
+WHEN vw1.Ship_List <> 'USF' AND vw1.Init_TB_Merch <= 0 AND vw1.Init_Bullion_Shipped > 0 AND vw1.Init_nonBullion_Shipped > 0 THEN 'B3c' 
+WHEN vw1.Ship_List <> 'USF' AND vw1.Init_TB_Merch = 0 AND vw1.Init_Bullion_Ordered > 0 AND vw1.Init_nonBullion_Ordered > 0 THEN 'B3_Pending' 
+WHEN vw1.Ship_List = 'USF' AND vw1.Init_TB_Merch <= 0 THEN 'GR' 
+WHEN vw1.Ship_List = 'USF' AND vw1.Init_TB_Merch > 0 AND vw1.Init_Bullion_Shipped > 0 AND vw1.Init_nonBullion_Shipped = 0 THEN 'GR_B1' 
+WHEN vw1.Ship_List = 'USF' AND vw1.Init_TB_Merch <= 0 AND vw1.Init_Bullion_Shipped > 0 AND vw1.Init_nonBullion_Shipped = 0 THEN 'GR_B1c' 
+WHEN vw1.Ship_List = 'USF' AND vw1.Init_TB_Merch > 0 AND vw1.Init_Bullion_Shipped = 0 AND vw1.Init_nonBullion_Shipped > 0 THEN 'GR_B2' 
+WHEN vw1.Ship_List = 'USF' AND vw1.Init_TB_Merch <= 0 AND vw1.Init_Bullion_Shipped = 0 AND vw1.Init_nonBullion_Shipped > 0 THEN 'GR_B2c' 
+WHEN vw1.Ship_List = 'USF' AND vw1.Init_TB_Merch > 0 AND vw1.Init_Bullion_Shipped > 0 AND vw1.Init_nonBullion_Shipped > 0 THEN 'GR_B3' 
+WHEN vw1.Ship_List = 'USF' AND vw1.Init_TB_Merch <= 0 AND vw1.Init_Bullion_Shipped > 0 AND vw1.Init_nonBullion_Shipped > 0 THEN 'GR_B3c' 
+WHEN vw1.Init_TB_Merch <= 0 THEN 'CO' 
+ELSE 'Pending' END) AS Init_Buyer_Type
+FROM			dbo.vw_First_Sales_02_Order_Date vw1
+LEFT OUTER JOIN  dbo.tbl_DBF_Ad_Codes tbl1 ON vw1.Orig_Ad_Code = dbo.tbl_DBF_Ad_Codes.Ad_Code

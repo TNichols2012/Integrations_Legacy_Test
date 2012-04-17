@@ -1,0 +1,26 @@
+SELECT     
+dbo.vw_First_Sales_01_Entry_Date.Entry_Date, 
+dbo.vw_First_Sales_01_Entry_Date.Cust_ID, 
+dbo.vw_First_Sales_01_Entry_Date.First_Name, 
+dbo.vw_First_Sales_01_Entry_Date.Last_Name, 
+dbo.vw_First_Sales_01_Entry_Date.Ttl_Order_Count, 
+dbo.vw_First_Sales_01_Entry_Date.First_Order_Date, 
+dbo.vw_First_Sales_01_Entry_Date.Orig_Ad_Code, 
+MIN(dbo.vw_Sales_Orders.Order_ID) AS First_Order_ID, 
+SUM(ISNULL(dbo.vw_Sales_Orders.Value_Shipped, 0)) AS Init_TB_Merch, 
+SUM(CASE WHEN stock_Type = 'Bullion' THEN isnull(value_ordered, 0) ELSE 0 END) AS Init_Bullion_Ordered, 
+SUM(CASE WHEN stock_Type <> 'Bullion' THEN isnull(value_ordered, 0) ELSE 0 END) AS Init_nonBullion_Ordered, 
+SUM(CASE WHEN stock_Type = 'Bullion' THEN isnull(value_shipped, 0) ELSE 0 END) AS Init_Bullion_Shipped, 
+SUM(CASE WHEN stock_Type <> 'Bullion' THEN isnull(value_shipped, 0) ELSE 0 END) AS Init_nonBullion_Shipped
+FROM			dbo.vw_First_Sales_01_Entry_Date 
+LEFT OUTER JOIN		dbo.vw_Sales_Orders 
+ON			dbo.vw_First_Sales_01_Entry_Date.First_Order_ID = dbo.vw_Sales_Orders.Order_ID 
+AND			dbo.vw_First_Sales_01_Entry_Date.Cust_ID = dbo.vw_Sales_Orders.Cust_ID
+GROUP BY 
+dbo.vw_First_Sales_01_Entry_Date.Entry_Date, 
+dbo.vw_First_Sales_01_Entry_Date.Cust_ID, 
+dbo.vw_First_Sales_01_Entry_Date.First_Name, 
+dbo.vw_First_Sales_01_Entry_Date.Last_Name, 
+dbo.vw_First_Sales_01_Entry_Date.Ttl_Order_Count, 
+dbo.vw_First_Sales_01_Entry_Date.First_Order_Date, 
+dbo.vw_First_Sales_01_Entry_Date.Orig_Ad_Code

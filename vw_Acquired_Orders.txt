@@ -1,0 +1,67 @@
+SELECT 
+Acquired.ConfirmationCode,
+Acquired.Sales_Agent,
+Acquired.Acquired_Date,
+Acquired.Acquired_Value,
+Confirmed.Confirmed_Date,
+Confirmed.Confirmed_Value,
+DATEDIFF(d, Acquired.Acquired_Date, Confirmed_Date) AS Confirmed_Days_Held,
+Cancelled.Cancelled_Date,
+Cancelled.Cancelled_Value,
+DATEDIFF(d, Acquired.Acquired_Date, Cancelled_Date) AS Cancelled_Days_Held,
+Released.Released_Date,
+Released.Released_Value,
+DATEDIFF(d, Acquired.Acquired_Date, Released_Date) AS Released_Days_Held
+FROM
+	(
+	SELECT     ConfirmationCode, 
+	Username AS Sales_Agent, 
+	[DateTime] AS Acquired_Date, 
+	SUM(Retail * Quantity) AS Acquired_Value
+	FROM         TransactionTable
+	WHERE	(Action = 'Acquired' AND PortfolioOrder = 'FALSE' AND CallType IN ('Inbound', 'Outbound'))
+				OR
+			(Action = 'Confirmed' AND PortfolioOrder = 'TRUE' AND CallType IN ('Inbound', 'Outbound'))
+	GROUP BY DateTime, Username, ConfirmationCode
+	) AS Acquired
+LEFT OUTER JOIN
+	(
+	SELECT     ConfirmationCode, 
+	Username AS Sales_Agent, 
+	[DateTime] AS Confirmed_Date, 
+	SUM(Retail * Quantity) AS Confirmed_Value
+	FROM	TransactionTable
+	WHERE	Action = 'Confirmed' 
+	AND		Released='FALSE'
+	AND		(
+			MOMStatus LIKE 'PCAP%'
+			OR
+			MOMStatus LIKE 'CK RECVD%'
+			OR 
+			MOMStatus LIKE 'OP - One Pass'
+			)
+	GROUP BY DateTime, Username, ConfirmationCode
+	) AS Confirmed
+ON Acquired.ConfirmationCode=Confirmed.ConfirmationCode
+LEFT OUTER JOIN
+	(
+	SELECT     ConfirmationCode, 
+	[DateTime] AS Cancelled_Date, 
+	Source AS Sales_Agent, 
+	SUM(Retail * Quantity) AS Cancelled_Value
+	FROM         TransactionTable
+	WHERE     (Action = 'Cancelled') AND (Released = 'True')
+	GROUP BY DateTime, Source, ConfirmationCode
+	) AS Cancelled 
+ON Acquired.ConfirmationCode=Cancelled.ConfirmationCode
+LEFT OUTER JOIN
+	(
+	SELECT     ConfirmationCode, 
+	[DateTime] AS Released_Date, 
+	Source, 
+	SUM(Retail * Quantity) AS Released_Value
+	FROM         TransactionTable
+	WHERE     (Action = 'Released') AND (Released = 'True')
+	GROUP BY DateTime, Source, ConfirmationCode
+	) AS Released
+ON Acquired.ConfirmationCode=Released.ConfirmationCode

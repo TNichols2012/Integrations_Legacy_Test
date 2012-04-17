@@ -1,0 +1,23 @@
+SELECT     TOP (100) PERCENT 
+dbo.tbl_DBF_CMS.Order_ID, 
+dbo.tbl_DBF_CMS.Order_Date, 
+dbo.tbl_DBF_RMA.entered AS Return_Date, 
+dbo.tbl_Sales_Teams.Name AS Sales_Agent, 
+dbo.tbl_Sales_Teams.Login AS Sale_ID, 
+SUM(ISNULL(dbo.tbl_DBF_RMA.rma_total - dbo.tbl_DBF_RMA.shipping, 0)) AS Return_Value, 
+SUM(CASE WHEN tbl_DBF_CMS.Ad_Code NOT LIKE 'OB%' THEN isnull(rma_total - shipping, 0) ELSE 0 END) AS RT_IB_Value, 
+SUM(CASE WHEN tbl_DBF_CMS.Ad_Code LIKE 'OB%' THEN isnull(rma_total - shipping, 0) ELSE 0 END) AS RT_OB_Value
+FROM         dbo.tbl_DBF_RMA 
+INNER JOIN   dbo.tbl_DBF_CMS 
+ON		dbo.tbl_DBF_RMA.[order] = dbo.tbl_DBF_CMS.Order_ID 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON		dbo.tbl_DBF_CMS.Sales_ID = dbo.tbl_Sales_Teams.Login
+WHERE	(dbo.tbl_DBF_CMS.Order_Type NOT LIKE 'CXL%') 
+AND		(dbo.tbl_DBF_CMS.Order_Type NOT LIKE 'RS%')
+GROUP BY 
+dbo.tbl_DBF_RMA.entered, 
+dbo.tbl_Sales_Teams.Login, 
+dbo.tbl_DBF_CMS.Order_Date, 
+dbo.tbl_DBF_CMS.Order_ID, 
+dbo.tbl_Sales_Teams.Name
+ORDER BY Return_Date DESC

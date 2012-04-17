@@ -1,0 +1,38 @@
+SELECT     TOP 100 PERCENT Customer_ID, 
+COUNT(Customer_ID) AS Ttl_Order_Count, 
+SUM(ISNULL(Value_Shipped, 0)) AS Ttl_Shipped_Value, 
+SUM(CASE WHEN Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Ttl_Bullion, 
+SUM(CASE WHEN Item_Type <> 'BULL' OR Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Ttl_Non_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Order_Count, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2001_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' AND Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2001_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' AND Item_Type <> 'BULL' OR Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2001_Non_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Order_Count, 
+SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2002_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' AND Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2002_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' AND Item_Type <> 'BULL' OR Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2002_Non_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Order_Count, 
+SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2003_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' AND Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2003_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' AND Item_Type <> 'BULL' OR Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2003_Non_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Order_Count, 
+SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2004_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' AND Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2004_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' AND Item_Type <> 'BULL' OR Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2004_Non_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Order_Count, 
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2005_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' AND Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2005_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' AND Item_Type <> 'BULL' OR Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2005_Non_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Order_Count, 
+SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2006_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' AND Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2006_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' AND Item_Type <> 'BULL' OR Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2006_Non_Bullion
+(CASE 
+WHEN (SUM(CASE WHEN Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 AND (SUM(CASE WHEN Item_Type <> 'BULL' OR Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END)) = 0 THEN 'B1' 
+WHEN (SUM(CASE WHEN Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END)) = 0 AND (SUM(CASE WHEN Item_Type <> 'BULL' OR Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 THEN 'B2' 
+WHEN (SUM(CASE WHEN Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 AND (SUM(CASE WHEN Item_Type <> 'BULL' OR Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 THEN 'B3' 
+ELSE 'NB ' END) AS Buyer_Type
+FROM         dbo.vw_Sales_Orders_by_Item_State
+WHERE     (item_state IN ('SH', 'PS'))
+GROUP BY Customer_ID
+ORDER BY Customer_ID

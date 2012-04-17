@@ -1,0 +1,8 @@
+
+
+CREATE/ALTER PROCEDURE [dbo].[usp_InventoryMatrix_GetSection] (@SectionId int)
+AS
+SELECT	[Text]
+FROM	InventoryMatrixSections
+WHERE	([Id] = @SectionId)
+

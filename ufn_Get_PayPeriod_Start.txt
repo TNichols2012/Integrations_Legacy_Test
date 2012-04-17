@@ -1,0 +1,41 @@
+USE [Data_Warehouse]
+GO
+/****** Object:  UserDefinedFunction [dbo].[Get_PayPeriod_Start]    Script Date: 10/01/2010 13:25:19 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER FUNCTION [dbo].[Get_PayPeriod_Start](@In_TodaysDate datetime, @In_PayPeriod varchar(15))
+RETURNS date AS
+BEGIN
+	DECLARE @StartDate Date
+	
+	IF @In_PayPeriod = 'Current'
+	BEGIN
+		IF DAY(@In_TodaysDate) < 16
+		SET @StartDate = CONVERT(Date, (CONVERT(varchar(4), YEAR(@in_TodaysDate))+ '-' + CONVERT(Varchar(2), MONTH(@in_TodaysDate)) + '-01' ))
+		ELSE
+		SET @StartDate = CONVERT(Date, (CONVERT(varchar(4), YEAR(@in_TodaysDate))+ '-' + CONVERT(Varchar(2), MONTH(@in_TodaysDate)) + '-16' ))
+	END
+	
+	IF @In_PayPeriod = 'Previous'
+	BEGIN
+		IF DAY(@In_TodaysDate) < 16
+		BEGIN
+			IF MONTH(@in_TodaysDate) = 1
+			SET @StartDate = CONVERT(Date, (CONVERT(varchar(4), YEAR(@in_TodaysDate)-1)+ '-' + '12-16' ))	
+			ELSE SET @StartDate = CONVERT(Date, (CONVERT(varchar(4), YEAR(@in_TodaysDate))+ '-' + CONVERT(Varchar(2), MONTH(@in_TodaysDate)-1) + '-16' ))	
+		END
+		ELSE SET @StartDate = CONVERT(Date, (CONVERT(varchar(4), YEAR(@in_TodaysDate))+ '-' + CONVERT(Varchar(2), MONTH(@in_TodaysDate)) + '-01' ))
+	END
+	
+	RETURN @StartDate	
+END
+
+
+
+
+
+
+

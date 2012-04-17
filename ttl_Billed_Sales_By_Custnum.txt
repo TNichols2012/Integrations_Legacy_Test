@@ -1,0 +1,13 @@
+SELECT     
+custnum, 
+COUNT(custnum) AS Order_Count, 
+SUM(tb_merch) AS Total_Sales, SUM(CASE WHEN Results_MOM_CMS.Odr_Date >= '1/1/2001' AND Results_MOM_CMS.Odr_Date < '1/1/2002' THEN isnull(tb_merch, 0) ELSE 0 END) AS Y2001, 
+SUM(CASE WHEN Results_MOM_CMS.Odr_Date >= '1/1/2002' AND Results_MOM_CMS.Odr_Date < '1/1/2003' THEN isnull(tb_merch, 0) ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Results_MOM_CMS.Odr_Date >= '1/1/2003' AND Results_MOM_CMS.Odr_Date < '1/1/2004' THEN isnull(tb_merch, 0) ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Results_MOM_CMS.Odr_Date >= '1/1/2004' AND Results_MOM_CMS.Odr_Date < '1/1/2005' THEN isnull(tb_merch, 0) ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Results_MOM_CMS.Odr_Date >= '1/1/2005' AND Results_MOM_CMS.Odr_Date < '1/1/2006' THEN isnull(tb_merch, 0) ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Results_MOM_CMS.Odr_Date >= '1/1/2006' AND Results_MOM_CMS.Odr_Date < '1/1/2007' THEN isnull(tb_merch, 0) ELSE 0 END) AS Y2006, 
+SUM(CASE WHEN Results_MOM_CMS.Odr_Date >= '1/1/2007' AND Results_MOM_CMS.Odr_Date < '1/1/2008' THEN isnull(tb_merch, 0) ELSE 0 END) AS Y2007
+FROM         dbo.Results_MOM_CMS
+GROUP BY custnum
+HAVING      (SUM(tb_merch) > 0)

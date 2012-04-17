@@ -1,0 +1,40 @@
+SELECT     TOP (100) PERCENT 
+dbo.vw_Amcat_By_Date.Call_Start_Date, 
+dbo.vw_Amcat_By_Date.Name, 
+ISNULL(dbo.vw_Amcat_By_Date.Ttl_Calls_Handled, 0) AS Ttl_Calls_Handled, 
+ISNULL(dbo.vw_Amcat_By_Date.Ttl_Queue_Time, 0) AS Ttl_Queue_Time, 
+ISNULL(dbo.vw_Amcat_By_Date.Ttl_Talk_Time, 0) AS Ttl_Talk_Time, 
+ISNULL(dbo.vw_Amcat_By_Date.Ttl_Wrap_Time, 0) AS Ttl_Wrap_Time, 
+ISNULL(dbo.vw_Amcat_Agent_Stats_By_Date.Pause_Time, 0) AS Ttl_Pause_Time, 
+ISNULL(dbo.vw_Amcat_Agent_Stats_By_Date.Wait_Time, 0) AS Ttl_Wait_Time, 
+ISNULL(dbo.vw_Amcat_By_Date.Ttl_Pres, 0) AS Ttl_Pres_Made, 
+ISNULL(dbo.vw_Amcat_By_Date.Ttl_Sales, 0) AS Ttl_Sales_Dispositioned, 
+0 AS Ttl_Gross_Sales, 
+ISNULL(dbo.vw_MOM_By_Date_TB_Sales.Ttl_Sales_Orders_Submitted, 0) AS Ttl_Sales_Orders_Submitted, 
+ISNULL(dbo.vw_MOM_By_Date_TB_Sales.Ttl_Net_Sales, 0) AS Ttl_Net_Sales, 
+ISNULL(dbo.vw_Amcat_By_Date.IB_Calls_Handled, 0) AS IB_Calls_Handled, 
+ISNULL(dbo.vw_Amcat_By_Date.IB_Talk_Time, 0) AS IB_Talk_Time, 
+ISNULL(dbo.vw_Amcat_By_Date.IB_Pres, 0) AS IB_Pres_Made, 
+ISNULL(dbo.vw_Amcat_By_Date.IB_Sales, 0) AS IB_Sales_Dispositioned, 
+0 AS IB_Gross_Sales, 
+ISNULL(dbo.vw_MOM_By_Date_TB_Sales.IB_Sales_Orders_Submitted, 0) AS IB_Sales_Orders_Submitted, 
+ISNULL(dbo.vw_MOM_By_Date_TB_Sales.IB_Sales_Value, 0) AS IB_Sales_Value, 
+ISNULL(dbo.vw_Amcat_By_Date.OB_Calls_Handled, 0) AS OB_Calls_Handled, 
+ISNULL(dbo.vw_Amcat_By_Date.OB_Talk_Time, 0) AS OB_Talk_Time, 
+ISNULL(dbo.vw_Amcat_By_Date.OB_Pres, 0) AS OB_Pres_Made, 
+ISNULL(dbo.vw_Amcat_By_Date.OB_Sales, 0) AS OB_Sales_Dispositioned, 
+0 AS OB_Gross_Sales, 
+ISNULL(dbo.vw_MOM_By_Date_TB_Sales.OB_Sales_Orders_Submitted, 0) AS OB_Sales_Orders_Submitted, 
+ISNULL(dbo.vw_MOM_By_Date_TB_Sales.OB_Sales_Value, 0) AS OB_Sales_Value, 
+ISNULL(dbo.vw_Amcat_By_Date.TR_Calls_Handled, 0) AS TR_Calls_Handled, 
+ISNULL(dbo.vw_Amcat_By_Date.TR_Talk_Time, 0) AS TR_Talk_Time, 
+ISNULL(dbo.vw_Amcat_By_Date.TR_Pres, 0) AS TR_Pres_Made, 
+ISNULL(dbo.vw_Amcat_By_Date.TR_Sales, 0) AS TR_Sales_Dispositioned, 
+dbo.vw_Amcat_By_Date.Sales_Manager, 
+dbo.vw_Amcat_By_Date.Site
+FROM         dbo.vw_Amcat_Agent_Stats_By_Date RIGHT OUTER JOIN
+                      dbo.vw_Amcat_By_Date ON dbo.vw_Amcat_Agent_Stats_By_Date.Stat_Date = dbo.vw_Amcat_By_Date.Call_Start_Date AND 
+                      dbo.vw_Amcat_Agent_Stats_By_Date.Name = dbo.vw_Amcat_By_Date.Name LEFT OUTER JOIN
+                      dbo.vw_MOM_By_Date_TB_Sales ON dbo.vw_Amcat_By_Date.Call_Start_Date = dbo.vw_MOM_By_Date_TB_Sales.Order_Date AND 
+                      dbo.vw_Amcat_By_Date.MOM_Login = dbo.vw_MOM_By_Date_TB_Sales.sales_id
+ORDER BY dbo.vw_Amcat_By_Date.Call_Start_Date DESC

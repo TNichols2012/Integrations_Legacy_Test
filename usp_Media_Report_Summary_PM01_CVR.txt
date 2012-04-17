@@ -1,0 +1,1638 @@
+USE [Data_Warehouse]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_Media_Report_Summary_PM01_CVR]    Script Date: 10/01/2010 13:16:50 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[usp_Media_Report_Summary_PM01_CVR]
+(
+@in_Sales_ID varchar(25),
+@in_Sales_Team varchar(50)
+)
+AS
+BEGIN
+
+DECLARE @int_Leads_Total numeric(8,0) = 0;
+IF @in_Sales_ID = 'ALL'
+SET @in_Sales_ID = '%';
+
+IF @in_Sales_Team = 'ALL'
+SET @in_Sales_Team = '%';
+
+--***********************************************************************************
+-- PREPARE MAIN MEDIA TABLE
+--***********************************************************************************
+CREATE TABLE #tbl_Media (
+Customer_Value_Range varchar(50),
+Leads numeric(8,0) DEFAULT (0),
+Percentage_of_Book numeric(12,4) DEFAULT (0), 
+Talk_Time varchar(25) DEFAULT ('00:00:00:00'),
+Dialed numeric(8,0) DEFAULT (0),
+Presentations numeric(8,0) DEFAULT (0),
+Percentage_of_Presentations numeric(12,4) DEFAULT (0), 
+Leads_Not_Called numeric(8,0) DEFAULT (0),
+Percentage_of_Not_Called numeric(12,4) DEFAULT (0), 
+Certified_Orders numeric(8,0) DEFAULT (0), 
+Certified_Sales money DEFAULT (0),
+Certified_Closing_Ratio numeric(12,4) DEFAULT (0),
+Average_Ticket money DEFAULT (0),
+Loadbook_Value money DEFAULT (0),
+Sales_ID varchar(5) DEFAULT (''),
+Sales_Team varchar(50) DEFAULT ('')
+)
+
+INSERT INTO #tbl_Media (Customer_Value_Range)
+SELECT
+'1. Gold Reports ($0)' AS Customer_Value_Range
+UNION ALL
+SELECT
+'2. Bullion' AS Customer_Value_Range
+UNION ALL 
+SELECT
+'3. Certified $0 to $999' AS Customer_Value_Range
+UNION ALL
+SELECT
+'4. Certified $1,000 to $4,999' AS Customer_Value_Range
+UNION ALL
+SELECT
+'5. Certified $5,000 to $14,999' AS Customer_Value_Range
+UNION ALL
+SELECT
+'6. Certified $15,000 to $24,999' AS Customer_Value_Range
+UNION ALL
+SELECT
+'7. Certified $25,000 +' AS Customer_Value_Range
+UNION ALL
+SELECT
+'New Leads: Previous Month' AS Customer_Value_Range
+UNION ALL
+SELECT
+'New Leads: Recent' AS Customer_Value_Range
+UNION ALL
+SELECT
+'Rollovers: Previous Month' AS Customer_Value_Range
+UNION ALL
+SELECT
+'Rollovers: Recent' AS Customer_Value_Range
+UNION ALL
+SELECT
+'Total' AS Customer_Value_Range
+
+UPDATE #tbl_Media
+SET
+Sales_ID	= @in_Sales_ID,
+Sales_Team	= @in_Sales_Team
+
+
+CREATE CLUSTERED INDEX idx_tbl_Media_Customer_Value_Range
+ON #tbl_Media (Customer_Value_Range)
+
+--SELECT *
+--FROM #tbl_Media;
+
+--***********************************************************************************
+-- PREPARE MEDIA LEAD COUNT
+--***********************************************************************************
+CREATE TABLE #tbl_Media_CVR (
+Customer_Value_Range varchar(50) DEFAULT (0),
+Leads numeric(8,0) DEFAULT (0)
+)
+
+INSERT INTO #tbl_Media_CVR (Customer_Value_Range, Leads)
+SELECT
+'1. Gold Reports ($0)' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Bullion_Sales <= 0 AND Certified_Sales <= 0 THEN 1 ELSE 0 END), 0) AS Leads
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'2. Bullion' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Bullion_Sales > 0 AND Certified_Sales <= 0 THEN 1 ELSE 0 END), 0) AS Leads
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL 
+
+SELECT
+'3. Certified $0 to $999' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Certified_Sales > 0 AND Certified_Sales < 1000 THEN 1 ELSE 0 END), 0) AS Leads
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'4. Certified $1,000 to $4,999' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Certified_Sales > 1000 AND Certified_Sales < 5000 THEN 1 ELSE 0 END), 0) AS Leads
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'5. Certified $5,000 to $14,999' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Certified_Sales > 5000 AND Certified_Sales < 15000 THEN 1 ELSE 0 END), 0) AS Leads
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'6. Certified $15,000 to $24,999' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Certified_Sales > 15000 AND Certified_Sales < 25000 THEN 1 ELSE 0 END), 0) AS Leads
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'7. Certified $25,000 +' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Certified_Sales > 25000 THEN 1 ELSE 0 END), 0) AS Leads
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'New Leads: Previous Month' AS Customer_Value_Range,
+COUNT(*) AS Leads
+FROM tbl_Media_Loadbooks
+WHERE Change_Date >= dbo.Get_TheMonth_Previous_01(GetDate())
+AND Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+AND New_Lead ='Yes'
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'New Leads: Recent' AS Customer_Value_Range,
+COUNT(*) AS Leads
+FROM tbl_Media_Loadbooks
+WHERE Change_Date >= dbo.Get_TheMonth_Previous_00(GetDate())
+AND New_Lead ='Yes'
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'Rollovers: Previous Month' AS Customer_Value_Range,
+COUNT(*) AS Leads
+FROM tbl_Media_Loadbooks
+WHERE Change_Date >= dbo.Get_TheMonth_Previous_01(GetDate())
+AND Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+AND New_Lead ='No'
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'Rollovers: Recent' AS Customer_Value_Range,
+COUNT(*) AS Leads
+FROM tbl_Media_Loadbooks
+WHERE Change_Date >= dbo.Get_TheMonth_Previous_00(GetDate())
+AND New_Lead ='No'
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'Total' AS Customer_Value_Range,
+COUNT(*) AS Leads
+FROM tbl_Media_Loadbooks
+WHERE Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+CREATE NONCLUSTERED INDEX idx_tbl_Media_CVR_Customer_Value_Range
+ON #tbl_Media_CVR (Customer_Value_Range)
+INCLUDE (Leads)
+
+--SELECT * 
+--FROM #tbl_Media_CVR
+
+SET @int_Leads_Total=(SELECT COUNT(*) AS Leads FROM tbl_Media_Loadbooks WHERE Sales_ID LIKE @in_Sales_ID AND Team LIKE @in_Sales_Team)
+
+UPDATE tbl
+SET 
+tbl.Leads= tmp.Leads
+FROM #tbl_Media tbl
+INNER JOIN #tbl_Media_CVR tmp
+ON tbl.Customer_Value_Range=tmp.Customer_Value_Range;
+
+DROP TABLE #tbl_Media_CVR;
+
+--SELECT *
+--FROM #tbl_Media
+
+
+--***********************************************************************************
+-- PREPARE MEDIA LOADBOOK VALUE
+--***********************************************************************************
+CREATE TABLE #tbl_Loadbook_Value (
+Customer_Value_Range varchar(50) DEFAULT (0),
+Loadbook_Value numeric(18,4) DEFAULT (0)
+)
+
+INSERT INTO #tbl_Loadbook_Value(Customer_Value_Range, Loadbook_Value)
+SELECT
+'1. Gold Reports ($0)' AS Customer_Value_Range,
+ISNULL(SUM(Total_Sales), 0) AS Value
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Bullion_Sales <= 0
+AND Certified_Sales <= 0
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'2. Bullion' AS Customer_Value_Range,
+ISNULL(SUM(Total_Sales), 0) AS Value
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND Bullion_Sales > 0
+AND Certified_Sales <= 0
+AND New_Lead IS NOT NULL
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL 
+
+SELECT
+'3. Certified $0 to $999' AS Customer_Value_Range,
+ISNULL(SUM(Total_Sales), 0) AS Value
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Certified_Sales > 0
+AND Certified_Sales < 1000
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'4. Certified $1,000 to $4,999' AS Customer_Value_Range,
+ISNULL(SUM(Total_Sales), 0) AS Value
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Certified_Sales >= 1000
+AND Certified_Sales < 5000
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'5. Certified $5,000 to $14,999' AS Customer_Value_Range,
+ISNULL(SUM(Total_Sales), 0) AS Value
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Certified_Sales >= 5000
+AND Certified_Sales < 15000
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'6. Certified $15,000 to $24,999' AS Customer_Value_Range,
+ISNULL(SUM(Total_Sales), 0) AS Value
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Certified_Sales >= 15000
+AND Certified_Sales < 25000
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'7. Certified $25,000 +' AS Customer_Value_Range,
+ISNULL(SUM(Total_Sales), 0) AS Value
+FROM tbl_Media_Loadbooks
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Certified_Sales >= 25000
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'New Leads: Previous Month' AS Customer_Value_Range,
+ISNULL(SUM(Total_Sales), 0) AS Value
+FROM tbl_Media_Loadbooks
+WHERE Change_Date >= dbo.Get_TheMonth_Previous_01(GetDate())
+AND Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+AND New_Lead ='Yes'
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'New Leads: Recent' AS Customer_Value_Range,
+ISNULL(SUM(Total_Sales), 0) AS Value
+FROM tbl_Media_Loadbooks
+WHERE Change_Date >= dbo.Get_TheMonth_Previous_00(GetDate())
+AND New_Lead ='Yes'
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'Rollovers: Previous Month' AS Customer_Value_Range,
+ISNULL(SUM(Total_Sales), 0) AS Value
+FROM tbl_Media_Loadbooks
+WHERE Change_Date >= dbo.Get_TheMonth_Previous_01(GetDate())
+AND Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+AND New_Lead ='No'
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'Rollovers: Recent' AS Customer_Value_Range,
+ISNULL(SUM(Total_Sales), 0) AS Value
+FROM tbl_Media_Loadbooks
+WHERE Change_Date >= dbo.Get_TheMonth_Previous_00(GetDate())
+AND New_Lead ='No'
+AND Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+UNION ALL
+
+SELECT
+'Total' AS Customer_Value_Range,
+ISNULL(SUM(Total_Sales), 0) AS Value
+FROM tbl_Media_Loadbooks
+WHERE Sales_ID LIKE @in_Sales_ID
+AND Team LIKE @in_Sales_Team
+
+CREATE NONCLUSTERED INDEX idx_tbl_Loadbook_Value_Customer_Value_Range
+ON #tbl_Loadbook_Value (Customer_Value_Range)
+INCLUDE (Loadbook_Value)
+
+--SELECT * 
+--FROM #tbl_Media_CVR
+
+UPDATE tbl
+SET 
+tbl.Loadbook_Value= tmp.Loadbook_Value
+FROM #tbl_Media tbl
+INNER JOIN #tbl_Loadbook_Value tmp
+ON tbl.Customer_Value_Range=tmp.Customer_Value_Range;
+
+DROP TABLE #tbl_Loadbook_Value;
+
+--SELECT *
+--FROM #tbl_Media
+
+
+--***********************************************************************************
+-- PREPARE MEDIA CALLS
+--***********************************************************************************
+CREATE TABLE #tbl_Media_ContactNumber (
+Sales_Team varchar(50) DEFAULT (''),
+Sales_Rep_Called_By varchar(50) DEFAULT (''),
+Sales_ID_Called_By varchar(5) DEFAULT (''),
+ContactNumber varchar(25) DEFAULT (''),
+Call_Talk_Time numeric(12, 0) DEFAULT (0),
+Presentation varchar(5) DEFAULT (''),
+Sales_ID_Current varchar(5) DEFAULT (''),
+Campaign varchar(25) DEFAULT (''), 
+Cust_ID varchar(25) DEFAULT (''), 
+Bullion_Sales money DEFAULT (0),
+Certified_Sales money DEFAULT (0),
+Change_Date date, 
+New_Lead varchar(3)
+)
+
+INSERT INTO #tbl_Media_ContactNumber (Sales_Team, Sales_Rep_Called_By, Sales_ID_Called_By, ContactNumber, Call_Talk_Time, Presentation, Sales_ID_Current, Campaign, Cust_ID, Bullion_Sales, Certified_Sales, Change_Date, New_Lead)
+SELECT 
+tM.Team AS Sales_Team,
+tM.Sales_Rep_Called_By,
+tM.Sales_ID_Called_By,
+tM.ContactNumber,
+tM.Call_Talk_Time, 
+tM.Presentation,
+tM.Sales_ID_Current,
+tM.Campaign,
+tM.Cust_ID,
+tML.Bullion_Sales,
+tML.Certified_Sales,
+tML.Change_Date,
+tML.New_Lead
+FROM tbl_Media_Calls_PM01_OB tM
+INNER JOIN tbl_Media_Loadbooks tML
+ON tM.Cust_ID = tML.Cust_ID
+WHERE tM.Sales_ID_Called_By LIKE @in_Sales_ID 
+AND tM.Sales_ID_Current LIKE @in_Sales_ID 
+AND tM.Sales_ID_Called_By = tM.Sales_ID_Current 
+AND tM.Team LIKE @in_Sales_Team
+
+--SELECT * FROM #tbl_Media_ContactNumber ORDER BY ContactNumber
+
+-- **************************************
+-- ****** PREPARE MEDIA TALK TIME *******
+-- **************************************
+CREATE TABLE #tbl_Media_Talk_Time (
+Customer_Value_Range varchar(50) DEFAULT (''), 
+Talk_Time varchar(25)
+)
+
+CREATE NONCLUSTERED INDEX idx_tbl_Media_Talk_Time_Customer_Value_Range
+ON #tbl_Media_Talk_Time (Customer_Value_Range)
+INCLUDE(Talk_Time)
+
+INSERT INTO #tbl_Media_Talk_Time (Customer_Value_Range, Talk_Time)
+SELECT 
+'1. Gold Reports ($0)' AS Customer_Value_Range,
+dbo.ufn_Show_Time_Format(ISNULL(SUM(Call_Talk_Time), 0)) AS Talk_Time
+FROM	#tbl_Media_ContactNumber
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Bullion_Sales <= 0
+AND Certified_Sales <= 0
+
+UNION ALL
+
+SELECT
+'2. Bullion' AS Customer_Value_Range,
+dbo.ufn_Show_Time_Format(ISNULL(SUM(Call_Talk_Time), 0)) AS Talk_Time
+FROM	#tbl_Media_ContactNumber
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Bullion_Sales > 0
+AND Certified_Sales <= 0
+
+UNION ALL 
+
+SELECT
+'3. Certified $0 to $999' AS Customer_Value_Range,
+dbo.ufn_Show_Time_Format(ISNULL(SUM(Call_Talk_Time), 0)) AS Talk_Time
+FROM	#tbl_Media_ContactNumber
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Certified_Sales > 0
+AND Certified_Sales < 1000
+
+UNION ALL
+
+SELECT
+'4. Certified $1,000 to $4,999' AS Customer_Value_Range,
+dbo.ufn_Show_Time_Format(ISNULL(SUM(Call_Talk_Time), 0)) AS Talk_Time
+FROM	#tbl_Media_ContactNumber
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Certified_Sales >= 1000
+AND Certified_Sales < 5000
+
+UNION ALL
+
+SELECT
+'5. Certified $5,000 to $14,999' AS Customer_Value_Range,
+dbo.ufn_Show_Time_Format(ISNULL(SUM(Call_Talk_Time), 0)) AS Talk_Time
+FROM	#tbl_Media_ContactNumber
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Certified_Sales >= 5000
+AND Certified_Sales < 15000
+
+UNION ALL
+
+SELECT
+'6. Certified $15,000 to $24,999' AS Customer_Value_Range,
+dbo.ufn_Show_Time_Format(ISNULL(SUM(Call_Talk_Time), 0)) AS Talk_Time
+FROM	#tbl_Media_ContactNumber
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Certified_Sales >= 15000
+AND Certified_Sales < 25000
+
+UNION ALL
+
+SELECT
+'7. Certified $25,000 +' AS Customer_Value_Range,
+dbo.ufn_Show_Time_Format(ISNULL(SUM(Call_Talk_Time), 0)) AS Talk_Time
+FROM	#tbl_Media_ContactNumber
+WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+AND New_Lead IS NOT NULL
+AND Certified_Sales >= 25000
+
+UNION ALL
+
+SELECT
+'New Leads: Previous Month' AS Customer_Value_Range,
+dbo.ufn_Show_Time_Format(ISNULL(SUM(Call_Talk_Time), 0)) AS Talk_Time
+FROM	#tbl_Media_ContactNumber
+WHERE Change_Date >= dbo.Get_TheMonth_Previous_01(GetDate())
+AND Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+AND New_Lead ='Yes'
+
+UNION ALL
+
+SELECT
+'New Leads: Recent' AS Customer_Value_Range,
+dbo.ufn_Show_Time_Format(ISNULL(SUM(Call_Talk_Time), 0)) AS Talk_Time
+FROM	#tbl_Media_ContactNumber
+WHERE Change_Date >= dbo.Get_TheMonth_Previous_00(GetDate())
+AND New_Lead ='Yes'
+
+UNION ALL
+
+SELECT
+'Rollovers: Previous Month' AS Customer_Value_Range,
+dbo.ufn_Show_Time_Format(ISNULL(SUM(Call_Talk_Time), 0)) AS Talk_Time
+FROM	#tbl_Media_ContactNumber
+WHERE Change_Date >= dbo.Get_TheMonth_Previous_01(GetDate())
+AND Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+AND New_Lead ='No'
+
+UNION ALL
+
+SELECT
+'Rollovers: Recent' AS Customer_Value_Range,
+dbo.ufn_Show_Time_Format(ISNULL(SUM(Call_Talk_Time), 0)) AS Talk_Time
+FROM	#tbl_Media_ContactNumber
+WHERE Change_Date >= dbo.Get_TheMonth_Previous_00(GetDate())
+AND New_Lead ='No'
+
+UNION ALL
+
+SELECT
+'Total' AS Customer_Value_Range,
+dbo.ufn_Show_Time_Format(ISNULL(SUM(Call_Talk_Time), 0)) AS Talk_Time
+FROM	#tbl_Media_ContactNumber
+--WHERE Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+
+CREATE NONCLUSTERED INDEX idx_tbl_Media_ContactNumber_Change_Date
+ON #tbl_Media_ContactNumber (Change_Date, New_Lead, Bullion_Sales, Certified_Sales)
+INCLUDE (ContactNumber, Call_Talk_Time)
+
+--SELECT * FROM #tbl_Media_Talk_Time
+
+UPDATE tbl
+SET 
+tbl.Talk_Time= tmp.Talk_Time
+FROM #tbl_Media tbl
+INNER JOIN #tbl_Media_Talk_Time tmp
+ON tbl.Customer_Value_Range=tmp.Customer_Value_Range;
+
+DROP TABLE #tbl_Media_Talk_Time;
+
+-- **************************************
+-- ******** PREPARE MEDIA DIALED ********
+-- **************************************
+CREATE TABLE #tbl_Media_Dialed (
+Customer_Value_Range varchar(50) DEFAULT (''), 
+Dialed numeric(8,0)
+)
+
+INSERT INTO #tbl_Media_Dialed (Customer_Value_Range, Dialed)
+SELECT --*
+'1. Gold Reports ($0)' AS Customer_Value_Range,
+COUNT(*) AS Dialed
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Bullion_Sales <= 0
+		AND Certified_Sales <= 0
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'2. Bullion' AS Customer_Value_Range,
+COUNT(*) AS Dialed
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Bullion_Sales > 0
+		AND Certified_Sales <= 0
+		GROUP BY Cust_ID
+		) AS vw1
+
+
+UNION ALL 
+
+SELECT
+'3. Certified $0 to $999' AS Customer_Value_Range,
+COUNT(*) AS Dialed
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Certified_Sales > 0
+		AND Certified_Sales < 1000
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'4. Certified $1,000 to $4,999' AS Customer_Value_Range,
+COUNT(*) AS Dialed
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Certified_Sales >= 1000
+		AND Certified_Sales < 5000
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'5. Certified $5,000 to $14,999' AS Customer_Value_Range,
+COUNT(*) AS Dialed
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Certified_Sales >= 5000
+		AND Certified_Sales < 15000
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'6. Certified $15,000 to $24,999' AS Customer_Value_Range,
+COUNT(*) AS Dialed
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Certified_Sales >= 15000
+		AND Certified_Sales < 25000
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'7. Certified $25,000 +' AS Customer_Value_Range,
+COUNT(*) AS Dialed
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Certified_Sales >= 25000
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'New Leads: Previous Month' AS Customer_Value_Range,
+COUNT(*) AS Dialed
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date >= dbo.Get_TheMonth_Previous_01(GetDate())
+		AND Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+		AND New_Lead ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'New Leads: Recent' AS Customer_Value_Range,
+COUNT(*) AS Dialed
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date >= dbo.Get_TheMonth_Previous_00(GetDate())
+		AND New_Lead ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'Rollovers: Previous Month' AS Customer_Value_Range,
+COUNT(*) AS Dialed
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date >= dbo.Get_TheMonth_Previous_01(GetDate())
+		AND Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+		AND New_Lead ='No'
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'Rollovers: Recent' AS Customer_Value_Range,
+COUNT(*) AS Dialed
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date >= dbo.Get_TheMonth_Previous_00(GetDate())
+		AND New_Lead ='No'
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'Total' AS Customer_Value_Range,
+COUNT(*) AS Dialed
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		--WHERE Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+		GROUP BY Cust_ID
+		) AS vw1
+
+CREATE NONCLUSTERED INDEX idx_tbl_Media_Dialed_Customer_Value_Range
+ON #tbl_Media_Dialed(Customer_Value_Range)
+INCLUDE (Dialed)
+
+--SELECT *
+--FROM #tbl_Media_Dialed
+
+UPDATE tbl
+SET 
+tbl.Dialed= tmp.Dialed
+FROM #tbl_Media tbl
+INNER JOIN #tbl_Media_Dialed tmp
+ON tbl.Customer_Value_Range=tmp.Customer_Value_Range;
+
+DROP TABLE #tbl_Media_Dialed;
+
+-- **************************************
+-- **** PREPARE MEDIA PRESENTATIONS *****
+-- **************************************
+
+CREATE TABLE #tbl_Media_Presentations (
+Customer_Value_Range varchar(50) DEFAULT (''), 
+Presented varchar(25)
+);
+
+INSERT INTO #tbl_Media_Presentations (Customer_Value_Range, Presented)
+SELECT 
+'1. Gold Reports ($0)' AS Customer_Value_Range,
+COUNT(*) AS Presented
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Bullion_Sales <= 0
+		AND Certified_Sales <= 0
+		AND Presentation ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'2. Bullion' AS Customer_Value_Range,
+COUNT(*) AS Presented
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Bullion_Sales > 0
+		AND Certified_Sales <= 0
+		AND Presentation ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL 
+
+SELECT
+'3. Certified $0 to $999' AS Customer_Value_Range,
+COUNT(*) AS Presented
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Certified_Sales > 0
+		AND Certified_Sales < 1000
+		AND Presentation ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'4. Certified $1,000 to $4,999' AS Customer_Value_Range,
+COUNT(*) AS Presented
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Certified_Sales >= 1000
+		AND Certified_Sales < 5000
+		AND Presentation ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+		
+UNION ALL
+
+SELECT
+'5. Certified $5,000 to $14,999' AS Customer_Value_Range,
+COUNT(*) AS Presented
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Certified_Sales >= 5000
+		AND Certified_Sales < 15000
+		AND Presentation ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+		
+UNION ALL
+
+SELECT
+'6. Certified $15,000 to $24,999' AS Customer_Value_Range,
+COUNT(*) AS Presented
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Certified_Sales >= 15000
+		AND Certified_Sales < 25000
+		AND Presentation ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'7. Certified $25,000 +' AS Customer_Value_Range,
+COUNT(*) AS Presented
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Certified_Sales >= 25000
+		AND Presentation ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'New Leads: Previous Month' AS Customer_Value_Range,
+COUNT(*) AS Presented
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date >= dbo.Get_TheMonth_Previous_01(GetDate())
+		AND Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+		AND New_Lead ='Yes'
+		AND Presentation ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'New Leads: Recent' AS Customer_Value_Range,
+COUNT(*) AS Presented
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date >= dbo.Get_TheMonth_Previous_00(GetDate())
+		AND New_Lead ='Yes'
+		AND Presentation ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+		
+UNION ALL
+
+SELECT
+'Rollovers: Previous Month' AS Customer_Value_Range,
+COUNT(*) AS Presented
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date >= dbo.Get_TheMonth_Previous_01(GetDate())
+		AND Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+		AND New_Lead ='No'
+		AND Presentation ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'Rollovers: Recent' AS Customer_Value_Range,
+COUNT(*) AS Presented
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		WHERE Change_Date >= dbo.Get_TheMonth_Previous_00(GetDate())
+		AND New_Lead ='No'
+		AND Presentation ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'Total' AS Customer_Value_Range,
+COUNT(*) AS Presented
+FROM	(
+		SELECT
+		Cust_ID
+		FROM #tbl_Media_ContactNumber
+		--WHERE Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+		WHERE Presentation ='Yes'
+		GROUP BY Cust_ID
+		) AS vw1
+
+CREATE NONCLUSTERED INDEX idx_tbl_Media_Presentations
+ON #tbl_Media_Presentations(Customer_Value_Range)
+INCLUDE (Presented);
+
+UPDATE tbl
+SET 
+tbl.Presentations= tmp.Presented
+FROM #tbl_Media tbl
+INNER JOIN #tbl_Media_Presentations tmp
+ON tbl.Customer_Value_Range=tmp.Customer_Value_Range;
+
+DROP TABLE #tbl_Media_Presentations;
+
+--***********************************************************************************
+-- PREPARE MEDIA SALES (OUTBOUND)
+--***********************************************************************************
+CREATE TABLE #tbl_Media_Sales (
+Name varchar(50),
+Sales_ID varchar(5),
+Cust_ID varchar(15),
+Cust_Total_Sales money DEFAULT (0), 
+Cust_Certified_Sales money DEFAULT (0), 
+Cust_Bullion_Sales money DEFAULT (0),
+Campaign varchar(25),
+Order_Total_Sales money DEFAULT (0), 
+Order_Certified_Sales money DEFAULT (0), 
+Order_Bullion_Sales money DEFAULT (0),
+Buyer_Type varchar(15),
+Sales_Manager varchar(50),
+Sales_Team varchar(50),
+Change_Date date, 
+New_Lead varchar(3)
+)
+
+INSERT INTO #tbl_Media_Sales (Name, Sales_ID, Cust_ID, Cust_Total_Sales, Cust_Bullion_Sales, Cust_Certified_Sales, Campaign, Order_Total_Sales, Order_Bullion_Sales, Order_Certified_Sales, Buyer_Type, Sales_Manager, Sales_Team, Change_Date, New_Lead)
+SELECT 
+tM.Name,
+tM.Sales_ID,
+tM.Cust_ID,
+tML.Total_Sales AS Cust_Total_Value,
+tML.Bullion_Sales AS Cust_Bullion_Value,
+tML.Certified_Sales AS Cust_Bump_Value,
+tML.Campaign,
+tM.Total_Value AS Order_Total_Value,
+tM.Bullion_Value AS Order_Bullion_Value,
+tM.Bump_Value AS Order_Bump_Value,
+tM.Buyer_Type,
+tM.Sales_Manager,
+tM.Team, 
+tML.Change_Date,
+tML.New_Lead
+FROM tbl_Media_Sales_PM01_OB tM
+LEFT JOIN tbl_Media_Loadbooks tML
+ON tM.Cust_ID = tML.Cust_ID
+WHERE tM.sales_id LIKE @in_Sales_ID
+AND tM.Team LIKE @in_Sales_Team
+
+CREATE NONCLUSTERED INDEX idx_tbl_Media_Sales
+ON #tbl_Media_Sales (Change_Date, New_Lead, Cust_Certified_Sales, Cust_Bullion_Sales)
+INCLUDE (Order_Certified_Sales, Order_Bullion_Sales)
+  
+--SELECT * FROM #tbl_Media_Sales
+
+CREATE TABLE #tbl_Media_Sales_Certified (
+Customer_Value_Range varchar(50) DEFAULT (''), 
+Bullion_Orders numeric(8,0),
+Bullion_Sales money,
+Certified_Orders numeric(8,0),
+Certified_Sales money
+)
+
+INSERT INTO #tbl_Media_Sales_Certified (Customer_Value_Range, Bullion_Orders, Bullion_Sales, Certified_Orders, Certified_Sales)
+SELECT 
+'1. Gold Reports ($0)' AS Customer_Value_Range,
+vw1.Bullion_Orders,
+vw1.Bullion_Sales,
+vw1.Certified_Orders,
+vw1.Certified_Sales
+FROM	(
+		SELECT
+		ISNULL(SUM(CASE WHEN Order_Bullion_Sales > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Orders,
+		ISNULL(SUM(Order_Bullion_Sales), 0) AS Bullion_Sales,
+		ISNULL(SUM(CASE WHEN Order_Certified_Sales > 0 THEN 1 ELSE 0 END), 0) AS Certified_Orders,
+		ISNULL(SUM(Order_Certified_Sales), 0) AS Certified_Sales
+		FROM #tbl_Media_Sales
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Cust_Bullion_Sales <= 0
+		AND Cust_Certified_Sales <= 0
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'2. Bullion' AS Customer_Value_Range,
+vw1.Bullion_Orders,
+vw1.Bullion_Sales,
+vw1.Certified_Orders,
+vw1.Certified_Sales
+FROM	(
+		SELECT
+		ISNULL(SUM(CASE WHEN Order_Bullion_Sales > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Orders,
+		ISNULL(SUM(Order_Bullion_Sales), 0) AS Bullion_Sales,
+		ISNULL(SUM(CASE WHEN Order_Certified_Sales > 0 THEN 1 ELSE 0 END), 0) AS Certified_Orders,
+		ISNULL(SUM(Order_Certified_Sales), 0) AS Certified_Sales
+		FROM #tbl_Media_Sales
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Cust_Bullion_Sales > 0
+		AND Cust_Certified_Sales <= 0
+		) AS vw1
+
+UNION ALL 
+
+SELECT
+'3. Certified $0 to $999' AS Customer_Value_Range,
+vw1.Bullion_Orders,
+vw1.Bullion_Sales,
+vw1.Certified_Orders,
+vw1.Certified_Sales
+FROM	(
+		SELECT
+		ISNULL(SUM(CASE WHEN Order_Bullion_Sales > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Orders,
+		ISNULL(SUM(Order_Bullion_Sales), 0) AS Bullion_Sales,
+		ISNULL(SUM(CASE WHEN Order_Certified_Sales > 0 THEN 1 ELSE 0 END), 0) AS Certified_Orders,
+		ISNULL(SUM(Order_Certified_Sales), 0) AS Certified_Sales
+		FROM #tbl_Media_Sales
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Cust_Certified_Sales > 0
+		AND Cust_Certified_Sales < 1000
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'4. Certified $1,000 to $4,999' AS Customer_Value_Range,
+vw1.Bullion_Orders,
+vw1.Bullion_Sales,
+vw1.Certified_Orders,
+vw1.Certified_Sales
+FROM	(
+		SELECT
+		ISNULL(SUM(CASE WHEN Order_Bullion_Sales > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Orders,
+		ISNULL(SUM(Order_Bullion_Sales), 0) AS Bullion_Sales,
+		ISNULL(SUM(CASE WHEN Order_Certified_Sales > 0 THEN 1 ELSE 0 END), 0) AS Certified_Orders,
+		ISNULL(SUM(Order_Certified_Sales), 0) AS Certified_Sales
+		FROM #tbl_Media_Sales
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Cust_Certified_Sales >= 1000
+		AND Cust_Certified_Sales < 5000
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'5. Certified $5,000 to $14,999' AS Customer_Value_Range,
+vw1.Bullion_Orders,
+vw1.Bullion_Sales,
+vw1.Certified_Orders,
+vw1.Certified_Sales
+FROM	(
+		SELECT
+		ISNULL(SUM(CASE WHEN Order_Bullion_Sales > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Orders,
+		ISNULL(SUM(Order_Bullion_Sales), 0) AS Bullion_Sales,
+		ISNULL(SUM(CASE WHEN Order_Certified_Sales > 0 THEN 1 ELSE 0 END), 0) AS Certified_Orders,
+		ISNULL(SUM(Order_Certified_Sales), 0) AS Certified_Sales
+		FROM #tbl_Media_Sales
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Cust_Certified_Sales >= 5000
+		AND Cust_Certified_Sales < 15000
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'6. Certified $15,000 to $24,999' AS Customer_Value_Range,
+vw1.Bullion_Orders,
+vw1.Bullion_Sales,
+vw1.Certified_Orders,
+vw1.Certified_Sales
+FROM	(
+		SELECT
+		ISNULL(SUM(CASE WHEN Order_Bullion_Sales > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Orders,
+		ISNULL(SUM(Order_Bullion_Sales), 0) AS Bullion_Sales,
+		ISNULL(SUM(CASE WHEN Order_Certified_Sales > 0 THEN 1 ELSE 0 END), 0) AS Certified_Orders,
+		ISNULL(SUM(Order_Certified_Sales), 0) AS Certified_Sales
+		FROM #tbl_Media_Sales
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Cust_Certified_Sales >= 15000
+		AND Cust_Certified_Sales < 25000
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'7. Certified $25,000 +' AS Customer_Value_Range,
+vw1.Bullion_Orders,
+vw1.Bullion_Sales,
+vw1.Certified_Orders,
+vw1.Certified_Sales
+FROM	(
+		SELECT
+		ISNULL(SUM(CASE WHEN Order_Bullion_Sales > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Orders,
+		ISNULL(SUM(Order_Bullion_Sales), 0) AS Bullion_Sales,
+		ISNULL(SUM(CASE WHEN Order_Certified_Sales > 0 THEN 1 ELSE 0 END), 0) AS Certified_Orders,
+		ISNULL(SUM(Order_Certified_Sales), 0) AS Certified_Sales
+		FROM #tbl_Media_Sales
+		WHERE Change_Date < dbo.Get_TheMonth_Previous_01(GetDate())
+		AND New_Lead IS NOT NULL
+		AND Cust_Certified_Sales >= 25000
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'New Leads: Previous Month' AS Customer_Value_Range,
+vw1.Bullion_Orders,
+vw1.Bullion_Sales,
+vw1.Certified_Orders,
+vw1.Certified_Sales
+FROM	(
+		SELECT
+		ISNULL(SUM(CASE WHEN Order_Bullion_Sales > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Orders,
+		ISNULL(SUM(Order_Bullion_Sales), 0) AS Bullion_Sales,
+		ISNULL(SUM(CASE WHEN Order_Certified_Sales > 0 THEN 1 ELSE 0 END), 0) AS Certified_Orders,
+		ISNULL(SUM(Order_Certified_Sales), 0) AS Certified_Sales
+		FROM #tbl_Media_Sales
+		WHERE Change_Date >= dbo.Get_TheMonth_Previous_01(GetDate())
+		AND Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+		AND New_Lead ='Yes'
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'New Leads: Recent' AS Customer_Value_Range,
+vw1.Bullion_Orders,
+vw1.Bullion_Sales,
+vw1.Certified_Orders,
+vw1.Certified_Sales
+FROM	(
+		SELECT
+		ISNULL(SUM(CASE WHEN Order_Bullion_Sales > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Orders,
+		ISNULL(SUM(Order_Bullion_Sales), 0) AS Bullion_Sales,
+		ISNULL(SUM(CASE WHEN Order_Certified_Sales > 0 THEN 1 ELSE 0 END), 0) AS Certified_Orders,
+		ISNULL(SUM(Order_Certified_Sales), 0) AS Certified_Sales
+		FROM #tbl_Media_Sales
+		WHERE Change_Date >= dbo.Get_TheMonth_Previous_00(GetDate())
+		AND New_Lead ='Yes'
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'Rollovers: Previous Month' AS Customer_Value_Range,
+vw1.Bullion_Orders,
+vw1.Bullion_Sales,
+vw1.Certified_Orders,
+vw1.Certified_Sales
+FROM	(
+		SELECT
+		ISNULL(SUM(CASE WHEN Order_Bullion_Sales > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Orders,
+		ISNULL(SUM(Order_Bullion_Sales), 0) AS Bullion_Sales,
+		ISNULL(SUM(CASE WHEN Order_Certified_Sales > 0 THEN 1 ELSE 0 END), 0) AS Certified_Orders,
+		ISNULL(SUM(Order_Certified_Sales), 0) AS Certified_Sales
+		FROM #tbl_Media_Sales
+		WHERE Change_Date >= dbo.Get_TheMonth_Previous_01(GetDate())
+		AND Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+		AND New_Lead ='No'
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'Rollovers: Recent' AS Customer_Value_Range,
+vw1.Bullion_Orders,
+vw1.Bullion_Sales,
+vw1.Certified_Orders,
+vw1.Certified_Sales
+FROM	(
+		SELECT
+		ISNULL(SUM(CASE WHEN Order_Bullion_Sales > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Orders,
+		ISNULL(SUM(Order_Bullion_Sales), 0) AS Bullion_Sales,
+		ISNULL(SUM(CASE WHEN Order_Certified_Sales > 0 THEN 1 ELSE 0 END), 0) AS Certified_Orders,
+		ISNULL(SUM(Order_Certified_Sales), 0) AS Certified_Sales
+		FROM #tbl_Media_Sales
+		WHERE Change_Date >= dbo.Get_TheMonth_Previous_00(GetDate())
+		AND New_Lead ='No'
+		) AS vw1
+
+UNION ALL
+
+SELECT
+'Total' AS Customer_Value_Range,
+vw1.Bullion_Orders,
+vw1.Bullion_Sales,
+vw1.Certified_Orders,
+vw1.Certified_Sales
+FROM	(
+		SELECT
+		ISNULL(SUM(CASE WHEN Order_Bullion_Sales > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Orders,
+		ISNULL(SUM(Order_Bullion_Sales), 0) AS Bullion_Sales,
+		ISNULL(SUM(CASE WHEN Order_Certified_Sales > 0 THEN 1 ELSE 0 END), 0) AS Certified_Orders,
+		ISNULL(SUM(Order_Certified_Sales), 0) AS Certified_Sales
+		FROM #tbl_Media_Sales
+		--WHERE Change_Date < dbo.Get_TheMonth_Previous_00(GetDate())
+		) AS vw1
+
+CREATE NONCLUSTERED INDEX idx_tbl_Media_Sales_Certified_CVR_Combo
+ON #tbl_Media_Sales_Certified(Customer_Value_Range)
+INCLUDE(Certified_Orders, Certified_Sales)
+
+--SELECT * FROM #tbl_Media_Sales_Certified
+
+UPDATE tbl
+SET 
+tbl.Certified_Orders= tmp.Certified_Orders,
+tbl.Certified_Sales	= tmp.Certified_Sales
+FROM #tbl_Media tbl
+INNER JOIN #tbl_Media_Sales_Certified tmp
+ON tbl.Customer_Value_Range=tmp.Customer_Value_Range;
+
+DROP TABLE #tbl_Media_Sales;
+DROP TABLE #tbl_Media_Sales_Certified;
+
+
+
+/*
+--***********************************************************************************
+-- PREPARE MEDIA SALES (PENDING)
+--***********************************************************************************
+
+CREATE TABLE #tbl_Media_Sales_Orders_On_Hold (
+Order_Date DateTime,
+Sales_Rep_Name varchar(50),
+Sales_ID varchar(5),
+Sales_Manager varchar(50),
+Team varchar(50),
+Site varchar(50),
+Pending_Reason varchar(50),
+Campaign varchar(25),
+Cust_ID varchar(25),
+Cust_Bullion_Value money,
+Cust_Certified_Value money,
+Order_ID varchar(50),
+Order_Total money,
+Order_Bullion_Value money,
+Order_Certified_Value money,
+Order_Type varchar(25)
+);
+
+INSERT INTO #tbl_Media_Sales_Orders_On_Hold (Order_Date, Sales_Rep_Name, Sales_ID, Sales_Manager, Team, Site, Pending_Reason, Campaign, Cust_ID, Cust_Bullion_Value, Cust_Certified_Value, Order_ID, Order_Total, Order_Bullion_Value, Order_Certified_Value, Order_Type)
+SELECT
+CMS.ODR_DATE AS Order_Date, 
+vTM.Sales_Rep,
+vTM.Login AS Sales_ID,
+vTM.Sales_Manager, 
+vTM.Team,
+vTM.Site, 
+CMS.ORDERTYPE AS Pending_Reason, 
+ISNULL(tMA.Campaign, 'Other') AS Campaign,
+CMS.Custnum AS Cust_ID, 
+tCSS.Ttl_Net_Sales_B AS Cust_Bullion_Value,
+tCSS.Ttl_Net_Sales_nB AS Cust_Certified_Value,
+CMS.ORDERNO AS Order_ID, 
+(CMS.ORD_TOTAL - CMS.SHIPPING - CMS.TAX) AS Order_Total_Value, 
+vSO.Bullion_Value AS Order_Bullion_Value,
+vSO.Certified_Value AS Order_Certified_Value,
+(CASE WHEN CMS.CL_KEY LIKE 'OB%' THEN 'Outbound' ELSE 'Inbound' END) AS Order_Type 
+FROM         USRCAPPSRVR01.MailOrderManager.dbo.CMS CMS
+INNER JOIN vw_Team_Members vTM
+ON CMS.SALES_ID = vTM.Login
+INNER JOIN USRCAPPSRVR01.MailOrderManager.dbo.CUST CUST
+ON CMS.CUSTNUM = CUST.Custnum
+LEFT JOIN USRCAPPSRVR01.SIMS.dbo.vw_Sales_Orders_by_Order_ID_CM_Only vSO
+ON CMS.ORDERNO = vSO.Order_ID
+LEFT JOIN tbl_MOM_Adcosts tMA
+ON CUST.ORIG_AD = tMA.Ad_Code
+INNER JOIN tbl_Customer_Sales_Statistics tCSS
+ON tCSS.Cust_ID = CUST.Custnum
+WHERE CMS.Sales_ID LIKE @in_Sales_ID
+AND vTM.Team LIKE @in_Sales_Team
+AND CMS.ODR_DATE >= dbo.Get_TheMonth_Previous_01(GetDate()-1)
+AND CMS.ODR_DATE < dbo.Get_TheMonth(GetDate()-1)
+GROUP BY 
+CMS.ODR_DATE,
+vTM.Sales_Rep,
+vTM.Login,
+vTM.Sales_Manager, 
+vTM.Team,
+vTM.Site,
+CMS.Custnum, 
+tCSS.Ttl_Net_Sales_B,
+tCSS.Ttl_Net_Sales_nB,
+CMS.ORDERNO,
+CMS.ORDERTYPE,
+CMS.PERM_HOLD, 
+CMS.ORDER_ST2,
+CMS.ORD_TOTAL,
+CMS.SHIPPING,
+CMS.TAX,
+vSO.Bullion_Value,
+vSO.Certified_Value,
+CMS.CL_KEY,
+tMA.Campaign
+HAVING      (CMS.ORDERTYPE <> 'CXL') AND (CMS.PERM_HOLD = 1) AND (CMS.ORDER_ST2 <> 'CN') AND (CMS.ORD_TOTAL > 0)
+
+--SELECT * FROM #tbl_Media_Sales_Orders_On_Hold
+
+DECLARE #tbl_Media_Sales_Pending TABLE (
+Customer_Value_Range varchar(50),
+Bullion_Pending_Orders numeric(8,0),
+Bullion_Pending_Value money DEFAULT (0),
+Certified_Pending_Orders numeric(8,0),
+Certified_Pending_Value money DEFAULT (0)
+);
+
+INSERT INTO #tbl_Media_Sales_Pending (Customer_Value_Range, Bullion_Pending_Orders, Bullion_Pending_Value, Certified_Pending_Orders, Certified_Pending_Value)
+SELECT
+'Gold Reports' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Order_Bullion_Value > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Pending_Orders,
+ISNULL(SUM(Order_Bullion_Value), 0) AS Bullion_Pending_Value,
+ISNULL(SUM(CASE WHEN Order_Certified_Value > 0 THEN 1 ELSE 0 END), 0) AS Certified_Pending_Orders,
+ISNULL(SUM(Order_Certified_Value), 0) AS Certified_Pending_Value
+FROM #tbl_Media_Sales_Orders_On_Hold tmp
+INNER JOIN tbl_MOM_Cust_History_Summary tMCH
+ON tmp.Cust_ID=tMCH.Cust_ID
+--AND tmp.Sales_ID=tMCH.Sales_ID
+WHERE tMCH.Change_Date < dbo.Get_TheDate(GetDate()-30)
+AND tmp.Order_Type = 'Outbound'
+AND tmp.Cust_Bullion_Value <= 0
+AND tmp.Cust_Certified_Value <= 0
+
+UNION ALL
+
+SELECT
+'Bullion' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Order_Bullion_Value > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Pending_Orders,
+ISNULL(SUM(Order_Bullion_Value), 0) AS Bullion_Pending_Value,
+ISNULL(SUM(CASE WHEN Order_Certified_Value > 0 THEN 1 ELSE 0 END), 0) AS Certified_Pending_Orders,
+ISNULL(SUM(Order_Certified_Value), 0) AS Certified_Pending_Value
+FROM #tbl_Media_Sales_Orders_On_Hold tmp
+INNER JOIN tbl_MOM_Cust_History_Summary tMCH
+ON tmp.Cust_ID=tMCH.Cust_ID
+--AND tmp.Sales_ID=tMCH.Sales_ID
+WHERE tMCH.Change_Date < dbo.Get_TheDate(GetDate()-30)
+AND tmp.Order_Type = 'Outbound'
+AND tmp.Cust_Bullion_Value > 0
+AND tmp.Cust_Certified_Value <= 0
+
+UNION ALL 
+
+SELECT
+'Certified $0 to $999' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Order_Bullion_Value > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Pending_Orders,
+ISNULL(SUM(Order_Bullion_Value), 0) AS Bullion_Pending_Value,
+ISNULL(SUM(CASE WHEN Order_Certified_Value > 0 THEN 1 ELSE 0 END), 0) AS Certified_Pending_Orders,
+ISNULL(SUM(Order_Certified_Value), 0) AS Certified_Pending_Value
+FROM #tbl_Media_Sales_Orders_On_Hold tmp
+INNER JOIN tbl_MOM_Cust_History_Summary tMCH
+ON tmp.Cust_ID=tMCH.Cust_ID
+--AND tmp.Sales_ID=tMCH.Sales_ID
+WHERE tMCH.Change_Date < dbo.Get_TheDate(GetDate()-30)
+AND tmp.Order_Type = 'Outbound'
+AND tmp.Cust_Certified_Value > 0
+AND tmp.Cust_Certified_Value < 1000
+
+UNION ALL
+
+SELECT
+'Certified $1,000 to $4,999' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Order_Bullion_Value > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Pending_Orders,
+ISNULL(SUM(Order_Bullion_Value), 0) AS Bullion_Pending_Value,
+ISNULL(SUM(CASE WHEN Order_Certified_Value > 0 THEN 1 ELSE 0 END), 0) AS Certified_Pending_Orders,
+ISNULL(SUM(Order_Certified_Value), 0) AS Certified_Pending_Value
+FROM #tbl_Media_Sales_Orders_On_Hold tmp
+INNER JOIN tbl_MOM_Cust_History_Summary tMCH
+ON tmp.Cust_ID=tMCH.Cust_ID
+--AND tmp.Sales_ID=tMCH.Sales_ID
+WHERE tMCH.Change_Date < dbo.Get_TheDate(GetDate()-30)
+AND tmp.Order_Type = 'Outbound'
+AND tmp.Cust_Certified_Value >= 1000
+AND tmp.Cust_Certified_Value < 5000
+		
+UNION ALL
+
+SELECT
+'Certified $5,000 to $14,999' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Order_Bullion_Value > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Pending_Orders,
+ISNULL(SUM(Order_Bullion_Value), 0) AS Bullion_Pending_Value,
+ISNULL(SUM(CASE WHEN Order_Certified_Value > 0 THEN 1 ELSE 0 END), 0) AS Certified_Pending_Orders,
+ISNULL(SUM(Order_Certified_Value), 0) AS Certified_Pending_Value
+FROM #tbl_Media_Sales_Orders_On_Hold tmp
+INNER JOIN tbl_MOM_Cust_History_Summary tMCH
+ON tmp.Cust_ID=tMCH.Cust_ID
+--AND tmp.Sales_ID=tMCH.Sales_ID
+WHERE tMCH.Change_Date < dbo.Get_TheDate(GetDate()-30)
+AND tmp.Order_Type = 'Outbound'
+AND tmp.Cust_Certified_Value >= 5000
+AND tmp.Cust_Certified_Value < 15000
+
+UNION ALL
+
+SELECT
+'Certified $15,000 to $24,999' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Order_Bullion_Value > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Pending_Orders,
+ISNULL(SUM(Order_Bullion_Value), 0) AS Bullion_Pending_Value,
+ISNULL(SUM(CASE WHEN Order_Certified_Value > 0 THEN 1 ELSE 0 END), 0) AS Certified_Pending_Orders,
+ISNULL(SUM(Order_Certified_Value), 0) AS Certified_Pending_Value
+FROM #tbl_Media_Sales_Orders_On_Hold tmp
+INNER JOIN tbl_MOM_Cust_History_Summary tMCH
+ON tmp.Cust_ID=tMCH.Cust_ID
+--AND tmp.Sales_ID=tMCH.Sales_ID
+WHERE tMCH.Change_Date < dbo.Get_TheDate(GetDate()-30)
+AND tmp.Order_Type = 'Outbound'
+AND tmp.Cust_Certified_Value >= 15000
+AND tmp.Cust_Certified_Value < 25000
+
+UNION ALL
+
+SELECT
+'Certified $25,000 +' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Order_Bullion_Value > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Pending_Orders,
+ISNULL(SUM(Order_Bullion_Value), 0) AS Bullion_Pending_Value,
+ISNULL(SUM(CASE WHEN Order_Certified_Value > 0 THEN 1 ELSE 0 END), 0) AS Certified_Pending_Orders,
+ISNULL(SUM(Order_Certified_Value), 0) AS Certified_Pending_Value
+FROM #tbl_Media_Sales_Orders_On_Hold tmp
+INNER JOIN tbl_MOM_Cust_History_Summary tMCH
+ON tmp.Cust_ID=tMCH.Cust_ID
+--AND tmp.Sales_ID=tMCH.Sales_ID
+WHERE tMCH.Change_Date < dbo.Get_TheDate(GetDate()-30)
+AND tmp.Order_Type = 'Outbound'
+AND tmp.Cust_Certified_Value >= 25000
+
+UNION ALL
+
+SELECT
+'Rollovers' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Order_Bullion_Value > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Pending_Orders,
+ISNULL(SUM(Order_Bullion_Value), 0) AS Bullion_Pending_Value,
+ISNULL(SUM(CASE WHEN Order_Certified_Value > 0 THEN 1 ELSE 0 END), 0) AS Certified_Pending_Orders,
+ISNULL(SUM(Order_Certified_Value), 0) AS Certified_Pending_Value
+FROM #tbl_Media_Sales_Orders_On_Hold tmp
+INNER JOIN tbl_MOM_Cust_History_Summary tMCH
+ON tmp.Cust_ID=tMCH.Cust_ID
+--AND tmp.Sales_ID=tMCH.Sales_ID
+WHERE tMCH.Change_Date >= dbo.Get_TheDate(GetDate()-30)
+AND tmp.Order_Type = 'Outbound'
+
+UNION ALL
+
+SELECT
+'Total' AS Customer_Value_Range,
+ISNULL(SUM(CASE WHEN Order_Bullion_Value > 0 THEN 1 ELSE 0 END), 0) AS Bullion_Pending_Orders,
+ISNULL(SUM(Order_Bullion_Value), 0) AS Bullion_Pending_Value,
+ISNULL(SUM(CASE WHEN Order_Certified_Value > 0 THEN 1 ELSE 0 END), 0) AS Certified_Pending_Orders,
+ISNULL(SUM(Order_Certified_Value), 0) AS Certified_Pending_Value
+FROM #tbl_Media_Sales_Orders_On_Hold tmp
+INNER JOIN tbl_MOM_Cust_History_Summary tMCH
+ON tmp.Cust_ID=tMCH.Cust_ID
+--AND tmp.Sales_ID=tMCH.Sales_ID
+WHERE tmp.Order_Type = 'Outbound'
+
+UPDATE tbl
+SET 
+tbl.Certified_Pending	= tmp.Certified_Pending_Value
+FROM #tbl_Media tbl
+INNER JOIN #tbl_Media_Sales_Pending tmp
+ON tbl.Customer_Value_Range=tmp.Customer_Value_Range
+*/
+--***********************************************************************************
+-- PREPARE MEDIA CLOSING RATIO AND AVERAGE TICKET
+--***********************************************************************************
+UPDATE #tbl_Media
+SET 
+Percentage_of_Book			= CASE WHEN @int_Leads_Total > 0 AND Leads > 0 THEN Leads / @int_Leads_Total ELSE 0 END,
+Percentage_of_Presentations = CASE WHEN Dialed > 0 THEN Presentations / Dialed ELSE 0 END,
+Certified_Closing_Ratio		= CASE WHEN Presentations > 0 THEN Certified_Orders / Presentations ELSE 0 END,
+Leads_Not_Called			= CASE WHEN Leads > 0 THEN Leads - Dialed ELSE 0 END,
+Percentage_of_Not_Called	= CASE WHEN Leads > 0 THEN (Leads - Dialed)/ Leads ELSE 0 END,
+Average_Ticket				= CASE WHEN Certified_Orders > 0 THEN Certified_Sales / Certified_Orders ELSE 0 END
+
+--***********************************************************************************
+-- SHOW ANSWERS
+--***********************************************************************************
+--SELECT * FROM #tbl_Media
+
+SELECT
+Customer_Value_Range AS 'Original Media Type and Loadbook Value Range',
+Leads,
+Percentage_of_Book AS '% of Book',
+Talk_Time AS 'Total Talk Time',
+Dialed AS 'Leads Dialed',
+Presentations AS 'Leads Presented',
+Percentage_of_Presentations AS '% of Dialed Presented', 
+Leads_Not_Called AS 'Leads Not Called',
+Percentage_of_Not_Called AS '% Not Called', 
+Certified_Orders AS 'Certified Orders', 
+Certified_Sales AS 'Certified Sales',
+Certified_Closing_Ratio AS 'Certified Closing Ratio',
+Average_Ticket AS 'Certified Average Ticket',
+Loadbook_Value AS 'Loadbook Value',
+Sales_ID AS 'Sales ID',
+Sales_Team AS 'Sales Team'
+FROM #tbl_Media
+
+DROP TABLE #tbl_Media
+END

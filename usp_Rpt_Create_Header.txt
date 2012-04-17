@@ -1,0 +1,53 @@
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Tony Nichols
+-- Create date: 06/05/2008
+-- Description:	Creates and Add Report Headers
+-- =============================================
+CREATE PROCEDURE [dbo].[usp_Rpt_Create_Header] (@Report_Name varchar(50))
+AS
+BEGIN
+		SET NOCOUNT ON;
+
+IF NOT EXISTS	(
+		SELECT Run_Date
+		FROM tbl_Reports
+		WHERE Run_Date = dbo.Get_TheDate(GetDate())
+		)
+INSERT INTO tbl_Reports (Run_Date, Run_Time, Report_Name)
+VALUES (dbo.Get_TheDate(GetDate()), GetDate(), @Report_Name)
+
+Declare @Report_Content varchar(5000)
+
+SET @Report_Content= 'Current As Of: ' + CHAR(10) 
+SET @Report_Content= @Report_Content + CONVERT(varchar(2), Month(GetDate())) + '/' 
+SET @Report_Content= @Report_Content + CONVERT(varchar(2), Day(GetDate())) + '/' 
+SET @Report_Content= @Report_Content + CONVERT(varchar(4), Year(GetDate())) + CHAR(10) 
+
+IF (LEN(DatePart (hh, getdate() )) =1 )
+		SET @Report_Content= @Report_Content + '0' + CONVERT(varchar(2), DatePart (hh, getdate() ) ) + ':'
+ELSE	SET @Report_Content= @Report_Content + CONVERT(varchar(2), DatePart (hh, getdate())) + ':'
+
+IF (LEN(DatePart (n, getdate() )) =1 )
+		SET @Report_Content= @Report_Content + '0' + CONVERT(varchar(2), DatePart (n, getdate() ) ) + ':'
+ELSE	SET @Report_Content= @Report_Content + CONVERT(varchar(2), DatePart (n, getdate())) + ':'
+
+IF (LEN(DatePart (s, getdate() )) =1 )
+		SET @Report_Content= @Report_Content + '0' + CONVERT(varchar(2), DatePart (s, getdate() ) ) 
+ELSE	SET @Report_Content= @Report_Content + CONVERT(varchar(2), DatePart (s, getdate())) 
+
+IF (DatePart(hh, getDate()) < 12)
+	SET @Report_Content= @Report_Content + ' AM' + CHAR(10)
+ELSE SET @Report_Content= @Report_Content + ' PM' + CHAR(10)
+
+UPDATE tbl_Reports
+SET Report_Content= @Report_Content
+WHERE Report_Name = @Report_Name
+AND Run_Date = dbo.Get_TheDate(GetDate())
+
+END
+GO

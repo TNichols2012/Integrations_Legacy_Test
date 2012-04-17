@@ -1,0 +1,131 @@
+SELECT  
+'Certified Orders: ' + ISNULL(Campaign, 'Missing') AS Title,
+Count(Order_ID) AS Totals,
+SUM (CASE WHEN Month(Order_Date)=1 THEN 1 ELSE 0 END) AS Jan,
+SUM (CASE WHEN Month(Order_Date)=2 THEN 1 ELSE 0 END) AS Feb,
+SUM (CASE WHEN Month(Order_Date)=3 THEN 1 ELSE 0 END) AS Mar,
+SUM (CASE WHEN Month(Order_Date)=4 THEN 1 ELSE 0 END) AS Apr,
+SUM (CASE WHEN Month(Order_Date)=5 THEN 1 ELSE 0 END) AS May,
+SUM (CASE WHEN Month(Order_Date)=6 THEN 1 ELSE 0 END) AS Jun,
+SUM (CASE WHEN Month(Order_Date)=7 THEN 1 ELSE 0 END) AS Jul,
+SUM (CASE WHEN Month(Order_Date)=8 THEN 1 ELSE 0 END) AS Aug,
+SUM (CASE WHEN Month(Order_Date)=9 THEN 1 ELSE 0 END) AS Sep,
+SUM (CASE WHEN Month(Order_Date)=10 THEN 1 ELSE 0 END) AS Oct,
+SUM (CASE WHEN Month(Order_Date)=11 THEN 1 ELSE 0 END) AS Nov,
+SUM (CASE WHEN Month(Order_Date)=12 THEN 1 ELSE 0 END) AS [Dec]
+FROM        dbo.vw_Sales_Orders_by_OrderID_Only
+WHERE	Order_Date >='1/1/2007' AND Order_Date <'1/1/2008'
+AND	Net_Order_Value > 0
+AND	Order_Buyer_Type IN ('B2', 'B3')
+GROUP BY Campaign
+
+UNION ALL
+
+SELECT  
+'Bullion Orders: ' + ISNULL(Campaign, 'Missing') AS Title,
+Count(Order_ID) AS Totals,
+SUM (CASE WHEN Month(Order_Date)=1 THEN 1 ELSE 0 END) AS Jan,
+SUM (CASE WHEN Month(Order_Date)=2 THEN 1 ELSE 0 END) AS Feb,
+SUM (CASE WHEN Month(Order_Date)=3 THEN 1 ELSE 0 END) AS Mar,
+SUM (CASE WHEN Month(Order_Date)=4 THEN 1 ELSE 0 END) AS Apr,
+SUM (CASE WHEN Month(Order_Date)=5 THEN 1 ELSE 0 END) AS May,
+SUM (CASE WHEN Month(Order_Date)=6 THEN 1 ELSE 0 END) AS Jun,
+SUM (CASE WHEN Month(Order_Date)=7 THEN 1 ELSE 0 END) AS Jul,
+SUM (CASE WHEN Month(Order_Date)=8 THEN 1 ELSE 0 END) AS Aug,
+SUM (CASE WHEN Month(Order_Date)=9 THEN 1 ELSE 0 END) AS Sep,
+SUM (CASE WHEN Month(Order_Date)=10 THEN 1 ELSE 0 END) AS Oct,
+SUM (CASE WHEN Month(Order_Date)=11 THEN 1 ELSE 0 END) AS Nov,
+SUM (CASE WHEN Month(Order_Date)=12 THEN 1 ELSE 0 END) AS [Dec]
+FROM        dbo.vw_Sales_Orders_by_OrderID_Only
+WHERE	Order_Date >='1/1/2007' AND Order_Date <'1/1/2008'
+AND	Net_Order_Value > 0
+AND	Order_Buyer_Type='B1'
+GROUP BY Campaign
+
+UNION ALL
+
+SELECT  
+'Total Orders: ' + ISNULL(Campaign, 'Missing') AS Title,
+Count(Order_ID) AS Totals,
+SUM (CASE WHEN Month(Order_Date)=1 THEN 1 ELSE 0 END) AS Jan,
+SUM (CASE WHEN Month(Order_Date)=2 THEN 1 ELSE 0 END) AS Feb,
+SUM (CASE WHEN Month(Order_Date)=3 THEN 1 ELSE 0 END) AS Mar,
+SUM (CASE WHEN Month(Order_Date)=4 THEN 1 ELSE 0 END) AS Apr,
+SUM (CASE WHEN Month(Order_Date)=5 THEN 1 ELSE 0 END) AS May,
+SUM (CASE WHEN Month(Order_Date)=6 THEN 1 ELSE 0 END) AS Jun,
+SUM (CASE WHEN Month(Order_Date)=7 THEN 1 ELSE 0 END) AS Jul,
+SUM (CASE WHEN Month(Order_Date)=8 THEN 1 ELSE 0 END) AS Aug,
+SUM (CASE WHEN Month(Order_Date)=9 THEN 1 ELSE 0 END) AS Sep,
+SUM (CASE WHEN Month(Order_Date)=10 THEN 1 ELSE 0 END) AS Oct,
+SUM (CASE WHEN Month(Order_Date)=11 THEN 1 ELSE 0 END) AS Nov,
+SUM (CASE WHEN Month(Order_Date)=12 THEN 1 ELSE 0 END) AS [Dec]
+FROM        dbo.vw_Sales_Orders_by_OrderID_Only
+WHERE	Order_Date >='1/1/2007' AND Order_Date <'1/1/2008'
+AND	Net_Order_Value > 0
+GROUP BY Campaign
+
+UNION ALL
+
+SELECT  
+'Certified Value: ' + ISNULL(Campaign, 'Missing') AS Title,
+SUM (ISNULL(Net_Order_Non_Bullion_Value, 0)) AS Totals,
+SUM (CASE WHEN Month(Order_Date)=1 THEN (ISNULL(Net_Order_Non_Bullion_Value, 0)) ELSE 0 END) AS Jan,
+SUM (CASE WHEN Month(Order_Date)=2 THEN (ISNULL(Net_Order_Non_Bullion_Value, 0)) ELSE 0 END) AS Feb,
+SUM (CASE WHEN Month(Order_Date)=3 THEN (ISNULL(Net_Order_Non_Bullion_Value, 0)) ELSE 0 END) AS Mar,
+SUM (CASE WHEN Month(Order_Date)=4 THEN (ISNULL(Net_Order_Non_Bullion_Value, 0)) ELSE 0 END) AS Apr,
+SUM (CASE WHEN Month(Order_Date)=5 THEN (ISNULL(Net_Order_Non_Bullion_Value, 0)) ELSE 0 END) AS May,
+SUM (CASE WHEN Month(Order_Date)=6 THEN (ISNULL(Net_Order_Non_Bullion_Value, 0)) ELSE 0 END) AS Jun,
+SUM (CASE WHEN Month(Order_Date)=7 THEN (ISNULL(Net_Order_Non_Bullion_Value, 0)) ELSE 0 END) AS Jul,
+SUM (CASE WHEN Month(Order_Date)=8 THEN (ISNULL(Net_Order_Non_Bullion_Value, 0)) ELSE 0 END) AS Aug,
+SUM (CASE WHEN Month(Order_Date)=9 THEN (ISNULL(Net_Order_Non_Bullion_Value, 0)) ELSE 0 END) AS Sep,
+SUM (CASE WHEN Month(Order_Date)=10 THEN (ISNULL(Net_Order_Non_Bullion_Value, 0)) ELSE 0 END) AS Oct,
+SUM (CASE WHEN Month(Order_Date)=11 THEN (ISNULL(Net_Order_Non_Bullion_Value, 0)) ELSE 0 END) AS Nov,
+SUM (CASE WHEN Month(Order_Date)=12 THEN (ISNULL(Net_Order_Non_Bullion_Value, 0)) ELSE 0 END) AS [Dec]
+FROM        dbo.vw_Sales_Orders_by_OrderID_Only
+WHERE	Order_Date >='1/1/2007' AND Order_Date <'1/1/2008'
+AND	Net_Order_Non_Bullion_Value > 0
+GROUP BY Campaign
+
+UNION ALL
+SELECT  
+'Bullion Value: ' + ISNULL(Campaign, 'Missing') AS Title,
+SUM (ISNULL(Net_Order_Bullion_Value, 0)) AS Totals,
+SUM (CASE WHEN Month(Order_Date)=1 THEN (ISNULL(Net_Order_Bullion_Value, 0)) ELSE 0 END) AS Jan,
+SUM (CASE WHEN Month(Order_Date)=2 THEN (ISNULL(Net_Order_Bullion_Value, 0)) ELSE 0 END) AS Feb,
+SUM (CASE WHEN Month(Order_Date)=3 THEN (ISNULL(Net_Order_Bullion_Value, 0)) ELSE 0 END) AS Mar,
+SUM (CASE WHEN Month(Order_Date)=4 THEN (ISNULL(Net_Order_Bullion_Value, 0)) ELSE 0 END) AS Apr,
+SUM (CASE WHEN Month(Order_Date)=5 THEN (ISNULL(Net_Order_Bullion_Value, 0)) ELSE 0 END) AS May,
+SUM (CASE WHEN Month(Order_Date)=6 THEN (ISNULL(Net_Order_Bullion_Value, 0)) ELSE 0 END) AS Jun,
+SUM (CASE WHEN Month(Order_Date)=7 THEN (ISNULL(Net_Order_Bullion_Value, 0)) ELSE 0 END) AS Jul,
+SUM (CASE WHEN Month(Order_Date)=8 THEN (ISNULL(Net_Order_Bullion_Value, 0)) ELSE 0 END) AS Aug,
+SUM (CASE WHEN Month(Order_Date)=9 THEN (ISNULL(Net_Order_Bullion_Value, 0)) ELSE 0 END) AS Sep,
+SUM (CASE WHEN Month(Order_Date)=10 THEN (ISNULL(Net_Order_Bullion_Value, 0)) ELSE 0 END) AS Oct,
+SUM (CASE WHEN Month(Order_Date)=11 THEN (ISNULL(Net_Order_Bullion_Value, 0)) ELSE 0 END) AS Nov,
+SUM (CASE WHEN Month(Order_Date)=12 THEN (ISNULL(Net_Order_Bullion_Value, 0)) ELSE 0 END) AS [Dec]
+FROM        dbo.vw_Sales_Orders_by_OrderID_Only
+WHERE	Order_Date >='1/1/2007' AND Order_Date <'1/1/2008'
+AND	Net_Order_Bullion_Value > 0
+GROUP BY Campaign
+
+UNION ALL
+
+SELECT  
+'Total Value: ' + ISNULL(Campaign, 'Missing') AS Title,
+SUM (ISNULL(Net_Order_Value, 0)) AS Totals,
+SUM (CASE WHEN Month(Order_Date)=1 THEN (ISNULL(Net_Order_Value, 0)) ELSE 0 END) AS Jan,
+SUM (CASE WHEN Month(Order_Date)=2 THEN (ISNULL(Net_Order_Value, 0)) ELSE 0 END) AS Feb,
+SUM (CASE WHEN Month(Order_Date)=3 THEN (ISNULL(Net_Order_Value, 0)) ELSE 0 END) AS Mar,
+SUM (CASE WHEN Month(Order_Date)=4 THEN (ISNULL(Net_Order_Value, 0)) ELSE 0 END) AS Apr,
+SUM (CASE WHEN Month(Order_Date)=5 THEN (ISNULL(Net_Order_Value, 0)) ELSE 0 END) AS May,
+SUM (CASE WHEN Month(Order_Date)=6 THEN (ISNULL(Net_Order_Value, 0)) ELSE 0 END) AS Jun,
+SUM (CASE WHEN Month(Order_Date)=7 THEN (ISNULL(Net_Order_Value, 0)) ELSE 0 END) AS Jul,
+SUM (CASE WHEN Month(Order_Date)=8 THEN (ISNULL(Net_Order_Value, 0)) ELSE 0 END) AS Aug,
+SUM (CASE WHEN Month(Order_Date)=9 THEN (ISNULL(Net_Order_Value, 0)) ELSE 0 END) AS Sep,
+SUM (CASE WHEN Month(Order_Date)=10 THEN (ISNULL(Net_Order_Value, 0)) ELSE 0 END) AS Oct,
+SUM (CASE WHEN Month(Order_Date)=11 THEN (ISNULL(Net_Order_Value, 0)) ELSE 0 END) AS Nov,
+SUM (CASE WHEN Month(Order_Date)=12 THEN (ISNULL(Net_Order_Value, 0)) ELSE 0 END) AS [Dec]
+FROM        dbo.vw_Sales_Orders_by_OrderID_Only
+WHERE	Order_Date >='1/1/2007' AND Order_Date <'1/1/2008'
+AND	Net_Order_Value > 0
+GROUP BY Campaign
+

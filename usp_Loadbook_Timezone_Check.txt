@@ -1,0 +1,94 @@
+USE [Data_Warehouse]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_Loadbook_Timezone_Check]    Script Date: 10/01/2010 13:15:58 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[usp_Loadbook_Timezone_Check] 
+@in_Number varchar(25)
+AS 
+BEGIN
+DECLARE @int_Answer integer
+DECLARE @in_Area_Code varchar(3)
+DECLARE @bln_DST varchar(5)
+DECLARE @int_DST integer
+DECLARE @dt_Location_Time datetime
+DECLARE @dt_Local_Time datetime
+DECLARE @int_TZ_Offset integer
+
+SET @in_Area_Code = LEFT(@in_Number, 3) 
+
+
+SET @int_Answer = (	SELECT 
+					Count(tTAC.Daylight_Savings_Time)
+					FROM tbl_Timezone_Area_Codes tTAC
+					LEFT JOIN tbl_Timezone_Exclusions tTE
+					ON tTAC.Area_Code=tTE.Area_Code
+					WHERE tTAC.Area_Code = @in_Area_Code
+					AND tTE.Area_Code IS NULL
+				)
+
+SET @int_DST = (	SELECT tTAC.Daylight_Savings_Time
+					FROM tbl_Timezone_Area_Codes tTAC
+					WHERE tTAC.Area_Code = @in_Area_Code
+				)
+
+IF (@int_Answer > 0)
+BEGIN
+	IF (@int_DST = 0)
+	BEGIN
+		SET @int_TZ_Offset = (	SELECT tTAC.Time_Zone_Offset
+								FROM tbl_Timezone_Area_Codes tTAC
+								WHERE tTAC.Area_Code = @in_Area_Code
+								) 
+
+		SET @dt_Local_Time=GETDATE()
+		SET @dt_Location_Time = (SELECT DATEADD(hour, @int_TZ_Offset, GETUTCDATE()))
+
+		SELECT 
+		@dt_Local_Time AS [Local_Time],
+		@dt_Location_Time AS Location_Time,
+		CASE WHEN DATEPART( hour, @dt_Location_Time) >= 8 AND DATEPART( hour, @dt_Location_Time) < 21 THEN 'Yes' ELSE 'No' END AS Can_Call	
+	END -- IF (@int_DST = 0)
+
+	IF (@int_DST = 1)
+	BEGIN
+		SET @bln_DST = (SELECT 
+						CASE WHEN GETDATE() >= tTD.DST_Start AND GETDATE() <= tTD.DST_Stop THEN 'True' ELSE 'False' END AS Answer
+						FROM tbl_Timezone_DST  tTD
+						WHERE tTD.[Year] = YEAR(GetDate())
+						)
+		IF (@bln_DST = 'True')				
+			SET @int_TZ_Offset = (	SELECT Time_Zone_Offset
+								FROM tbl_Timezone_Area_Codes
+								WHERE Area_Code = @in_Area_Code
+								) + 1
+		IF (@bln_DST = 'False')
+			SET @int_TZ_Offset = (	SELECT Time_Zone_Offset
+								FROM tbl_Timezone_Area_Codes
+								WHERE Area_Code = @in_Area_Code
+								) 	
+		
+		SET @dt_Local_Time=GETDATE()
+		SET @dt_Location_Time = (SELECT DATEADD(hour, @int_TZ_Offset, GETUTCDATE()))
+
+		SELECT 
+		@dt_Local_Time AS Local_Time,
+		@dt_Location_Time AS Location_Time,
+		CASE WHEN DATEPART( hour, @dt_Location_Time) >= 8 AND DATEPART( hour, @dt_Location_Time) < 21 THEN 'Yes' ELSE 'No' END AS Can_Call	
+END
+
+END -- IF (@int_Answer > 0)
+
+ELSE
+	BEGIN
+		SET @dt_Local_Time=GETDATE()
+		SELECT 
+		@dt_Local_Time AS Local_Time,
+		Null AS Location_Time,
+		'No' AS Can_Call
+	END 
+
+END

@@ -1,0 +1,268 @@
+SELECT 
+"Metric" = 'Month_Name',
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_13(GetDate())) AS Month_13, 
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_12(GetDate())) AS Month_12, 
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_11(GetDate())) AS Month_11, 
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_10(GetDate())) AS Month_10, 
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_09(GetDate())) AS Month_09, 
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_08(GetDate())) AS Month_08, 
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_07(GetDate())) AS Month_07, 
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_06(GetDate())) AS Month_06, 
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_05(GetDate())) AS Month_05, 
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_04(GetDate())) AS Month_04, 
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_03(GetDate())) AS Month_03, 
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_02(GetDate())) AS Month_02, 
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_01(GetDate())) AS Month_01,
+dbo.Get_TheMonth_Name(dbo.Get_TheMonth_Previous_00(GetDate())) AS Month_00
+
+
+SELECT     TOP (100) PERCENT 
+"Metric" = 'Calls Handled',
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_00
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+WHERE CallType = 3
+AND AgentExitCode > 16
+
+UNION ALL
+
+SELECT     TOP (100) PERCENT 
+"Metric" = 'DMT Calls Handled',
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_00
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+WHERE CallType = 3
+AND AgentExitCode > 16
+AND PoolFK IN (-8, -9, -11) -- DMT
+
+UNION ALL
+
+SELECT     TOP (100) PERCENT 
+"Metric" = 'Magazine Calls Handled',
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_00
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+WHERE CallType = 3
+AND AgentExitCode > 16
+AND PoolFK IN (-13) -- Magazine
+
+UNION ALL
+
+SELECT     TOP (100) PERCENT 
+"Metric" = 'Newspaper Calls Handled',
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_00
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+WHERE CallType = 3
+AND AgentExitCode > 16
+AND PoolFK IN (-3, -7, -10, -18, -19, -20) -- Newspaper
+
+UNION ALL
+
+SELECT     TOP (100) PERCENT 
+"Metric" = 'TV Calls Handled',
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_00
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+WHERE CallType = 3
+AND AgentExitCode > 16
+AND PoolFK IN (-4) -- TV
+
+UNION ALL
+
+SELECT     TOP (100) PERCENT 
+"Metric" = 'Calls Handled 2mins+',
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_00
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+WHERE CallType = 3
+AND AgentExitCode > 16
+AND Call_Talk_Time >= 120
+
+UNION ALL
+
+SELECT     TOP (100) PERCENT 
+"Metric" = 'DMT Calls Handled 2mins+',
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_00
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+WHERE CallType = 3
+AND AgentExitCode > 16
+AND Call_Talk_Time >= 120
+AND PoolFK IN (-8, -9, -11) -- DMT
+
+UNION ALL
+
+SELECT     TOP (100) PERCENT 
+"Metric" = 'Magazine Calls Handled 2mins+',
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_00
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+WHERE CallType = 3
+AND AgentExitCode > 16
+AND Call_Talk_Time >= 120
+AND PoolFK IN (-13) -- Magazine
+
+UNION ALL
+
+SELECT     TOP (100) PERCENT 
+"Metric" = 'Newspaper Calls Handled 2mins+',
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_00
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+WHERE CallType = 3
+AND AgentExitCode > 16
+AND Call_Talk_Time >= 120
+AND PoolFK IN (-3, -7, -10, -18, -19, -20) -- Newspaper
+
+UNION ALL
+
+SELECT     TOP (100) PERCENT 
+"Metric" = 'TV Calls Handled 2mins+',
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Call_Start_Time < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Call_Start_Time >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_00
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+WHERE CallType = 3
+AND AgentExitCode > 16
+AND Call_Talk_Time >= 120
+AND PoolFK IN (-4) -- TV

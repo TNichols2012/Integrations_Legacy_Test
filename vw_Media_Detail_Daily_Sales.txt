@@ -1,0 +1,7 @@
+SELECT     
+Ad_Code, 
+Ttl_Shipped_Value, 
+Ttl_Bullion, 
+Ttl_Non_Bullion, 
+Ttl_Misc
+FROM         USRC_FILESERVER.Data_Warehouse.dbo.vw_Daily_Media_Sales_Volume AS vDMSV

@@ -1,0 +1,34 @@
+SELECT     TOP (100) PERCENT 
+dbo.tbl_DBF_CMS.Order_Date, 
+dbo.tbl_DBF_CMS.Ship_Date, 
+dbo.tbl_DBF_Media_Codes.Campaign, 
+dbo.tbl_DBF_CMS.Ad_Code, 
+dbo.tbl_DBF_CMS.Order_ID, 
+dbo.tbl_DBF_Items.Item_ID, 
+dbo.tbl_DBF_Stock.Stock_ID, 
+dbo.tbl_DBF_Stock.Stock_Assoc, 
+dbo.tbl_DBF_Stock.Stock_Desc, 
+dbo.tbl_DBF_CMS.Order_Total, 
+dbo.tbl_DBF_CMS.Ttl_Billed_Merch, 
+dbo.tbl_DBF_CMS.Ttl_Billed_Shipping, 
+dbo.tbl_DBF_Items.Quantity_Ordered, 
+dbo.tbl_DBF_Items.Value_Ordered, 
+dbo.tbl_DBF_Items.Quantity_Shipped, 
+dbo.tbl_DBF_Items.Value_Shipped, 
+dbo.tbl_DBF_Stock.Stock_Type, 
+dbo.tbl_DBF_Items.Item_State, 
+dbo.tbl_DBF_CMS.Sales_ID, 
+dbo.tbl_DBF_CMS.Ttl_Billed_Tax, 
+dbo.tbl_DBF_CMS.Order_Type, 
+dbo.tbl_DBF_CMS.Cust_ID, 
+dbo.tbl_DBF_CMS.Ship_List
+FROM			dbo.tbl_DBF_Stock 
+RIGHT OUTER JOIN	dbo.tbl_DBF_CMS 
+LEFT OUTER JOIN		dbo.tbl_DBF_Items 
+ON			dbo.tbl_DBF_CMS.Order_ID = dbo.tbl_DBF_Items.Order_ID 
+ON			dbo.tbl_DBF_Stock.Stock_ID = dbo.tbl_DBF_Items.Stock_ID 
+LEFT OUTER JOIN		dbo.tbl_DBF_Media_Codes 
+ON			dbo.tbl_DBF_CMS.Ad_Code = dbo.tbl_DBF_Media_Codes.Ad_Code
+WHERE			(dbo.tbl_DBF_Items.Stock_ID <> '') 
+AND			(dbo.tbl_DBF_CMS.Order_Type <> 'CXL')
+ORDER BY		dbo.tbl_DBF_CMS.Order_Date DESC

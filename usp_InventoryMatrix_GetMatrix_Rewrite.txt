@@ -1,0 +1,151 @@
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tmp_MOM_CMS'
+		)
+DROP TABLE tmp_MOM_CMS
+GO
+
+select [order]
+into tmp_MOM_CMS
+from mom_cms
+where (custnum = 13676) and (order_st2 <> 'CN')
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tmp_MOM_ITEMS'
+		)
+DROP TABLE tmp_MOM_ITEMS
+GO
+
+select item, item_state, quanto
+into tmp_MOM_ITEMS
+from mom_items
+where	([order] in 
+			(select [order]
+			from tmp_MOM_CMS
+			)
+		)
+and (trans_id <> 0)
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tmp_Shipped_Items'
+		)
+DROP TABLE tmp_Shipped_Items
+GO
+
+select item, sum(quanto) AS quanto
+into tmp_Shipped_Items
+from tmp_MOM_ITEMS
+where (item_state = 'PS')
+or (item_state = 'SH')
+group by item
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tmp_Returned_Items'
+		)
+DROP TABLE tmp_Returned_Items
+GO
+
+select item, sum(quanto) AS quanto
+into tmp_Returned_Items
+from tmp_MOM_ITEMS
+where (item_state = 'RT')
+group by item
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tmp_Items'
+		)
+DROP TABLE tmp_Items
+GO
+
+select 
+ShippedItems.item, 
+ShippedItems.quanto - isnull(ReturnedItems.quanto, 0) AS Shipped_Quantity
+into tmp_Items
+from tmp_Shipped_Items as ShippedItems
+left outer join tmp_Returned_Items as ReturnedItems
+on ShippedItems.item = ReturnedItems.item
+
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tmp_MOM_STOCK'
+		)
+DROP TABLE tmp_MOM_STOCK
+GO
+
+select assoc, Shipped_Quantity
+into tmp_MOM_STOCK
+from MOM_STOCK
+inner join tmp_Items as Items
+on MOM_STOCK.number = Items.item
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tmp_InventoryMatrixHeaderSectionMappings'
+		)
+DROP TABLE tmp_InventoryMatrixHeaderSectionMappings
+GO
+
+select [Id]
+into tmp_InventoryMatrixHeaderSectionMappings
+from InventoryMatrixHeaderSectionMappings
+where (HeaderId = 1)
+and (SectionId = 1)
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tmp_InventoryMatrixRowMappings'
+		)
+DROP TABLE tmp_InventoryMatrixRowMappings
+GO
+
+select 
+InventoryMatrixRowMappings.[Id], 
+[Position]
+into tmp_InventoryMatrixRowMappings
+from InventoryMatrixRowMappings
+inner join tmp_InventoryMatrixHeaderSectionMappings as InventoryMatrixHeaderSectionMappings
+on InventoryMatrixRowMappings.HeaderSectionMappingId = InventoryMatrixHeaderSectionMappings.[Id]
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tmp_InventoryMatrixColumnMappings'
+		)
+DROP TABLE tmp_InventoryMatrixColumnMappings
+GO
+
+select 
+InventoryMatrixColumnMappings.[Id], 
+[Position]
+into tmp_InventoryMatrixColumnMappings
+from InventoryMatrixColumnMappings
+inner join tmp_InventoryMatrixHeaderSectionMappings as InventoryMatrixHeaderSectionMappings
+on InventoryMatrixColumnMappings.HeaderSectionMappingId = InventoryMatrixHeaderSectionMappings.[Id]
+
+
+select 
+InventoryMatrixRowMappings.[Position] as RowPosition, 
+InventoryMatrixColumnMappings.[Position] as ColumnPosition, 
+isnull(Shipped_Quantity, 0) as Quantity, 
+ProductClassificationCode
+from InventoryMatrixMappings
+left outer join tmp_MOM_STOCK as MOM_STOCK
+on InventoryMatrixMappings.ProductClassificationCode = MOM_STOCK.assoc
+inner join tmp_InventoryMatrixRowMappings as InventoryMatrixRowMappings
+on InventoryMatrixMappings.RowMappingId = InventoryMatrixRowMappings.[Id]
+inner join tmp_InventoryMatrixColumnMappings as InventoryMatrixColumnMappings
+on InventoryMatrixMappings.ColumnMappingId = InventoryMatrixColumnMappings.[Id]
+order by RowPosition, ColumnPosition

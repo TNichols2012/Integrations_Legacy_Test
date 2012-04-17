@@ -1,0 +1,6 @@
+SELECT     
+ContactNumber, 
+COUNT(ContactNumber) AS Times_Contacted, 
+MAX(CallEndTime) AS Last_Contact_Date
+FROM         dbo.tbl_CCS_Data
+GROUP BY ContactNumber

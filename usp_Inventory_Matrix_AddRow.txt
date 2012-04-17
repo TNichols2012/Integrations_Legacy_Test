@@ -1,0 +1,122 @@
+set ANSI_NULLS OFF
+set QUOTED_IDENTIFIER OFF
+GO
+
+ALTER PROCEDURE [dbo].[usp_InventoryMatrix_AddRow]
+(
+@HeaderText varchar(50),
+@SectionText varchar(50),
+@RowText varchar(50)
+)
+AS
+
+declare @HeaderId int
+declare @SectionId int
+declare @HeaderSectionMappingId int
+declare @LastPosition int
+declare @RowId int
+declare @NewRowMappingId int
+declare @ErrorString varchar(300)
+
+set @ErrorString = ' '
+
+set @NewRowMappingId = 0
+
+-- See if the header text exists. If it does not then return row id of 0 to indicate an error
+set @HeaderId =
+	(
+	select [Id]
+	from InventoryMatrixHeaders
+	where ([Text] = @HeaderText)
+	)
+
+if (@HeaderId is null)
+	begin
+	set @ErrorString = 'Header ' + @HeaderText + ' could not be found'
+	select @NewRowMappingId, @ErrorString
+	return
+	end
+ 
+-- See if the section text exists. If it does not then return row id of 0 to indicate an error
+set @SectionId =
+	(
+	select [Id]
+	from InventoryMatrixSections
+	where ([Text] = @SectionText)
+	)
+
+if (@SectionId is null)
+	begin
+	set @ErrorString = 'Section ' + @SectionText + ' could not be found'
+	select @NewRowMappingId, @ErrorString
+	return
+	end
+
+-- Get the header section mapping id. If it does not exist then return a row id of 0 to indicate an error
+set @HeaderSectionMappingId =
+	(
+	select [Id]
+	from InventoryMatrixHeaderSectionMappings
+	where (HeaderId = @HeaderId)
+	and (SectionId = @SectionId)
+	)
+
+if (@HeaderSectionMappingId is null)
+	begin
+	set @ErrorString = 'Header-Section mapping for header ' + @HeaderText + ' and section ' + @SectionText + ' could not be found'
+	select @NewRowMappingId, @ErrorString
+	return
+	end
+
+-- Get the position of the last row
+set @LastPosition =
+	(
+	select top 1 [Position]
+	from InventoryMatrixRowMappings
+	where (HeaderSectionMappingId = @HeaderSectionMappingId)
+	order by [Position] desc
+	)
+
+if (@LastPosition is null)
+	begin
+	set @LastPosition = 0
+	end
+
+-- Get the row id
+set @RowId =
+	(
+	select [Id]
+	from InventoryMatrixRows
+	where ([Text] = @RowText)
+	)
+
+-- Add the row and return the Id
+if (@RowId is null)
+	begin
+	insert into InventoryMatrixRows ([Text])
+	values (@RowText)
+	set @RowId = @@IDENTITY
+	end
+
+set @NewRowMappingId =
+	(
+	select [Id]
+	from InventoryMatrixRowMappings
+	where (RowId = @RowId)
+	and (HeaderSectionMappingId = @HeaderSectionMappingId)
+	)
+
+if (@NewRowMappingId is null)
+	begin
+	insert into InventoryMatrixRowMappings (RowId, HeaderSectionMappingId, [Position])
+	values (@RowId, @HeaderSectionMappingId, (@LastPosition + 1))
+	set @NewRowMappingId = @@IDENTITY
+	set @ErrorString = 'Row ' + @RowText + ' was successfully added'
+	end
+else
+	begin
+	set @ErrorString = 'Row ' + @RowText + ' already exists'
+	end
+
+select @NewRowMappingId, @ErrorString
+

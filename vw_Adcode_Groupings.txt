@@ -1,0 +1,544 @@
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Calls_Handled, 0) AS Ttl_Calls_Handled, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Queue_Time, 0) AS Ttl_Queue_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Talk_Time, 0) AS Ttl_Talk_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Wrap_Time, 0) AS Ttl_Wrap_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Agent_Stats.Pause_Time, 0) AS Ttl_Pause_Time, 
+ISNULL(dbo.vw_Daily_Agent_Agent_Stats.Wait_Time, 0) AS Ttl_Wait_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Pres, 0) AS Ttl_Pres_Made, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Sales, 0) AS Ttl_Sales_Dispositioned, 
+0 AS Ttl_Gross_Sales, 
+ISNULL(dbo.vw_Daily_MOM_TB_Sales.Ttl_Sales_Orders_Submitted, 0) AS Ttl_Sales_Orders_Submitted, 
+ISNULL(dbo.vw_Daily_MOM_TB_Sales.Ttl_Net_Sales, 0) AS Ttl_Net_Sales, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.IB_Calls_Handled, 0) AS IB_Calls_Handled, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.IB_Talk_Time, 0) AS IB_Talk_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.IB_Pres, 0) AS IB_Pres_Made, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.IB_Sales, 0) AS IB_Sales_Dispositioned, 
+0 AS IB_Gross_Sales, 
+ISNULL(dbo.vw_Daily_MOM_TB_Sales.IB_Sales_Orders_Submitted, 0) AS IB_Sales_Orders_Submitted, 
+ISNULL(dbo.vw_Daily_MOM_TB_Sales.IB_Sales_Value, 0) AS IB_Sales_Value, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.OB_Calls_Handled, 0) AS OB_Calls_Handled, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.OB_Talk_Time, 0) AS OB_Talk_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.OB_Pres, 0) AS OB_Pres_Made, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.OB_Sales, 0) AS OB_Sales_Dispositioned, 0 AS OB_Gross_Sales, 
+ISNULL(dbo.vw_Daily_MOM_TB_Sales.OB_Sales_Orders_Submitted, 0) AS OB_Sales_Orders_Submitted, 
+ISNULL(dbo.vw_Daily_MOM_TB_Sales.OB_Sales_Value, 0) AS OB_Sales_Value, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.TR_Calls_Handled, 0) AS TR_Calls_Handled, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.TR_Talk_Time, 0) AS TR_Talk_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.TR_Pres, 0) AS TR_Pres_Made, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.TR_Sales, 0) AS TR_Sales_Dispositioned, 
+dbo.tbl_Sales_Teams.Sales_Manager, 
+dbo.tbl_Sales_Tea ms.Site
+
+
+SELECT     Original_Ad_Code, COUNT(Original_Ad_Code) AS [Count], 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         vw_First_Sales_03_Buyer_Type
+GROUP BY Original_Ad_Code
+ORDER BY COUNT(Original_Ad_Code) DESC
+	
+(CASE 
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'DMT%' THEN 'Direct_Mail' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'OB%' OR dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code = 'OUTBOUND' THEN 'Outbound' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'IB%' THEN 'Inbound' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'WEB%' THEN 'Internet' 
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BIAL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'MBAL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'MOAL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'PHAZ%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'TUAZ%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AVCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BACA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BBCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BDPCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BHCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BRCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'LATCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'LANG%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'LAwCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'LBCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'LBPTCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'OACA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'OCRCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'SJCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'SDCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'SMCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'SNCA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'RICA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'VECA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'RMCO%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BRCT%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BPCT%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BSCT%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BDFL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BRFL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'MIFL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ORFL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'SPFL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ATGA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AUGA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'HOHI%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AZHR%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BUIA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BOID%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AHIL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BEIL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BLIL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'CHDHL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'CHIL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'CHTIL%'  THEN 'Newspaper'
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ANIN%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BEIN%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BLIN%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ININ%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'LEKY%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BRLA%'  THEN 'Newspaper'
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ATLM%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ATMA%'  THEN 'Newspaper'
+
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BOMA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BOGMA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BOMMA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BRMA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ANMD%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BAMD%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BAME%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BAMI%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BCMI%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'DEMI%'  THEN 'Newspaper'
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'MISTMN%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'MIPPMN%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'TCMN%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BSMO%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'KCMO%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BIMT%'  THEN 'Newspaper'
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'OMNE%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'LVNV%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AKOH%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'CLOH%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ASOH%'  THEN 'Newspaper'
+
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ASNC%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'CHNC%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BIND%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'MANH%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ACNJ%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BENJ%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BNNJ%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BRNJ%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ALNM%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ALNY%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AMNY%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BINY%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BKNY%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BUFNY%'  THEN 'Newspaper'
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'DNNY%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'LINY%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'NYMNY%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'NYPNY%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'SUNY%'  THEN 'Newspaper'
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ALPA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BCPA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'PHILPA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'PHIPA%'  THEN 'Newspaper'
+
+
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AAMI%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ADMI%'  THEN 'Newspaper'
+
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ANSC%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BTSL%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ABSD%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'CHTN%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ABTX%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AMTX%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ANTX%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BCSTX%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'DATX%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'FOTX%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'HOTX%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'SATX%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ALVA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'NOVA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'RIVA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ROVA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ADVO%'  THEN 'Newspaper'
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'SEWA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BRWA%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'APWI%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BEWV%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BLWV%'  THEN 'Newspaper'
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ABBC%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BAONC%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BFONC%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BRONC%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'TOSON%'  THEN 'Newspaper'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'TOPON%'  THEN 'Newspaper'
+
+
+
+
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like '1%'  THEN 'TV'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like '2%'  THEN 'TV'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like '3%'  THEN 'TV'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like '4%'  THEN 'TV'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like '5%'  THEN 'TV'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like '6%'  THEN 'TV'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like '7%'  THEN 'TV'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like '8%'  THEN 'TV'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like '9%'  THEN 'TV'
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ACG%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'ACW%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AML%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AP%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AS%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AT%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AW%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'AY%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BE%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BH%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BM%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'BOM%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'CM%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'DP%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'GSN%'  THEN 'Magazine'
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'HA%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'HE%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'KP%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'K%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'MS%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'NG%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'NL%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'NW%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'P%'  THEN 'Magazine'
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'SEP%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'SM%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'TIME%'  THEN 'Magazine'
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'USN%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'US%'  THEN 'Magazine'
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'VFW%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'VF%'  THEN 'Magazine'
+WHEN dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code Like 'WT%'  THEN 'Magazine'
+
+
+
+
+
+
+
+ELSE 'Pending' END) AS Initial_Media_Type
+
+
+SELECT     
+'Media Customers' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+
+UNION ALL
+
+SELECT     
+'Newspaper Ads Produced' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('Newspaper')
+
+UNION ALL
+
+SELECT     
+'Newspaper Ads Production Cost' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN ad_cost ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN ad_cost ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN ad_cost ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN ad_cost ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN ad_cost ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN ad_cost ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('Newspaper')
+
+UNION ALL
+
+SELECT     
+'Newspaper Customers' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('Newspaper')
+
+UNION ALL
+
+SELECT     
+'Newspaper Customer Initial Purchases' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('Newspaper')
+
+UNION ALL
+
+SELECT     
+'TV Ads Produced' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('TV')
+
+UNION ALL
+
+SELECT     
+'TV Ads Production Cost' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN ad_cost ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN ad_cost ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN ad_cost ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN ad_cost ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN ad_cost ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN ad_cost ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('TV')
+
+UNION ALL
+
+SELECT     
+'TV Customers' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('TV')
+
+UNION ALL
+
+SELECT     
+'TV Customer Purchases' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('TV')
+
+UNION ALL
+
+SELECT     
+'Magazine Ads Produced' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('Magazine')
+
+UNION ALL
+
+SELECT     
+'Magazine Ads Production Cost' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN ad_cost ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN ad_cost ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN ad_cost ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN ad_cost ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN ad_cost ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN ad_cost ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('Magazine')
+
+UNION ALL
+
+SELECT     
+'Magazine Customers' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('Magazine')
+
+UNION ALL
+
+SELECT     
+'Magazine Customer Purchases' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('Magazine')
+
+UNION ALL
+
+SELECT     
+'Radio Ads Produced' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('Radio')
+
+UNION ALL
+
+SELECT     
+'Radio Ads Production Cost' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN ad_cost ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN ad_cost ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN ad_cost ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN ad_cost ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN ad_cost ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN ad_cost ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('Radio')
+UNION ALL
+
+SELECT     
+'Radio Customers' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('Radio')
+
+UNION ALL
+
+SELECT     
+'Radio Customer Purchases' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('Radio')
+
+UNION ALL
+
+SELECT     
+'DMT Ads Produced' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('DMT')
+
+UNION ALL
+
+SELECT     
+'DMT Ads Production Cost' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN ad_cost ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN ad_cost ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN ad_cost ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN ad_cost ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN ad_cost ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN ad_cost ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('DMT')
+
+UNION ALL
+
+SELECT     
+'DMT Customers' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('DMT')
+
+UNION ALL
+
+SELECT     
+'DMT Customer Purchases' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN Initial_Ttl_Shipped_Value ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_05_Media_Type
+WHERE     Initial_Media_Type IN ('DMT')
+

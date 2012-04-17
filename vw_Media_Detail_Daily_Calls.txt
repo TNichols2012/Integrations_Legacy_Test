@@ -1,0 +1,9 @@
+SELECT     
+DNIS, 
+SUM(Call_Volume) AS Call_Volume, 
+SUM(Agent_Answered) AS Agent_Answered, 
+SUM(Answered_Below_2min) AS Answered_Below_2min, 
+SUM(Answered_Above_2min) AS Answered_Above_2min
+FROM         dbo.tbl_Amcat_Call_Volume_IB
+GROUP BY DNIS, Call_Start_Time, Call_Volume, Agent_Answered, Answered_Below_2min, Answered_Above_2min
+HAVING      (Call_Start_Time >= dbo.Get_TheDate(GETDATE() - 1)) AND (Call_Start_Time < dbo.Get_TheDate(GETDATE()))

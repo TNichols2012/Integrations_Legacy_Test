@@ -1,0 +1,20 @@
+SELECT     TOP (100) PERCENT 
+dbo.tbl_DBF_Cust.Entry_Date, 
+dbo.tbl_DBF_Cust.Cust_ID, 
+dbo.tbl_DBF_Cust.First_Name, 
+dbo.tbl_DBF_Cust.Last_Name, 
+COUNT(dbo.tbl_DBF_CMS.Order_Date) AS Ttl_Order_Count, 
+MIN(dbo.tbl_DBF_CMS.Order_Date) AS First_Order_Date, 
+MIN(dbo.tbl_DBF_CMS.Order_ID) AS First_Order_ID, 
+ISNULL(dbo.tbl_DBF_Cust.Orig_Ad_Code, 'Missing_Orig_Ad_Code') AS Orig_Ad_Code
+FROM			dbo.tbl_DBF_CMS 
+RIGHT OUTER JOIN	dbo.tbl_DBF_Cust 
+ON 			dbo.tbl_DBF_CMS.Cust_ID = dbo.tbl_DBF_Cust.Cust_ID
+GROUP BY 
+dbo.tbl_DBF_Cust.Cust_ID, 
+dbo.tbl_DBF_Cust.Last_Name, 
+dbo.tbl_DBF_Cust.First_Name, 
+dbo.tbl_DBF_Cust.Orig_Ad_Code, 
+dbo.tbl_DBF_Cust.Entry_Date
+HAVING      (MIN(dbo.tbl_DBF_CMS.Order_Date) IS NOT NULL)
+ORDER BY dbo.tbl_DBF_Cust.Entry_Date

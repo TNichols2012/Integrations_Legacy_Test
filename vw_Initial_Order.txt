@@ -1,0 +1,66 @@
+
+
+--vw_Initial_Order
+
+SELECT 
+vw2.Cust_ID,
+vw2.Init_Order_Date,
+vw2.Init_Order_ID
+FROM	(
+		SELECT 
+		vw3.Cust_ID, 
+		vw3.Init_Order_Date, 
+		MIN(vSO.Order_ID) AS Init_Order_ID
+		FROM	dbo.vw_Sales_Orders AS vSO
+		INNER JOIN (
+					SELECT     
+					Cust_ID, 
+					MIN(Order_Date) AS Init_Order_Date
+					FROM		dbo.vw_Sales_Orders
+					GROUP BY	Cust_ID
+					) AS vw3
+		ON vSO.Cust_ID=vw3.Cust_ID
+		AND vSO.Order_Date=vw3.Init_Order_Date
+		GROUP BY vw3.Cust_ID, vw3.Init_Order_Date
+		) AS vw2
+
+GROUP BY vw2.Cust_ID, vw2.Init_Order_Date, vw2.Init_Order_ID
+
+
+
+--vw_Initial_Order_B
+SELECT     Cust_ID, First_B_Order_Date, First_B_Order_ID
+FROM         (SELECT     vw3.Cust_ID, vw3.First_B_Order_Date, MIN(vSO.Order_ID) AS First_B_Order_ID
+                       FROM          dbo.vw_Sales_Orders AS vSO INNER JOIN
+                                                  (SELECT     Cust_ID, MIN(Order_Date) AS First_B_Order_Date
+                                                    FROM          dbo.vw_Sales_Orders_Bullion_Only
+                                                    GROUP BY Cust_ID) AS vw3 ON vSO.Cust_ID = vw3.Cust_ID AND vSO.Order_Date = vw3.First_B_Order_Date
+                       GROUP BY vw3.Cust_ID, vw3.First_B_Order_Date) AS vw2
+GROUP BY Cust_ID, First_B_Order_Date, First_B_Order_ID
+
+
+--vw_Initial_Order_nB
+
+SELECT 
+vw2.Cust_ID,
+vw2.First_nB_Order_Date,
+vw2.First_nB_Order_ID
+FROM	(
+		SELECT 
+		vw3.Cust_ID, 
+		vw3.First_nB_Order_Date, 
+		MIN(vSO.Order_ID) AS First_nB_Order_ID
+		FROM	dbo.vw_Sales_Orders AS vSO
+		INNER JOIN (
+					SELECT     
+					Cust_ID, 
+					MIN(Order_Date) AS First_nB_Order_Date
+					FROM		dbo.vw_Sales_Orders_NonBullion_Only
+					GROUP BY	Cust_ID
+					) AS vw3
+		ON vSO.Cust_ID=vw3.Cust_ID
+		AND vSO.Order_Date=vw3.First_nB_Order_Date
+		GROUP BY vw3.Cust_ID, vw3.First_nB_Order_Date
+		) AS vw2
+
+GROUP BY vw2.Cust_ID, vw2.First_nB_Order_Date, vw2.First_nB_Order_ID

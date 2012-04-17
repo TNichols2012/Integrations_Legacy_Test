@@ -1,0 +1,1858 @@
+SELECT     
+'DMT Gold Report Initial' AS 'Metric', 
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+
+UNION ALL
+
+SELECT     
+'DMT Gold Report Outbound' AS 'Metric', 
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+
+UNION ALL
+
+SELECT     
+'DMT Bullion Initial' AS 'Metric', 
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+
+UNION ALL
+
+SELECT     
+'DMT Bullion Outbound' AS 'Metric', 
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+
+UNION ALL
+
+SELECT     
+'DMT Bump Initial' AS 'Metric', 
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+
+UNION ALL
+
+SELECT     
+'DMT Bump Outbound' AS 'Metric', 
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+
+
+*************************************** OR ***********************************
+
+SELECT     
+'DMT 2001 Gold Report Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '2/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2001' AND Entry_Date < '3/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2001' AND Entry_Date < '4/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2001' AND Entry_Date < '5/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2001' AND Entry_Date < '6/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2001' AND Entry_Date < '7/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2001' AND Entry_Date < '8/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2001' AND Entry_Date < '9/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2001' AND Entry_Date < '10/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2001' AND Entry_Date < '11/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2001' AND Entry_Date < '12/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2001' AND Entry_Date < '1/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2001' 
+AND Entry_Date < '2/1/2002'
+
+UNION ALL
+
+SELECT     
+'DMT 2001 Gold Report Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '2/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2001' AND Entry_Date < '3/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2001' AND Entry_Date < '4/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2001' AND Entry_Date < '5/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2001' AND Entry_Date < '6/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2001' AND Entry_Date < '7/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2001' AND Entry_Date < '8/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2001' AND Entry_Date < '9/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2001' AND Entry_Date < '10/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2001' AND Entry_Date < '11/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2001' AND Entry_Date < '12/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2001' AND Entry_Date < '1/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2001' 
+AND Entry_Date < '2/1/2002'
+
+UNION ALL
+
+SELECT     
+'DMT 2001 Bullion Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '2/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2001' AND Entry_Date < '3/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2001' AND Entry_Date < '4/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2001' AND Entry_Date < '5/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2001' AND Entry_Date < '6/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2001' AND Entry_Date < '7/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2001' AND Entry_Date < '8/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2001' AND Entry_Date < '9/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2001' AND Entry_Date < '10/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2001' AND Entry_Date < '11/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2001' AND Entry_Date < '12/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2001' AND Entry_Date < '1/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2001' 
+AND Entry_Date < '2/1/2002'
+
+UNION ALL
+
+SELECT     
+'DMT 2001 Bullion Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '2/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2001' AND Entry_Date < '3/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2001' AND Entry_Date < '4/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2001' AND Entry_Date < '5/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2001' AND Entry_Date < '6/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2001' AND Entry_Date < '7/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2001' AND Entry_Date < '8/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2001' AND Entry_Date < '9/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2001' AND Entry_Date < '10/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2001' AND Entry_Date < '11/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2001' AND Entry_Date < '12/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2001' AND Entry_Date < '1/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2001' 
+AND Entry_Date < '2/1/2002'
+
+UNION ALL
+
+SELECT     
+'DMT 2001 Bump Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '2/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2001' AND Entry_Date < '3/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2001' AND Entry_Date < '4/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2001' AND Entry_Date < '5/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2001' AND Entry_Date < '6/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2001' AND Entry_Date < '7/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2001' AND Entry_Date < '8/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2001' AND Entry_Date < '9/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2001' AND Entry_Date < '10/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2001' AND Entry_Date < '11/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2001' AND Entry_Date < '12/1/2001' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2001' AND Entry_Date < '1/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2001' 
+AND Entry_Date < '2/1/2002'
+
+UNION ALL
+
+SELECT     
+'DMT 2001 Bump Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '2/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2001' AND Entry_Date < '3/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2001' AND Entry_Date < '4/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2001' AND Entry_Date < '5/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2001' AND Entry_Date < '6/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2001' AND Entry_Date < '7/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2001' AND Entry_Date < '8/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2001' AND Entry_Date < '9/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2001' AND Entry_Date < '10/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2001' AND Entry_Date < '11/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2001' AND Entry_Date < '12/1/2001' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2001' AND Entry_Date < '1/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2001' 
+AND Entry_Date < '2/1/2002'
+
+UNION ALL
+
+SELECT     
+'DMT 2002 Gold Report Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '2/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2002' AND Entry_Date < '3/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2002' AND Entry_Date < '4/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2002' AND Entry_Date < '5/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2002' AND Entry_Date < '6/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2002' AND Entry_Date < '7/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2002' AND Entry_Date < '8/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2002' AND Entry_Date < '9/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2002' AND Entry_Date < '10/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2002' AND Entry_Date < '11/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2002' AND Entry_Date < '12/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2002' AND Entry_Date < '1/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2002' 
+AND Entry_Date < '2/1/2003'
+
+UNION ALL
+
+SELECT     
+'DMT 2002 Gold Report Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '2/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2002' AND Entry_Date < '3/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2002' AND Entry_Date < '4/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2002' AND Entry_Date < '5/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2002' AND Entry_Date < '6/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2002' AND Entry_Date < '7/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2002' AND Entry_Date < '8/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2002' AND Entry_Date < '9/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2002' AND Entry_Date < '10/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2002' AND Entry_Date < '11/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2002' AND Entry_Date < '12/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2002' AND Entry_Date < '1/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2002' 
+AND Entry_Date < '2/1/2003'
+
+UNION ALL
+
+SELECT     
+'DMT 2002 Bullion Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '2/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2002' AND Entry_Date < '3/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2002' AND Entry_Date < '4/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2002' AND Entry_Date < '5/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2002' AND Entry_Date < '6/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2002' AND Entry_Date < '7/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2002' AND Entry_Date < '8/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2002' AND Entry_Date < '9/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2002' AND Entry_Date < '10/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2002' AND Entry_Date < '11/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2002' AND Entry_Date < '12/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2002' AND Entry_Date < '1/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2002' 
+AND Entry_Date < '2/1/2003'
+
+UNION ALL
+
+SELECT     
+'DMT 2002 Bullion Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '2/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2002' AND Entry_Date < '3/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2002' AND Entry_Date < '4/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2002' AND Entry_Date < '5/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2002' AND Entry_Date < '6/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2002' AND Entry_Date < '7/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2002' AND Entry_Date < '8/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2002' AND Entry_Date < '9/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2002' AND Entry_Date < '10/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2002' AND Entry_Date < '11/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2002' AND Entry_Date < '12/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2002' AND Entry_Date < '1/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2002' 
+AND Entry_Date < '2/1/2003'
+
+UNION ALL
+
+SELECT     
+'DMT 2002 Bump Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '2/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2002' AND Entry_Date < '3/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2002' AND Entry_Date < '4/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2002' AND Entry_Date < '5/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2002' AND Entry_Date < '6/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2002' AND Entry_Date < '7/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2002' AND Entry_Date < '8/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2002' AND Entry_Date < '9/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2002' AND Entry_Date < '10/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2002' AND Entry_Date < '11/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2002' AND Entry_Date < '12/1/2002' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2002' AND Entry_Date < '1/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2002' 
+AND Entry_Date < '2/1/2003'
+
+UNION ALL
+
+SELECT     
+'DMT 2002 Bump Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '2/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2002' AND Entry_Date < '3/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2002' AND Entry_Date < '4/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2002' AND Entry_Date < '5/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2002' AND Entry_Date < '6/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2002' AND Entry_Date < '7/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2002' AND Entry_Date < '8/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2002' AND Entry_Date < '9/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2002' AND Entry_Date < '10/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2002' AND Entry_Date < '11/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2002' AND Entry_Date < '12/1/2002' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2002' AND Entry_Date < '1/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2002' 
+AND Entry_Date < '2/1/2003'
+
+UNION ALL
+
+SELECT     
+'DMT 2003 Gold Report Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '2/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2003' AND Entry_Date < '3/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2003' AND Entry_Date < '4/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2003' AND Entry_Date < '5/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2003' AND Entry_Date < '6/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2003' AND Entry_Date < '7/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2003' AND Entry_Date < '8/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2003' AND Entry_Date < '9/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2003' AND Entry_Date < '10/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2003' AND Entry_Date < '11/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2003' AND Entry_Date < '12/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2003' AND Entry_Date < '1/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2003' 
+AND Entry_Date < '2/1/2004'
+
+UNION ALL
+
+SELECT     
+'DMT 2003 Gold Report Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '2/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2003' AND Entry_Date < '3/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2003' AND Entry_Date < '4/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2003' AND Entry_Date < '5/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2003' AND Entry_Date < '6/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2003' AND Entry_Date < '7/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2003' AND Entry_Date < '8/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2003' AND Entry_Date < '9/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2003' AND Entry_Date < '10/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2003' AND Entry_Date < '11/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2003' AND Entry_Date < '12/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2003' AND Entry_Date < '1/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2003' 
+AND Entry_Date < '2/1/2004'
+
+UNION ALL
+
+SELECT     
+'DMT 2003 Bullion Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '2/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2003' AND Entry_Date < '3/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2003' AND Entry_Date < '4/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2003' AND Entry_Date < '5/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2003' AND Entry_Date < '6/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2003' AND Entry_Date < '7/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2003' AND Entry_Date < '8/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2003' AND Entry_Date < '9/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2003' AND Entry_Date < '10/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2003' AND Entry_Date < '11/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2003' AND Entry_Date < '12/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2003' AND Entry_Date < '1/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2003' 
+AND Entry_Date < '2/1/2004'
+
+UNION ALL
+
+SELECT     
+'DMT 2003 Bullion Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '2/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2003' AND Entry_Date < '3/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2003' AND Entry_Date < '4/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2003' AND Entry_Date < '5/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2003' AND Entry_Date < '6/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2003' AND Entry_Date < '7/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2003' AND Entry_Date < '8/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2003' AND Entry_Date < '9/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2003' AND Entry_Date < '10/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2003' AND Entry_Date < '11/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2003' AND Entry_Date < '12/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2003' AND Entry_Date < '1/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2003' 
+AND Entry_Date < '2/1/2004'
+
+UNION ALL
+
+SELECT     
+'DMT 2003 Bump Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '2/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2003' AND Entry_Date < '3/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2003' AND Entry_Date < '4/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2003' AND Entry_Date < '5/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2003' AND Entry_Date < '6/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2003' AND Entry_Date < '7/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2003' AND Entry_Date < '8/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2003' AND Entry_Date < '9/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2003' AND Entry_Date < '10/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2003' AND Entry_Date < '11/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2003' AND Entry_Date < '12/1/2003' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2003' AND Entry_Date < '1/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2003' 
+AND Entry_Date < '2/1/2004'
+
+UNION ALL
+
+SELECT     
+'DMT 2003 Bump Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '2/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2003' AND Entry_Date < '3/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2003' AND Entry_Date < '4/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2003' AND Entry_Date < '5/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2003' AND Entry_Date < '6/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2003' AND Entry_Date < '7/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2003' AND Entry_Date < '8/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2003' AND Entry_Date < '9/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2003' AND Entry_Date < '10/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2003' AND Entry_Date < '11/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2003' AND Entry_Date < '12/1/2003' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2003' AND Entry_Date < '1/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2003' 
+AND Entry_Date < '2/1/2004'
+
+UNION ALL
+
+SELECT     
+'DMT 2004 Gold Report Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '2/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2004' AND Entry_Date < '3/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2004' AND Entry_Date < '4/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2004' AND Entry_Date < '5/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2004' AND Entry_Date < '6/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2004' AND Entry_Date < '7/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2004' AND Entry_Date < '8/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2004' AND Entry_Date < '9/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2004' AND Entry_Date < '10/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2004' AND Entry_Date < '11/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2004' AND Entry_Date < '12/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2004' AND Entry_Date < '1/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2004' 
+AND Entry_Date < '2/1/2005'
+
+UNION ALL
+
+SELECT     
+'DMT 2004 Gold Report Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '2/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2004' AND Entry_Date < '3/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2004' AND Entry_Date < '4/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2004' AND Entry_Date < '5/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2004' AND Entry_Date < '6/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2004' AND Entry_Date < '7/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2004' AND Entry_Date < '8/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2004' AND Entry_Date < '9/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2004' AND Entry_Date < '10/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2004' AND Entry_Date < '11/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2004' AND Entry_Date < '12/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2004' AND Entry_Date < '1/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2004' 
+AND Entry_Date < '2/1/2005'
+
+UNION ALL
+
+SELECT     
+'DMT 2004 Bullion Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '2/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2004' AND Entry_Date < '3/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2004' AND Entry_Date < '4/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2004' AND Entry_Date < '5/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2004' AND Entry_Date < '6/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2004' AND Entry_Date < '7/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2004' AND Entry_Date < '8/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2004' AND Entry_Date < '9/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2004' AND Entry_Date < '10/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2004' AND Entry_Date < '11/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2004' AND Entry_Date < '12/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2004' AND Entry_Date < '1/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2004' 
+AND Entry_Date < '2/1/2005'
+
+UNION ALL
+
+SELECT     
+'DMT 2004 Bullion Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '2/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2004' AND Entry_Date < '3/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2004' AND Entry_Date < '4/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2004' AND Entry_Date < '5/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2004' AND Entry_Date < '6/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2004' AND Entry_Date < '7/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2004' AND Entry_Date < '8/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2004' AND Entry_Date < '9/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2004' AND Entry_Date < '10/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2004' AND Entry_Date < '11/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2004' AND Entry_Date < '12/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2004' AND Entry_Date < '1/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2004' 
+AND Entry_Date < '2/1/2005'
+
+UNION ALL
+
+SELECT     
+'DMT 2004 Bump Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '2/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2004' AND Entry_Date < '3/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2004' AND Entry_Date < '4/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2004' AND Entry_Date < '5/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2004' AND Entry_Date < '6/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2004' AND Entry_Date < '7/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2004' AND Entry_Date < '8/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2004' AND Entry_Date < '9/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2004' AND Entry_Date < '10/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2004' AND Entry_Date < '11/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2004' AND Entry_Date < '12/1/2004' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2004' AND Entry_Date < '1/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2004' 
+AND Entry_Date < '2/1/2005'
+
+UNION ALL
+
+SELECT     
+'DMT 2004 Bump Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '2/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2004' AND Entry_Date < '3/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2004' AND Entry_Date < '4/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2004' AND Entry_Date < '5/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2004' AND Entry_Date < '6/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2004' AND Entry_Date < '7/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2004' AND Entry_Date < '8/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2004' AND Entry_Date < '9/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2004' AND Entry_Date < '10/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2004' AND Entry_Date < '11/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2004' AND Entry_Date < '12/1/2004' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2004' AND Entry_Date < '1/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2004' 
+AND Entry_Date < '2/1/2005'
+
+UNION ALL
+
+SELECT     
+'DMT 2005 Gold Report Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '2/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2005' AND Entry_Date < '3/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2005' AND Entry_Date < '4/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2005' AND Entry_Date < '5/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2005' AND Entry_Date < '6/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2005' AND Entry_Date < '7/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2005' AND Entry_Date < '8/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2005' AND Entry_Date < '9/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2005' AND Entry_Date < '10/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2005' AND Entry_Date < '11/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2005' AND Entry_Date < '12/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2005' AND Entry_Date < '1/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2005' 
+AND Entry_Date < '2/1/2006'
+
+UNION ALL
+
+SELECT     
+'DMT 2005 Gold Report Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '2/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2005' AND Entry_Date < '3/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2005' AND Entry_Date < '4/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2005' AND Entry_Date < '5/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2005' AND Entry_Date < '6/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2005' AND Entry_Date < '7/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2005' AND Entry_Date < '8/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2005' AND Entry_Date < '9/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2005' AND Entry_Date < '10/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2005' AND Entry_Date < '11/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2005' AND Entry_Date < '12/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2005' AND Entry_Date < '1/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2005' 
+AND Entry_Date < '2/1/2006'
+
+UNION ALL
+
+SELECT     
+'DMT 2005 Bullion Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '2/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2005' AND Entry_Date < '3/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2005' AND Entry_Date < '4/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2005' AND Entry_Date < '5/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2005' AND Entry_Date < '6/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2005' AND Entry_Date < '7/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2005' AND Entry_Date < '8/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2005' AND Entry_Date < '9/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2005' AND Entry_Date < '10/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2005' AND Entry_Date < '11/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2005' AND Entry_Date < '12/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2005' AND Entry_Date < '1/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2005' 
+AND Entry_Date < '2/1/2006'
+
+UNION ALL
+
+SELECT     
+'DMT 2005 Bullion Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '2/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2005' AND Entry_Date < '3/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2005' AND Entry_Date < '4/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2005' AND Entry_Date < '5/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2005' AND Entry_Date < '6/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2005' AND Entry_Date < '7/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2005' AND Entry_Date < '8/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2005' AND Entry_Date < '9/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2005' AND Entry_Date < '10/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2005' AND Entry_Date < '11/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2005' AND Entry_Date < '12/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2005' AND Entry_Date < '1/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2005' 
+AND Entry_Date < '2/1/2006'
+
+UNION ALL
+
+SELECT     
+'DMT 2005 Bump Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '2/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2005' AND Entry_Date < '3/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2005' AND Entry_Date < '4/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2005' AND Entry_Date < '5/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2005' AND Entry_Date < '6/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2005' AND Entry_Date < '7/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2005' AND Entry_Date < '8/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2005' AND Entry_Date < '9/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2005' AND Entry_Date < '10/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2005' AND Entry_Date < '11/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2005' AND Entry_Date < '12/1/2005' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2005' AND Entry_Date < '1/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2005' 
+AND Entry_Date < '2/1/2006'
+
+UNION ALL
+
+SELECT     
+'DMT 2005 Bump Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '2/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2005' AND Entry_Date < '3/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2005' AND Entry_Date < '4/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2005' AND Entry_Date < '5/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2005' AND Entry_Date < '6/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2005' AND Entry_Date < '7/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2005' AND Entry_Date < '8/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2005' AND Entry_Date < '9/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2005' AND Entry_Date < '10/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2005' AND Entry_Date < '11/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2005' AND Entry_Date < '12/1/2005' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2005' AND Entry_Date < '1/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2005' 
+AND Entry_Date < '2/1/2006'
+
+UNION ALL
+
+SELECT     
+'DMT 2006 Gold Report Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '2/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2006' AND Entry_Date < '3/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2006' AND Entry_Date < '4/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2006' AND Entry_Date < '5/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2006' AND Entry_Date < '6/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2006' AND Entry_Date < '7/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2006' AND Entry_Date < '8/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2006' AND Entry_Date < '9/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2006' AND Entry_Date < '10/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2006' AND Entry_Date < '11/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2006' AND Entry_Date < '12/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2006' AND Entry_Date < '1/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2006' 
+AND Entry_Date < '2/1/2007'
+
+UNION ALL
+
+SELECT     
+'DMT 2006 Gold Report Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '2/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2006' AND Entry_Date < '3/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2006' AND Entry_Date < '4/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2006' AND Entry_Date < '5/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2006' AND Entry_Date < '6/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2006' AND Entry_Date < '7/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2006' AND Entry_Date < '8/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2006' AND Entry_Date < '9/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2006' AND Entry_Date < '10/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2006' AND Entry_Date < '11/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2006' AND Entry_Date < '12/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2006' AND Entry_Date < '1/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2006' 
+AND Entry_Date < '2/1/2007'
+
+UNION ALL
+
+SELECT     
+'DMT 2006 Bullion Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '2/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2006' AND Entry_Date < '3/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2006' AND Entry_Date < '4/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2006' AND Entry_Date < '5/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2006' AND Entry_Date < '6/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2006' AND Entry_Date < '7/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2006' AND Entry_Date < '8/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2006' AND Entry_Date < '9/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2006' AND Entry_Date < '10/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2006' AND Entry_Date < '11/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2006' AND Entry_Date < '12/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2006' AND Entry_Date < '1/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2006' 
+AND Entry_Date < '2/1/2007'
+
+UNION ALL
+
+SELECT     
+'DMT 2006 Bullion Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '2/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2006' AND Entry_Date < '3/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2006' AND Entry_Date < '4/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2006' AND Entry_Date < '5/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2006' AND Entry_Date < '6/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2006' AND Entry_Date < '7/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2006' AND Entry_Date < '8/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2006' AND Entry_Date < '9/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2006' AND Entry_Date < '10/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2006' AND Entry_Date < '11/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2006' AND Entry_Date < '12/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2006' AND Entry_Date < '1/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2006' 
+AND Entry_Date < '2/1/2007'
+
+UNION ALL
+
+SELECT     
+'DMT 2006 Bump Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '2/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2006' AND Entry_Date < '3/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2006' AND Entry_Date < '4/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2006' AND Entry_Date < '5/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2006' AND Entry_Date < '6/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2006' AND Entry_Date < '7/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2006' AND Entry_Date < '8/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2006' AND Entry_Date < '9/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2006' AND Entry_Date < '10/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2006' AND Entry_Date < '11/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2006' AND Entry_Date < '12/1/2006' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2006' AND Entry_Date < '1/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2006' 
+AND Entry_Date < '2/1/2007'
+
+UNION ALL
+
+SELECT     
+'DMT 2006 Bump Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '2/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2006' AND Entry_Date < '3/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2006' AND Entry_Date < '4/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2006' AND Entry_Date < '5/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2006' AND Entry_Date < '6/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2006' AND Entry_Date < '7/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2006' AND Entry_Date < '8/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2006' AND Entry_Date < '9/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2006' AND Entry_Date < '10/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2006' AND Entry_Date < '11/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2006' AND Entry_Date < '12/1/2006' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2006' AND Entry_Date < '1/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2006' 
+AND Entry_Date < '2/1/2007'
+
+UNION ALL
+
+SELECT     
+'DMT 2007 Gold Report Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '2/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2007' AND Entry_Date < '3/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2007' AND Entry_Date < '4/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2007' AND Entry_Date < '5/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2007' AND Entry_Date < '6/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2007' AND Entry_Date < '7/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2007' AND Entry_Date < '8/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2007' AND Entry_Date < '9/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2007' AND Entry_Date < '10/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2007' AND Entry_Date < '11/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2007' AND Entry_Date < '12/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2007' AND Entry_Date < '1/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2007' 
+AND Entry_Date < '2/1/2008'
+
+UNION ALL
+
+SELECT     
+'DMT 2007 Gold Report Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '2/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2007' AND Entry_Date < '3/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2007' AND Entry_Date < '4/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2007' AND Entry_Date < '5/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2007' AND Entry_Date < '6/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2007' AND Entry_Date < '7/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2007' AND Entry_Date < '8/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2007' AND Entry_Date < '9/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2007' AND Entry_Date < '10/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2007' AND Entry_Date < '11/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2007' AND Entry_Date < '12/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2007' AND Entry_Date < '1/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2007' 
+AND Entry_Date < '2/1/2008'
+
+UNION ALL
+
+SELECT     
+'DMT 2007 Bullion Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '2/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2007' AND Entry_Date < '3/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2007' AND Entry_Date < '4/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2007' AND Entry_Date < '5/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2007' AND Entry_Date < '6/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2007' AND Entry_Date < '7/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2007' AND Entry_Date < '8/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2007' AND Entry_Date < '9/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2007' AND Entry_Date < '10/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2007' AND Entry_Date < '11/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2007' AND Entry_Date < '12/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2007' AND Entry_Date < '1/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2007' 
+AND Entry_Date < '2/1/2008'
+
+UNION ALL
+
+SELECT     
+'DMT 2007 Bullion Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '2/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2007' AND Entry_Date < '3/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2007' AND Entry_Date < '4/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2007' AND Entry_Date < '5/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2007' AND Entry_Date < '6/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2007' AND Entry_Date < '7/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2007' AND Entry_Date < '8/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2007' AND Entry_Date < '9/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2007' AND Entry_Date < '10/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2007' AND Entry_Date < '11/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2007' AND Entry_Date < '12/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2007' AND Entry_Date < '1/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2007' 
+AND Entry_Date < '2/1/2008'
+
+UNION ALL
+
+SELECT     
+'DMT 2007 Bump Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '2/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2007' AND Entry_Date < '3/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2007' AND Entry_Date < '4/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2007' AND Entry_Date < '5/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2007' AND Entry_Date < '6/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2007' AND Entry_Date < '7/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2007' AND Entry_Date < '8/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2007' AND Entry_Date < '9/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2007' AND Entry_Date < '10/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2007' AND Entry_Date < '11/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2007' AND Entry_Date < '12/1/2007' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2007' AND Entry_Date < '1/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2007' 
+AND Entry_Date < '2/1/2008'
+
+UNION ALL
+
+SELECT     
+'DMT 2007 Bump Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '2/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2007' AND Entry_Date < '3/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2007' AND Entry_Date < '4/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2007' AND Entry_Date < '5/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2007' AND Entry_Date < '6/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2007' AND Entry_Date < '7/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2007' AND Entry_Date < '8/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2007' AND Entry_Date < '9/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2007' AND Entry_Date < '10/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2007' AND Entry_Date < '11/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2007' AND Entry_Date < '12/1/2007' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2007' AND Entry_Date < '1/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2007' 
+AND Entry_Date < '2/1/2008'
+
+UNION ALL
+
+SELECT     
+'DMT 2008 Gold Report Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '2/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2008' AND Entry_Date < '3/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2008' AND Entry_Date < '4/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2008' AND Entry_Date < '5/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2008' AND Entry_Date < '6/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2008' AND Entry_Date < '7/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2008' AND Entry_Date < '8/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2008' AND Entry_Date < '9/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2008' AND Entry_Date < '10/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2008' AND Entry_Date < '11/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2008' AND Entry_Date < '12/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2008' AND Entry_Date < '1/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2008' 
+AND Entry_Date < '2/1/2009'
+
+UNION ALL
+
+SELECT     
+'DMT 2008 Gold Report Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '2/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2008' AND Entry_Date < '3/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2008' AND Entry_Date < '4/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2008' AND Entry_Date < '5/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2008' AND Entry_Date < '6/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2008' AND Entry_Date < '7/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2008' AND Entry_Date < '8/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2008' AND Entry_Date < '9/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2008' AND Entry_Date < '10/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2008' AND Entry_Date < '11/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2008' AND Entry_Date < '12/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2008' AND Entry_Date < '1/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2008' 
+AND Entry_Date < '2/1/2009'
+
+UNION ALL
+
+SELECT     
+'DMT 2008 Bullion Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '2/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2008' AND Entry_Date < '3/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2008' AND Entry_Date < '4/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2008' AND Entry_Date < '5/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2008' AND Entry_Date < '6/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2008' AND Entry_Date < '7/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2008' AND Entry_Date < '8/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2008' AND Entry_Date < '9/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2008' AND Entry_Date < '10/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2008' AND Entry_Date < '11/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2008' AND Entry_Date < '12/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2008' AND Entry_Date < '1/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2008' 
+AND Entry_Date < '2/1/2009'
+
+UNION ALL
+
+SELECT     
+'DMT 2008 Bullion Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '2/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2008' AND Entry_Date < '3/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2008' AND Entry_Date < '4/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2008' AND Entry_Date < '5/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2008' AND Entry_Date < '6/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2008' AND Entry_Date < '7/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2008' AND Entry_Date < '8/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2008' AND Entry_Date < '9/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2008' AND Entry_Date < '10/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2008' AND Entry_Date < '11/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2008' AND Entry_Date < '12/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2008' AND Entry_Date < '1/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2008' 
+AND Entry_Date < '2/1/2009'
+
+UNION ALL
+
+SELECT     
+'DMT 2008 Bump Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '2/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2008' AND Entry_Date < '3/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2008' AND Entry_Date < '4/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2008' AND Entry_Date < '5/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2008' AND Entry_Date < '6/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2008' AND Entry_Date < '7/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2008' AND Entry_Date < '8/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2008' AND Entry_Date < '9/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2008' AND Entry_Date < '10/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2008' AND Entry_Date < '11/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2008' AND Entry_Date < '12/1/2008' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2008' AND Entry_Date < '1/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2008' 
+AND Entry_Date < '2/1/2009'
+
+UNION ALL
+
+SELECT     
+'DMT 2008 Bump Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '2/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2008' AND Entry_Date < '3/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2008' AND Entry_Date < '4/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2008' AND Entry_Date < '5/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2008' AND Entry_Date < '6/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2008' AND Entry_Date < '7/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2008' AND Entry_Date < '8/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2008' AND Entry_Date < '9/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2008' AND Entry_Date < '10/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2008' AND Entry_Date < '11/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2008' AND Entry_Date < '12/1/2008' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2008' AND Entry_Date < '1/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2008' 
+AND Entry_Date < '2/1/2009'
+
+UNION ALL
+
+SELECT     
+'DMT 2009 Gold Report Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '2/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2009' AND Entry_Date < '3/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2009' AND Entry_Date < '4/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2009' AND Entry_Date < '5/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2009' AND Entry_Date < '6/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2009' AND Entry_Date < '7/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2009' AND Entry_Date < '8/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2009' AND Entry_Date < '9/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2009' AND Entry_Date < '10/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2009' AND Entry_Date < '11/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2009' AND Entry_Date < '12/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2009' AND Entry_Date < '1/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2009' 
+AND Entry_Date < '2/1/2010'
+
+UNION ALL
+
+SELECT     
+'DMT 2009 Gold Report Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '2/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2009' AND Entry_Date < '3/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2009' AND Entry_Date < '4/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2009' AND Entry_Date < '5/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2009' AND Entry_Date < '6/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2009' AND Entry_Date < '7/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2009' AND Entry_Date < '8/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2009' AND Entry_Date < '9/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2009' AND Entry_Date < '10/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2009' AND Entry_Date < '11/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2009' AND Entry_Date < '12/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2009' AND Entry_Date < '1/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2009' 
+AND Entry_Date < '2/1/2010'
+
+UNION ALL
+
+SELECT     
+'DMT 2009 Bullion Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '2/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2009' AND Entry_Date < '3/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2009' AND Entry_Date < '4/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2009' AND Entry_Date < '5/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2009' AND Entry_Date < '6/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2009' AND Entry_Date < '7/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2009' AND Entry_Date < '8/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2009' AND Entry_Date < '9/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2009' AND Entry_Date < '10/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2009' AND Entry_Date < '11/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2009' AND Entry_Date < '12/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2009' AND Entry_Date < '1/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2009' 
+AND Entry_Date < '2/1/2010'
+
+UNION ALL
+
+SELECT     
+'DMT 2009 Bullion Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '2/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2009' AND Entry_Date < '3/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2009' AND Entry_Date < '4/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2009' AND Entry_Date < '5/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2009' AND Entry_Date < '6/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2009' AND Entry_Date < '7/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2009' AND Entry_Date < '8/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2009' AND Entry_Date < '9/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2009' AND Entry_Date < '10/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2009' AND Entry_Date < '11/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2009' AND Entry_Date < '12/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2009' AND Entry_Date < '1/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2009' 
+AND Entry_Date < '2/1/2010'
+
+UNION ALL
+
+SELECT     
+'DMT 2009 Bump Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '2/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2009' AND Entry_Date < '3/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2009' AND Entry_Date < '4/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2009' AND Entry_Date < '5/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2009' AND Entry_Date < '6/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2009' AND Entry_Date < '7/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2009' AND Entry_Date < '8/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2009' AND Entry_Date < '9/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2009' AND Entry_Date < '10/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2009' AND Entry_Date < '11/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2009' AND Entry_Date < '12/1/2009' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2009' AND Entry_Date < '1/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2009' 
+AND Entry_Date < '2/1/2010'
+
+UNION ALL
+
+SELECT     
+'DMT 2009 Bump Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '2/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2009' AND Entry_Date < '3/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2009' AND Entry_Date < '4/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2009' AND Entry_Date < '5/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2009' AND Entry_Date < '6/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2009' AND Entry_Date < '7/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2009' AND Entry_Date < '8/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2009' AND Entry_Date < '9/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2009' AND Entry_Date < '10/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2009' AND Entry_Date < '11/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2009' AND Entry_Date < '12/1/2009' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2009' AND Entry_Date < '1/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2009' 
+AND Entry_Date < '2/1/2010'
+
+UNION ALL
+
+SELECT     
+'DMT 2010 Gold Report Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '2/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2010' AND Entry_Date < '3/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2010' AND Entry_Date < '4/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2010' AND Entry_Date < '5/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2010' AND Entry_Date < '6/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2010' AND Entry_Date < '7/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2010' AND Entry_Date < '8/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2010' AND Entry_Date < '9/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2010' AND Entry_Date < '10/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2010' AND Entry_Date < '11/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2010' AND Entry_Date < '12/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2010' AND Entry_Date < '1/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2010' 
+AND Entry_Date < '2/1/2011'
+
+UNION ALL
+
+SELECT     
+'DMT 2010 Gold Report Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '2/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2010' AND Entry_Date < '3/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2010' AND Entry_Date < '4/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2010' AND Entry_Date < '5/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2010' AND Entry_Date < '6/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2010' AND Entry_Date < '7/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2010' AND Entry_Date < '8/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2010' AND Entry_Date < '9/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2010' AND Entry_Date < '10/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2010' AND Entry_Date < '11/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2010' AND Entry_Date < '12/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2010' AND Entry_Date < '1/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2010' 
+AND Entry_Date < '2/1/2011'
+
+UNION ALL
+
+SELECT     
+'DMT 2010 Bullion Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '2/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2010' AND Entry_Date < '3/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2010' AND Entry_Date < '4/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2010' AND Entry_Date < '5/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2010' AND Entry_Date < '6/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2010' AND Entry_Date < '7/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2010' AND Entry_Date < '8/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2010' AND Entry_Date < '9/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2010' AND Entry_Date < '10/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2010' AND Entry_Date < '11/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2010' AND Entry_Date < '12/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2010' AND Entry_Date < '1/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2010' 
+AND Entry_Date < '2/1/2011'
+
+UNION ALL
+
+SELECT     
+'DMT 2010 Bullion Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '2/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2010' AND Entry_Date < '3/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2010' AND Entry_Date < '4/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2010' AND Entry_Date < '5/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2010' AND Entry_Date < '6/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2010' AND Entry_Date < '7/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2010' AND Entry_Date < '8/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2010' AND Entry_Date < '9/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2010' AND Entry_Date < '10/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2010' AND Entry_Date < '11/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2010' AND Entry_Date < '12/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2010' AND Entry_Date < '1/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2010' 
+AND Entry_Date < '2/1/2011'
+
+UNION ALL
+
+SELECT     
+'DMT 2010 Bump Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '2/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2010' AND Entry_Date < '3/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2010' AND Entry_Date < '4/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2010' AND Entry_Date < '5/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2010' AND Entry_Date < '6/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2010' AND Entry_Date < '7/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2010' AND Entry_Date < '8/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2010' AND Entry_Date < '9/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2010' AND Entry_Date < '10/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2010' AND Entry_Date < '11/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2010' AND Entry_Date < '12/1/2010' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2010' AND Entry_Date < '1/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2010' 
+AND Entry_Date < '2/1/2011'
+
+UNION ALL
+
+SELECT     
+'DMT 2010 Bump Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '2/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2010' AND Entry_Date < '3/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2010' AND Entry_Date < '4/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2010' AND Entry_Date < '5/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2010' AND Entry_Date < '6/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2010' AND Entry_Date < '7/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2010' AND Entry_Date < '8/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2010' AND Entry_Date < '9/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2010' AND Entry_Date < '10/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2010' AND Entry_Date < '11/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2010' AND Entry_Date < '12/1/2010' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2010' AND Entry_Date < '1/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2010' 
+AND Entry_Date < '2/1/2011'
+
+UNION ALL
+
+SELECT     
+'DMT 2011 Gold Report Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '2/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2011' AND Entry_Date < '3/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2011' AND Entry_Date < '4/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2011' AND Entry_Date < '5/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2011' AND Entry_Date < '6/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2011' AND Entry_Date < '7/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2011' AND Entry_Date < '8/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2011' AND Entry_Date < '9/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2011' AND Entry_Date < '10/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2011' AND Entry_Date < '11/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2011' AND Entry_Date < '12/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2011' AND Entry_Date < '1/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2011' 
+AND Entry_Date < '2/1/2012'
+
+UNION ALL
+
+SELECT     
+'DMT 2011 Gold Report Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '2/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2011' AND Entry_Date < '3/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2011' AND Entry_Date < '4/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2011' AND Entry_Date < '5/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2011' AND Entry_Date < '6/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2011' AND Entry_Date < '7/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2011' AND Entry_Date < '8/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2011' AND Entry_Date < '9/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2011' AND Entry_Date < '10/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2011' AND Entry_Date < '11/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2011' AND Entry_Date < '12/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2011' AND Entry_Date < '1/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2011' 
+AND Entry_Date < '2/1/2012'
+
+UNION ALL
+
+SELECT     
+'DMT 2011 Bullion Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '2/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2011' AND Entry_Date < '3/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2011' AND Entry_Date < '4/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2011' AND Entry_Date < '5/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2011' AND Entry_Date < '6/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2011' AND Entry_Date < '7/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2011' AND Entry_Date < '8/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2011' AND Entry_Date < '9/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2011' AND Entry_Date < '10/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2011' AND Entry_Date < '11/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2011' AND Entry_Date < '12/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2011' AND Entry_Date < '1/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2011' 
+AND Entry_Date < '2/1/2012'
+
+UNION ALL
+
+SELECT     
+'DMT 2011 Bullion Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '2/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2011' AND Entry_Date < '3/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2011' AND Entry_Date < '4/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2011' AND Entry_Date < '5/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2011' AND Entry_Date < '6/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2011' AND Entry_Date < '7/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2011' AND Entry_Date < '8/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2011' AND Entry_Date < '9/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2011' AND Entry_Date < '10/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2011' AND Entry_Date < '11/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2011' AND Entry_Date < '12/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2011' AND Entry_Date < '1/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2011' 
+AND Entry_Date < '2/1/2012'
+
+UNION ALL
+
+SELECT     
+'DMT 2011 Bump Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '2/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2011' AND Entry_Date < '3/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2011' AND Entry_Date < '4/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2011' AND Entry_Date < '5/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2011' AND Entry_Date < '6/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2011' AND Entry_Date < '7/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2011' AND Entry_Date < '8/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2011' AND Entry_Date < '9/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2011' AND Entry_Date < '10/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2011' AND Entry_Date < '11/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2011' AND Entry_Date < '12/1/2011' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2011' AND Entry_Date < '1/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2011' 
+AND Entry_Date < '2/1/2012'
+
+UNION ALL
+
+SELECT     
+'DMT 2011 Bump Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '2/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2011' AND Entry_Date < '3/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2011' AND Entry_Date < '4/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2011' AND Entry_Date < '5/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2011' AND Entry_Date < '6/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2011' AND Entry_Date < '7/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2011' AND Entry_Date < '8/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2011' AND Entry_Date < '9/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2011' AND Entry_Date < '10/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2011' AND Entry_Date < '11/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2011' AND Entry_Date < '12/1/2011' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2011' AND Entry_Date < '1/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2011' 
+AND Entry_Date < '2/1/2012'
+
+UNION ALL
+
+SELECT     
+'DMT 2012 Gold Report Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '2/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2012' AND Entry_Date < '3/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2012' AND Entry_Date < '4/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2012' AND Entry_Date < '5/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2012' AND Entry_Date < '6/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2012' AND Entry_Date < '7/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2012' AND Entry_Date < '8/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2012' AND Entry_Date < '9/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2012' AND Entry_Date < '10/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2012' AND Entry_Date < '11/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2012' AND Entry_Date < '12/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2012' AND Entry_Date < '1/1/2013' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2012' 
+AND Entry_Date < '2/1/2013'
+
+UNION ALL
+
+SELECT     
+'DMT 2012 Gold Report Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '2/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2012' AND Entry_Date < '3/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2012' AND Entry_Date < '4/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2012' AND Entry_Date < '5/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2012' AND Entry_Date < '6/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2012' AND Entry_Date < '7/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2012' AND Entry_Date < '8/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2012' AND Entry_Date < '9/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2012' AND Entry_Date < '10/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2012' AND Entry_Date < '11/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2012' AND Entry_Date < '12/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2012' AND Entry_Date < '1/1/2013' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'GR'
+AND Entry_Date >= '1/1/2012' 
+AND Entry_Date < '2/1/2013'
+
+UNION ALL
+
+SELECT     
+'DMT 2012 Bullion Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '2/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2012' AND Entry_Date < '3/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2012' AND Entry_Date < '4/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2012' AND Entry_Date < '5/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2012' AND Entry_Date < '6/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2012' AND Entry_Date < '7/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2012' AND Entry_Date < '8/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2012' AND Entry_Date < '9/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2012' AND Entry_Date < '10/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2012' AND Entry_Date < '11/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2012' AND Entry_Date < '12/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2012' AND Entry_Date < '1/1/2013' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2012' 
+AND Entry_Date < '2/1/2013'
+
+UNION ALL
+
+SELECT     
+'DMT 2012 Bullion Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '2/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2012' AND Entry_Date < '3/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2012' AND Entry_Date < '4/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2012' AND Entry_Date < '5/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2012' AND Entry_Date < '6/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2012' AND Entry_Date < '7/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2012' AND Entry_Date < '8/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2012' AND Entry_Date < '9/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2012' AND Entry_Date < '10/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2012' AND Entry_Date < '11/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2012' AND Entry_Date < '12/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2012' AND Entry_Date < '1/1/2013' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type = 'B1'
+AND Entry_Date >= '1/1/2012' 
+AND Entry_Date < '2/1/2013'
+
+UNION ALL
+
+SELECT     
+'DMT 2012 Bump Initial' AS 'Metric', 
+ISNULL (SUM(Init_Shipped_nB), 0) AS Month_13,
+'0' AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '2/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2012' AND Entry_Date < '3/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2012' AND Entry_Date < '4/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2012' AND Entry_Date < '5/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2012' AND Entry_Date < '6/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2012' AND Entry_Date < '7/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2012' AND Entry_Date < '8/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2012' AND Entry_Date < '9/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2012' AND Entry_Date < '10/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2012' AND Entry_Date < '11/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2012' AND Entry_Date < '12/1/2012' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2012' AND Entry_Date < '1/1/2013' THEN ISNULL (Init_Shipped_nB, 0) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2012' 
+AND Entry_Date < '2/1/2013'
+
+UNION ALL
+
+SELECT     
+'DMT 2012 Bump Outbound' AS 'Metric', 
+'0' AS Month_13,
+ISNULL (SUM(Ttl_Net_Sales_nB) - SUM(Init_Shipped_nB), 0) AS Month_12,
+SUM (CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '2/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= '2/1/2012' AND Entry_Date < '3/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= '3/1/2012' AND Entry_Date < '4/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_09,
+SUM (CASE WHEN Entry_Date >= '4/1/2012' AND Entry_Date < '5/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_08,
+SUM (CASE WHEN Entry_Date >= '5/1/2012' AND Entry_Date < '6/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_07,
+SUM (CASE WHEN Entry_Date >= '6/1/2012' AND Entry_Date < '7/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_06,
+SUM (CASE WHEN Entry_Date >= '7/1/2012' AND Entry_Date < '8/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_05,
+SUM (CASE WHEN Entry_Date >= '8/1/2012' AND Entry_Date < '9/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_04,
+SUM (CASE WHEN Entry_Date >= '9/1/2012' AND Entry_Date < '10/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_03,
+SUM (CASE WHEN Entry_Date >= '10/1/2012' AND Entry_Date < '11/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_02,
+SUM (CASE WHEN Entry_Date >= '11/1/2012' AND Entry_Date < '12/1/2012' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_01,
+SUM (CASE WHEN Entry_Date >= '12/1/2012' AND Entry_Date < '1/1/2013' THEN (ISNULL(Ttl_Net_Sales_nB, 0) - ISNULL(Init_Shipped_nB, 0)) ELSE 0 END) AS Month_00
+FROM         dbo.tbl_Customer_Sales_Statistics
+WHERE Campaign = 'DMT'
+AND Init_Buyer_Type IN ('B2', 'B3')
+AND Entry_Date >= '1/1/2012' 
+AND Entry_Date < '2/1/2013'

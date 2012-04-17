@@ -1,0 +1,61 @@
+CREATE TRIGGER [dbo].[trig_Rollover_Rank] 
+ON [dbo].[tbl_Sales_Teams] 
+AFTER INSERT, UPDATE, DELETE 
+AS
+BEGIN
+
+
+SET TRANSACTION ISOLATION LEVEL Read Uncommitted
+
+DECLARE @tbl_Sales_Reps TABLE (
+PKindex int identity (1,1),
+Sales_Rep_Name varchar(50)
+)
+
+INSERT INTO @tbl_Sales_Reps (Sales_Rep_Name)
+SELECT 
+tST.[Name] 
+FROM tbl_Sales_Teams tST
+LEFT JOIN tbl_Rollover_Exclusions tRE
+ON tST.[Login] = tRE.Sales_ID
+WHERE tST.Rollover_Rank IS NOT NULL 
+AND tST.Active = 1
+AND tRE.Sales_ID IS NULL
+ORDER BY tST.[Name]
+
+UPDATE tbl_Sales_Teams
+SET 
+Rollover_Rank = null
+
+UPDATE tST
+SET
+Rollover_Rank = tmp.PKindex
+FROM @tbl_Sales_Reps tmp
+INNER JOIN tbl_Sales_Teams tST
+ON tmp.Sales_Rep_Name=tST.Name
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_Rollover_Rank'
+		)
+DROP TABLE tbl_Rollover_Rank
+
+SELECT 
+tST.Rollover_Rank AS Ranking,
+tST.[Login],
+tST.Rollover_Status
+INTO dbo.tbl_Rollover_Rank
+FROM tbl_Sales_Teams tST
+LEFT JOIN tbl_Rollover_Exclusions tRE
+ON tST.[Login] = tRE.Sales_ID
+WHERE tST.Rollover_Rank IS NOT NULL 
+AND tST.Active = 1
+AND tRE.Sales_ID IS NULL;
+
+ALTER TABLE tbl_Rollover_Rank ADD Rollover_Rank Int Identity(1, 1)
+
+
+--SELECT * FROM tbl_Sales_Teams WHERE Active = 1 ORDER BY Rollover_Rank
+
+END

@@ -1,0 +1,81 @@
+USE [SIMSTest2]
+GO
+/****** Object:  Trigger [dbo].[trg_Workgroup_Updates]    Script Date: 03/24/2011 16:49:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER TRIGGER [dbo].[trg_Workgroup_Updates]
+   ON  [dbo].[LoginTable]
+   AFTER INSERT,UPDATE
+AS 
+BEGIN
+      SET NOCOUNT ON;
+
+      DECLARE @tbl_Login_Active TABLE (
+      Sales_ID nvarchar(6),
+      Sales_Rep nvarchar(50), 
+      isManager bit
+      );
+
+      ----------------------------
+      -- Get Existing Sales_IDs --
+      ----------------------------
+
+      INSERT INTO @tbl_Login_Active (Sales_ID, Sales_Rep, isManager)
+      SELECT
+      Username,
+      Realname,
+      CASE WHEN SecurityRole LIKE '%Manager%' THEN 1 ELSE 0 END as isManager
+      FROM LoginTable 
+      WHERE Populate = 1
+      AND SecurityRole IN ('Sales', 'Sales Manager');
+
+      -------------------------------
+      -- UPDATE Existing Sales_IDs --
+      -------------------------------
+      UPDATE tSMG
+      SET
+      Sales_Rep_Name = tmp.Sales_Rep,
+      IsSalesManager = tmp.isManager
+      FROM @tbl_Login_Active AS tmp
+      INNER JOIN dbo.tbl_ShoreTel_Managed_Groups AS tSMG
+      ON tmp.Sales_ID = tSMG.Sales_ID;
+
+      --------------------------
+      -- INSERT New Sales_IDs --
+      --------------------------
+      INSERT INTO dbo.tbl_ShoreTel_Managed_Groups (Sales_ID, Sales_Rep_Name, isSalesManager)
+      SELECT 
+      tmp.Sales_ID,
+      tmp.Sales_Rep,
+      tmp.isManager
+      FROM @tbl_Login_Active tmp
+      LEFT JOIN dbo.tbl_ShoreTel_Managed_Groups tSMG
+      ON tmp.Sales_ID = tSMG.Sales_ID
+      WHERE tSMG.Sales_ID IS NULL;
+
+	----------------------------
+	-- Get Existing Sales_IDs --
+	----------------------------
+
+	DECLARE @tbl_Login_inActive TABLE (
+	Sales_ID nvarchar(15),
+	Sales_Rep nvarchar(60), 
+	isManager bit
+	);
+
+	INSERT INTO @tbl_Login_inActive (Sales_ID, Sales_Rep, isManager)
+	SELECT
+	Username,
+	Realname,
+	CASE WHEN SecurityRole LIKE '%Manager%' THEN 1 ELSE 0 END as isManager
+	FROM LoginTable 
+	WHERE Populate = 0
+	AND SecurityRole IN ('Sales', 'Sales Manager');
+
+	DELETE 
+	FROM dbo.tbl_ShoreTel_Managed_Groups 
+	WHERE Sales_ID IN (SELECT Sales_ID FROM @tbl_Login_inActive GROUP BY Sales_ID)
+
+END

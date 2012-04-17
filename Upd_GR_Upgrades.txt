@@ -1,0 +1,71 @@
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tmp_GR_Upgrades'
+		)
+DROP TABLE tmp_GR_Upgrades
+GO
+
+WITH cte_GR_Upgrades AS 
+(
+SELECT vw1.Orig_Ad_Code,
+vSO.Cust_ID,
+vw1.Order_Date AS GR_Order_Date,
+vSO.Order_Date,
+SUM (CASE WHEN vw1.Order_Date >= vSO.Order_Date THEN 0 ELSE 1 END)  AS GR_Items,
+SUM (CASE WHEN vw1.Order_Date >= vSO.Order_Date THEN 0 ELSE Ttl_Billed_Merch END)  AS GR_Value
+FROM vw_Sales_Orders vSO
+INNER JOIN 
+	( 
+	SELECT 
+	tDC.Orig_Ad_Code,
+	tDC.Cust_ID,
+	vw_Sales_Orders.Order_Date
+	FROM vw_Sales_Orders
+	INNER JOIN tbl_DBF_Cust tDC
+	ON vw_Sales_Orders.Cust_ID=tDC.Cust_ID
+	AND vw_Sales_Orders.Ad_Code=tDC.Orig_Ad_Code
+	WHERE Stock_Type ='Gold_Report'
+	AND Item_State IN ('PS', 'SH', 'RT')
+	--AND tDC.Cust_ID =1003
+	GROUP BY tDC.Orig_Ad_Code, tDC.Cust_ID, vw_Sales_Orders.Order_Date
+	) AS vw1
+ON vSO.Cust_ID=vw1.Cust_ID
+--WHERE Orig_Ad_Code='9197116B'
+GROUP BY 
+vw1.Orig_Ad_Code,
+vSO.Cust_ID,
+vw1.Order_Date,
+vSO.Order_Date
+HAVING SUM (CASE WHEN vw1.Order_Date >= vSO.Order_Date THEN 0 ELSE Ttl_Billed_Merch END) >0
+--ORDER BY vSO.Cust_ID, vw1.Orig_Ad_Code, vSO.Order_Date
+)
+
+SELECT 
+Orig_Ad_Code,
+SUM (CASE WHEN GR_Items > 0 THEN 1 ELSE 0 END) AS GR_Upgraded_Orders,
+SUM (GR_Value) AS GR_Upgraded_Value
+INTO tmp_GR_Upgrades
+FROM cte_GR_Upgrades
+GROUP BY Orig_Ad_Code
+
+CREATE CLUSTERED INDEX tmp_GR_Upgrades_Orig_Ad_Code
+ON tmp_GR_Upgrades (Orig_Ad_Code)
+GO
+
+
+UPDATE Results_Media_Code_Orders
+SET Results_Media_Code_Orders.GR_Orders_Upgraded = 0
+
+UPDATE Results_Media_Code_Orders
+SET Results_Media_Code_Orders.GR_Orders_Upgraded = tmp_GR_Upgrades.GR_Upgraded_Orders
+FROM tmp_GR_Upgrades 
+WHERE Results_Media_Code_Orders.Ad_Code = tmp_GR_Upgrades.Orig_Ad_Code
+
+UPDATE Results_Media_Code_Values
+SET Results_Media_Code_Values.GR_Value_Upgraded = 0
+
+UPDATE Results_Media_Code_Values
+SET Results_Media_Code_Values.GR_Value_Upgraded = tmp_GR_Upgrades.GR_Upgraded_Value
+FROM tmp_GR_Upgrades 
+WHERE Results_Media_Code_Values.Ad_Code = tmp_GR_Upgrades.Orig_Ad_Code

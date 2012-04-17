@@ -1,0 +1,239 @@
+--************
+-- Olympics --
+--************
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '1984 OLYMPIC P'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC P', 'PR69', '84OPP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC P', 'PR70', '84OPP0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC P', 'MS69', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC P', 'MS70', 'N/A'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '1984 OLYMPIC D'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC D', 'PR69', '84ODP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC D', 'PR70', '84ODP0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC D', 'MS69', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC D', 'MS70', 'N/A'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '1984 OLYMPIC S'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC S', 'PR69', '84OSP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC S', 'PR70', '84OSP0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC S', 'MS69', 'N/A'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC S', 'MS70', 'N/A'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '1984 OLYMPIC W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC W', 'MS69', '84OWM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC W', 'MS70', '84OWM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC W', 'PR69', '84OWP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '1984 OLYMPIC W', 'PR70', '84OWP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2000 LIBRARY OF CONGRESS W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2000 LIBRARY OF CONGRESS W', 'MS69', '00LCM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2000 LIBRARY OF CONGRESS W', 'MS70', '00LCM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2000 LIBRARY OF CONGRESS W', 'PR69', '00LCP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2000 LIBRARY OF CONGRESS W', 'PR70', '00LCP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2003 FIRST FLIGHT W'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2003 FIRST FLIGHT W', 'MS69', '03FFM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2003 FIRST FLIGHT W', 'MS70', '03FFM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2003 FIRST FLIGHT W', 'PR69', '03FFP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2003 FIRST FLIGHT W', 'PR70', '03FFP0'
+
+
+--*****************
+-- First Spouses --
+--*****************
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2007 MARTHA WASHINGTON'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 MARTHA WASHINGTON', 'MS69', '07MWM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 MARTHA WASHINGTON', 'PR69', '07MWP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 MARTHA WASHINGTON', 'MS70', '07MWM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 MARTHA WASHINGTON', 'PR70', '07MWP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2007 ABIGAIL ADAMS'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 ABIGAIL ADAMS', 'MS69', '07AAM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 ABIGAIL ADAMS', 'PR69', '07AAP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 ABIGAIL ADAMS', 'MS70', '07AAM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 ABIGAIL ADAMS', 'PR70', '07AAP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2007 JEFFERSONS LIBERTY'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 JEFFERSONS LIBERTY', 'MS69', '07JLM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 JEFFERSONS LIBERTY', 'PR69', '07JLP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 JEFFERSONS LIBERTY', 'MS70', '07JLM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 JEFFERSONS LIBERTY', 'PR70', '07JLP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2007 DOLLEY MADISON'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 DOLLEY MADISON', 'MS69', '07DMM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 DOLLEY MADISON', 'PR69', '07DMP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 DOLLEY MADISON', 'MS70', '07DMM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2007 DOLLEY MADISON', 'PR70', '07DMP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2008 JACKSONS LIBERTY'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 JACKSONS LIBERTY', 'MS69', '08JLM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 JACKSONS LIBERTY', 'PR69', '08JLP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 JACKSONS LIBERTY', 'MS70', '08JLM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 JACKSONS LIBERTY', 'PR70', '08JLP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2008 LOUISA ADAMS'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 LOUISA ADAMS', 'MS69', '08LAM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 LOUISA ADAMS', 'PR69', '08LAP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 LOUISA ADAMS', 'MS70', '08LAM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 LOUISA ADAMS', 'PR70', '08LAP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2008 ELIZABETH MONROE'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 ELIZABETH MONROE', 'MS69', '08EMM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 ELIZABETH MONROE', 'PR69', '08EMP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 ELIZABETH MONROE', 'MS70', '08EMM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 ELIZABETH MONROE', 'PR70', '08EMP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2008 VAN BURENS LIBERTY'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 VAN BURENS LIBERTY', 'MS69', '08VBM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 VAN BURENS LIBERTY', 'PR69', '08VBP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 VAN BURENS LIBERTY', 'MS70', '08VBM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2008 VAN BURENS LIBERTY', 'PR70', '08VBP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2009 ANNA HARRISON'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 ANNA HARRISON', 'MS69', '09AHM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 ANNA HARRISON', 'PR69', '09AHP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 ANNA HARRISON', 'MS70', '09AHM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 ANNA HARRISON', 'PR70', '09AHP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2009 JULIA TYLER'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 JULIA TYLER', 'MS69', '09JTM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 JULIA TYLER', 'PR69', '09JTP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 JULIA TYLER', 'MS70', '09JTM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 JULIA TYLER', 'PR70', '09JTP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2009 LETITIA TYLER'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 LETITIA TYLER', 'MS69', '09LTM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 LETITIA TYLER', 'PR69', '09LTP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 LETITIA TYLER', 'MS70', '09LTM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 LETITIA TYLER', 'PR70', '09LTP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2009 SARAH POLK'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 SARAH POLK', 'MS69', '09SPM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 SARAH POLK', 'PR69', '09SPP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 SARAH POLK', 'MS70', '09SPM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 SARAH POLK', 'PR70', '09SPP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2009 MARGARET TAYLOR'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 MARGARET TAYLOR', 'MS69', '09MTM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 MARGARET TAYLOR', 'PR69', '09MTP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 MARGARET TAYLOR', 'MS70', '09MTM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2009 MARGARET TAYLOR', 'PR70', '09MTP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2010 BUCHANANS LIBERTY'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 BUCHANANS LIBERTY', 'MS69', '10BLM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 BUCHANANS LIBERTY', 'PR69', '10BLP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 BUCHANANS LIBERTY', 'MS70', '10BLM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 BUCHANANS LIBERTY', 'PR70', '10BLP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2010 JANE PIERCE'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 JANE PIERCE', 'MS69', '10JPM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 JANE PIERCE', 'PR69', '10JPP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 JANE PIERCE', 'MS70', '10JPM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 JANE PIERCE', 'PR70', '10JPP0'
+
+EXEC usp_IM_Add_Row 'CMM', '$10 MODERN GOLD', '2010 ABIGAIL FILLMORE'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 ABIGAIL FILLMORE', 'MS69', '10AFM9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 ABIGAIL FILLMORE', 'PR69', '10AFP9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 ABIGAIL FILLMORE', 'MS70', '10AFM0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'CMM', '$10 MODERN GOLD', '2010 ABIGAIL FILLMORE', 'PR70', '10AFP0'
+
+
+
+
+
+
+
+
+
+
+
+
+

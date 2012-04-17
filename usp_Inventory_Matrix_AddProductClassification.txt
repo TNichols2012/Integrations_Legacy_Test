@@ -1,0 +1,162 @@
+set ANSI_NULLS OFF
+set QUOTED_IDENTIFIER OFF
+GO
+
+ALTER PROCEDURE [dbo].[usp_InventoryMatrix_AddProductClassificationCode]
+(
+@HeaderText varchar(50),
+@SectionText varchar(50),
+@RowText varchar(50),
+@ColumnText varchar(50),
+@ProductClassificationCodeText varchar(50)
+)
+AS
+
+declare @HeaderId int
+declare @SectionId int
+declare @HeaderSectionMappingId int
+declare @RowId int
+declare @ColumnId int
+declare @RowMappingId int
+declare @ColumnMappingId int
+declare @ProductClassificationCodeId int
+declare @ErrorString varchar(400)
+
+set @ErrorString = ' '
+
+set @ProductClassificationCodeId = 0
+
+-- Get the header id and make sure the header text exists
+set @HeaderId =
+	(
+	select [Id]
+	from InventoryMatrixHeaders
+	where ([Text] = @HeaderText)
+	)
+
+if (@HeaderId is null)
+	begin
+	set @ErrorString = 'Header ' + @HeaderText + ' could not be found'
+	select @ProductClassificationCodeId, @ErrorString
+	return
+	end
+
+-- Get the section id and make sure the section text exists
+set @SectionId =
+	(
+	select [Id]
+	from InventoryMatrixSections
+	where ([Text] = @SectionText)
+	)
+
+if (@SectionId is null)
+	begin
+	set @ErrorString = 'Section ' + @SectionText  + ' could not be found'
+	select @ProductClassificationCodeId, @ErrorString
+	return
+	end
+
+-- Get the header-section mapping and make sure it exists
+set @HeaderSectionMappingId =
+	(
+	select [Id]
+	from InventoryMatrixHeaderSectionMappings
+	where (HeaderId = @HeaderId)
+	and (SectionId = @SectionId)
+	)
+
+if (@HeaderSectionMappingId is null)
+	begin
+	set @ErrorString = 'Mapping for header ' + @HeaderText + ' and section ' + @SectionText + ' could not be found'
+	select @ProductClassificationCodeId, @ErrorString
+	return
+	end
+
+-- Get the row id and make sure it exists
+set @RowId =
+	(
+	select [Id]
+	from InventoryMatrixRows
+	where ([Text] = @RowText)
+	)
+
+if (@RowId is null)
+	begin
+	set @ErrorString = 'Row ' + @RowText + ' could not be found'
+	select @ProductClassificationCodeId, @ErrorString
+	return
+	end
+
+-- Get the column id and make sure it exists
+set @ColumnId =
+	(
+	select [Id]
+	from InventoryMatrixColumns
+	where ([Text] = @ColumnText)
+	)
+
+if (@ColumnId is null)
+	begin
+	set @ErrorString = 'Column ' + @ColumnText + ' could not be found'
+	select @ProductClassificationCodeId, @ErrorString
+	return
+	end
+
+-- Get the row mapping id and make sure it exists
+set @RowMappingId =
+	(
+	select [Id]
+	from InventoryMatrixRowMappings
+	where (RowId = @RowId)
+	and (HeaderSectionMappingId = @HeaderSectionMappingId)
+	)
+
+if (@RowMappingId is null)
+	begin
+	set @ErrorString = 'Mapping for header ' + @HeaderText + ', section ' + @SectionText + ' and row ' + @RowText + ' could not be found'
+	select @ProductClassificationCodeId, @ErrorString
+	return
+	end
+
+-- Get the column mapping id and make sure it exists
+set @ColumnMappingId =
+	(
+	select [Id]
+	from InventoryMatrixColumnMappings
+	where (ColumnId = @ColumnId)
+	and (HeaderSectionMappingId = @HeaderSectionMappingId)
+	)
+
+if (@ColumnMappingId is null)
+	begin
+	set @ErrorString = 'Mapping for header ' + @HeaderText + ', section ' + @SectionText + ' and column ' + @ColumnText + ' could not be found'
+	select @ProductClassificationCodeId, @ErrorString
+	return
+	end
+
+-- Get the product classification code id. If it exists then update the data. If it does not exist then insert the data.
+set @ProductClassificationCodeId = 
+	(
+	select [Id]
+	from InventoryMatrixMappings
+	where (RowMappingId = @RowMappingId)
+	and (ColumnMappingId = @ColumnMappingId)
+	)
+
+if (@ProductClassificationCodeId is null)
+	begin
+	insert into InventoryMatrixMappings (ProductClassificationCode, RowMappingId, ColumnMappingId)
+	values (@ProductClassificationCodeText, @RowMappingId, @ColumnMappingId)
+	set @ProductClassificationCodeId = @@IDENTITY
+	set @ErrorString = 'Product classification code ' + @ProductClassificationCodeText + ' was successfully added'
+	end
+else
+	begin
+	update InventoryMatrixMappings
+	set ProductClassificationCode = @ProductClassificationCodeText
+	where ([Id] = @ProductClassificationCodeId)
+	set @ErrorString = 'Product classification code ' + @ProductClassificationCodeText + ' was successfully updated'
+end
+
+select @ProductClassificationCodeId, @ErrorString
+

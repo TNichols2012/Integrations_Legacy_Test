@@ -1,0 +1,1457 @@
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_Amcat_Call_Results_First_IB'
+		)
+DROP TABLE tbl_Amcat_Call_Results_First_IB
+GO
+
+SELECT 
+tACR.*
+INTO tbl_Amcat_Call_Results_First_IB
+FROM 
+	(
+	SELECT
+	Call_Start_Time,
+	ContactNumber,
+	MIN(CallStartTime) AS First_Call
+	FROM tbl_Amcat_Call_Results 
+	WHERE CallType = 3
+	AND Call_Start_Time >= dbo.Get_TheDate(GETDATE()-90)
+	AND AgentFK IS NOT NULL
+	GROUP BY
+	Call_Start_Time,
+	ContactNumber
+	) AS vw1
+INNER JOIN tbl_Amcat_Call_Results tACR
+ON vw1.ContactNumber=tACR.ContactNumber
+AND vw1.First_Call=tACR.CallStartTime	
+
+
+
+
+SELECT 
+ReturnReason
+FROM [SIMS].dbo.CustomerRelationsIssuesTable CRIT
+INNER JOIN [SIMS].dbo.LoginTable LT
+ON CRIT.Username=LT.Realname
+GROUP BY ReturnReason
+
+
+
+
+
+SELECT     Transaction_Type, MP3_File_Name_2, Sales_Rep, Call_Seconds, Contact_Number, Call_Start_Time, Call_Disposition
+FROM         tbl_Survey_Calls
+WHERE     (Transaction_Type = 'Sales')
+ORDER BY Call_Start_Time
+
+
+
+https://secure.logmein.com/z?2yzgyj699dngzee95muwkw2drjxqxhcoku8zrexb
+
+
+
+--IF ( DATEPART(hour, GetDate() ) <8 OR DATEPART(hour, GetDate() ) >=21 )
+--UPDATE tbl_Amcat_Call_Volume_IB
+--SET 
+--P7_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 7),
+--P7_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 7),
+--P7_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 7),
+--P7_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 7)
+--WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-7
+--AND Call_Start_Time < dbo.Get_TheDate(GetDate())-1;
+--GO
+--
+--IF ( DATEPART(hour, GetDate() ) <8 OR DATEPART(hour, GetDate() ) >=21 )
+--UPDATE tbl_Amcat_Call_Volume_IB
+--SET 
+--P15_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+--P15_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+--P15_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+--P15_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+--WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-15
+--AND Call_Start_Time < dbo.Get_TheDate(GetDate())-1;
+--GO
+
+------IF ( DATEPART(hour, GetDate() ) <11 OR DATEPART(hour, GetDate() ) >=21 )
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 30),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 30),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 30),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 30)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-32
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-30;
+--GO
+
+
+
+SELECT     TOP (100) PERCENT 
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_Lookup_Call_Disposition.CallResultDescription, 
+COUNT(*) AS Count
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+INNER JOIN   dbo.tbl_Lookup_Call_Disposition 
+ON dbo.tbl_CCS_Data.AgentExitCode = dbo.tbl_Lookup_Call_Disposition.CallResultCode
+WHERE     (dbo.tbl_CCS_Data.CallStartTime > dbo.Get_TheDate(GETDATE() - 30))
+GROUP BY dbo.tbl_Sales_Teams.Name, dbo.tbl_Lookup_Call_Disposition.CallResultDescription
+ORDER BY dbo.tbl_Sales_Teams.Name, Count DESC
+
+
+
+
+
+
+
+IF  EXISTS 
+(SELECT * FROM sys.objects 
+WHERE object_id = OBJECT_ID(N'[dbo].[MOM_PICKS]') 
+AND type in (N'U'))
+DROP TABLE [dbo].[MOM_PICKS]
+GO
+
+
+SELECT
+RDBFCMS.odr_date AS Order_Date,
+RDBFCMS.[order] AS Order_ID, 
+RDBFCMS.custnum AS Cust_ID,
+tDBFCUST.First_Name,
+tDBFCUST.Last_Name,
+tDBFCUST.Sales_ID,
+tDBFCUST.Contact_Number,
+tCCSD.CallStartTime AS Call_Start_Time,
+tCCSD.RecordingFileName AS File_Location
+FROM dbo.Results_DBF_CMS RDBFCMS
+INNER JOIN dbo.tbl_DBF_CUST tDBFCUST
+ON RDBFCMS.custnum = tDBFCUST.Cust_ID
+LEFT OUTER JOIN dbo.Results_CCS_Call_Results tCCSD
+ON tDBFCUST.Contact_Number = tCCSD.ContactNumber
+WHERE cardtype ='AE'
+AND odr_date >= dbo.Get_TheDate(GetDate()-30)
+AND CallStartTime >= dbo.Get_TheDate(GetDate()-30)
+ORDER BY RDBFCMS.custnum, RDBFCMS.odr_date, tCCSD.CallStartTime
+
+
+
+SELECT     TOP (100) PERCENT 
+dbo.vw_Sales_Orders.Order_Date, 
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_Sales_Teams.Login AS Sales_ID, 
+SUM(CASE WHEN Ad_Code Like 'OB%' AND Ad_Code NOT Like 'GR1%' AND Ad_Code NOT Like '2007GIFT%' THEN 1 ELSE 0 END) AS OB_Orders_Submitted, 
+SUM(CASE WHEN Ad_Code Like 'OB%' AND Ad_Code NOT Like 'GR1%' AND Ad_Code NOT Like '2007GIFT%' THEN Value_Ordered ELSE 0 END) AS OB_Sales_Value, 
+SUM(CASE WHEN (Ad_Code Like 'OB%' AND Ad_Code NOT Like 'GR1%' AND Ad_Code NOT Like '2007GIFT%' AND Stock_Type ='Bullion') THEN 1 ELSE 0 END) AS OB_Bullion_Submitted, 
+SUM(CASE WHEN (Ad_Code Like 'OB%' AND Ad_Code NOT Like 'GR1%' AND Ad_Code NOT Like '2007GIFT%' AND Stock_Type ='Bullion') THEN Value_Ordered ELSE 0 END) AS OB_Bullion_Value, 
+SUM(CASE WHEN (Ad_Code Like 'OB%' AND Ad_Code NOT Like 'GR1%' AND Ad_Code NOT Like '2007GIFT%' AND Stock_Type <>'Bullion') THEN 1 ELSE 0 END) AS OB_Bump_Submitted, 
+SUM(CASE WHEN (Ad_Code Like 'OB%' AND Ad_Code NOT Like 'GR1%' AND Ad_Code NOT Like '2007GIFT%' AND Stock_Type <>'Bullion') THEN Value_Ordered ELSE 0 END) AS OB_Bump_Value
+FROM         dbo.vw_Sales_Orders 
+LEFT OUTER JOIN	dbo.tbl_Sales_Teams 
+ON dbo.vw_Sales_Orders.Sales_ID = dbo.tbl_Sales_Teams.Login 
+LEFT OUTER JOIN	dbo.tbl_DBF_Cust
+ON dbo.vw_Sales_Orders.Cust_ID = dbo.tbl_DBF_Cust.Cust_ID
+WHERE     dbo.tbl_Sales_Teams.Name IS NOT NULL
+--AND dbo.vw_Sales_Orders.Order_Date >= '9/1/2007'
+--AND dbo.vw_Sales_Orders.Order_Date < dbo.Get_TheDate (GetDate() )
+AND Item_State IN ('PS', 'SH', 'RT') 
+GROUP BY dbo.vw_Sales_Orders.Order_Date, dbo.tbl_Sales_Teams.Name, dbo.tbl_Sales_Teams.Login
+HAVING      (
+SUM(CASE WHEN  Ad_Code Like 'OB%' AND Ad_Code NOT Like 'GR1%' AND Ad_Code NOT Like '2007GIFT%' THEN Value_Ordered ELSE 0 END) > 0
+)
+ORDER BY dbo.vw_Sales_Orders.Order_Date
+
+
+<?php
+$search=htmlentities($_GET["in_Cust_ID"]);
+$self=htmlentities($_SERVER['PHP_SELF']);
+
+if ($search===''){
+	echo ('
+		<form action="'.$self.'" method="GET">
+		<label> Customer ID#: <input type="text" name="in_Cust_ID" /></label>
+		<input type="submit" value="Search!" />
+		</form>');
+	echo "Please enter the Customer ID#."."<br>";
+	echo "<br>";
+}
+else {
+	echo ('
+		<form action="'.$self.'" method="GET">
+		<label> Customer ID#: <input type="text" name="in_Cust_ID" /></label>
+		<input type="submit" value="Search!" />
+		</form>');
+
+	echo "The following Inventory Matrix is for Customer ID#: $search"."<br>";
+		echo "<br>";
+}
+?
+
+
+DELETE FROM ContactInfo
+WHERE PKCustomerRecord IN (
+SELECT Max(PKCustomerRecord) AS PKCustomerRecord
+FROM ContactInfo
+WHERE CustNum IN (	SELECT     CustNum
+					FROM          ContactInfo AS ContactInfo_1
+					WHERE CustNum <> ''
+					GROUP BY CustNum
+					HAVING      (COUNT(CustNum) > 1)	)
+Group By CustNum
+)
+
+
+
+
+
+
+Cust_ID
+82948
+39595
+12268
+104760
+99685
+120597
+153182
+22515
+81005
+115694
+114400
+16057
+76332
+79948
+84725
+80497
+72678
+5272
+114086
+138300
+52232
+114670
+50878
+
+
+\\usrc_dialer\voicemails\160_4614637C-BD95-426F-8079-464932568C85_November_26_121.wav
+\\usrc_dialer\voicemails\160_17356A4E-EA56-4620-AB83-77D6F247E9EE_November_16_1343.wav
+\\usrc_dialer\voicemails\160_9D6F32FB-11EA-479F-9346-DD020ACE5AEB_November_16_131.wav
+\\usrc_dialer\voicemails\160_72378F4D-D453-4ECB-AA22-CCC2B4EEFEB6_November_26_86.wav
+\\usrc_dialer\voicemails\160_DA177D7A-FB45-4830-AAA4-49B22CEB9BC8_November_26_1441.wav
+
+D:\Recordings\MyCustomerInbound\20071118_120304_000127_9072746175.wav
+
+
+
+9072746175
+
+\\usrc_dialer\voicemails\127_CF1BD149-76D3-425F-97B4-61BE3BDA8267_November_26_1138.wav
+\\usrc_dialer\voicemails\127_4B144CFE-81F7-4C03-A55E-400C534FB582_November_26_1321.wav
+\\usrc_dialer\voicemails\127_02AEB007-5C70-422D-8CD3-C2953CBE4040_November_26_1344.wav
+
+
+907276441
+\\usrc_dialer\voicemails\127_B3659A6E-1EE3-46AF-8459-5C2716435188_November_26_1343.wav
+
+
+
+USE [USRC_Main]
+GO
+UPDATE dbo.MOM_PICKS
+SET Product_Code=CAST(dbo.MOM_STOCK.assoc AS varchar(8))
+FROM         dbo.MOM_STOCK 
+WHERE dbo.MOM_STOCK.number = dbo.MOM_PICKS.Stock_ID
+GO
+
+USE [USRC_Main]
+GO
+SELECT
+StockNumber AS Stock_ID,
+StockDescription AS Stock_Desc,
+'XXXXXX' AS Product_Code
+INTO dbo.MOM_PICKS
+FROM [USRC_SIMSSERVER].SIMS.dbo.MasterTable
+WHERE Tier ='1'
+GO
+
+
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='MOM_PICKS'
+		)
+DROP TABLE MOM_PICKS
+GO
+
+SELECT
+StockNumber AS Stock_ID,
+StockDescription AS Stock_Desc,
+'XXXXXX' AS Product_Code
+INTO dbo.MOM_PICKS
+FROM [USRC_SIMSSERVER].SIMS.dbo.MasterTable
+WHERE Tier ='1'
+GO
+
+UPDATE dbo.MOM_PICKS
+SET Product_Code=CAST(dbo.MOM_STOCK.assoc AS varchar(8))
+FROM         dbo.MOM_STOCK 
+WHERE dbo.MOM_STOCK.number = dbo.MOM_PICKS.Stock_ID
+GO
+
+Inherits="WebApplication3._Default"
+
+    <asp:GridView ID="GridView1" DataSourceID="SqlDataSource1" runat="server" />
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+      SelectCommand="SELECT [au_id], [au_lname], [au_fname], [phone], [address], [city], [state], [zip], [contract] FROM [authors]"
+      ConnectionString="<%$ ConnectionStrings:Pubs %>" />
+
+Persist Security Info=True; User ID=SQLadmin; Password=AustinDat@; 
+Integrated Security=SSPI;
+
+
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"& gt;
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+  <head>
+  <script type="text/javascript">
+  <!--
+  var adOpenDynamic = 2
+  var adLockOptimistic = 3
+
+  var conn_str = "..."
+  var conn = new   ActiveXObject("ADODB.Connection")
+  conn.open(conn_str, "",   "")
+
+  function get_selected_value(sel) {
+    return sel.options[sel.options.selectedIndex].value;
+  }
+
+  function gen_list_options(query, id, val) {
+    var html = ''
+    var rs = new ActiveXObject("ADODB.Recordset")
+    rs.open(query, conn, adOpenDynamic, adLockOptimistic)
+    if(!rs.bof) {
+      rs.MoveFirst()
+      while(!rs.eof) {
+        html += '<option value="' + rs.fields(id).value + '">' + rs.fields(val).value + '</option>'
+        rs.MoveNext()
+      }
+    }
+    rs.close()
+    return html
+  }
+
+  function rs2arr(rs, arr) {
+    for(var i=0; i!= rs.fields.count; ++i)
+      arr[rs.fields(i).name] = rs.fields(i).value
+  }
+
+  function arr2rs(arr, rs) {
+    for(var f in arr)
+      if(rs.fields(f))
+        rs.fields(f).value = arr[f]
+  }
+  
+  function show_menu() {
+    var html = ''
+    html += '<input type="button" value="Rank" onclick="show_rank()">'
+    document.getElementById("main").innerHTML = html
+  }
+
+  function show_rank() {
+    // write the HTML for the form
+    var html = ''
+    html += '<p id="selector"><select id="rank_list" onchange="get_rank(get_selected_value(this))">'
+    html += '<option value="0">New rank</option>'
+    html += gen_list_options("SELECT * FROM Rank", "ID", "ShortName")
+    html += '</select></p>'
+    html += '<p><span id="shortname_p">Short Name</span> <input type="text" id="rank_short" /></p>'
+    html += '<p><span id="longname_p">Long Name</span> <input type="text" id="rank_long" /></p>'
+    html += '<p id="control_p"><input type="button" value="Update" onclick="update_rank()" />'
+    html += ' <input type="button" value="Delete" onclick="delete_rank()" />'
+    html += ' <input type="button" value="Back" onclick="show_menu()" /></p>'
+
+    document.getElementById("main").innerHTML = html
+  }
+
+  function get_rank(id) {
+    var data = new Array()
+    if(id == 0) {
+      // Show the new guy
+      data["ShortName"] = ""
+      data["LongName"] = ""
+    }
+    else {
+      var rs = new ActiveXObject("ADODB.Recordset")
+      rs.open("SELECT * FROM Rank WHERE ID = " + id, conn, adOpenDynamic, adLockOptimistic)
+      rs2arr(rs, data)
+      rs.close()
+    }
+
+    // Read the resulting transaction state into the form
+    document.getElementById("rank_short").value = data["ShortName"]
+    document.getElementById("rank_long").value = data["LongName"]
+  }
+
+  function delete_rank() {
+    var id = get_selected_value(document.getElementById("rank_list"))
+    conn.execute("DELETE FROM Rank WHERE ID = " + id)
+    show_rank()
+  }
+  
+  function update_rank() {
+    var id = get_selected_value(document.getElementById("rank_list"))
+
+    // Store form state in array
+    var data = new Array();
+    data["ShortName"] = document.getElementById("rank_short").value
+    data["LongName"] = document.getElementById("rank_long").value
+
+    // Build the query, selecting only the current record if it exists
+    var str_sql = "SELECT * FROM Rank"
+    if(id != 0)
+      str_sql += " WHERE ID = " + id
+
+    // Get the record
+    var rs = new ActiveXObject("ADODB.Recordset")
+    rs.open(str_sql, conn, 2, 3)
+    if(id == 0)
+      rs.AddNew()
+    arr2rs(data, rs)           // dump the data into the record
+    rs.Update()
+              
+    // Refresh the UI
+    var sel = document.getElementById("rank_list").selectedIndex
+    show_rank()
+    document.getElementById("rank_list").selectedI ndex = sel
+    get_rank(id)
+  }
+
+  //-->
+  </script>
+
+  <title>JS Client-side ADO example</title>
+  </head>
+
+  <body onload="show_menu()">
+    <div id="main" />
+  </body>
+  </html>
+
+
+
+****************************************************************************
+****************************************************************************
+****************************************************************************
+
+UPDATE ContactPhoneNumbers
+
+SET ContactNumber = RTRIM(replace(replace(replace(replace(phone2, '-', ''), ' ', ''), ')', ''), '(', ''))
+
+FROM ContactPhoneNumbers, ContactInfo, MOM_Cust
+
+WHERE ContactInfoFK = PKCustomerRecord
+
+AND ContactInfo.custnum = CAST(MOM_CUST.custnum as varchar)
+
+AND PhoneTypeFK=2
+
+ 
+
+In order to update the Secondary number, that will be previously insert-ed.
+
+ 
+
+ 
+
+2) I’ll be adding to the ‘Insert ContactPhoneNumbers Records’ step which already INSERTs a new Primary number, with
+
+ 
+
+INSERT INTO dbo.ContactPhoneNumbers(ContactInfoFK, ContactNumber, PhoneTypeFK)
+
+SELECT     
+
+dbo.ContactInfo.PKCustomerRecord, 
+
+RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(dbo.MOM_CUST.phone2, '-', ''), ' ', ''), ')', ''), '(', '')) AS Expr1, 
+
+2 AS Expr2
+
+FROM                           dbo.ContactInfo 
+
+INNER JOIN                  dbo.MOM_CUST 
+
+ON                               dbo.ContactInfo.CustNum = CAST(dbo.MOM_CUST.custnum AS varchar) 
+
+LEFT OUTER JOIN        dbo.ContactPhoneNumbers 
+
+ON       RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(dbo.MOM_CUST.phone2, '-', ''), ' ', ''), ')', ''), '(', '')) = dbo.ContactPhoneNumbers.ContactNumber 
+
+AND                             dbo.ContactInfo.PKCustomerRecord = dbo.ContactPhoneNumbers.ContactInfoFK
+
+WHERE                        (dbo.ContactPhoneNumbers.ContactNumber IS NULL) 
+
+AND                             (dbo.ContactPhoneNumbers.ContactInfoFK IS NULL)
+
+AND                             (dbo.ContactPhoneNumbers.PhoneTypeFK IS NULL)
+
+AND                             (RTRIM(REPLACE(REPLACE(REPLACE(REPLACE(dbo.MOM_CUST.phone2, '-', ''), ' ', ''), ')', ''), '(', '')) <> '')
+
+ 
+
+In order to INSERT a new Secondary number, that will later be UPDATE-ed.
+
+ 
+
+
+
+
+
+WHNY18F	2
+TOPON21F	2
+BOMA46F	2
+TPIN2F	2
+TAWA19F	2
+WANY9F	2
+STCA7F	2
+PTPA14F	2
+WION10F	2
+PTOR23F	2
+YOPA22F	2
+
+http://usrcdev01/inventorymatrixweb/default.htm?MOMCustNum=133885
+
+
+Imports Excel = Microsoft.Office.Interop.Excel
+Imports System
+Imports System.Data
+Imports System.Math
+Imports Microsoft.SqlServer.Dts.Runtime
+
+Public Class ScriptMain
+Public Sub Main()
+
+Dim sFile As IO.File
+
+If sFile.Exists("\\srv08-za063\source\Daily Sales.xls") Then
+sFile.Delete("\\srv08-za063\source\Daily Sales.xls")
+End If
+
+Dim File_name As String
+Dim Macro_name As String
+Dim ExcelObject As Excel.Application
+Dim tFilename As String
+Dim oBook As Excel.WorkbookClass
+Dim oBooks As Excel.Workbooks
+
+tFilename = "\\srv08-za063\source\Macros\Daily_Sales.XLS"
+
+Macro_name = "Macro1"
+
+ExcelObject = CType(CreateObject("Excel.Application"), Excel.Application)
+ExcelObject.Visible = True
+
+oBooks = ExcelObject.Workbooks
+oBook = CType(oBooks.Open("\\srv08-za063\source\Macros\Daily_Sales.XLS"), Excel.WorkbookClass)
+
+ExcelObject.Run(Macro_name)
+
+ExcelObject.Application.Quit()
+ExcelObject.DisplayAlerts = True
+
+ExcelObject = Nothing
+
+If sFile.Exists("\\srv08-za063\source\Daily Sales.asc") Then
+sFile.Delete("\\srv08-za063\source\Daily Sales.asc")
+End If
+
+End Sub
+End Class
+
+
+
+
+declare	@Path varchar(128) ,
+	@FileName varchar(128)
+	select	@Path = 'C:\' ,
+		@FileName = 'myfile.txt'
+
+declare	@objFSys int
+declare @i int
+declare	@File varchar(1000)
+	
+	select @File = @Path + @FileName
+	exec sp_OACreate 'Scripting.FileSystemObject', @objFSys out
+	exec sp_OAMethod @objFSys, 'FileExists', @i out, @File
+	if @i = 1
+		print 'exists'
+	else
+		print 'not exists'
+	exec sp_OADestroy @objFSys 
+
+SELECT     dbo.tbl_DBF_Cust.Entry_Date, dbo.tbl_DBF_Cust.Cust_ID, dbo.tbl_DBF_Cust.First_Name, dbo.tbl_DBF_Cust.Last_Name, 
+                      dbo.tbl_DBF_Cust.Orig_Ad_Code, dbo.tbl_DBF_Cust.Sales_ID, dbo.tbl_DBF_Cust.Contact_Number, dbo.vw_Contact_Dates.Times_Contacted, 
+                      dbo.vw_Contact_Dates.First_Contact_Date, dbo.vw_Contact_Dates.Last_Contact_Date, dbo.tbl_Customer_Sales_Statistics.Ttl_Net_Sales_Value, 
+                      dbo.tbl_Customer_Sales_Statistics.Ttl_Net_Sales_B, dbo.tbl_Customer_Sales_Statistics.Ttl_Net_Sales_nB, 
+                      dbo.tbl_Customer_Sales_Statistics.First_B_Order_Date, dbo.tbl_Customer_Sales_Statistics.First_nB_Order_Date
+FROM         dbo.tbl_DBF_Cust LEFT OUTER JOIN
+                      dbo.tbl_Customer_Sales_Statistics ON dbo.tbl_DBF_Cust.Cust_ID = dbo.tbl_Customer_Sales_Statistics.Cust_ID LEFT OUTER JOIN
+                      dbo.vw_Contact_Dates ON dbo.tbl_DBF_Cust.Contact_Number = dbo.vw_Contact_Dates.ContactNumber
+WHERE     (dbo.tbl_DBF_Cust.Orig_Ad_Code = 'Web') AND (dbo.tbl_DBF_Cust.Entry_Date >= CONVERT(DATETIME, '2007-05-17 00:00:00', 102))
+
+
+
+
+SELECT     
+Entry_Date, 
+Cust_ID, 
+First_Name,
+Last_Name,
+Orig_Ad_Code,
+Sales_ID,
+Orig_Ad_Code,
+Ttl_Net_Sales_Value, 
+Ttl_Net_Sales_B, 
+Ttl_Net_Sales_nB
+FROM         tbl_Customer_Sales_Statistics
+WHERE     (Orig_Ad_Code = 'Web') 
+AND (Entry_Date >= CONVERT(DATETIME, '2007-05-17 00:00:00', 102))
+
+
+
+http://support.microsoft.com/EasyAssist?id=G2XXHW 
+
+
+
+    Application.ActivePrinter = "\\USMONEY\SHARP AR-M450 PCL6 on Ne06:"
+    ActiveWindow.SelectedSheets.PrintOut Copies:=1, ActivePrinter:= _
+        "\\USMONEY\SHARP AR-M450 PCL6 on Ne06:", Collate:=True
+    Range("B7").Select
+
+
+
+
+WHERE CMS.Ad_Code IN (
+'CAB1AM',
+'CAB2AM',
+'CAB1PM',
+'CAB2PM',
+'CABAM1191',
+'CNBAM2191',
+'DISPM1191',
+'BRVPM1191',
+'HISPM1191',
+'CABAM1192',
+'HISAM1192',
+'DISAM1192',
+'BRVPM1192',
+'CNBPM1192',
+'CABPM1192',
+'CABAM1194',
+'DISAM1194',
+'DISAM2194',
+'CABPM1194',
+'MSNPM2194',
+'CABAM1197',
+'CABAM2197',
+'MSNAM2197',
+'CABPM1197',
+'CABAM1198',
+'CNNPM1198',
+'TRVAM1199',
+'CABPM1199',
+'CNNPM2199',
+'FOXPM3199')
+
+
+
+=DATEVALUE(CONCATENATE(TEXT(C2, "mm/dd/yyyy"), " ", TEXT(E2, "hh:mm:ss AM/PM")))
+
+
+=CONCATENATE(TEXT(B20, "mm/dd/yyyy"), " ", TEXT( D20, "hh:mm:ss AM/PM"))
+
+SELECT     
+Daily_Date, 
+Site,
+Sales_Manager, 
+[Name] AS Sales_Agent, 
+Ttl_Calls_Handled, 
+Ttl_Talk_Time, 
+Ttl_Pres_Made, 
+Ttl_Sales_Dispositioned, 
+Ttl_Gross_Sales, 
+Ttl_Sales_Orders_Submitted, 
+Ttl_Net_Sales, 
+IB_Calls_Handled, 
+IB_Talk_Time, 
+IB_Pres_Made, 
+IB_Sales_Dispositioned, 
+IB_Gross_Sales, 
+IB_Sales_Orders_Submitted, 
+IB_Sales_Value, 
+OB_Calls_Handled, 
+OB_Talk_Time, 
+OB_Pres_Made, 
+OB_Sales_Dispositioned, 
+OB_Gross_Sales, 
+OB_Sales_Orders_Submitted, 
+OB_Sales_Value, 
+TR_Calls_Handled,
+TR_Talk_Time, 
+TR_Pres_Made, 
+TR_Sales_Dispositioned, 
+(Ttl_Talk_Time+Ttl_Wait_Time) AS Ttl_Project_Time,
+Ttl_Wait_Time,
+Return_Value,
+RT_IB_Value,
+RT_OB_Value,
+dbo.Get_TheDate(GETDATE())-1 AS Report_Date
+FROM         vw_Daily_Operations_Summary
+WHERE --(Daily_Date >= '1/1/2006')
+(Daily_Date >= dbo.Get_TheDate(GETDATE()-1))
+AND (Daily_Date < dbo.Get_TheDate(GETDATE() ))
+AND (Ttl_Net_Sales > 0 OR (Ttl_Talk_Time+Ttl_Wait_Time) > 0 OR Return_Value >0)
+ORDER BY Daily_Date 
+
+
+
+
+
+120842	Glenn          	Rode                	370.00	TWR	10/31/2006 12:00:00 AM	JL  $370.00; ; 	TWR
+144831	Julia          	Hallford            	414.00	TWR	3/25/2007 12:00:00 AM	TWR $414.00; ; 	TWR
+NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL
+
+
+
+SELECT     TOP (100) PERCENT dbo.tbl_DBF_CMS.Order_Date, dbo.tbl_DBF_CMS.Order_ID, dbo.tbl_DBF_Items.Item_ID, dbo.tbl_DBF_Stock.Stock_ID, 
+                      dbo.tbl_DBF_Stock.Stock_Assoc, dbo.tbl_DBF_Stock.Stock_Desc, dbo.tbl_DBF_CMS.Order_Total, dbo.tbl_DBF_CMS.Ttl_Billed_Merch, 
+                      dbo.tbl_DBF_CMS.Ttl_Billed_Shipping, dbo.tbl_DBF_Items.Quantity_Ordered, dbo.tbl_DBF_Items.Value_Ordered, 
+                      dbo.tbl_DBF_Items.Quantity_Shipped, dbo.tbl_DBF_Items.Value_Shipped, dbo.tbl_DBF_Stock.Stock_Type, dbo.tbl_DBF_CMS.Sales_ID, 
+                      dbo.tbl_DBF_CMS.Ttl_Billed_Tax, dbo.tbl_DBF_CMS.Order_Type, dbo.tbl_DBF_CMS.Cust_ID, dbo.tbl_DBF_CMS.Ship_List, 
+                      dbo.tbl_DBF_Items.Item_State, dbo.tbl_DBF_Items_Status.Status_Description AS Item_Description, dbo.tbl_DBF_CMS.Order_Status, 
+                      dbo.tbl_DBF_CMS_Status.Status_Description AS Order_Description
+FROM         dbo.tbl_DBF_CMS LEFT OUTER JOIN
+                      dbo.tbl_DBF_CMS_Status ON dbo.tbl_DBF_CMS.Order_Status = dbo.tbl_DBF_CMS_Status.Status_Code LEFT OUTER JOIN
+                      dbo.tbl_DBF_Items_Status RIGHT OUTER JOIN
+                      dbo.tbl_DBF_Items ON dbo.tbl_DBF_Items_Status.Status_Code = dbo.tbl_DBF_Items.Item_State ON 
+                      dbo.tbl_DBF_CMS.Order_ID = dbo.tbl_DBF_Items.Order_ID LEFT OUTER JOIN
+                      dbo.tbl_DBF_Stock ON dbo.tbl_DBF_Items.Stock_ID = dbo.tbl_DBF_Stock.Stock_ID LEFT OUTER JOIN
+                      dbo.tbl_DBF_Ad_Codes ON dbo.tbl_DBF_CMS.Ad_Code = dbo.tbl_DBF_Ad_Codes.Ad_Code
+WHERE     (dbo.tbl_DBF_Items.Stock_ID <> '') AND (dbo.tbl_DBF_CMS.Order_Type <> 'CXL') AND (dbo.tbl_DBF_Stock.Stock_ID <> '') AND 
+                      (dbo.tbl_DBF_Items.Item_State = 'PS') AND (dbo.tbl_DBF_CMS.Order_Status = 'PS')
+ORDER BY dbo.tbl_DBF_CMS.Order_Date DESC
+
+
+SELECT
+'AU' AS Site,
+ISNULL ( SUM (CASE WHEN (Action = 'Acquired') AND (Released = 'False') AND (CallType = 'Inbound') AND (ConfirmationCode LIKE 'AU%') AND (ID <> '-1') 
+	THEN (Retail * Quantity) ELSE 0 END), 0 ) AS IB,
+ISNULL ( SUM (CASE WHEN (Action = 'Acquired') AND (Released = 'False') AND (CallType = 'Outbound') AND (ConfirmationCode LIKE 'AU%') AND (ID <> '-1') 
+	THEN (Retail * Quantity) ELSE 0 END), 0 )AS OB,
+ISNULL ( SUM (CASE WHEN (Action = 'Acquired') AND (Released = 'False') AND (ConfirmationCode LIKE 'AU%') AND (ID <> '-1') 
+	THEN (Retail * Quantity) ELSE 0 END), 0 ) AS Total
+FROM TransactionTable
+WHERE DateTime >= dbo.Get_TheDate( GetDate() ) 
+
+
+
+
+SELECT
+'BM' AS Site,
+ISNULL ( SUM (CASE WHEN (Action = 'Acquired') AND (Released = 'False') AND (CallType = 'Inbound') AND (ConfirmationCode LIKE 'BM%') AND (ID <> '-1') 
+	THEN (Retail * Quantity) ELSE 0 END), 0 ) AS IB,
+ISNULL ( SUM (CASE WHEN (Action = 'Acquired') AND (Released = 'False') AND (CallType = 'Outbound') AND (ConfirmationCode LIKE 'BM%') AND (ID <> '-1') 
+	THEN (Retail * Quantity) ELSE 0 END), 0 ) AS OB,
+ISNULL ( SUM (CASE WHEN (Action = 'Acquired') AND (Released = 'False') AND (ConfirmationCode LIKE 'BM%') AND (ID <> '-1') 
+	THEN (Retail * Quantity) ELSE 0 END), 0 ) AS Total
+FROM TransactionTable
+WHERE DateTime >= dbo.Get_TheDate( GetDate() ) 
+
+
+SELECT
+'C3' AS Site,
+ISNULL ( SUM (CASE WHEN (Action = 'Acquired') AND (Released = 'False') AND (CallType = 'Inbound') AND (ConfirmationCode LIKE 'C3%') AND (ID <> '-1') 
+	THEN (Retail * Quantity) ELSE 0 END), 0 ) AS IB,
+ISNULL ( SUM (CASE WHEN (Action = 'Acquired') AND (Released = 'False') AND (CallType = 'Outbound') AND (ConfirmationCode LIKE 'C3%') AND (ID <> '-1') 
+	THEN (Retail * Quantity) ELSE 0 END), 0 ) AS OB,
+ISNULL ( SUM (CASE WHEN (Action = 'Acquired') AND (Released = 'False') AND (ConfirmationCode LIKE 'C3%') AND (ID <> '-1') 
+	THEN (Retail * Quantity) ELSE 0 END), 0 ) AS Total
+FROM TransactionTable
+WHERE DateTime >= dbo.Get_TheDate( GetDate() ) 
+
+
+
+SELECT
+'Total' AS Site,
+ISNULL ( SUM (CASE WHEN (Action = 'Acquired') AND (Released = 'False') AND (CallType = 'Inbound') AND (ID <> '-1') 
+	THEN (Retail * Quantity) ELSE 0 END), 0 ) AS IB,
+ISNULL ( SUM (CASE WHEN (Action = 'Acquired') AND (Released = 'False') AND (CallType = 'Outbound') AND (ID <> '-1') 
+	THEN (Retail * Quantity) ELSE 0 END), 0 ) AS OB,
+ISNULL ( SUM (CASE WHEN (Action = 'Acquired') AND (Released = 'False') AND (ID <> '-1') 
+	THEN (Retail * Quantity) ELSE 0 END), 0 ) AS Total
+FROM TransactionTable
+WHERE DateTime >= dbo.Get_TheDate( GetDate() ) 
+
+
+'**********************************************************************
+'  Visual Basic ActiveX Script
+'************************************************************************
+
+Function Main()
+
+	Dim obj_FSO, str_Data_File
+	Set obj_FSO = CreateObject("Scripting.FileSystemObject") 
+
+	If obj_FSO.FileExists("\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_SIMS_Total.txt") Then 
+		obj_FSO.DeleteFile "\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_SIMS_Total.txt"  
+	End If
+
+	Set str_Data_File= obj_FSO.OpenTextFile("\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_SIMS_Total.txt", 8, True) 
+	'str_Data_File.WriteLine("Site" & vbtab & "IB" & vbtab & "OB"  & vbtab & "Total")
+
+	'str_Data_File.WriteLine(DTSGlobalVariables("gv_AU_Site").Value) & vbtab & _
+	str_Data_File.WriteLine( "AU IB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_AU_IB").Value, Groupdigits) )
+	str_Data_File.WriteLine( "AU OB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_AU_OB").Value, Groupdigits) )
+	'str_Data_File.WriteLine("----------------------------------")
+	str_Data_File.WriteLine( "AU TL" & vbtab & FormatCurrency(DTSGlobalVariables("gv_AU_Total").Value, Groupdigits) )
+	str_Data_File.WriteLine
+
+	str_Data_File.WriteLine( "BM IB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_BM_IB").Value, Groupdigits) )
+	str_Data_File.WriteLine( "BM OB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_BM_OB").Value, Groupdigits) )
+	'str_Data_File.WriteLine("----------------------------------")
+	str_Data_File.WriteLine( "BM TL" & vbtab & FormatCurrency(DTSGlobalVariables("gv_BM_Total").Value, Groupdigits) )
+	str_Data_File.WriteLine
+
+	str_Data_File.WriteLine( "C3 IB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_C3_IB").Value, Groupdigits) )
+	str_Data_File.WriteLine( "C3 OB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_C3_OB").Value, Groupdigits) )
+	'str_Data_File.WriteLine("----------------------------------")
+	str_Data_File.WriteLine( "C3 TL" & vbtab & FormatCurrency(DTSGlobalVariables("gv_C3_Total").Value, Groupdigits) )
+	str_Data_File.WriteLine
+
+	str_Data_File.WriteLine( "TL IB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_Ttl_IB").Value, Groupdigits) )
+	str_Data_File.WriteLine( "TL OB" & vbtab & FormatCurrency(DTSGlobalVariables("gv_Ttl_OB").Value, Groupdigits) )
+	'str_Data_File.WriteLine("----------------------------------")
+	str_Data_File.WriteLine( "TOTAL" & vbtab & FormatCurrency(DTSGlobalVariables("gv_Ttl_Total").Value, Groupdigits) )
+	str_Data_File.WriteLine
+
+	'str_Data_File.WriteLine(DTSGlobalVariables("gv_BM_Site").Value) & vbtab  & _
+	'	FormatCurrency(DTSGlobalVariables("gv_BM_IB").Value, Groupdigits) & vbtab & _
+	'	FormatCurrency(DTSGlobalVariables("gv_BM_OB").Value, Groupdigits) & vbtab & _
+	'	FormatCurrency(DTSGlobalVariables("gv_BM_Total").Value, Groupdigits) 
+
+	'str_Data_File.WriteLine(DTSGlobalVariables("gv_C3_Site").Value) & vbtab  & _
+	'	FormatCurrency(DTSGlobalVariables("gv_C3_IB").Value, Groupdigits) & vbtab & _
+	'	FormatCurrency(DTSGlobalVariables("gv_C3_OB").Value, Groupdigits) & vbtab & _
+	'	FormatCurrency(DTSGlobalVariables("gv_C3_Total").Value, Groupdigits) 
+
+	'str_Data_File.WriteLine("--------------------------------------------------------------------")
+
+	'str_Data_File.WriteLine(DTSGlobalVariables("gv_Ttl_Site").Value) & vbtab & _
+	'	FormatCurrency(DTSGlobalVariables("gv_Ttl_IB").Value, Groupdigits) & vbtab& _
+	'	FormatCurrency(DTSGlobalVariables("gv_Ttl_OB").Value, Groupdigits) & vbtab& _
+	'	FormatCurrency(DTSGlobalVariables("gv_Ttl_Total").Value, Groupdigits) 
+
+'****************************************************************************************************************************************************
+
+
+'****************************************************************************************************************************************************
+	str_Data_File.Close
+
+	Main = DTSTaskExecResult_Success
+End Function
+
+
+
+
+
+UPDATE TransactionTable
+
+SET Username = ‘Tommy Treglia (MFT)’,
+
+Destination =’Tommy Treglia (MFT)’
+
+WHERE Username = ‘Michael Treglia (MFT)’
+
+
+
+
+SELECT     TOP (100) PERCENT dbo.tbl_Customer_Sales_Statistics.Entry_Date, dbo.tbl_Customer_Sales_Statistics.Cust_ID, 
+                      dbo.tbl_Customer_Sales_Statistics.Init_Buyer_Type, dbo.tbl_DBF_RMA.entered, dbo.tbl_DBF_RMA.rma_total
+FROM         dbo.tbl_Customer_Sales_Statistics INNER JOIN
+                      dbo.tbl_DBF_CMS ON dbo.tbl_Customer_Sales_Statistics.Cust_ID = dbo.tbl_DBF_CMS.Cust_ID INNER JOIN
+                      dbo.tbl_DBF_RMA ON dbo.tbl_DBF_CMS.Order_ID = dbo.tbl_DBF_RMA.[order]
+WHERE     (dbo.tbl_Customer_Sales_Statistics.Init_Buyer_Type = 'GR')
+ORDER BY dbo.tbl_DBF_RMA.entered DESC
+
+
+
+SELECT     TOP (100) PERCENT 
+dbo.Results_DBF_CMS.odr_date AS Order_Date, 
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_DBF_Cust.First_Name, 
+dbo.tbl_DBF_Cust.Last_Name, 
+dbo.Results_DBF_CMS.ordertype AS Order_Type, 
+dbo.Results_DBF_CMS.[order] AS Order_ID, 
+
+dbo.Results_DBF_CMS.ord_total - dbo.Results_DBF_CMS.shipping - dbo.Results_DBF_CMS.tax AS Order_Total, 
+                      
+dbo.vw_Sales_Orders_By_OrderID_Only.Net_Order_Value AS Ttl_Billed_Merch, 
+
+dbo.tbl_Sales_Teams.Sales_Manager, dbo.tbl_Sales_Teams.Site, 
+dbo.Results_DBF_CMS.cl_key AS Ad_Code, dbo.Results_DBF_CMS.shipping AS Ttl_Shipping, dbo.Results_DBF_CMS.tax AS Ttl_Tax
+FROM         dbo.Results_DBF_CMS INNER JOIN
+                      dbo.tbl_Sales_Teams ON dbo.Results_DBF_CMS.sales_id = dbo.tbl_Sales_Teams.Login INNER JOIN
+                      dbo.tbl_DBF_Cust ON dbo.Results_DBF_CMS.custnum = dbo.tbl_DBF_Cust.Cust_ID LEFT OUTER JOIN
+                      dbo.vw_Sales_Orders_By_OrderID_Only ON dbo.Results_DBF_CMS.[order] = dbo.vw_Sales_Orders_By_OrderID_Only.Order_ID
+GROUP BY dbo.tbl_Sales_Teams.Name, dbo.tbl_DBF_Cust.First_Name, dbo.tbl_DBF_Cust.Last_Name, dbo.Results_DBF_CMS.ordertype, 
+                      dbo.Results_DBF_CMS.perm_hold, dbo.Results_DBF_CMS.[order], dbo.Results_DBF_CMS.odr_date, dbo.Results_DBF_CMS.order_st2, 
+                      dbo.Results_DBF_CMS.ord_total, dbo.Results_DBF_CMS.shipping, dbo.Results_DBF_CMS.tax, dbo.tbl_Sales_Teams.Sales_Manager, 
+                      dbo.tbl_Sales_Teams.Site, dbo.Results_DBF_CMS.cl_key, dbo.vw_Sales_Orders_By_OrderID_Only.Net_Order_Value
+HAVING      (dbo.Results_DBF_CMS.ordertype <> 'CXL') AND (dbo.Results_DBF_CMS.perm_hold = 1) AND (dbo.Results_DBF_CMS.order_st2 <> 'CN') AND 
+                      (dbo.Results_DBF_CMS.ord_total > 0)
+ORDER BY dbo.tbl_Sales_Teams.Name
+
+
+
+
+
+SELECT     dbo.tbl_DBF_Stock.Stock_Type
+FROM         dbo.Results_DBF_CMS LEFT OUTER JOIN
+                      dbo.tbl_DBF_Items ON dbo.Results_DBF_CMS.[order] = dbo.tbl_DBF_Items.Order_ID LEFT OUTER JOIN
+                      dbo.tbl_DBF_Stock ON dbo.tbl_DBF_Items.Stock_ID = dbo.tbl_DBF_Stock.Stock_ID
+WHERE     (dbo.Results_DBF_CMS.perm_hold = 1) AND (dbo.Results_DBF_CMS.order_st2 <> 'CN') AND (dbo.Results_DBF_CMS.ord_total > 0) AND 
+                      (dbo.Results_DBF_CMS.ordertype <> 'CXL')
+
+
+
+SELECT     TOP (100) PERCENT Entry_Date, Cust_ID, First_Name, Last_Name, Ttl_Order_Count, Init_Buyer_Type, Campaign, Customer_Buyer_Status, 
+                      Init_NB_Order_Date, Init_NB_nonBullion_Ordered
+FROM         dbo.tbl_Customer_Sales_Status
+WHERE     (Entry_Date >= CONVERT(DATETIME, '2006-11-01 00:00:00', 102)) AND (Init_Buyer_Type = 'GR') AND (NOT (Customer_Buyer_Status IN ('B1', 'NB')))
+ORDER BY Entry_Date
+
+
+
+
+
+SELECT     TOP (100) PERCENT dbo.tbl_Customer_Sales_Status.Entry_Date, dbo.tbl_Customer_Sales_Status.Cust_ID, 
+                      dbo.tbl_Customer_Sales_Status.First_Name, dbo.tbl_Customer_Sales_Status.Last_Name, 
+                      dbo.tbl_Customer_Sales_Status.Init_Buyer_Type AS Init_Buyer_Status, 
+                      dbo.tbl_Customer_Sales_Status.Customer_Buyer_Status AS Current_Buyer_Status, 
+                      dbo.vw_Contact_Dates_OB_Only.Times_Contacted AS OB_Contacts, 
+                      dbo.vw_Contact_Dates_OB_Only.Last_Contact_Age AS Last_OB_Contact_Days_Ago, dbo.vw_Contact_Dates_OB_Only.Last_Contact_Date, 
+                      dbo.tbl_Customer_Sales_Status.Ttl_Order_Count, dbo.tbl_Customer_Sales_Status.Ttl_Shipped_Value
+FROM         dbo.tbl_Customer_Sales_Status INNER JOIN
+                      dbo.tbl_DBF_Cust ON dbo.tbl_Customer_Sales_Status.Cust_ID = dbo.tbl_DBF_Cust.Cust_ID LEFT OUTER JOIN
+                      dbo.vw_Contact_Dates_OB_Only ON dbo.tbl_DBF_Cust.Contact_Number = dbo.vw_Contact_Dates_OB_Only.ContactNumber
+WHERE     (dbo.tbl_Customer_Sales_Status.Init_Buyer_Type = 'GR') AND (dbo.tbl_Customer_Sales_Status.Campaign = 'DMT') AND 
+                      (dbo.tbl_Customer_Sales_Status.Entry_Date >= CONVERT(DATETIME, '2007-01-01 00:00:00', 102)) AND 
+                      (dbo.vw_Contact_Dates_OB_Only.First_Contact_Date >= CONVERT(DATETIME, '2007-01-01 00:00:00', 102))
+ORDER BY dbo.tbl_Customer_Sales_Status.Entry_Date
+
+
+
+
+
+SELECT
+Stock_Type,
+SUM(CASE WHEN Item_State = 'CM' THEN dbo.vw_Sales_Orders.Quantity_Ordered ELSE 0 END) AS Quantity_Committed, 
+SUM(CASE WHEN Item_State = 'CM' THEN dbo.vw_Sales_Orders.Value_Ordered ELSE 0 END) AS Value_Committed, 
+SUM(CASE WHEN Item_State = 'PS' THEN dbo.vw_Sales_Orders.Quantity_Ordered ELSE 0 END) AS Quantity_PreShipped, 
+SUM(CASE WHEN Item_State = 'PS' THEN dbo.vw_Sales_Orders.Value_Ordered ELSE 0 END) AS Value_PreShipped, 
+SUM(CASE WHEN Item_State = 'SH' THEN dbo.vw_Sales_Orders.Quantity_Ordered ELSE 0 END) AS Quantity_Shipped,
+SUM(CASE WHEN Item_State = 'SH' THEN dbo.vw_Sales_Orders.Value_Ordered ELSE 0 END) AS Value_Shipped,
+SUM(CASE WHEN Item_State = 'RT' THEN dbo.vw_Sales_Orders.Quantity_Ordered ELSE 0 END) AS Quantity_Returned, 
+SUM(CASE WHEN Item_State = 'RT' THEN dbo.vw_Sales_Orders.Value_Ordered ELSE 0 END) AS Value_Returned,
+SUM(CASE WHEN Item_State IN ('PS', 'SH', 'RT') THEN dbo.vw_Sales_Orders.Quantity_Ordered ELSE 0 END) AS Net_Quantity_Shipped, 
+SUM(CASE WHEN Item_State IN ('PS', 'SH', 'RT') THEN dbo.vw_Sales_Orders.Value_Ordered ELSE 0 END) AS Net_Value_Shipped
+FROM vw_Sales_Orders
+WHERE Item_State IN ('CM', 'PS', 'RT', 'SH')
+AND Stock_Type IS NOT NULL
+AND Stock_Type <> 'Gold_Report'
+AND Order_Date >='3/1/2007'
+GROUP BY Stock_Type
+ORDER BY Stock_type
+
+
+
+SELECT     dbo.vw_First_Sales_03_Buyer_Type.Entry_Date, dbo.vw_First_Sales_03_Buyer_Type.Cust_ID, dbo.vw_First_Sales_03_Buyer_Type.First_Name, 
+                      dbo.vw_First_Sales_03_Buyer_Type.Last_Name, dbo.vw_First_Sales_03_Buyer_Type.Init_Buyer_Type, 
+                      dbo.vw_Contact_Dates_OB_Only.Times_Contacted, dbo.vw_Contact_Dates_OB_Only.Last_Contact_Date, 
+                      dbo.vw_Contact_Dates_OB_Only.Last_Contact_Disposition
+FROM         dbo.vw_First_Sales_03_Buyer_Type INNER JOIN
+                      dbo.tbl_DBF_Cust ON dbo.vw_First_Sales_03_Buyer_Type.Cust_ID = dbo.tbl_DBF_Cust.Cust_ID LEFT OUTER JOIN
+                      dbo.vw_Contact_Dates_OB_Only ON dbo.tbl_DBF_Cust.Contact_Number = dbo.vw_Contact_Dates_OB_Only.ContactNumber
+WHERE     (dbo.vw_First_Sales_03_Buyer_Type.Init_Buyer_Type = 'GR') AND (dbo.vw_First_Sales_03_Buyer_Type.Entry_Date >= CONVERT(DATETIME, 
+                      '2006-11-01 00:00:00', 102) AND dbo.vw_First_Sales_03_Buyer_Type.Entry_Date < CONVERT(DATETIME, '2007-02-14 00:00:00', 102))
+
+
+
+
+SELECT     TOP (100) PERCENT 
+dbo.vw_First_Sales_03_Buyer_Type.Entry_Date, 
+dbo.vw_First_Sales_03_Buyer_Type.Cust_ID, 
+dbo.vw_First_Sales_03_Buyer_Type.First_Name, 
+dbo.vw_First_Sales_03_Buyer_Type.Last_Name, 
+dbo.vw_First_Sales_03_Buyer_Type.Init_Buyer_Type AS Init_Buyer_Status, 
+dbo.vw_Contact_Dates_OB_Only.Times_Contacted AS OB_Contacts, 
+dbo.vw_Contact_Dates_OB_Only.Last_Contact_Age AS Last_OB_Contact_Days_Ago
+FROM         dbo.vw_First_Sales_03_Buyer_Type
+INNER JOIN    dbo.tbl_DBF_Cust 
+ON dbo.vw_First_Sales_03_Buyer_Type.Cust_ID = dbo.tbl_DBF_Cust.Cust_ID 
+LEFT OUTER JOIN  dbo.vw_Contact_Dates_OB_Only 
+ON dbo.tbl_DBF_Cust.Contact_Number = dbo.vw_Contact_Dates_OB_Only.ContactNumber
+WHERE     (dbo.vw_First_Sales_03_Buyer_Type.Init_Buyer_Type = 'GR') 
+AND (dbo.vw_First_Sales_03_Buyer_Type.Entry_Date >= CONVERT(DATETIME, '2006-11-01 00:00:00', 102)) 
+AND (dbo.vw_Contact_Dates_OB_Only.First_Contact_Date >= CONVERT(DATETIME, '2006-11-01 00:00:00', 102))
+AND dbo.tbl_DBF_Cust.Contact_Number IS NULL
+ORDER BY dbo.vw_First_Sales_03_Buyer_Type.Entry_Date
+
+SELECT     Entry_Date, Cust_ID, First_Name, Last_Name, Ttl_Order_Count, First_Order_ID, Init_TB_Merch, Init_Bullion_Shipped, Init_nonBullion_Shipped, 
+                      Init_Buyer_Type, Cust_ID AS Expr1
+FROM         vw_First_Sales_03_Buyer_Type
+WHERE     (Init_Buyer_Type = 'GR') AND (Entry_Date >= CONVERT(DATETIME, '2006-11-01 00:00:00', 102)) AND (Entry_Date < CONVERT(DATETIME, 
+
+                      '2007-02-14 00:00:00', 102))
+
+
+
+
+http://content2.totallycrap.com/audio/demolition/  
+
+
+
+SELECT     TOP (100) PERCENT dbo.tbl_Customer_Sales_Status.Entry_Date, dbo.tbl_Customer_Sales_Status.Cust_ID, 
+                      dbo.tbl_Customer_Sales_Status.First_Name, dbo.tbl_Customer_Sales_Status.Last_Name, 
+                      dbo.tbl_Customer_Sales_Status.Init_Buyer_Type AS Init_Buyer_Status, 
+                      dbo.tbl_Customer_Sales_Status.Customer_Buyer_Status AS Current_Buyer_Status, 
+                      dbo.vw_Contact_Dates_OB_Only.Times_Contacted AS OB_Contacts, 
+                      dbo.vw_Contact_Dates_OB_Only.Last_Contact_Age AS Last_OB_Contact_Days_Ago
+FROM         dbo.tbl_Customer_Sales_Status INNER JOIN
+                      dbo.tbl_DBF_Cust ON dbo.tbl_Customer_Sales_Status.Cust_ID = dbo.tbl_DBF_Cust.Cust_ID LEFT OUTER JOIN
+                      dbo.vw_Contact_Dates_OB_Only ON dbo.tbl_DBF_Cust.Contact_Number = dbo.vw_Contact_Dates_OB_Only.ContactNumber
+WHERE     (dbo.tbl_Customer_Sales_Status.Init_Buyer_Type = 'GR') AND (dbo.tbl_Customer_Sales_Status.Entry_Date >= CONVERT(DATETIME, 
+                      '2007-02-01 00:00:00', 102)) AND (dbo.vw_Contact_Dates_OB_Only.First_Contact_Date >= CONVERT(DATETIME, '2007-01-01 00:00:00', 102))
+ORDER BY dbo.tbl_Customer_Sales_Status.Entry_Date
+
+SELECT 
+c.custnum, 
+c.firstname, 
+c.lastname, 
+c.odr_date, 
+c.gross, 
+c.sales_id, 
+tST.[name], 
+tST.Site
+FROM Results_MOM_CUST c
+LEFT JOIN tbl_Sales_Teams tST ON c.sales_id = tST.login
+WHERE Site ='Austin'
+AND c.odr_date < (GetDate()) - 91
+AND c.gross Between 650 And 14999.99
+AND c.sales_id<>'XX' 
+AND c.sales_id<>'YY'
+AND c.sales_id<>'YA ' 
+AND c.sales_id<>'YB' 
+AND c.sales_id<>'AU ' 
+AND c.sales_id<>'BM '
+AND c.sales_id<>'C3 '
+AND c.sales_id<>'A90'
+AND c.sales_id<>'B90'
+AND c.sales_id<>'C90'
+AND (c.addr_type LIKE 'B%' OR c.addr_type LIKE 'P%' OR c.addr_type LIKE 'O%')
+ORDER BY c.odr_date desc;
+
+
+SELECT 
+c.custnum, 
+c.firstname, 
+c.lastname, 
+c.odr_date, 
+c.gross, 
+c.sales_id, 
+tST.[name], 
+tST.Site
+FROM Results_MOM_CUST c
+LEFT JOIN tbl_Sales_Teams tST ON c.sales_id = tST.login
+WHERE Site ='Beaumont'
+AND c.odr_date < (GetDate()) - 91
+AND c.gross Between 650 And 14999.99
+AND c.sales_id<>'XX' 
+AND c.sales_id<>'YY'
+AND c.sales_id<>'YA ' 
+AND c.sales_id<>'YB' 
+AND c.sales_id<>'AU ' 
+AND c.sales_id<>'BM '
+AND c.sales_id<>'C3 '
+AND c.sales_id<>'A90'
+AND c.sales_id<>'B90'
+AND c.sales_id<>'C90'
+AND (c.addr_type LIKE 'B%' OR c.addr_type LIKE 'P%' OR c.addr_type LIKE 'O%')
+ORDER BY c.odr_date desc;
+
+
+SELECT 
+c.custnum, 
+c.firstname, 
+c.lastname, 
+c.odr_date, 
+c.gross, 
+c.sales_id, 
+tST.[name], 
+tST.Site
+FROM Results_MOM_CUST c
+LEFT JOIN tbl_Sales_Teams tST ON c.sales_id = tST.login
+WHERE Site ='C3'
+AND c.odr_date < (GetDate()) - 91
+AND c.gross Between 650 And 14999.99
+AND c.sales_id<>'XX' 
+AND c.sales_id<>'YY'
+AND c.sales_id<>'YA ' 
+AND c.sales_id<>'YB' 
+AND c.sales_id<>'AU ' 
+AND c.sales_id<>'BM '
+AND c.sales_id<>'C3 '
+AND c.sales_id<>'A90'
+AND c.sales_id<>'B90'
+AND c.sales_id<>'C90'
+AND (c.addr_type LIKE 'B%' OR c.addr_type LIKE 'P%' OR c.addr_type LIKE 'O%')
+ORDER BY c.odr_date desc;
+
+
+DROP TABLE `Austin_Rollovers`
+GO
+
+CREATE TABLE `Austin_Rollovers` (
+`custnum` VarChar (50) , 
+`firstname` VarChar (15) , 
+`lastname` VarChar (20) , 
+`odr_date` DateTime , 
+`gross` Decimal (9,2) , 
+`sales_id` VarChar (3) , 
+`name` VarChar (50) , 
+`Site` VarChar (50) ,
+`Transfer To` VarChar (50)   );
+GO
+
+
+DROP TABLE `Beaumont_Rollovers`;
+GO
+
+CREATE TABLE `Beaumont_Rollovers` (
+`custnum` VarChar (50) , 
+`firstname` VarChar (15) , 
+`lastname` VarChar (20) , 
+`odr_date` DateTime , 
+`gross` Decimal (9,2) , 
+`sales_id` VarChar (3) , 
+`name` VarChar (50) , 
+`Site` VarChar (50) , 
+`Transfer To` VarChar (50)  );
+GO
+
+DROP TABLE `C3_Rollovers` 
+GO
+
+CREATE TABLE `C3_Rollovers` (
+`custnum` VarChar (50) , 
+`firstname` VarChar (15) , 
+`lastname` VarChar (20) , 
+`odr_date` DateTime , 
+`gross` Decimal (9,2) , 
+`sales_id` VarChar (3) , 
+`name` VarChar (50) , 
+`Site` VarChar (50)  )
+GO
+
+
+
+CA
+\\usrc_dialer\voicemails\24_D66F4A83-99E6-426C-91F1-7BD631989F05_February_20_1539.wav	7139441373
+\\usrc_dialer\voicemails\24_74A0BAC2-4C38-442C-BB61-C7539705B1B6_February_14_1447.wav	8085515081
+\\usrc_dialer\voicemails\24_0BCB64FC-9B18-46C6-98D0-59ED583F46D3_February_14_1444.wav	7134360217
+\\usrc_dialer\voicemails\24_36593846-C213-481B-98BD-9285F5A0543E_February_5_156.wav	3016546538
+\\usrc_dialer\voicemails\24_222C48C0-D3DD-47C6-8F97-A7881A585DA2_January_31_827.wav	9417558946
+
+WBT
+\\usrc_dialer\voicemails\156_1CA06D4E-3347-4669-9500-E5C72A3E8129_January_31_89.wav	3177739663
+\\usrc_dialer\voicemails\156_F7C45E69-7DA5-45A8-A75E-186DA43C0E3C_January_30_750.wav	7722862168
+
+
+
+
+SELECT     TOP (100) PERCENT dbo.tbl_DBF_Cust.Entry_Date, dbo.tbl_DBF_Cust.Cust_ID, dbo.tbl_DBF_Cust.First_Name, dbo.tbl_DBF_Cust.Last_Name, 
+                      dbo.tbl_DBF_Cust.Orig_Ad_Code, dbo.vw_Sales_Orders.Ad_Code, dbo.vw_Sales_Orders.Order_Date, dbo.vw_Sales_Orders.Order_ID, 
+                      SUM(CASE WHEN Item_State = 'CM' THEN dbo.vw_Sales_Orders.Value_Ordered ELSE 0 END) AS Value_Committed, 
+                      SUM(CASE WHEN Item_State = 'PS' THEN dbo.vw_Sales_Orders.Value_Ordered ELSE 0 END) AS Value_PreShipped, 
+                      SUM(CASE WHEN Item_State = 'SH' THEN dbo.vw_Sales_Orders.Value_Ordered ELSE 0 END) AS Value_Shipped, dbo.Get_TheDate(GETDATE()) 
+                      AS Report_Date, dbo.tbl_DBF_Cust.Gross, dbo.tbl_DBF_Cust.Order_Freq
+FROM         dbo.vw_Sales_Orders INNER JOIN
+                      dbo.tbl_DBF_Cust ON dbo.vw_Sales_Orders.Cust_ID = dbo.tbl_DBF_Cust.Cust_ID
+WHERE     (dbo.tbl_DBF_Cust.Orig_Ad_Code LIKE 'DMT%') AND (dbo.vw_Sales_Orders.Ad_Code LIKE 'OB%') AND 
+                      (dbo.vw_Sales_Orders.Order_Date >= dbo.Get_TheDate(GETDATE()) - 7)
+GROUP BY dbo.tbl_DBF_Cust.Entry_Date, dbo.tbl_DBF_Cust.Cust_ID, dbo.tbl_DBF_Cust.First_Name, dbo.tbl_DBF_Cust.Last_Name, 
+                      dbo.vw_Sales_Orders.Order_Date, dbo.vw_Sales_Orders.Order_ID, dbo.tbl_DBF_Cust.Orig_Ad_Code, dbo.vw_Sales_Orders.Ad_Code, 
+                      dbo.tbl_DBF_Cust.Gross, dbo.tbl_DBF_Cust.Order_Freq
+HAVING      (SUM(dbo.vw_Sales_Orders.Value_Ordered) > 0)
+ORDER BY dbo.vw_Sales_Orders.Order_Date
+
+SELECT     
+vw1.Order_Date, 
+tbl1.First_Name, 
+tbl1.Last_Name, 
+vw1.Cust_ID, 
+vw1.Order_ID, 
+vw1.Value_Shipped AS Ttl_Shipped_Value, 
+SUM(CASE WHEN vw1.Stock_Type = 'Bullion' THEN ISNULL(vw1.Value_Shipped, 0) ELSE 0 END) AS Bullion_Sale, 
+SUM(CASE WHEN vw1.Stock_Type <> 'Bullion' THEN ISNULL(vw1.Value_Shipped, 0) ELSE 0 END) AS nonBullion_Sale
+FROM			dbo.vw_Sales_Orders_Item_State_SH vw1
+LEFT OUTER JOIN		dbo.tbl_DBF_Cust tbl1
+ON			vw1.Cust_ID = tbl1.Cust_ID
+WHERE Order_Date >= '1/1/2001'
+AND Order_Date < '1/1/2002'
+GROUP BY vw1.Order_Date, 
+tbl1.First_Name, 
+tbl1.Last_Name, 
+vw1.Cust_ID, 
+vw1.Value_Shipped, 
+vw1.Order_ID
+
+
+
+SELECT     TOP 100 PERCENT 
+Customer_ID, 
+COUNT(Customer_ID) AS Ttl_Order_Count, 
+SUM(ISNULL(Value_Shipped, 0)) AS Ttl_Shipped_Value, 
+                      
+SUM(CASE WHEN Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Ttl_Bullion, 
+SUM(CASE WHEN Item_Type <> 'BULL' OR Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Ttl_Non_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Order_Count, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2001_Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' AND Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2001_Bullion, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' AND Item_Type <> 'BULL' OR Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2001_Non_Bullion, SUM(CASE WHEN Order_Date >= '1/1/2002' AND 
+                      Order_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Order_Count, SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2002_Ttl_Shipped, SUM(CASE WHEN Order_Date >= '1/1/2002' AND 
+                      Order_Date < '1/1/2003' AND Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2002_Bullion, 
+                      SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' AND Item_Type <> 'BULL' OR
+                      Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2002_Non_Bullion, SUM(CASE WHEN Order_Date >= '1/1/2003' AND 
+                      Order_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Order_Count, SUM(CASE WHEN Order_Date >= '1/1/2003' AND 
+                      Order_Date < '1/1/2004' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2003_Ttl_Shipped, SUM(CASE WHEN Order_Date >= '1/1/2003' AND 
+                      Order_Date < '1/1/2004' AND Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2003_Bullion, 
+                      SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' AND Item_Type <> 'BULL' OR
+                      Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2003_Non_Bullion, SUM(CASE WHEN Order_Date >= '1/1/2004' AND 
+                      Order_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Order_Count, SUM(CASE WHEN Order_Date >= '1/1/2004' AND 
+                      Order_Date < '1/1/2005' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2004_Ttl_Shipped, SUM(CASE WHEN Order_Date >= '1/1/2004' AND 
+                      Order_Date < '1/1/2005' AND Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2004_Bullion, 
+                      SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' AND Item_Type <> 'BULL' OR
+                      Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2004_Non_Bullion, SUM(CASE WHEN Order_Date >= '1/1/2005' AND 
+                      Order_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Order_Count, SUM(CASE WHEN Order_Date >= '1/1/2005' AND 
+                      Order_Date < '1/1/2006' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2005_Ttl_Shipped, SUM(CASE WHEN Order_Date >= '1/1/2005' AND 
+                      Order_Date < '1/1/2006' AND Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2005_Bullion, 
+                      SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' AND Item_Type <> 'BULL' OR
+                      Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2005_Non_Bullion, SUM(CASE WHEN Order_Date >= '1/1/2006' AND 
+                      Order_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Order_Count, SUM(CASE WHEN Order_Date >= '1/1/2006' AND 
+                      Order_Date < '1/1/2007' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2006_Ttl_Shipped, SUM(CASE WHEN Order_Date >= '1/1/2006' AND 
+                      Order_Date < '1/1/2007' AND Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2006_Bullion, 
+                      SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' AND Item_Type <> 'BULL' OR
+                      Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2006_Non_Bullion, 
+                      (CASE WHEN (SUM(CASE WHEN Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 AND (SUM(CASE WHEN Item_Type <> 'BULL' OR
+                      Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END)) 
+                      = 0 THEN 'B1' WHEN (SUM(CASE WHEN Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END)) = 0 AND 
+                      (SUM(CASE WHEN Item_Type <> 'BULL' OR
+                      Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END)) 
+                      > 0 THEN 'B2' WHEN (SUM(CASE WHEN Item_Type = 'BULL' THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 AND 
+                      (SUM(CASE WHEN Item_Type <> 'BULL' OR
+                      Item_Type IS NULL THEN isnull(Value_Shipped, 0) ELSE 0 END)) > 0 THEN 'B3' ELSE 'NB ' END) AS Buyer_Type
+FROM         dbo.vw_Sales_Orders_by_Item_State
+WHERE     (item_state IN ('SH', 'PS'))
+GROUP BY Customer_ID
+ORDER BY Customer_ID
+
+SELECT     TOP 100 PERCENT 
+dbo.vw_First_Sales_02_Order_Date.Entry_Date, 
+dbo.vw_First_Sales_02_Order_Date.Cust_ID, 
+dbo.vw_First_Sales_02_Order_Date.First_Name, 
+dbo.vw_First_Sales_02_Order_Date.Last_Name, 
+dbo.vw_First_Sales_02_Order_Date.Ttl_Order_Count, 
+dbo.vw_First_Sales_02_Order_Date.First_Order_Date, 
+dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch, 
+dbo.vw_First_Sales_02_Order_Date.First_Order_ID, 
+dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code, 
+dbo.vw_Sales_Orders_Shipped.Ttl_Shipped_Value AS Initial_Ttl_Shipped_Value, 
+
+dbo.vw_Sales_Orders_Shipped.Bullion_Sale AS Initial_Bullion_Sale, 
+dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale AS Initial_Non_Bullion_Sale, 
+
+
+(CASE 
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_Bullion_Shipped > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_nonBullion_Shipped = 0 THEN 'B1' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_First_Sales_02_Order_Date.Init_Bullion_Shipped > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_nonBullion_Shipped = 0 THEN 'B1c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_Bullion_Shipped = 0 AND dbo.vw_First_Sales_02_Order_Date.Init_nonBullion_Shipped > 0 THEN 'B2' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_First_Sales_02_Order_Date.Init_Bullion_Shipped = 0 AND dbo.vw_First_Sales_02_Order_Date.Init_nonBullion_Shipped > 0 THEN 'B2c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_Bullion_Shipped > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_nonBullion_Shipped > 0 THEN 'B3' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_First_Sales_02_Order_Date.Init_Bullion_Shipped > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_nonBullion_Shipped > 0 THEN 'B3c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch = 0 THEN 'GR_B0' 
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 THEN 'GR' 
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_Bullion_Shipped > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_nonBullion_Shipped = 0 THEN 'GR_B1' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_First_Sales_02_Order_Date.Init_Bullion_Shipped > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_nonBullion_Shipped = 0 THEN 'GR_B1c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_Bullion_Shipped = 0 AND dbo.vw_First_Sales_02_Order_Date.Init_nonBullion_Shipped > 0 THEN 'GR_B2' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_First_Sales_02_Order_Date.Init_Bullion_Shipped = 0 AND dbo.vw_First_Sales_02_Order_Date.Init_nonBullion_Shipped > 0 THEN 'GR_B2c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_Bullion_Shipped > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_nonBullion_Shipped > 0 THEN 'GR_B3' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Ship_List = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_First_Sales_02_Order_Date.Init_Bullion_Shipped > 0 AND dbo.vw_First_Sales_02_Order_Date.Init_nonBullion_Shipped > 0 THEN 'GR_B3c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 THEN 'CO' ELSE 'Pending' END) AS Initial_Buyer_Type, 
+
+
+dbo.tbl_Ad_Codes.campaign
+
+(CASE 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale = 0 
+THEN 'B1' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale = 0 
+THEN 'B1c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale = 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 
+THEN 'B2' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale = 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 
+THEN 'B2c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 
+THEN 'B3' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 
+THEN 'B3c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Ttl_Shipped_Value IS NULL 
+THEN 'GR' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Ttl_Shipped_Value = 0 
+THEN 'GR' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch = 0 AND dbo.vw_Sales_Orders_Shipped.Ttl_Shipped_Value = 0 
+THEN 'GR_B0' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale = 0 
+THEN 'GR_B1' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale = 0 
+THEN 'GR_B1c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale = 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 
+THEN 'GR_B2' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale = 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 
+THEN 'GR_B2c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 
+THEN 'GR_B3' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 
+THEN 'GR_B3c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Ttl_Shipped_Value IS NULL THEN 'CO' ELSE 'Pending' END) AS Initial_Buyer_Type, 
+dbo.tbl_Ad_Codes.campaign
+FROM         dbo.tbl_Ad_Codes RIGHT OUTER JOIN
+                      dbo.vw_First_Sales_02_Order_Date ON dbo.tbl_Ad_Codes.Ad_Code = dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code LEFT OUTER JOIN
+                      dbo.vw_Sales_Orders_Shipped ON dbo.vw_First_Sales_02_Order_Date.First_Order_ID = dbo.vw_Sales_Orders_Shipped.Order_ID
+
+Function Main()
+
+             Dim obj_ExcelWB
+	Dim str_FileName, str_FilePathRoot
+	
+	Set obj_ExcelWB=CreateObject("Excel.Application")
+
+'**************************************************************************************
+'	 Variables used to call the Condenser
+'**************************************************************************************
+	str_FileName = "USRCBR_Daily_Inbound_DMT_Template.xls"
+	str_FilePathRoot= "\\Usrc_fileserver\SQL_Server\Client_USMR\Work\"
+	str_FilePathNew="\\Usrc_fileserver\SQL_Server\Client_USMR\Reports\"
+
+'**************************************************************************************
+
+	obj_ExcelWB.Workbooks.Open str_FilePathRoot & str_FileName 
+	
+	obj_ExcelWB.Run  "ThisWorkbook.USRCBR_Daily_Inbound_DMT_Report_Condenser"
+
+	obj_ExcelWB.Quit
+
+	Set obj_ExcelWB=nothing
+
+	Main = DTSTaskExecResult_Success
+
+End Function
+
+
+
+
+1997A1PR69DCAM	2
+1997A2PR69DCAM	2
+1997A3PR69DCAM	2
+1998A3PR70DCAM	2
+1998A4PR69DCAM	2
+1998A4PR70DCAM	2
+2001A4PR69DCAM	2
+2001A4PR70DCAM	2
+2006GAEMS70SET	2
+RC1904$20LIBMS66	2
+
+
+
+SELECT     StockNumber, COUNT(ID) AS Count
+FROM         MasterTable
+GROUP BY StockNumber
+HAVING      (COUNT(ID) > 1)
+ORDER BY Count DESC
+
+
+http://www.youtube.com/watch?v=PwK5_LciOlQ
+
+
+SELECT     
+Stock_Description, 
+Unit_Retail_Value, 
+Stock_Count, 
+Year, 
+ISNULL(Mint, '') AS Mint, 
+Denomination, 
+Type, 
+Condition, 
+Grade, 
+TopPick
+FROM         vw_Daily_Current_Inventory
+ORDER BY TopPick DESC, Stock_Description
+
+
+
+
+
+Function Main()
+
+             Dim obj_ExcelWB
+	Dim str_FileName, str_FilePathRoot
+	
+	Set obj_ExcelWB=CreateObject("Excel.Application")
+
+'**************************************************************************************
+'	 Variables used to call the Condenser
+'**************************************************************************************
+	str_FileName = "USRCBR_Daily_Authorizations_Template.xls"
+	str_FilePathRoot= "\\Usrc_fileserver\SQL_Server\Client_USMR\Work\"
+	str_FilePathNew="\\Usrc_fileserver\SQL_Server\Client_USMR\Reports\"
+
+'**************************************************************************************
+
+	obj_ExcelWB.Workbooks.Open str_FilePathRoot & str_FileName 
+	
+	obj_ExcelWB.Run  "ThisWorkbook.USRCBR_Daily_Authorizations_Report_Condenser"
+
+	obj_ExcelWB.Quit
+
+	Set obj_ExcelWB=nothing
+
+	Main = DTSTaskExecResult_Success
+
+End Function
+
+
+
+
+
+SELECT     TOP (100) PERCENT dbo.tbl_DBF_Cust.Entry_Date, dbo.tbl_DBF_Cust.Cust_ID, dbo.tbl_DBF_Cust.First_Name, dbo.tbl_DBF_Cust.Last_Name, 
+                      COUNT(dbo.tbl_DBF_CMS.Order_Date) AS Ttl_Order_Count, MIN(dbo.tbl_DBF_CMS.Order_Date) AS First_Order_Date, MIN(dbo.tbl_DBF_CMS.Order_ID) 
+                      AS First_Order_ID, dbo.tbl_DBF_Cust.Orig_Ad_Code
+FROM         dbo.tbl_DBF_CMS RIGHT OUTER JOIN
+                      dbo.tbl_DBF_Cust ON dbo.tbl_DBF_CMS.Cust_ID = dbo.tbl_DBF_Cust.Cust_ID
+GROUP BY dbo.tbl_DBF_Cust.Cust_ID, dbo.tbl_DBF_Cust.Last_Name, dbo.tbl_DBF_Cust.First_Name, dbo.tbl_DBF_Cust.Orig_Ad_Code, 
+                      dbo.tbl_DBF_Cust.Entry_Date
+HAVING      (MIN(dbo.tbl_DBF_CMS.Order_Date) IS NOT NULL)
+ORDER BY dbo.tbl_DBF_Cust.Entry_Date

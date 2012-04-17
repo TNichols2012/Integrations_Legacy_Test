@@ -1,0 +1,79 @@
+SELECT     
+number AS Stock_ID, 
+[desc] AS Stock_Desc, 
+uncost AS Stock_Cost, 
+price1 AS Stock_Price, 
+assoc AS Stock_Assoc, 
+(CASE	
+WHEN assoc = 'BULL' THEN 'Bullion' 
+WHEN assoc = 'PRE-33' THEN 'Pre-1933' 
+WHEN assoc = 'PRE33' THEN 'Pre-1933' 
+WHEN assoc = 'RC' THEN 'Pre-1933'
+WHEN assoc LIKE '%A[1234]M%' THEN 'Mint' 
+WHEN assoc LIKE '%A[1234]P%' THEN 'Proof' 
+WHEN assoc LIKE '%C[1234]M%' OR assoc LIKE '%C[1234]P%' THEN 'Platinum' 
+WHEN assoc LIKE '%D[1234]M%' OR assoc LIKE '%D[1234]P%' THEN 'Platinum' 
+WHEN assoc LIKE '%P[90]' AND number LIKE 'CMM%' THEN 'Commemorative Proof' 
+WHEN assoc LIKE '%P[1234567890]' AND number LIKE 'COMM%' THEN 'Commemorative Proof' 
+WHEN assoc LIKE '%M[1234567890]' AND number LIKE 'CMM%' THEN 'Commemorative' 
+WHEN assoc LIKE '%M[1234567890]' AND number LIKE 'COMM%' THEN 'Commemorative' 
+WHEN assoc ='' AND number LIKE 'COMM%' AND [desc] LIKE '%PR%' THEN 'Commemorative Proof' 
+WHEN assoc ='' AND number LIKE 'COMM%' THEN 'Commemorative' 
+WHEN assoc ='' AND number LIKE 'CMM%' AND [desc] LIKE '%PR%' THEN 'Commemorative Proof' 
+WHEN assoc ='' AND number LIKE 'CMM%' THEN 'Commemorative' 
+WHEN assoc ='' AND number LIKE 'RC%' THEN 'Pre-1933' 
+WHEN assoc ='' AND number LIKE 'R%' THEN 'Pre-1933' 
+WHEN assoc ='' AND number LIKE 'WPRE%' THEN 'Pre-1933' 
+WHEN assoc ='' AND number LIKE 'ZPRE%' THEN 'Pre-1933' 
+WHEN assoc ='' AND number LIKE 'SLV%MS%' THEN 'Mint' 
+WHEN assoc ='' AND number LIKE 'SLV%PR%' THEN 'Proof' 
+WHEN assoc ='' AND number LIKE 'SLV%' THEN 'Bullion' 
+WHEN assoc ='' AND number LIKE 'WSLV%' THEN 'Bullion' 
+WHEN assoc ='' AND ([desc] LIKE '%Gold%Set%MS%' OR [desc] LIKE '%GAE%Set%MS') THEN 'Mint' 
+WHEN assoc ='' AND ([desc] LIKE '%Gold%Set%PR%' OR [desc] LIKE '%GAE%Set%PR') THEN 'Proof' 
+
+WHEN assoc ='' AND ([desc] LIKE '%Gold%PR%Set%' OR [desc] LIKE '%GAE%PR%Set%') THEN 'Proof' 
+WHEN assoc ='' AND ([desc] LIKE '%Proof%$50 Gold%' OR [desc] LIKE '%Proof%$50 GAE%') THEN 'Proof' 
+WHEN assoc ='' AND ([desc] LIKE '%$50 Gold%Proof%' OR [desc] LIKE '%$50 Gold%PR%' OR [desc] LIKE '%$50 GAE%Proof%' OR [desc] LIKE '%$50 GAE%PR%') THEN 'Proof' 
+WHEN assoc ='' AND ([desc] LIKE '%$50%Buff%Proof%' OR [desc] LIKE '%$50%Buff%PR%') THEN 'Proof' 
+WHEN assoc ='' AND ([desc] LIKE '%$25 Gold%Proof%' OR [desc] LIKE '%$25 Gold%PR%' OR [desc] LIKE '%$25 GAE%Proof%' OR [desc] LIKE '%$25 GAE%PR%') THEN 'Proof' 
+WHEN assoc ='' AND ([desc] LIKE '%$10 Gold%Proof%' OR [desc] LIKE '%$10 Gold%PR%' OR [desc] LIKE '%$10 GAE%Proof%' OR [desc] LIKE '%$10 GAE%PR%') THEN 'Proof' 
+WHEN assoc ='' AND ([desc] LIKE '%$5 Gold%Proof%' OR [desc] LIKE '%$5 Gold%PR%' OR [desc] LIKE '%$5 GAE%Proof%' OR [desc] LIKE '%$5 GAE%PR%') THEN 'Proof' 
+WHEN assoc ='' AND ([desc] LIKE '%Gold%$50%Proof%' OR [desc] LIKE '%Gold%$50%PR%' OR [desc] LIKE '%GAE%$50%Proof%' OR [desc] LIKE '%GAE%$50%PR%') THEN 'Proof' 
+WHEN assoc ='' AND ([desc] LIKE '%Gold%$25%Proof%' OR [desc] LIKE '%Gold%$25%PR%' OR [desc] LIKE '%GAE%$25%Proof%' OR [desc] LIKE '%GAE%$25%PR%') THEN 'Proof' 
+WHEN assoc ='' AND ([desc] LIKE '%Gold%$10%Proof%' OR [desc] LIKE '%Gold%$10%PR%' OR [desc] LIKE '%GAE%$10%Proof' OR [desc] LIKE '%GAE%$10%PR') THEN 'Proof' 
+WHEN assoc ='' AND ([desc] LIKE '%Gold%$5%Proof%' OR [desc] LIKE '%Gold%$5%PR%' OR [desc] LIKE '%GAE%$5%Proof' OR [desc] LIKE '%GAE%$5%PR') THEN 'Proof' 
+
+WHEN assoc ='' AND ([desc] LIKE '%Gold%Set%' OR [desc] LIKE '%GAE%Set%') THEN 'Mint' 
+WHEN assoc ='' AND ([desc] LIKE '%$50 Gold%MS%' OR [desc] LIKE '%$50 GAE%MS%') THEN 'Mint' 
+WHEN assoc ='' AND ([desc] LIKE '%$50%Buff%MS%') THEN 'Mint' 
+WHEN assoc ='' AND ([desc] LIKE '%$25 Gold%MS%' OR [desc] LIKE '%$25 GAE%MS%') THEN 'Mint' 
+WHEN assoc ='' AND ([desc] LIKE '%$10 Gold%MS%' OR [desc] LIKE '%$10 GAE%MS%') THEN 'Mint' 
+WHEN assoc ='' AND ([desc] LIKE '%$5 Gold%MS%' OR [desc] LIKE '%$5 GAE%MS%') THEN 'Mint' 
+
+WHEN assoc ='' AND ([desc] LIKE '%$50 Gold%' OR [desc] LIKE '%$50 GAE%') THEN 'Bullion' 
+WHEN assoc ='' AND ([desc] LIKE '%$25 Gold%' OR [desc] LIKE '%$25 GAE%') THEN 'Bullion' 
+WHEN assoc ='' AND ([desc] LIKE '%$10 Gold%' OR [desc] LIKE '%$10 GAE%') THEN 'Bullion' 
+WHEN assoc ='' AND ([desc] LIKE '%$5 Gold%' OR [desc] LIKE '%$5 GAE%') THEN 'Bullion' 
+
+WHEN assoc ='' AND ([desc] LIKE '%Plat%Set%MS%' OR [desc] LIKE '%PAE%Set%MS') THEN 'Platinum' 
+WHEN assoc ='' AND ([desc] LIKE '%Plat%Set%PR%' OR [desc] LIKE '%PAE%Set%PR') THEN 'Platinum' 
+WHEN assoc ='' AND ([desc] LIKE '%Plat%Set%' OR [desc] LIKE '%PAE%Set%') THEN 'Platinum' 
+
+WHEN assoc ='' AND ([desc] LIKE '%$100 Plat%MS%' OR [desc] LIKE '%$100 PAE%MS%') THEN 'Platinum' 
+WHEN assoc ='' AND ([desc] LIKE '%$50 Plat%MS%' OR [desc] LIKE '%$50 PAE%MS%') THEN 'Platinum' 
+WHEN assoc ='' AND ([desc] LIKE '%$25 Plat%MS%' OR [desc] LIKE '%$25 PAE%MS%') THEN 'Platinum' 
+WHEN assoc ='' AND ([desc] LIKE '%$10 Plat%MS%' OR [desc] LIKE '%$10 PAE%MS%') THEN 'Platinum' 
+
+WHEN assoc ='' AND ([desc] LIKE '%Plat%$100%Proof%' OR [desc] LIKE '%PAE%$100%Proof%') THEN 'Platinum' 
+WHEN assoc ='' AND ([desc] LIKE '%Plat%$50%Proof%' OR [desc] LIKE '%PAE%$50%Proof%') THEN 'Platinum' 
+WHEN assoc ='' AND ([desc] LIKE '%Plat%$25%Proof%' OR [desc] LIKE '%PAE%$25%Proof') THEN 'Platinum' 
+WHEN assoc ='' AND ([desc] LIKE '%Plat%$10%Proof%' OR [desc] LIKE '%PAE%$10%Proof') THEN 'Platinum' 
+
+WHEN assoc ='' AND ([desc] LIKE '%$100 Plat%' OR [desc] LIKE '%$100 PAE%') THEN 'Platinum' 
+WHEN assoc ='' AND ([desc] LIKE '%$50 Plat%' OR [desc] LIKE '%$50 PAE%') THEN 'Platinum' 
+WHEN assoc ='' AND ([desc] LIKE '%$25 Plat%' OR [desc] LIKE '%$25 PAE%') THEN 'Platinum' 
+WHEN assoc ='' AND ([desc] LIKE '%$10 Plat%' OR [desc] LIKE '%$10 PAE%') THEN 'Platinum' 
+ELSE NULL 
+END) AS Stock_Type
+FROM         Results_DBF_Stock

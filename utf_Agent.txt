@@ -1,0 +1,37 @@
+--DECLARE @in_Call_Table_ID varchar(25) = '94470'
+
+CREATE FUNCTION ufn_Agent (@in_Call_Table_ID varchar(25)) 
+RETURNS @rtn_Table TABLE
+(
+Call_Table_ID varchar(25), 
+Sales_Rep_Name varchar(50),
+Talk_Time_Seconds numeric(8,0)
+)
+AS 
+BEGIN
+
+DECLARE @tbl_Agent TABLE (
+Call_Table_ID varchar(25), 
+Sales_Rep_Name varchar(50),
+Talk_Time_Seconds numeric(8,0)
+)
+
+INSERT INTO @tbl_Agent
+SELECT TOP 1
+CallTableID,
+PortName,
+MAX(TalkTimeSeconds) AS Talk_Time
+FROM dbo.tbl_ShoreTel_Connect
+WHERE (PortName LIKE '%(%)%')
+AND  (PartyIDLastName LIKE '%(%)%')
+AND (CallTableID=@in_Call_Table_ID)
+GROUP BY  CallTableID, PortName
+ORDER BY MAX(TalkTimeSeconds) DESC
+
+
+INSERT INTO @rtn_Table
+SELECT Call_Table_ID, Sales_Rep_Name, Talk_Time_Seconds FROM @tbl_Agent
+
+RETURN
+
+END

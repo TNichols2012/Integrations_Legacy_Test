@@ -1,0 +1,17 @@
+CREATE PROCEDURE [dbo].[usp_Show_Report] (@Report_Name varchar(25), @in_Date datetime= null)
+AS
+BEGIN
+		SET NOCOUNT ON;
+
+IF (@in_Date IS NULL)
+	SET @in_Date=CONVERT(varchar, dbo.Get_TheDate(GetDate()), 101)
+
+IF (@in_Date IS NOT NULL)
+	SET @in_Date=CONVERT(varchar, @in_Date, 101)
+
+		SELECT Report_Content
+		FROM tbl_Reports
+		WHERE Report_Name = @Report_Name
+		AND Run_Date = @in_Date
+
+END

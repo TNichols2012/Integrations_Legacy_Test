@@ -1,0 +1,248 @@
+USE [Data_Warehouse]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_Rollover_Assignment_Groups_C]    Script Date: 11/08/2011 10:31:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[usp_Rollover_Assignment_Groups_C]
+AS
+BEGIN
+--==============================================================================================
+-- G E N E R A T E   R O L L O V E R   G R O U P I N G   L I S T  (Qualified Leads to Roll)
+--==============================================================================================
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_Rollover_Group_List_C'
+		)
+DROP TABLE tbl_Rollover_Group_List_C
+
+SELECT --TOP 5
+IDENTITY(int, 1,1) AS Index_ID,
+tMC.Entry_Date,
+tMC.Cust_ID,
+tMC.First_Name, 
+tMC.Last_Name, 
+tMC.Gross, 
+dbo.Check_New_Lead(tMC.Cust_ID) AS New_Lead,
+dbo.ufn_Business_Days_Between_Dates (tMC.Entry_Date, GETDATE()) AS Business_Days,
+tST.Category,
+tST.[Site],
+tST.[Name], 
+tMC.Sales_ID, 
+vMCH.Change_Date,
+null AS Assign_To
+INTO tbl_Rollover_Group_List_C
+FROM tbl_MOM_Cust tMC
+INNER JOIN tbl_Sales_Teams tST
+ON tMC.Sales_ID = tST.[Login]
+INNER JOIN Results_MOM_Cust rMC
+ON rMC.CUSTNUM=tMC.Cust_ID
+LEFT JOIN vw_MOM_Cust_History vMCH
+ON tMC.Cust_ID = vMCH.Cust_ID
+WHERE tMC.Last_Ship_Date <> '2000-01-01'
+--AND tMC.Last_Ship_Date >= '2010-07-18'
+AND tMC.Sales_ID IS NOT NULL
+AND tMC.Sales_ID <> 'ZZZ'
+AND tST.Category = 'Inbound'
+AND (tMC.Address_Type LIKE 'B%' OR tMC.Address_Type LIKE 'P%' OR tMC.Address_Type LIKE 'O%')
+AND rMC.COMMENT NOT LIKE '%Do%Not%Roll%'
+AND rMC.COMMENT2 NOT LIKE '%Do%Not%Roll%'
+AND rMC.NOFAX = 0
+AND vMCH.Change_Date >= '2010-07-18'
+--AND dbo.Check_New_Lead(tMC.Cust_ID) = 'Yes'
+AND dbo.ufn_Business_Days_Between_Dates (vMCH.Change_Date, GETDATE()) > 15
+AND tMC.Gross <= 0
+
+ORDER BY tMC.Gross DESC  
+
+CREATE CLUSTERED INDEX idx_tbl_Rollover_Group_List_C_Index_ID
+ON tbl_Rollover_Group_List_C (Index_ID)
+
+--SELECT * FROM tbl_Rollover_Group_List_C
+
+ALTER TABLE tbl_Rollover_Group_List_C ALTER COLUMN Assign_To varchar(3)
+
+--==============================================================================================
+-- A S S I G N   R O L L O V E R S   T O   G R O U P   L I S T   C  (Qualified Leads to Roll)
+--==============================================================================================
+DECLARE @int_Increment1 int
+DECLARE @tmp_Count int
+DECLARE @int_Start_Here int
+
+SET @tmp_Count = (SELECT COUNT(*) FROM tbl_Rollover_Group_List_C)
+SET @int_Increment1 = (SELECT COUNT(*) FROM tbl_Rollover_Group_Rank_A) 
+SET @int_Start_Here = (SELECT TOP 1 Grouping_Rank FROM tbl_Rollover_Group_Rank_A WHERE Grouping_Status = 'Here')
+
+--SELECT @tmp_Count AS tbl_Rollover_Group_List_C_Count_of_Leads_To_Roll
+--SELECT @int_Increment1 AS tbl_Rollover_Group_Rank_A_Count_of_Sales_Reps_to_Get_Leads
+--SELECT @int_Start_Here AS Here_On_The_Rollover_Group_Rank_A_List
+
+IF @tmp_Count > 0 
+	BEGIN
+		DECLARE @First_Pass int
+		DECLARE @First_Index int	
+		DECLARE @Second_Pass int
+		DECLARE @Second_Index int	
+		DECLARE @New_Start int
+		
+		SET @First_Pass = @int_Start_Here
+		SET @First_Index = 1
+		
+		IF @First_Pass <> 1
+			SET @Second_Pass = 1
+		ELSE 
+			SET @Second_Pass = 0
+		
+		SET @Second_Index = @int_Increment1 - @int_Start_Here + 2
+
+		UPDATE tbl_Rollover_Group_List_C
+		SET
+		Assign_To = Null 
+
+		WHILE @First_Index <= @tmp_Count 
+				BEGIN
+					WHILE  @First_Pass <= @int_Increment1
+						BEGIN
+							UPDATE tbl_Rollover_Group_List_C
+							SET Assign_To = @First_Pass
+							WHERE Index_ID = @First_Index
+							AND Assign_To IS NULL
+							
+							SET	@First_Pass = @First_Pass + 1
+							SET @First_Index = @First_Index + 1			
+						END -- @First_Pass <= @int_Increment1
+			
+					SET @First_Index = @First_Index + @int_Start_Here - 1
+					SET @First_Pass = @int_Start_Here
+				END -- WHILE @First_Index <= @tmp_Count 
+								
+		WHILE @Second_Index <= @tmp_Count 
+			BEGIN
+				WHILE  @Second_Pass < @int_Start_Here
+					BEGIN
+						UPDATE tbl_Rollover_Group_List_C
+						SET Assign_To = @Second_Pass
+						WHERE Index_ID = @Second_Index
+						AND Assign_To IS NULL
+						
+						SET	@Second_Pass = @Second_Pass + 1
+						SET @Second_Index = @Second_Index + 1			
+					END --  @Second_Pass < @int_Start_Here
+		
+				SET @Second_Index = @Second_Index + @int_Increment1 - @int_Start_Here + 1
+				
+				IF @First_Pass <> 1
+					SET @Second_Pass = 1
+				ELSE 
+					SET @Second_Pass = 0
+			END -- WHILE @Second_Index <= @tmp_Count 
+
+		SET @New_Start = (SELECT Assign_To FROM tbl_Rollover_Group_List_C WHERE Index_ID IN (SELECT MAX(Index_ID) AS Last_Rep FROM tbl_Rollover_Group_List_C))
+		
+		--ALTER TABLE tbl_Rollover_Group_List_C ALTER COLUMN Assign_To varchar(3)
+
+		UPDATE tbl_Rollover_Group_List_C 
+		SET 
+		Assign_To = tbl_Rollover_Group_Rank_A.Sales_ID
+		FROM tbl_Rollover_Group_Rank_A 
+		WHERE tbl_Rollover_Group_List_C.Assign_To = CONVERT(varchar(10), tbl_Rollover_Group_Rank_A.Grouping_Rank)
+
+		IF (@New_Start + 1) > @int_Increment1
+			BEGIN
+				SET @New_Start = 1
+
+				UPDATE tbl_Rollover_Group_Rank_A
+				SET 
+				Grouping_Status = Null 
+						
+				UPDATE tbl_Rollover_Group_Rank_A
+				SET 
+				Grouping_Status = 'Here'
+				WHERE Grouping_Rank = @New_Start
+		
+				UPDATE tbl_Sales_Teams
+				SET
+				Grouping_Status = Null 
+			END
+		ELSE 
+			BEGIN
+				SET @New_Start = @New_Start + 1
+				
+				UPDATE tbl_Rollover_Group_Rank_A
+				SET 
+				Grouping_Status = Null 
+				
+				UPDATE tbl_Rollover_Group_Rank_A
+				SET 
+				Grouping_Status = 'Here'
+				WHERE Grouping_Rank = @New_Start
+				
+				UPDATE tbl_Sales_Teams
+				SET
+				Rollover_Status = Null 
+			END
+	END	-- IF @tmp_Count > 0 
+ELSE -- IF @tmp_Count > 0 
+	BEGIN
+		ALTER TABLE tbl_Rollover_Group_List_A ALTER COLUMN Assign_To varchar(3)
+	END
+	
+--SELECT * FROM tbl_Rollover_Group_List_C
+	
+INSERT INTO tbl_Rollover_Group_List (Entry_Date, Cust_ID, First_Name, Last_Name, Gross, New_Lead, Business_Days, Category, [Site], [Name], Sales_ID, Assign_To, Assigned_Rep, Comment1, Comment2)
+SELECT 
+CONVERT(date, tRGLa.Entry_Date) AS Entry_Date,
+CONVERT(varchar(15), tRGLa.Cust_ID) AS Cust_ID,
+tRGLa.First_Name,
+tRGLa.Last_Name,
+tRGLa.Gross, 
+tRGLa.New_Lead,
+tRGLa.Business_Days,
+tRGLa.Category,
+tRGLa.[Site],
+tRGLa.[Name],
+tRGLa.Sales_ID,
+CONVERT(varchar(3), tRGLa.Assign_To) AS Assign_To,
+tST.[Name] AS Assigned_Rep,
+CONVERT(varchar(50), rMC.COMMENT) AS Comment1, 
+CONVERT(varchar(60), rMC.COMMENT2) AS Comment2
+FROM tbl_Rollover_Group_List_C tRGLa
+INNER JOIN Results_MOM_Cust rMC
+ON tRGLa.Cust_ID=rMC.CUSTNUM
+LEFT JOIN tbl_Sales_Teams tST
+ON tRGLa.Assign_To = tST.[Login]
+
+--==============================================================================================
+-- A S S I G N   R O L L O V E R S   T O   G R O U P   L I S T   (SIMS Rollover Reps Leads to Roll)
+--==============================================================================================
+
+INSERT INTO tbl_Rollover_Group_List (Entry_Date, Cust_ID, First_Name, Last_Name, Gross, New_Lead, Business_Days, Category, Site, Name, Sales_ID, Assign_To, Assigned_Rep, Comment1, Comment2)
+SELECT 
+tMC.Entry_Date,
+tMC.Cust_ID, 
+tMC.First_Name,
+tMC.Last_Name,
+tMC.Gross,
+dbo.Check_New_Lead(tMC.Cust_ID) AS New_Lead,
+0 AS Business_Days,
+'SIMS_Rollovers' AS Category, 
+'' AS [Site],
+IB_Sales_Rep_Name AS [Name],
+IB_Sales_ID AS Sales_ID,
+tVL.Rollover_Rep AS Assign_To,
+tST.[Name] AS Assigned_Rep,
+'' AS Comment1,
+'' AS Comment2
+FROM tbl_Verification_List tVL
+LEFT JOIN tbl_MOM_Cust tMC
+ON tVL.Cust_ID = tMC.Cust_ID
+LEFT JOIN tbl_Sales_Teams tST
+ON tVL.Rollover_Rep = tST.[Login]
+WHERE tVL.Rollover_Rep IS NOT NULL
+
+--SELECT * FROM tbl_Rollover_Group_List
+
+END -- PROCEDURE dbo.usp_Rollover_Assignment_Groups_C
+

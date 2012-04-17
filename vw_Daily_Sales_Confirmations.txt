@@ -1,0 +1,8 @@
+SELECT     TOP (100) PERCENT 
+Daily_Date, Username, 
+SUM(CASE WHEN CallType IN ('Inbound', 'Outbound') THEN Retail ELSE 0 END) AS Ttl_Sales_Confirmed, 
+SUM(CASE WHEN CallType = 'Inbound' THEN Retail ELSE 0 END) AS IB_Sales_Confirmed, 
+SUM(CASE WHEN CallType = 'Outbound' THEN Retail ELSE 0 END) AS OB_Sales_Confirmed
+FROM         dbo.tbl_Sales_Quotes
+GROUP BY Daily_Date, Username
+ORDER BY Daily_Date DESC

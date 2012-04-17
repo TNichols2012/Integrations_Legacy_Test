@@ -1,0 +1,216 @@
+USE [Data_Warehouse]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_Bucket_Leads_Called]    Script Date: 11/10/2011 09:03:04 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--GO
+--CREATE PROCEDURE [dbo].[usp_PHP_Sales_Performance] (
+--@dt_Start_Time DATETIME,
+--@dt_Stop_Time DATETIME
+--)
+--AS
+--BEGIN
+
+DECLARE @str_Sales_ID VARCHAR(15) = '%'
+DECLARE @str_Sales_Manager VARCHAR(50) = '%'
+DECLARE @str_Super_Team VARCHAR(50) = '%'
+DECLARE @str_Site VARCHAR(15) = '%'
+
+DECLARE @dt_Start_Time DATETIME = dbo.Get_TheDate(GETDATE())
+--DECLARE @dt_Start_Time DATETIME = dbo.Get_TheMonth(GETDATE())
+DECLARE @dt_Stop_Time DATETIME = dbo.Get_TheDate(GETDATE()+1)
+
+CREATE TABLE #OB_Buckets (
+Sales_Rep VARCHAR(50),
+Sales_ID VARCHAR(15),
+IB_Calls NUMERIC(8,0) DEFAULT(0),
+IB_Talk_Time_Seconds NUMERIC(18,0) DEFAULT(0), 
+IB_Talk_Time VARCHAR(15) DEFAULT(''),
+OB_Dials NUMERIC(8,0) DEFAULT(0), 
+OB_Lead_Dials NUMERIC(8,0) DEFAULT(0), 
+OB_Lead_Presentations NUMERIC(8,0) DEFAULT(0), 
+OB_Lead_Presentations_Rate NUMERIC(8, 4) DEFAULT(0),
+OB_NonLead_Dials NUMERIC(8,0) DEFAULT(0),
+OB_Bucket_Dials NUMERIC(8,0) DEFAULT(0), 
+OB_Other_Lead_Dials NUMERIC(8,0) DEFAULT(0), 
+OB_Other_Dials NUMERIC(8,0) DEFAULT(0),
+OB_Talk_Time_Seconds NUMERIC(18,0) DEFAULT(0),
+OB_Talk_Time VARCHAR(15) DEFAULT(''),
+CC_Calls NUMERIC(8,0) DEFAULT(0),
+CC_Talk_Time_Seconds NUMERIC(18,0) DEFAULT(0), 
+CC_Talk_Time VARCHAR(15) DEFAULT(''),
+VM_Calls NUMERIC(8,0) DEFAULT(0),
+VM_Talk_Time_Seconds NUMERIC(18,0) DEFAULT(0), 
+VM_Talk_Time VARCHAR(15) DEFAULT('')
+)
+
+INSERT INTO #OB_Buckets (Sales_Rep, Sales_ID, IB_Calls, IB_Talk_Time_Seconds, OB_Dials, OB_Lead_Dials, OB_Lead_Presentations, OB_NonLead_Dials, OB_Other_Dials, OB_Talk_Time_Seconds, CC_Calls, CC_Talk_Time_Seconds, VM_Calls, VM_Talk_Time_Seconds )
+SELECT  
+tST.[Name] AS Sales_Rep,
+tST.[Login] AS Sales_ID,
+SUM (CASE WHEN tSCR.CallType = 3 AND tSCR.PoolFK <> 408 AND tSCR.Voice_Mail_Box IS NULL THEN 1 ELSE 0 END ) AS IB_Calls,
+SUM (CASE WHEN tSCR.CallType = 3 AND tSCR.PoolFK <> 408 AND tSCR.Voice_Mail_Box IS NULL THEN tSCR.Call_Talk_Time ELSE 0 END ) AS IB_Talk_Time_Seconds,
+SUM (CASE WHEN tSCR.CallType = 4 THEN 1 ELSE 0 END ) AS OB_Dials,
+SUM (CASE WHEN tSCR.CallType = 4 AND tSCRO.isLoadbook_Call = 'Yes' THEN 1 ELSE 0 END ) AS OB_Lead_Dials,
+SUM (CASE WHEN tSCR.CallType = 4 AND tSCRO.isLoadbook_Call = 'Yes' AND tSCR.Call_Talk_Time >= 120 THEN 1 ELSE 0 END ) AS OB_Lead_Presentations,
+SUM (CASE WHEN tSCR.CallType = 4 AND tSCRO.isLoadbook_Call <> 'Yes' AND tBL.Bucket_Description IS NULL THEN 1 ELSE 0 END ) AS OB_NonLead_Dials,
+SUM (CASE WHEN tSCR.CallType = 4 AND tSCRO.isLoadbook_Call = 'No' THEN 1 ELSE 0 END ) AS OB_Other_Dials,
+SUM (CASE WHEN tSCR.CallType = 4 THEN tSCR.Call_Talk_Time ELSE 0 END ) AS OB_Talk_Time_Seconds,
+SUM (CASE WHEN tSCR.CallType = 3 AND tSCR.PoolFK = 408 AND tSCR.Voice_Mail_Box IS NULL THEN 1 ELSE 0 END ) AS CC_Calls,
+SUM (CASE WHEN tSCR.CallType = 3 AND tSCR.PoolFK = 408 AND tSCR.Voice_Mail_Box IS NULL THEN tSCR.Call_Talk_Time ELSE 0 END ) AS CC_Talk_Time_Seconds,
+SUM (CASE WHEN tSCR.CallType = 3 AND tSCR.PoolFK = 408 AND tSCR.Voice_Mail_Box IS NOT NULL THEN 1 ELSE 0 END ) AS CC_Calls,
+SUM (CASE WHEN tSCR.CallType = 3 AND tSCR.PoolFK = 408 AND tSCR.Voice_Mail_Box IS NOT NULL THEN tSCR.Call_Talk_Time ELSE 0 END ) AS CC_Talk_Time_Seconds
+FROM dbo.tbl_Sales_Teams tST 
+INNER JOIN tbl_ShoreTel_Call_Results tSCR
+ON tST.Name = tSCR.Notes
+LEFT JOIN dbo.tbl_ShoreTel_Call_Results_Options tSCRO 
+ON tSCR.PBX_Call_GUID= tSCRO.PBX_Call_GUID
+LEFT JOIN dbo.tbl_Bucket_List tBL 
+ON tST.[Login] = tBL.Bucket_Description
+WHERE tSCR.CallType IN( 3, 4)
+AND tSCR.CallStartTime >= @dt_Start_Time
+AND tSCR.CallStartTime < @dt_Stop_Time
+AND tST.[Login] LIKE @str_Sales_ID
+AND tST.Sales_Manager LIKE @str_Sales_Manager
+AND tST.Super_Team LIKE @str_Super_Team
+AND tST.[Site] LIKE @str_Site
+GROUP BY 
+tST.[Name],
+tST.[Login]
+ORDER BY 
+tST.[Name]
+
+CREATE CLUSTERED INDEX idx_OB_Buckets_Sales_ID 
+ON #OB_Buckets (Sales_ID) 
+
+UPDATE #OB_Buckets
+SET 
+IB_Talk_Time = dbo.ufn_Show_Time_Format(IB_Talk_Time_Seconds),
+OB_Talk_Time = dbo.ufn_Show_Time_Format(OB_Talk_Time_Seconds),
+CC_Talk_Time = dbo.ufn_Show_Time_Format(CC_Talk_Time_Seconds),
+VM_Talk_Time = dbo.ufn_Show_Time_Format(VM_Talk_Time_Seconds),
+OB_Lead_Presentations_Rate = (CASE WHEN OB_Lead_Dials > 0 THEN OB_Lead_Presentations/OB_Lead_Dials ELSE 0 END)
+
+--SELECT * FROM #OB_Buckets
+--DROP TABLE #OB_Buckets
+
+DECLARE @tbl_Bucket_List TABLE (
+PK_ID INTEGER IDENTITY (1,1),
+Bucket_Name VARCHAR(15)
+)
+
+INSERT INTO @tbl_Bucket_List (Bucket_Name)
+SELECT Bucket_Name FROM tbl_Bucket_List ORDER BY Bucket_Name
+
+--SELECT * FROM @tbl_Bucket_List
+
+DECLARE @int_Increment1 INT = 1
+DECLARE @tmp_Count INT
+DECLARE @str_Column_Name VARCHAR(15)
+DECLARE @str_SQL_Script1 VARCHAR(1500)
+DECLARE @str_SQL_Script2 VARCHAR(1500)
+DECLARE @str_SQL_Script3 VARCHAR(1500)
+DECLARE @str_SQL_Script4 VARCHAR(1500)
+
+SET @tmp_Count = (SELECT COUNT(*) FROM @tbl_Bucket_List)
+
+--SELECT @tmp_Count AS Bucket_List_Count
+
+WHILE @int_Increment1 <= @tmp_Count
+	BEGIN
+		SET @str_Column_Name = (SELECT Bucket_Name FROM @tbl_Bucket_List WHERE PK_ID = @int_Increment1)
+
+		--SELECT @str_Column_Name
+		-- *****************************************************************************************************
+		-- A D D   N E W    B U C K E T   C O L U M N
+		-- *****************************************************************************************************
+		SET @str_SQL_Script1 = 'ALTER TABLE #OB_Buckets ADD [' + @str_Column_Name + '] NUMERIC(8,0)'
+		
+--		SELECT @str_SQL_Script1
+		
+		EXEC (@str_SQL_Script1)
+
+		--SELECT * FROM #OB_Buckets
+		--DROP TABLE #OB_Buckets
+
+		-- *****************************************************************************************************
+		-- S E T   N E W    B U C K E T   C O L U M N   T O    Z E R O ( 0 )
+		-- *****************************************************************************************************
+		SET @str_SQL_Script2 = 'UPDATE #OB_Buckets SET [' + @str_Column_Name + '] = 0'
+		EXEC (@str_SQL_Script2)
+
+		-- *****************************************************************************************************
+		-- U P D A T E    N E W    B U C K E T    C O L U M N    W I T H    C A L L    V O L U M E
+		-- *****************************************************************************************************
+		SET @str_SQL_Script3 =	'UPDATE tmp SET tmp.[' + @str_Column_Name + '] = vw1.Bucket_Calls FROM #OB_Buckets tmp ' +
+								'INNER JOIN (SELECT tST.[Login] AS Sales_ID, COUNT(*) AS Bucket_Calls FROM dbo.tbl_Sales_Teams tST ' +
+								'INNER JOIN tbl_ShoreTel_Call_Results tSCR ON tST.[Name] = tSCR.Notes ' +
+								'LEFT JOIN dbo.tbl_ShoreTel_Call_Results_Options tSCRO ON tSCR.PBX_Call_GUID = tSCRO.PBX_Call_GUID ' +
+								'LEFT JOIN dbo.tbl_Bucket_List tBL ON tST.[Login] = tBL.Bucket_Description WHERE tSCR.CallType = 4 ' +
+								'AND tSCR.CallStartTime >= ''' + CONVERT (VARCHAR(25), @dt_Start_Time, 102) + ''' AND tSCR.CallStartTime < ''' + CONVERT (VARCHAR(25), @dt_Stop_Time, 102) + ''' AND tBL.Bucket_Description IS NULL ' +
+								'AND tSCRO.isLoadbook_Call = ''' + @str_Column_Name + ''' GROUP BY tST.[Login] ) AS vw1 ON tmp.Sales_ID = vw1.Sales_ID WHERE tmp.Sales_ID = vw1.Sales_ID ' 
+		--SELECT @str_SQL_Script3
+		EXEC (@str_SQL_Script3)
+
+		-- *****************************************************************************************************
+		-- A C C U M U L A T E    O B    B U C K E T    D I A L S    W I T H    C A L L    V O L U M E
+		-- *****************************************************************************************************
+		SET @str_SQL_Script4 = 'UPDATE #OB_Buckets SET OB_Bucket_Dials = OB_Bucket_Dials + [' + @str_Column_Name + '] '
+		--SELECT @str_SQL_Script4
+		EXEC (@str_SQL_Script4)
+		
+		SET @int_Increment1 = @int_Increment1 + 1		
+		
+	END -- WHILE @int_Increment1 <= @tmp_Count
+
+	-- *****************************************************************************************************
+	-- D E D U C E    O T H E R    L E A D    D I A L S
+	-- *****************************************************************************************************
+	UPDATE #OB_Buckets
+	SET 
+	OB_Other_Lead_Dials = OB_NonLead_Dials - OB_Bucket_Dials - OB_Other_Dials
+
+	SELECT 
+	tST.[Name] AS Sales_Rep,
+	tST.[Login] AS Sales_ID,
+	ISNULL(tmp.IB_Calls, 0) AS IB_Calls,
+	ISNULL(tmp.IB_Talk_Time_Seconds, 0) AS IB_Talk_Time_Seconds,
+	ISNULL(tmp.IB_Talk_Time, '00:00:00:00') AS IB_Talk_Time,
+	ISNULL(tmp.OB_Dials,  0) AS OB_Dials,
+	ISNULL(tmp.OB_Lead_Dials, 0) AS OB_Lead_Dials,
+	ISNULL(tmp.OB_Lead_Presentations, 0) AS OB_Lead_Presentations,
+	ISNULL(tmp.OB_Lead_Presentations_Rate, 0) AS OB_Lead_Presentaions_Rate,
+	ISNULL(tmp.OB_NonLead_Dials, 0) AS OB_NonLead_Dials,
+	ISNULL(tmp.OB_Bucket_Dials, 0) AS OB_Bucket_Dials,
+	ISNULL(tmp.OB_Other_Lead_Dials, 0) AS OB_Other_Lead_Dials,
+	ISNULL(tmp.OB_Other_Dials, 0) AS OB_Other_Dials,
+	ISNULL(tmp.OB_Talk_Time_Seconds, 0) AS OB_Talk_Time_Seconds,
+	ISNULL(tmp.OB_Talk_Time, '00:00:00:00') AS OB_Talk_Time,
+	ISNULL(tmp.CC_Calls, 0) AS CC_Calls,
+	ISNULL(tmp.CC_Talk_Time_Seconds, 0) AS CC_Talk_Times_Seconds,
+	ISNULL(tmp.CC_Talk_Time, '00:00:00:00') AS CC_Talk_Time,
+	ISNULL(tmp.VM_Calls, 0) AS VM_Calls,
+	ISNULL(tmp.VM_Talk_Time_Seconds, 0) AS VM_Talk_Time_Seconds,
+	ISNULL(tmp.VM_Talk_Time, '00:00:00:00') AS VM_Talk_Time
+	FROM dbo.tbl_Sales_Teams tST
+	LEFT JOIN #OB_Buckets tmp
+	ON tST.[Name] = tmp.Sales_Rep
+	AND tST.[Login] = tmp.Sales_ID 
+	WHERE tST.Active = 1
+	AND tST.[Name] <> tST.Sales_Manager
+	AND tST.[Name] IS NOT NULL 
+	AND tST.[Login] LIKE @str_Sales_ID
+	AND tST.Sales_Manager LIKE @str_Sales_Manager
+	AND tST.Super_Team LIKE @str_Super_Team
+	AND tST.[Site] LIKE @str_Site
+	
+	DROP TABLE #OB_Buckets
+
+
+
+
+
+
+
+--END

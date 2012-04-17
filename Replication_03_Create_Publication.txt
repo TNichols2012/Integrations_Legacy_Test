@@ -1,0 +1,99 @@
+use [SIMS]
+exec sp_replicationdboption @dbname = N'SIMS', @optname = N'publish', @value = N'true'
+GO
+use [SIMS]
+exec [SIMS].sys.sp_addlogreader_agent @job_login = N'USMR\SQLadmin', @job_password = null, @publisher_security_mode = 1, @job_name = null
+GO
+-- Adding the transactional publication
+use [SIMS]
+exec sp_addpublication @publication = N'SIMS', @description = N'Transactional publication of database ''SIMS'' from Publisher ''USRC_SIMSSERVER''.', @sync_method = N'concurrent', @retention = 0, @allow_push = N'true', @allow_pull = N'true', @allow_anonymous = N'true', @enabled_for_internet = N'false', @snapshot_in_defaultfolder = N'true', @compress_snapshot = N'false', @ftp_port = 21, @ftp_login = N'anonymous', @allow_subscription_copy = N'false', @add_to_active_directory = N'false', @repl_freq = N'continuous', @status = N'active', @independent_agent = N'true', @immediate_sync = N'true', @allow_sync_tran = N'false', @autogen_sync_procs = N'false', @allow_queued_tran = N'false', @allow_dts = N'false', @replicate_ddl = 1, @allow_initialize_from_backup = N'false', @enabled_for_p2p = N'false', @enabled_for_het_sub = N'false'
+GO
+
+
+exec sp_addpublication_snapshot @publication = N'SIMS', @frequency_type = 1, @frequency_interval = 0, @frequency_relative_interval = 0, @frequency_recurrence_factor = 0, @frequency_subday = 0, @frequency_subday_interval = 0, @active_start_time_of_day = 0, @active_end_time_of_day = 235959, @active_start_date = 0, @active_end_date = 0, @job_login = N'USMR\SQLadmin', @job_password = null, @publisher_security_mode = 1
+
+
+use [SIMS]
+exec sp_addarticle @publication = N'SIMS', @article = N'CoinHistoryTable', @source_owner = N'dbo', @source_object = N'CoinHistoryTable', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual', @destination_table = N'CoinHistoryTable', @destination_owner = N'dbo', @vertical_partition = N'false', @ins_cmd = N'CALL sp_MSins_dboCoinHistoryTable', @del_cmd = N'CALL sp_MSdel_dboCoinHistoryTable', @upd_cmd = N'SCALL sp_MSupd_dboCoinHistoryTable'
+GO
+
+
+
+
+use [SIMS]
+exec sp_addarticle @publication = N'SIMS', @article = N'CoinRequestsTable', @source_owner = N'dbo', @source_object = N'CoinRequestsTable', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual', @destination_table = N'CoinRequestsTable', @destination_owner = N'dbo', @vertical_partition = N'false', @ins_cmd = N'CALL sp_MSins_dboCoinRequestsTable', @del_cmd = N'CALL sp_MSdel_dboCoinRequestsTable', @upd_cmd = N'SCALL sp_MSupd_dboCoinRequestsTable'
+GO
+
+
+
+
+use [SIMS]
+exec sp_addarticle @publication = N'SIMS', @article = N'CustomerServiceRequestsTable', @source_owner = N'dbo', @source_object = N'CustomerServiceRequestsTable', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual', @destination_table = N'CustomerServiceRequestsTable', @destination_owner = N'dbo', @vertical_partition = N'false', @ins_cmd = N'CALL sp_MSins_dboCustomerServiceRequestsTable', @del_cmd = N'CALL sp_MSdel_dboCustomerServiceRequestsTable', @upd_cmd = N'SCALL sp_MSupd_dboCustomerServiceRequestsTable'
+GO
+
+
+
+
+use [SIMS]
+exec sp_addarticle @publication = N'SIMS', @article = N'InventoryReturnsTable', @source_owner = N'dbo', @source_object = N'InventoryReturnsTable', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual', @destination_table = N'InventoryReturnsTable', @destination_owner = N'dbo', @vertical_partition = N'false', @ins_cmd = N'CALL sp_MSins_dboInventoryReturnsTable', @del_cmd = N'CALL sp_MSdel_dboInventoryReturnsTable', @upd_cmd = N'SCALL sp_MSupd_dboInventoryReturnsTable'
+GO
+
+
+
+
+use [SIMS]
+exec sp_addarticle @publication = N'SIMS', @article = N'LoginTable', @source_owner = N'dbo', @source_object = N'LoginTable', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual', @destination_table = N'LoginTable', @destination_owner = N'dbo', @vertical_partition = N'false', @ins_cmd = N'CALL sp_MSins_dboLoginTable', @del_cmd = N'CALL sp_MSdel_dboLoginTable', @upd_cmd = N'SCALL sp_MSupd_dboLoginTable'
+GO
+
+
+
+
+use [SIMS]
+exec sp_addarticle @publication = N'SIMS', @article = N'MasterTable', @source_owner = N'dbo', @source_object = N'MasterTable', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual', @destination_table = N'MasterTable', @destination_owner = N'dbo', @vertical_partition = N'false', @ins_cmd = N'CALL sp_MSins_dboMasterTable', @del_cmd = N'CALL sp_MSdel_dboMasterTable', @upd_cmd = N'SCALL sp_MSupd_dboMasterTable'
+GO
+
+
+
+
+use [SIMS]
+exec sp_addarticle @publication = N'SIMS', @article = N'sysdiagrams', @source_owner = N'dbo', @source_object = N'sysdiagrams', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual', @destination_table = N'sysdiagrams', @destination_owner = N'dbo', @vertical_partition = N'false', @ins_cmd = N'CALL sp_MSins_dbosysdiagrams', @del_cmd = N'CALL sp_MSdel_dbosysdiagrams', @upd_cmd = N'SCALL sp_MSupd_dbosysdiagrams'
+GO
+
+
+
+
+use [SIMS]
+exec sp_addarticle @publication = N'SIMS', @article = N'tbl_Media_Ad_Codes', @source_owner = N'dbo', @source_object = N'tbl_Media_Ad_Codes', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual', @destination_table = N'tbl_Media_Ad_Codes', @destination_owner = N'dbo', @vertical_partition = N'false', @ins_cmd = N'CALL sp_MSins_dbotbl_Media_Ad_Codes', @del_cmd = N'CALL sp_MSdel_dbotbl_Media_Ad_Codes', @upd_cmd = N'SCALL sp_MSupd_dbotbl_Media_Ad_Codes'
+GO
+
+
+
+
+use [SIMS]
+exec sp_addarticle @publication = N'SIMS', @article = N'tbl_Publications', @source_owner = N'dbo', @source_object = N'tbl_Publications', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual', @destination_table = N'tbl_Publications', @destination_owner = N'dbo', @vertical_partition = N'false', @ins_cmd = N'CALL sp_MSins_dbotbl_Publications', @del_cmd = N'CALL sp_MSdel_dbotbl_Publications', @upd_cmd = N'SCALL sp_MSupd_dbotbl_Publications'
+GO
+
+
+
+
+use [SIMS]
+exec sp_addarticle @publication = N'SIMS', @article = N'TelevisionTapeVersions', @source_owner = N'dbo', @source_object = N'TelevisionTapeVersions', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual', @destination_table = N'TelevisionTapeVersions', @destination_owner = N'dbo', @vertical_partition = N'false', @ins_cmd = N'CALL sp_MSins_dboTelevisionTapeVersions', @del_cmd = N'CALL sp_MSdel_dboTelevisionTapeVersions', @upd_cmd = N'SCALL sp_MSupd_dboTelevisionTapeVersions'
+GO
+
+
+
+
+use [SIMS]
+exec sp_addarticle @publication = N'SIMS', @article = N'TransactionTable', @source_owner = N'dbo', @source_object = N'TransactionTable', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual', @destination_table = N'TransactionTable', @destination_owner = N'dbo', @vertical_partition = N'false', @ins_cmd = N'CALL sp_MSins_dboTransactionTable', @del_cmd = N'CALL sp_MSdel_dboTransactionTable', @upd_cmd = N'SCALL sp_MSupd_dboTransactionTable'
+GO
+
+
+
+
+use [SIMS]
+exec sp_addarticle @publication = N'SIMS', @article = N'VaultReturnsTable', @source_owner = N'dbo', @source_object = N'VaultReturnsTable', @type = N'logbased', @description = null, @creation_script = null, @pre_creation_cmd = N'drop', @schema_option = 0x000000000803509F, @identityrangemanagementoption = N'manual', @destination_table = N'VaultReturnsTable', @destination_owner = N'dbo', @vertical_partition = N'false', @ins_cmd = N'CALL sp_MSins_dboVaultReturnsTable', @del_cmd = N'CALL sp_MSdel_dboVaultReturnsTable', @upd_cmd = N'SCALL sp_MSupd_dboVaultReturnsTable'
+GO
+
+
+
+

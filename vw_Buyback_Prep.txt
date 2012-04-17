@@ -1,0 +1,52 @@
+SELECT     
+dbo.MOMDataTable.Order_Date, 
+dbo.MOMDataTable.Cust_ID, 
+dbo.MOMCustTable.Contact_Number, 
+SUM(dbo.MOMDataTable.Quantity_Ordered) AS Quantity_Ordered, 
+SUM(dbo.MOMDataTable.Value_Ordered) AS Value_Ordered, 
+dbo.MOMDataTable.Stock_ID, dbo.MOMDataTable.Stock_Desc, 
+dbo.MOMDataTable.Order_ID, 
+CASE WHEN SUM(Quantity_Ordered) > 0 
+THEN SUM(Value_Ordered) / SUM(Quantity_Ordered) 
+ELSE 0 END AS Retail_Unit_Price, 
+ISNULL(dbo.MasterTable.Retail, 0) AS Buyback_Price, 
+dbo.MOMCustTable.Sales_ID, dbo.MasterTable.Year, 
+dbo.MasterTable.Mint, 
+dbo.MasterTable.Denomination, 
+dbo.MasterTable.Type, 
+dbo.MasterTable.Condition, 
+dbo.MasterTable.Grade
+FROM		dbo.MOMDataTable 
+LEFT OUTER JOIN	dbo.MasterTable 
+ON dbo.MOMDataTable.Stock_Desc = dbo.MasterTable.StockDescription 
+LEFT OUTER JOIN	dbo.MOMCustTable 
+ON dbo.MOMDataTable.Cust_ID = dbo.MOMCustTable.Cust_ID
+WHERE     (dbo.MOMDataTable.Item_State IN ('PS', 'SH', 'RT')) 
+AND (dbo.MOMDataTable.Value_Ordered > 0) 
+AND (dbo.MOMCustTable.Sales_ID <> '') 
+AND (dbo.MOMCustTable.Sales_ID <> 'AU') 
+AND (dbo.MOMCustTable.Sales_ID <> 'BM') 
+AND (dbo.MOMCustTable.Sales_ID <> 'C3') 
+AND (dbo.MOMCustTable.Sales_ID <> 'XX') 
+AND (dbo.MOMCustTable.Sales_ID <> 'XXX') 
+AND (dbo.MOMCustTable.Sales_ID <> 'YY') 
+AND (dbo.MOMCustTable.Sales_ID <> 'YA') 
+AND (dbo.MOMCustTable.Sales_ID <> 'YB') 
+AND (dbo.MOMCustTable.Sales_ID <> '49') 
+AND (dbo.MOMCustTable.Sales_ID <> '50')
+GROUP BY 
+dbo.MOMDataTable.Cust_ID, 
+dbo.MOMDataTable.Order_ID, 
+dbo.MOMDataTable.Stock_ID, 
+dbo.MOMDataTable.Stock_Desc, 
+dbo.MOMDataTable.Order_Date, 
+dbo.MOMCustTable.Contact_Number, 
+dbo.MOMCustTable.Sales_ID, 
+dbo.MasterTable.Year, 
+dbo.MasterTable.Mint, 
+dbo.MasterTable.Denomination, 
+dbo.MasterTable.Type, 
+dbo.MasterTable.Condition, 
+dbo.MasterTable.Grade, 
+dbo.MasterTable.Retail
+HAVING      (SUM(dbo.MOMDataTable.Value_Ordered) > 0)

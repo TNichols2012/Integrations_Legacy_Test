@@ -1,0 +1,15 @@
+SELECT     TOP (100) PERCENT 
+dbo.tbl_MOM_Data.MOM_Order_Date AS Order_Date, 
+dbo.tbl_Sales_Teams.Name, dbo.tbl_MOM_Data.sales_id, 
+COUNT(dbo.tbl_MOM_Data.sales_id) AS Ttl_Sales_Orders_Submitted, 
+SUM(dbo.tbl_MOM_Data.tb_merch) AS Ttl_Net_Sales, 
+SUM(CASE WHEN cl_key NOT LIKE 'OB%' THEN 1 ELSE 0 END) AS IB_Sales_Orders_Submitted, 
+SUM(CASE WHEN cl_key NOT LIKE 'OB%' THEN tb_merch ELSE 0 END) AS IB_Sales_Value, 
+SUM(CASE WHEN cl_key LIKE 'OB%' THEN 1 ELSE 0 END) AS OB_Sales_Orders_Submitted, 
+SUM(CASE WHEN cl_key LIKE 'OB%' THEN tb_merch ELSE 0 END) AS OB_Sales_Value
+FROM         dbo.tbl_MOM_Data 
+LEFT OUTER JOIN dbo.tbl_Sales_Teams ON dbo.tbl_MOM_Data.sales_id = dbo.tbl_Sales_Teams.Login 
+LEFT OUTER JOIN dbo.Results_MOM_CUST ON dbo.tbl_MOM_Data.custnum = dbo.Results_MOM_CUST.custnum
+WHERE     (dbo.tbl_Sales_Teams.Site IS NOT NULL)
+GROUP BY dbo.tbl_MOM_Data.MOM_Order_Date, dbo.tbl_MOM_Data.sales_id, dbo.tbl_Sales_Teams.Name
+ORDER BY Order_Date DESC

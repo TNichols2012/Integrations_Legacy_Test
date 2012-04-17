@@ -1,0 +1,465 @@
+USE [Data_Warehouse]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_SIMS_Report_Digital_B]    Script Date: 02/13/2012 10:40:56 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/****** Object:  StoredProcedure [dbo].[usp_SIMS_Report_Digital_B]    Script Date: 01/30/2012 10:36:21 ******/
+--SET ANSI_NULLS ON
+--GO
+--SET QUOTED_IDENTIFIER ON
+--
+--ALTER Procedure [dbo].[usp_SIMS_Report_Digital_B] AS 
+--BEGIN
+
+SET NOCOUNT ON
+
+DECLARE @Answer VARCHAR(8000)
+
+SET @Answer = 'Current as of: ' + CHAR(13) + CHAR(10) + CONVERT(varchar(20), GETDATE(), 120) + CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+
+-- EXECUTE Media Sales Updates
+--EXEC [usp_Media_Sales_Data_1_Sales]
+--EXEC [usp_Media_Sales_Data_2_Customers]
+--EXEC [usp_Media_Sales_Data_3_Orders]
+--EXEC [usp_Media_Sales_Data_4_Update]
+
+
+-- ***************************************************
+-- ********** Gather Digital IB Call Volume **********
+-- ***************************************************
+IF NOT EXISTS (SELECT TABLE_NAME FROM Information_Schema.Tables WHERE Table_Name='tmp_Media_Call_Volume')
+	BEGIN
+		CREATE TABLE tmp_Media_Call_Volume (
+		PK_ID INT IDENTITY(1,1),
+		Campaign VARCHAR(25),
+		Ad_Code VARCHAR(25),
+		DNIS VARCHAR(15),
+		Ad_Run_Date Date,
+		Inception_Ad_Call_Volume NUMERIC(8,0) DEFAULT(0),
+		Inception_Ad_Calls_Answered_Above_2min NUMERIC(8,0) DEFAULT(0),
+		Inception_Ad_Calls_Answered_Below_2min NUMERIC(8,0) DEFAULT(0),
+		Today_Ad_Call_Volume NUMERIC(8,0) DEFAULT(0),
+		Today_Ad_Calls_Answered_Above_2min NUMERIC(8,0) DEFAULT(0),
+		Today_Ad_Calls_Answered_Below_2min NUMERIC(8,0) DEFAULT(0),
+		MTD_Ad_Call_Volume NUMERIC(8,0) DEFAULT(0),
+		MTD_Ad_Calls_Answered_Above_2min NUMERIC(8,0) DEFAULT(0),
+		MTD_Ad_Calls_Answered_Below_2min NUMERIC(8,0) DEFAULT(0)
+		)
+		
+		CREATE CLUSTERED INDEX tmp_Media_Call_Volume_Ad_Code
+		ON tmp_Media_Call_Volume (Ad_Code)
+		
+	END  --  IF NOT EXISTS (SELECT TABLE_NAME FROM Information_Schema.Tables WHERE Table_Name='tmp_Media_Call_Volume')
+	
+TRUNCATE TABLE tmp_Media_Call_Volume
+DECLARE @tmp_Media_Call_Volume_Count_Line_ID INT = 1
+DECLARE @tmp_Media_Call_Volume_Count INT = 0
+DECLARE @tmp_Media_Call_Volume_Sum INT = 0
+
+INSERT INTO tmp_Media_Call_Volume (Campaign, Ad_Code, DNIS, Ad_Run_Date, Inception_Ad_Call_Volume, Inception_Ad_Calls_Answered_Above_2min, Inception_Ad_Calls_Answered_Below_2min)
+SELECT 
+'Digital' AS Campaign,
+Ad_Code,
+DNIS,
+Ad_Run_Date,
+Ad_Call_Volume,
+Ad_Calls_Above2min,
+Ad_Calls_Below2min
+FROM USRCAPPSRVR01.SIMS.dbo.tbl_Media_
+WHERE Ad_Code LIKE 'DG%'
+AND Ad_Run_Date <= dbo.Get_TheDate(GetDate()+1)
+ORDER BY Ad_Code
+
+INSERT INTO tmp_Media_Call_Volume (Campaign, Ad_Code, DNIS, Ad_Run_Date, Inception_Ad_Call_Volume, Inception_Ad_Calls_Answered_Above_2min, Inception_Ad_Calls_Answered_Below_2min)
+SELECT 
+'Digital' AS Campaign,
+Ad_Code,
+DNIS,
+Ad_Run_Date,
+Ad_Call_Volume,
+Ad_Calls_Above2min,
+Ad_Calls_Below2min
+FROM USRCAPPSRVR01.SIMS.dbo.tbl_Media_
+WHERE Ad_Code = 'USMRWEB'
+AND Ad_Run_Date <= dbo.Get_TheDate(GetDate()+1)
+
+UPDATE tmp_Media_Call_Volume
+SET
+Today_Ad_Call_Volume = Data_Warehouse.dbo.ufn_ShoreTel_DNIS_Calls_Offered(DNIS, GetDate(), GetDate()+1),
+Today_Ad_Calls_Answered_Above_2min = Data_Warehouse.dbo.ufn_ShoreTel_DNIS_Calls_Answered_Above_2min(DNIS, GetDate(), GetDate()+1),
+Today_Ad_Calls_Answered_Below_2min = Data_Warehouse.dbo.ufn_ShoreTel_DNIS_Calls_Answered_Below_2min(DNIS, GetDate(), GetDate()+1)
+WHERE DNIS IS NOT NULL 
+AND DNIS <> ''
+
+UPDATE tmp_Media_Call_Volume
+SET
+MTD_Ad_Call_Volume = Data_Warehouse.dbo.ufn_ShoreTel_DNIS_Calls_Offered(DNIS, dbo.Get_TheMonth(GetDate()), GetDate()+1),
+MTD_Ad_Calls_Answered_Above_2min = Data_Warehouse.dbo.ufn_ShoreTel_DNIS_Calls_Answered_Above_2min(DNIS, dbo.Get_TheMonth(GetDate()), GetDate()+1),
+MTD_Ad_Calls_Answered_Below_2min = Data_Warehouse.dbo.ufn_ShoreTel_DNIS_Calls_Answered_Below_2min(DNIS, dbo.Get_TheMonth(GetDate()), GetDate()+1)
+WHERE DNIS IS NOT NULL 
+AND DNIS <> ''
+
+SET @tmp_Media_Call_Volume_Count = (SELECT COUNT(*) FROM tmp_Media_Call_Volume)
+
+DECLARE @tbl_Digital_Today_Count_Line_ID INT = 1
+DECLARE @tbl_Digital_Today_Count INT = 0
+DECLARE @tbl_Digital_Today_Sum INT = 0
+DECLARE @tbl_Digital_Today TABLE (
+PK_ID INT IDENTITY(1,1),
+Ad_Code VARCHAR(25),
+DNIS VARCHAR(15),
+Ad_Run_Date Date,
+Ad_Call_Volume NUMERIC(8,0) DEFAULT(0),
+Ad_Calls_Answered_Above_2min NUMERIC(8,0) DEFAULT(0),
+Ad_Calls_Answered_Below_2min NUMERIC(8,0) DEFAULT(0)
+)
+INSERT INTO @tbl_Digital_Today (Ad_Code, DNIS, Ad_Run_Date, Ad_Call_Volume, Ad_Calls_Answered_Above_2min, Ad_Calls_Answered_Below_2min)
+SELECT
+Ad_Code,
+DNIS, 
+Ad_Run_Date,
+Today_Ad_Call_Volume,
+Today_Ad_Calls_Answered_Above_2min,
+Today_Ad_Calls_Answered_Below_2min
+FROM tmp_Media_Call_Volume
+WHERE Campaign = 'Digital'
+AND Today_Ad_Call_Volume > 0
+ORDER BY Today_Ad_Call_Volume DESC
+
+SET @tbl_Digital_Today_Count = (SELECT COUNT(*) FROM @tbl_Digital_Today)
+
+DECLARE @tbl_Digital_MTD_Count_Line_ID INT = 1
+DECLARE @tbl_Digital_MTD_Count INT = 0
+DECLARE @tbl_Digital_MTD_Sum INT = 0
+DECLARE @tbl_Digital_MTD TABLE (
+PK_ID INT IDENTITY(1,1),
+Ad_Code VARCHAR(25),
+DNIS VARCHAR(15),
+Ad_Run_Date Date,
+Ad_Call_Volume NUMERIC(8,0) DEFAULT(0),
+Ad_Calls_Answered_Above_2min NUMERIC(8,0) DEFAULT(0),
+Ad_Calls_Answered_Below_2min NUMERIC(8,0) DEFAULT(0)
+)
+INSERT INTO @tbl_Digital_MTD (Ad_Code, DNIS, Ad_Run_Date, Ad_Call_Volume, Ad_Calls_Answered_Above_2min, Ad_Calls_Answered_Below_2min)
+SELECT
+Ad_Code,
+DNIS, 
+Ad_Run_Date,
+MTD_Ad_Call_Volume,
+MTD_Ad_Calls_Answered_Above_2min,
+MTD_Ad_Calls_Answered_Below_2min
+FROM tmp_Media_Call_Volume
+WHERE Campaign = 'Digital'
+AND MTD_Ad_Call_Volume > 0
+ORDER BY MTD_Ad_Call_Volume DESC
+
+SET @tbl_Digital_MTD_Count = (SELECT COUNT(*) FROM @tbl_Digital_MTD)
+
+UPDATE tbl
+SET
+tbl.DNIS									= tmp.DNIS,
+tbl.Ad_Run_Date								= tmp.Ad_Run_Date,
+tbl.Inception_Ad_Call_Volume				= tmp.Inception_Ad_Call_Volume,
+tbl.Inception_Ad_Calls_Answered_Above_2min	= tmp.Inception_Ad_Calls_Answered_Above_2min,
+tbl.Inception_Ad_Calls_Answered_Below_2min	= tmp.Inception_Ad_Calls_Answered_Below_2min,
+tbl.MTD_Ad_Call_Volume						= tmp.MTD_Ad_Call_Volume,
+tbl.MTD_Ad_Calls_Answered_Above_2min		= tmp.MTD_Ad_Calls_Answered_Above_2min,
+tbl.MTD_Ad_Calls_Answered_Below_2min		= tmp.MTD_Ad_Calls_Answered_Below_2min,
+tbl.Today_Ad_Call_Volume					= tmp.Today_Ad_Call_Volume,
+tbl.Today_Ad_Calls_Answered_Above_2min		= tmp.Today_Ad_Calls_Answered_Above_2min,
+tbl.Today_Ad_Calls_Answered_Below_2min		= tmp.Today_Ad_Calls_Answered_Below_2min
+FROM tbl_Media_Call_Volume tbl
+INNER JOIN tmp_Media_Call_Volume tmp
+ON tbl.Ad_Code = tmp.Ad_Code
+
+INSERT INTO tbl_Media_Call_Volume (
+Campaign, 
+Ad_Code, 
+DNIS, 
+Ad_Run_Date, 
+Inception_Ad_Call_Volume,
+Inception_Ad_Calls_Answered_Above_2min,
+Inception_Ad_Calls_Answered_Below_2min,
+Today_Ad_Call_Volume,
+Today_Ad_Calls_Answered_Above_2min,
+Today_Ad_Calls_Answered_Below_2min,
+MTD_Ad_Call_Volume,
+MTD_Ad_Calls_Answered_Above_2min,
+MTD_Ad_Calls_Answered_Below_2min
+)
+SELECT 
+tmp.Campaign,
+tmp.Ad_Code,
+tmp.DNIS,
+tmp.Ad_Run_Date,
+tmp.Inception_Ad_Call_Volume,
+tmp.Inception_Ad_Calls_Answered_Above_2min,
+tmp.Inception_Ad_Calls_Answered_Below_2min,
+tmp.Today_Ad_Call_Volume,
+tmp.Today_Ad_Calls_Answered_Above_2min,
+tmp.Today_Ad_Calls_Answered_Below_2min,
+tmp.MTD_Ad_Call_Volume,
+tmp.MTD_Ad_Calls_Answered_Above_2min,
+tmp.MTD_Ad_Calls_Answered_Below_2min
+FROM tmp_Media_Call_Volume tmp
+LEFT JOIN tbl_Media_Call_Volume tbl
+ON tmp.Ad_Code = tbl.Ad_Code
+WHERE tbl.Ad_Code IS NULL
+
+-- ***************************************************
+-- ********** Gather Digital IB Sales Data  **********
+-- ***************************************************
+DECLARE @tbl_Digital_Sales_Today_Count_Line_ID INT = 1
+DECLARE @tbl_Digital_Sales_Today_Count INT = 0
+DECLARE @tbl_Digital_Sales_Today_Sum_Total INT = 0.00
+DECLARE @tbl_Digital_Sales_Today_Sum_Bullion INT = 0.00
+DECLARE @tbl_Digital_Sales_Today_Sum_Certified INT = 0.00
+DECLARE @tbl_Digital_Sales_Today_Sum_Bullion_Orders INT = 0
+DECLARE @tbl_Digital_Sales_Today_Sum_Certified_Orders INT = 0
+DECLARE @tbl_Digital_Sales_Today_Sum_Bullion_Customers INT = 0
+DECLARE @tbl_Digital_Sales_Today_Sum_Certified_Customers INT = 0
+
+DECLARE @tbl_Digital_Sales_Today TABLE (
+PK_ID INT IDENTITY(1,1),
+Campaign VARCHAR(25),
+Ad_Code VARCHAR(25),
+Sales_Total NUMERIC(18,2) DEFAULT(0),
+Bullion_Total NUMERIC(18,2) DEFAULT(0),
+Certified_Total NUMERIC(18,2) DEFAULT(0),
+Bullion_Orders NUMERIC(8,0) DEFAULT(0),
+Certified_Orders NUMERIC(8,0) DEFAULT(0),
+Gold_Reports_Orders NUMERIC(8,0) DEFAULT(0),
+Bullion_Customers NUMERIC(8,0) DEFAULT(0),
+Certified_Customers NUMERIC(8,0) DEFAULT(0),
+Gold_Reports_Customers NUMERIC(8,0) DEFAULT(0)
+)
+
+INSERT INTO @tbl_Digital_Sales_Today(Campaign, Ad_Code, Sales_Total, Bullion_Total, Certified_Total, Bullion_Orders, Certified_Orders, Bullion_Customers, Certified_Customers, Gold_Reports_Customers)
+SELECT 
+Campaign,
+Ad_Code,
+Today_Total_Sales, 
+Today_Bullion_Sales, 
+Today_Certified_Sales,
+Today_Bullion_Orders,
+Today_Certified_Orders, 
+Today_Bullion_Customers,
+Today_Certified_Customers,
+Today_Gold_Report_Customers
+FROM tbl_Media_Sales_Data 
+WHERE Ad_Code LIKE 'DG%'
+AND Today_Total_Sales > 0
+ORDER BY 
+Today_Total_Sales DESC
+
+SET @tbl_Digital_Sales_Today_Count = (SELECT COUNT(*) FROM @tbl_Digital_Sales_Today)
+
+DECLARE @tbl_Digital_Sales_MTD_Count_Line_ID INT = 1
+DECLARE @tbl_Digital_Sales_MTD_Count INT = 0
+DECLARE @tbl_Digital_Sales_MTD_Sum_Total INT = 0.00
+DECLARE @tbl_Digital_Sales_MTD_Sum_Bullion INT = 0.00
+DECLARE @tbl_Digital_Sales_MTD_Sum_Certified INT = 0.00
+DECLARE @tbl_Digital_Sales_MTD_Sum_Bullion_Orders INT = 0
+DECLARE @tbl_Digital_Sales_MTD_Sum_Certified_Orders INT = 0
+DECLARE @tbl_Digital_Sales_MTD_Sum_Bullion_Customers INT = 0
+DECLARE @tbl_Digital_Sales_MTD_Sum_Certified_Customers INT = 0
+DECLARE @tbl_Digital_Sales_MTD TABLE (
+PK_ID INT IDENTITY(1,1),
+Campaign VARCHAR(25),
+Ad_Code VARCHAR(25),
+Sales_Total NUMERIC(18,2) DEFAULT(0),
+Bullion_Total NUMERIC(18,2) DEFAULT(0),
+Certified_Total NUMERIC(18,2) DEFAULT(0),
+Bullion_Orders NUMERIC(8,0) DEFAULT(0),
+Certified_Orders NUMERIC(8,0) DEFAULT(0),
+Gold_Reports_Orders NUMERIC(8,0) DEFAULT(0),
+Bullion_Customers NUMERIC(8,0) DEFAULT(0),
+Certified_Customers NUMERIC(8,0) DEFAULT(0),
+Gold_Reports_Customers NUMERIC(8,0) DEFAULT(0)
+)
+
+INSERT INTO @tbl_Digital_Sales_MTD(Campaign, Ad_Code, Sales_Total, Bullion_Total, Certified_Total, Bullion_Orders, Certified_Orders, Bullion_Customers, Certified_Customers, Gold_Reports_Customers)
+SELECT 
+Campaign,
+Ad_Code,
+MTD_Total_Sales, 
+MTD_Bullion_Sales, 
+MTD_Certified_Sales,
+MTD_Bullion_Orders,
+MTD_Certified_Orders, 
+MTD_Bullion_Customers,
+MTD_Certified_Customers,
+MTD_Gold_Report_Customers
+FROM tbl_Media_Sales_Data 
+WHERE Ad_Code LIKE 'DG%'
+AND MTD_Total_Sales > 0
+ORDER BY 
+MTD_Total_Sales DESC
+
+SET @tbl_Digital_Sales_MTD_Count = (SELECT COUNT(*) FROM @tbl_Digital_Sales_MTD)
+
+-- ***************************************************
+-- ********** Write The Answers to Variable **********
+-- ***************************************************
+SET @Answer = @Answer + '##############################' + CHAR(13) + CHAR(10) +
+						'DIGITAL IB CALL VOLUME (TODAY)' + CHAR(13) + CHAR(10) +
+						'##############################' + CHAR(13) + CHAR(10) 
+IF (@tbl_Digital_Today_Count > 0) 
+	BEGIN
+		WHILE @tbl_Digital_Today_Count_Line_ID <= @tbl_Digital_Today_Count
+			BEGIN
+				SET @Answer = @Answer + CAST ((SELECT Ad_Code FROM @tbl_Digital_Today WHERE PK_ID = @tbl_Digital_Today_Count_Line_ID) AS CHAR(15)) 
+				SET @Answer = @Answer + CHAR(9) + CAST ((SELECT Ad_Call_Volume FROM @tbl_Digital_Today WHERE PK_ID = @tbl_Digital_Today_Count_Line_ID) AS VARCHAR(15)) + CHAR(13) + CHAR(10)
+				SET @tbl_Digital_Today_Sum = @tbl_Digital_Today_Sum + ISNULL((SELECT Ad_Call_Volume FROM @tbl_Digital_Today WHERE PK_ID = @tbl_Digital_Today_Count_Line_ID), 0)
+				SET @tbl_Digital_Today_Count_Line_ID = @tbl_Digital_Today_Count_Line_ID + 1
+		END  --  WHILE @tbl_Digital_Today_Count_Line_ID <= @tbl_Digital_Today_Count
+		SET @Answer = @Answer + '==============================' + CHAR(13) + CHAR(10) 
+		SET @Answer = @Answer + 'Total: ' + CHAR(9) + CHAR(9) + CHAR(9) + CONVERT(VARCHAR(15), @tbl_Digital_Today_Sum)
+	END  --  IF (@tbl_Digital_Today_Count > 0) 
+ELSE -- (@tbl_Digital_Today_Count = 0) 
+	BEGIN
+		SET @Answer = @Answer + 'None'
+	END
+SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+SET @Answer = @Answer + '##############################' + CHAR(13) + CHAR(10) +
+						'DIGITAL IB CALL VOLUME (MTD)' + CHAR(13) + CHAR(10) +
+						'##############################' + CHAR(13) + CHAR(10) 
+IF (@tbl_Digital_MTD_Count > 0) 
+	BEGIN
+		WHILE @tbl_Digital_MTD_Count_Line_ID <= @tbl_Digital_MTD_Count
+			BEGIN
+				SET @Answer = @Answer + CAST ((SELECT Ad_Code FROM @tbl_Digital_MTD WHERE PK_ID = @tbl_Digital_MTD_Count_Line_ID) AS CHAR(15)) 
+				SET @Answer = @Answer + CHAR(9) + CAST ((SELECT Ad_Call_Volume FROM @tbl_Digital_MTD WHERE PK_ID = @tbl_Digital_MTD_Count_Line_ID) AS VARCHAR(15)) + CHAR(13) + CHAR(10)
+				SET @tbl_Digital_MTD_Sum = @tbl_Digital_MTD_Sum + ISNULL((SELECT Ad_Call_Volume FROM @tbl_Digital_MTD WHERE PK_ID = @tbl_Digital_MTD_Count_Line_ID), 0)
+				SET @tbl_Digital_MTD_Count_Line_ID = @tbl_Digital_MTD_Count_Line_ID + 1
+		END  --  WHILE @tbl_Digital_MTD_Count_Line_ID <= @tbl_Digital_MTD_Count
+		SET @Answer = @Answer + '==============================' + CHAR(13) + CHAR(10) 
+		SET @Answer = @Answer + 'Total: ' + CHAR(9) + CHAR(9) + CHAR(9) + CONVERT(VARCHAR(15), @tbl_Digital_MTD_Sum)	
+	END  --  IF (@tbl_Digital_MTD_Count > 0) 
+ELSE -- (@tbl_Digital_MTD_Count = 0) 
+	BEGIN
+		SET @Answer = @Answer + 'None'
+	END
+
+SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+SET @Answer = @Answer + '##############################################' + CHAR(13) + CHAR(10) +
+						'DIGITAL SALES DATA (TODAY)' + CHAR(13) + CHAR(10) +
+						'##############################################' + CHAR(13) + CHAR(10)
+SET @Answer = @Answer + 'Ad Code          Total     Bullion   Certified' + CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+IF (@tbl_Digital_Sales_Today_Count > 0) 
+	BEGIN
+		WHILE @tbl_Digital_Sales_Today_Count_Line_ID <= @tbl_Digital_Sales_Today_Count
+			BEGIN
+				SET @Answer = @Answer + CAST ((SELECT Ad_Code FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID) AS CHAR(10)) 
+				SET @Answer = @Answer + ' $' + CONVERT(CHAR(10), CAST ((SELECT Sales_Total FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID) AS MONEY), 1) 
+				SET @Answer = @Answer + ' $' + CONVERT(CHAR(10), CAST ((SELECT Bullion_Total FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID) AS MONEY), 1) 
+				SET @Answer = @Answer + ' $' + CONVERT(CHAR(10), CAST ((SELECT Certified_Total FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID) AS MONEY), 1) + CHAR(13) + CHAR(10) 
+				
+				SET @Answer = @Answer + CONVERT(CHAR(21), '  Orders') + CONVERT(CHAR(12), CAST ((SELECT ISNULL(Bullion_Orders, 0) + ISNULL(Certified_Orders, 0) + ISNULL(Gold_Reports_Orders, 0) FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID) AS Int)) 
+				SET @Answer = @Answer + CONVERT(CHAR(12), CAST ((SELECT ISNULL(Bullion_Orders, 0) FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID) AS Int)) 
+				SET @Answer = @Answer + CONVERT(CHAR(10), CAST ((SELECT ISNULL(Certified_Orders, 0) FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID) AS Int)) 		
+				SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+				SET @Answer = @Answer + CONVERT(CHAR(21), '  Customers') + CONVERT(CHAR(12), CAST ((SELECT ISNULL(Bullion_Customers, 0) + ISNULL(Certified_Customers, 0) FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID) AS Int)) 
+				SET @Answer = @Answer + CONVERT(CHAR(12), CAST ((SELECT ISNULL(Bullion_Customers, 0) FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID) AS Int)) 
+				SET @Answer = @Answer + CONVERT(CHAR(10), CAST ((SELECT ISNULL(Certified_Customers, 0) FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID) AS Int)) 
+				
+				SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+				
+				SET @tbl_Digital_Sales_Today_Sum_Total = @tbl_Digital_Sales_Today_Sum_Total + ISNULL((SELECT Sales_Total FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID), 0)
+				SET @tbl_Digital_Sales_Today_Sum_Bullion = @tbl_Digital_Sales_Today_Sum_Bullion + ISNULL((SELECT Bullion_Total FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID), 0)
+				SET @tbl_Digital_Sales_Today_Sum_Certified = @tbl_Digital_Sales_Today_Sum_Certified + ISNULL((SELECT Certified_Total FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID), 0)
+				SET @tbl_Digital_Sales_Today_Sum_Bullion_Orders = @tbl_Digital_Sales_Today_Sum_Bullion_Orders + ISNULL((SELECT Bullion_Orders FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID), 0)
+				SET @tbl_Digital_Sales_Today_Sum_Certified_Orders = @tbl_Digital_Sales_Today_Sum_Certified_Orders + ISNULL((SELECT Certified_Orders FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID), 0)
+				SET @tbl_Digital_Sales_Today_Sum_Bullion_Customers = @tbl_Digital_Sales_Today_Sum_Bullion_Customers + ISNULL((SELECT Bullion_Customers FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID), 0)
+				SET @tbl_Digital_Sales_Today_Sum_Certified_Customers = @tbl_Digital_Sales_Today_Sum_Certified_Customers + ISNULL((SELECT Certified_Customers FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID), 0) 
+				
+				--SET @tbl_Digital_Sales_Today_Sum_Bullion_ = @tbl_Digital_Sales_Today_Sum_Bullion + ISNULL((SELECT Bullion_Total FROM @tbl_Digital_Sales_Today WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID), 0)
+				
+				SET @tbl_Digital_Sales_Today_Count_Line_ID = @tbl_Digital_Sales_Today_Count_Line_ID + 1
+		END  --  WHILE @tbl_Digital_Today_Count_Line_ID <= @tbl_Digital_Today_Count
+		SET @Answer = @Answer + '==============================================' + CHAR(13) + CHAR(10) 
+		SET @Answer = @Answer + 'Total:     $' + CONVERT(CHAR(10), CAST((@tbl_Digital_Sales_Today_Sum_Total) AS MONEY), 1) 
+		SET @Answer = @Answer + ' $' + CONVERT(CHAR(10), CAST((@tbl_Digital_Sales_Today_Sum_Bullion) AS MONEY), 1) 
+		SET @Answer = @Answer + ' $' + CONVERT(CHAR(10), CAST((@tbl_Digital_Sales_Today_Sum_Certified) AS MONEY), 1)
+		SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+		SET @Answer = @Answer + CONVERT(CHAR(21), '  Orders') + CONVERT(CHAR(12), CAST((@tbl_Digital_Sales_Today_Sum_Bullion_Orders + @tbl_Digital_Sales_Today_Sum_Certified_Orders) AS INT), 1) 
+		SET @Answer = @Answer + CONVERT(CHAR(12), CAST((@tbl_Digital_Sales_Today_Sum_Bullion_Orders) AS INT), 1) 
+		SET @Answer = @Answer + CONVERT(CHAR(10), CAST((@tbl_Digital_Sales_Today_Sum_Certified_Orders) AS INT), 1) 
+		SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+		SET @Answer = @Answer + CONVERT(CHAR(21), '  Customers') + CONVERT(CHAR(12), CAST((@tbl_Digital_Sales_Today_Sum_Bullion_Customers + @tbl_Digital_Sales_Today_Sum_Certified_Customers) AS INT), 1) 
+		SET @Answer = @Answer + CONVERT(CHAR(12), CAST((@tbl_Digital_Sales_Today_Sum_Bullion_Customers) AS INT), 1) 
+		SET @Answer = @Answer + CONVERT(CHAR(10), CAST((@tbl_Digital_Sales_Today_Sum_Certified_Customers) AS INT), 1) 
+		
+		
+	END  --  IF (@tbl_Digital_Today_Count > 0) 
+ELSE -- (@tbl_Digital_Today_Count = 0) 
+	BEGIN
+		SET @Answer = @Answer + 'None'
+	END
+
+SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+SET @Answer = @Answer + '##############################################' + CHAR(13) + CHAR(10) +
+						'DIGITAL SALES DATA (MTD)' + CHAR(13) + CHAR(10) +
+						'##############################################' + CHAR(13) + CHAR(10) 
+SET @Answer = @Answer + 'Ad Code          Total     Bullion   Certified' + CHAR(13) + CHAR(10) + CHAR(13) + CHAR(10) 
+IF (@tbl_Digital_Sales_MTD_Count > 0) 
+	BEGIN
+		WHILE @tbl_Digital_Sales_MTD_Count_Line_ID <= @tbl_Digital_Sales_MTD_Count
+			BEGIN
+				SET @Answer = @Answer + CAST ((SELECT Ad_Code FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID) AS CHAR(10)) 
+				SET @Answer = @Answer + ' $' + CONVERT(CHAR(10), CAST ((SELECT Sales_Total FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID) AS MONEY), 1) 
+				SET @Answer = @Answer + ' $' + CONVERT(CHAR(10), CAST ((SELECT Bullion_Total FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID) AS MONEY), 1) 
+				SET @Answer = @Answer + ' $' + CONVERT(CHAR(10), CAST ((SELECT Certified_Total FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID) AS MONEY), 1) + CHAR(13) + CHAR(10) 
+				
+				SET @Answer = @Answer + CONVERT(CHAR(21), '  Orders') + CONVERT(CHAR(12), CAST ((SELECT ISNULL(Bullion_Orders, 0) + ISNULL(Certified_Orders, 0) + ISNULL(Gold_Reports_Orders, 0) FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID) AS Int)) 
+				SET @Answer = @Answer + CONVERT(CHAR(12), CAST ((SELECT ISNULL(Bullion_Orders, 0) FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID) AS Int)) 
+				SET @Answer = @Answer + CONVERT(CHAR(10), CAST ((SELECT ISNULL(Certified_Orders, 0) FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID) AS Int)) 		
+				SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+				SET @Answer = @Answer + CONVERT(CHAR(21), '  Customers') + CONVERT(CHAR(12), CAST ((SELECT ISNULL(Bullion_Customers, 0) + ISNULL(Certified_Customers, 0) FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID) AS Int)) 
+				SET @Answer = @Answer + CONVERT(CHAR(12), CAST ((SELECT ISNULL(Bullion_Customers, 0) FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID) AS Int)) 
+				SET @Answer = @Answer + CONVERT(CHAR(10), CAST ((SELECT ISNULL(Certified_Customers, 0) FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID) AS Int)) 
+				
+				SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+				
+				SET @tbl_Digital_Sales_MTD_Sum_Total = @tbl_Digital_Sales_MTD_Sum_Total + ISNULL((SELECT Sales_Total FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID), 0)
+				SET @tbl_Digital_Sales_MTD_Sum_Bullion = @tbl_Digital_Sales_MTD_Sum_Bullion + ISNULL((SELECT Bullion_Total FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID), 0)
+				SET @tbl_Digital_Sales_MTD_Sum_Certified = @tbl_Digital_Sales_MTD_Sum_Certified + ISNULL((SELECT Certified_Total FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID), 0)
+				SET @tbl_Digital_Sales_MTD_Sum_Bullion_Orders = @tbl_Digital_Sales_MTD_Sum_Bullion_Orders + ISNULL((SELECT Bullion_Orders FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID), 0)
+				SET @tbl_Digital_Sales_MTD_Sum_Certified_Orders = @tbl_Digital_Sales_MTD_Sum_Certified_Orders + ISNULL((SELECT Certified_Orders FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID), 0)
+				SET @tbl_Digital_Sales_MTD_Sum_Bullion_Customers = @tbl_Digital_Sales_MTD_Sum_Bullion_Customers + ISNULL((SELECT Bullion_Customers FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID), 0)
+				SET @tbl_Digital_Sales_MTD_Sum_Certified_Customers = @tbl_Digital_Sales_MTD_Sum_Certified_Customers + ISNULL((SELECT Certified_Customers FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_MTD_Count_Line_ID), 0)
+				--SET @tbl_Digital_Sales_MTD_Sum_Bullion_ = @tbl_Digital_Sales_MTD_Sum_Bullion + ISNULL((SELECT Bullion_Total FROM @tbl_Digital_Sales_MTD WHERE PK_ID = @tbl_Digital_Sales_Today_Count_Line_ID), 0)
+				SET @Answer = @Answer + CHAR(13) + CHAR(10) 				
+				SET @tbl_Digital_Sales_MTD_Count_Line_ID = @tbl_Digital_Sales_MTD_Count_Line_ID + 1
+		END  --  WHILE @tbl_Digital_MTD_Count_Line_ID <= @tbl_Digital_MTD_Count
+		SET @Answer = @Answer + '==============================================' + CHAR(13) + CHAR(10) 
+		SET @Answer = @Answer + 'Total:     $' + CONVERT(CHAR(10), CAST((@tbl_Digital_Sales_MTD_Sum_Total) AS MONEY), 1) 
+		SET @Answer = @Answer + ' $' + CONVERT(CHAR(10), CAST((@tbl_Digital_Sales_MTD_Sum_Bullion) AS MONEY), 1) 
+		SET @Answer = @Answer + ' $' + CONVERT(CHAR(10), CAST((@tbl_Digital_Sales_MTD_Sum_Certified) AS MONEY), 1)
+		SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+		SET @Answer = @Answer + CONVERT(CHAR(21), '  Orders') + CONVERT(CHAR(12), CAST((@tbl_Digital_Sales_MTD_Sum_Bullion_Orders + @tbl_Digital_Sales_MTD_Sum_Certified_Orders) AS INT), 1) 
+		SET @Answer = @Answer + CONVERT(CHAR(12), CAST((@tbl_Digital_Sales_MTD_Sum_Bullion_Orders) AS INT), 1) 
+		SET @Answer = @Answer + CONVERT(CHAR(10), CAST((@tbl_Digital_Sales_MTD_Sum_Certified_Orders) AS INT), 1) 
+		SET @Answer = @Answer + CHAR(13) + CHAR(10) 
+		SET @Answer = @Answer + CONVERT(CHAR(21), '  Customers') + CONVERT(CHAR(12), CAST((@tbl_Digital_Sales_MTD_Sum_Bullion_Customers + @tbl_Digital_Sales_MTD_Sum_Certified_Customers) AS INT), 1) 
+		SET @Answer = @Answer + CONVERT(CHAR(12), CAST((@tbl_Digital_Sales_MTD_Sum_Bullion_Customers) AS INT), 1) 
+		SET @Answer = @Answer + CONVERT(CHAR(10), CAST((@tbl_Digital_Sales_MTD_Sum_Certified_Customers) AS INT), 1) 
+		
+		
+	END  --  IF (@tbl_Digital_MTD_Count > 0) 
+ELSE -- (@tbl_Digital_MTD_Count = 0) 
+	BEGIN
+		SET @Answer = @Answer + 'None'
+	END
+
+
+SELECT @Answer AS Answer
+
+--EXEC dbo.usp_Write_String_To_File @Answer, '\\usmrnas01\SQL_Server\SSIS_Reports\100_SSIS_Report_Packages_VS2005\Reports', '300_USMR_Daily_SIMS_Report_Digital.txt'
+
+--END

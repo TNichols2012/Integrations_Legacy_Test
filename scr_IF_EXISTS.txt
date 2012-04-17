@@ -1,0 +1,11 @@
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='<tbl_Name>'
+		)
+DROP TABLE <tbl_Name>
+GO
+
+
+IF EXISTS (SELECT TABLE_NAME FROM Information_Schema.Tables WHERE Table_Name = @tbl_Name);
+GO

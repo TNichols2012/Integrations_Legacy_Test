@@ -1,0 +1,259 @@
+Dim str_Current_Date, str_Current_Month, str_Current_Month_Name, str_Current_Year
+Dim str_Previous_Date, str_Previous_Month, str_Previous_Month_Name, str_Previous_Year
+Dim str_Delete1_Date, str_Delete1_Month, str_Delete1_Month_Name, str_Delete1_Year
+Dim str_Delete2_Date, str_Delete2_Month, str_Delete2_Month_Name, str_Delete2_Year
+Dim str_Delete3_Date, str_Delete3_Month, str_Delete3_Month_Name, str_Delete3_Year
+
+
+'Daily Variables
+Dim str_Daily_Month, str_Daily_Month_Name, str_Daily_Date, str_Daily_Year, str_Daily_Year_Abbr
+
+'Weekly Variables
+Dim dt_SunDate, str_Weekly_Month, str_Weekly_Date, str_Weekly_Year
+Dim int_Adjust_Day, int_Current_Day
+
+'Monthly Variables
+Dim str_Monthly_Month,  str_Monthly_Date, str_Monthly_Year, str_Monthly_Year_Abbr
+
+'=======================================================================
+Function Main()
+'=======================================================================
+	str_Current_Date = cstr ( Day ( Date ) )
+	str_Previous_Date = cstr ( Day ( Date - 1 ) )
+	str_Delete1_Date = cstr ( Day ( Date - 7 ) )
+	str_Delete2_Date = cstr ( Day ( Date - 8 ) )
+	str_Delete3_Date = cstr ( Day ( Date - 9 ) )
+
+	if ( len ( str_Current_Date ) = 1 ) then
+		str_Current_Date = "0" & str_Current_Date
+	end if
+
+	if ( len ( str_Previous_Date ) = 1 ) then
+		str_Previous_Date = "0" & str_Previous_Date
+	end if
+
+	if ( len ( str_Delete1_Date ) = 1 ) then
+		str_Delete1_Date = "0" & str_Delete1_Date
+	end if
+
+	if ( len ( str_Delete2_Date ) = 1 ) then
+		str_Delete2_Date = "0" & str_Delete2_Date
+	end if
+
+	if ( len ( str_Delete3_Date ) = 1 ) then
+		str_Delete3_Date = "0" & str_Delete3_Date
+	end if
+
+	str_Current_Month = cstr ( Month ( Date ) )
+	str_Previous_Month = cstr ( Month ( Date - 1 ) )
+	str_Delete1_Month = cstr ( Month ( Date - 7 ) )
+	str_Delete2_Month = cstr ( Month ( Date - 8 ) )
+	str_Delete3_Month = cstr ( Month ( Date - 9 ) )
+
+	if ( len ( str_Current_Month ) = 1 ) then
+		str_Current_Month = "0" & str_Current_Month
+	end if
+
+	if ( len ( str_Previous_Month ) = 1 ) then
+		str_Previous_Month = "0" & str_Previous_Month
+	end if
+
+	if ( len ( str_Delete1_Month ) = 1 ) then
+		str_Delete1_Month = "0" & str_Delete1_Month
+	end if
+
+	if ( len ( str_Delete2_Month ) = 1 ) then
+		str_Delete2_Month = "0" & str_Delete2_Month
+	end if
+
+	if ( len ( str_Delete3_Month ) = 1 ) then
+		str_Delete3_Month = "0" & str_Delete3_Month
+	end if
+
+	Select Case str_Current_Month
+		Case "01"  str_Current_Month_Name = "January"
+		Case "02"  str_Current_Month_Name = "February"
+		Case "03"  str_Current_Month_Name = "March"
+		Case "04"  str_Current_Month_Name = "April"
+		Case "05"  str_Current_Month_Name = "May"
+		Case "06"  str_Current_Month_Name = "June"
+		Case "07"  str_Current_Month_Name = "July"
+		Case "08"  str_Current_Month_Name = "August"
+		Case "09"  str_Current_Month_Name = "September"
+		Case "10"  str_Current_Month_Name = "October"
+		Case "11"  str_Current_Month_Name = "November"
+		Case "12"  str_Current_Month_Name = "December"
+	End Select
+
+	Select Case str_Previous_Month
+		Case "01"  str_Previous_Month_Name = "January"
+		Case "02"  str_Previous_Month_Name = "February"
+		Case "03"  str_Previous_Month_Name = "March"
+		Case "04"  str_Previous_Month_Name = "April"
+		Case "05"  str_Previous_Month_Name = "May"
+		Case "06"  str_Previous_Month_Name = "June"
+		Case "07"  str_Previous_Month_Name = "July"
+		Case "08"  str_Previous_Month_Name = "August"
+		Case "09"  str_Previous_Month_Name = "September"
+		Case "10"  str_Previous_Month_Name = "October"
+		Case "11"  str_Previous_Month_Name = "November"
+		Case "12"  str_Previous_Month_Name = "December"
+	End Select
+
+
+	str_Current_Year =  cstr ( Year ( Date ) )
+	str_Previous_Year =  cstr ( Year ( Date - 1 ) )
+	str_Delete1_Year =  cstr ( Year ( Date - 7 ) )
+	str_Delete2_Year =  cstr ( Year ( Date - 8 ) )
+	str_Delete3_Year =  cstr ( Year ( Date - 9 ) )
+
+'*********************************************************************************
+'		Daily Report Dates (str_Daily_Suffix)
+'*********************************************************************************
+	str_Daily_Month = str_Previous_Month
+	str_Daily_Month_Name = str_Previous_Month_Name
+	str_Daily_Date = str_Previous_Date
+	str_Daily_Year = str_Previous_Year
+
+'	DTSGlobalVariables("gv_Daily_Month").Value = str_Daily_Month
+'	DTSGlobalVariables("gv_Daily_Date").Value = str_Daily_Date
+'	DTSGlobalVariables("gv_Daily_Year").Value = str_Daily_Year
+'	DTSGlobalVariables("gv_Daily_Year_Abbr").Value = right ( str_Daily_Year, 2 )
+'	DTSGlobalVariables("gv_Daily_Suffix").Value = str_Daily_Month & str_Daily_Date
+
+'*********************************************************************************
+'		Weekly Report Dates (str_Weekly_Suffix)
+'*********************************************************************************
+	int_Current_Day = WeekDay ( Date )
+	
+	If ( int_Current_Day = 1 ) then
+		int_Adjust_Day = 0
+	end if
+
+	If ( int_Current_Day > 1 )  then
+		int_Adjust_Day = WeekDay ( Date-1 )
+	end if
+
+	dt_SunDate = Date - Int_Adjust_Day
+
+	str_Weekly_Month = cstr ( Month ( dt_SunDate ) )
+	str_Weekly_Date = cstr ( Day ( dt_SunDate ) )
+	str_Weekly_Year = cstr ( Year ( dt_SunDate ) )
+
+	if ( len ( str_Weekly_Date ) = 1 ) then
+		str_Weekly_Date = "0" & str_Weekly_Date
+	end if
+
+	if ( len ( str_Weekly_Month ) = 1 ) then
+		str_Weekly_Month = "0" & str_Weekly_Month
+	end if
+
+'	DTSGlobalVariables("gv_Weekly_Month").Value = str_Weekly_Month
+'	DTSGlobalVariables("gv_Weekly_Date").Value = str_Weekly_Date
+'	DTSGlobalVariables("gv_Weekly_Year").Value = str_Weekly_Year
+'	DTSGlobalVariables("gv_Weekly_Year_Abbr").Value = right ( str_Weekly_Year, 2 )
+'	DTSGlobalVariables("gv_Weekly_Suffix").Value = str_Weekly_Month & str_Weekly_Date
+
+'*********************************************************************************
+'		Monthly Report Dates (str_Monthly_Suffix)
+'*********************************************************************************
+
+	str_Monthly_Month = cstr ( Month ( DateAdd ( "m", -1, Date ) ) )
+'	str_Monthly_Date = 
+	str_Monthly_Year =  cstr ( Year ( DateAdd ( "m", -1, Date ) ) )
+
+	if ( len ( str_Monthly_Month ) = 1 ) then
+		str_Monthly_Month = "0" & str_Monthly_Month
+	end if
+
+'	DTSGlobalVariables("gv_Monthly_Month").Value = str_Monthly_Month
+'	DTSGlobalVariables("gv_Monthly_Date").Value = str_Monthly_Date
+'	DTSGlobalVariables("gv_Monthly_Year").Value = str_Monthly_Year
+'	DTSGlobalVariables("gv_Monthly_Year_Abbr").Value = right ( str_Monthly_Year, 2 )
+'	DTSGlobalVariables("gv_Monthly_Suffix").Value = str_Monthly_Month & str_Monthly_Name
+'	DTSGlobalVariables("gv_Monthly_Name").Value = MonthName(str_Monthly_Month)
+'
+	Call Archive_Report()
+
+	Main = DTSTaskExecResult_Success
+
+End Function
+'=======================================================================
+
+
+
+'=======================================================================
+Function Archive_Report()
+'=======================================================================
+DIM obj_FSO
+DIM str_FilePathRoot, str_FilePathNew, str_FilePathNew2
+DIM str_FilePath_AU, str_FilePath_BM, str_FilePath_C3, str_FilePath_Company
+DIM str_FileName, str_FilePathName, str_FilePathWeb
+DIM str_File1a, str_File2a, str_File3a, str_File4a, str_File5a, str_File6a, str_File7a, str_BatFilea, str_FTPfile1a
+DIM str_File1b, str_File2b, str_File3b, str_File4b, str_File5b, str_File6b, str_File7b, str_BatFileb, str_FTPfile1b
+DIM str_Prefix, str_Report_Title
+
+	Set obj_FSO=CreateObject("Scripting.FileSystemObject")
+
+
+'=======================================================================
+'	Global Variables used to define the archive parameters
+
+	str_FilePathRoot		= "\\usmrnas01\SQL_Server\Client_USMR\Reports\"
+	str_FilePath_Company	= "\\usmrnas01\Reports\Web_Company\Managers\"
+	str_FilePath_AU		= "\\usmrnas01\Reports\Web_AU\Managers\"
+	str_FilePath_BM		= "\\usmrnas01\Reports\Web_BM\Managers\"
+	str_FilePath_C3		= "\\usmrnas01\Reports\Web_C3\Managers\"
+	str_FilePath_New		= "\\usmrnas01\Inventory\Variance_Report\"
+
+
+
+	' Report Pre-Processing
+	If obj_FSO.FileExists(str_FilePathRoot & "107_USMR_Daily_Inventory_Variance_Template.bat") Then 
+		obj_FSO.DeleteFile(str_FilePathRoot & "107_USMR_Daily_Inventory_Variance_Template.bat")
+	End If 
+
+
+	'  Report Post-Processing
+	str_FileName= "107_USMR_Daily_Inventory_Variance_Report.xls"
+	str_Prefix = "USMR_"
+	str_Report_Title = "Daily_Inventory_Variance_"
+
+	' Check to see if primary file exists before proceeding  to archive report
+	If obj_FSO.FileExists(str_FilePathRoot & str_FileName) Then
+		Set str_File1b = obj_FSO.GetFile(str_FilePathRoot & str_FileName)
+				
+		' Copies file to Intraweb subfolder for zipping and network directory for archiving
+		str_File1b.Copy(str_FilePath_New & str_Prefix & str_Daily_Year & str_Report_Title  & str_Daily_Month & str_Daily_Date & ".xls")
+
+		' Zip the archive file
+		Set str_File1a= obj_FSO.OpenTextFile(str_FilePathRoot & "107_USMR_Daily_Inventory_Variance_Template.bat", 8, True) 
+		str_File1a.writeline("c:\winzip\wzzip.exe " & _
+			str_FilePath_New & str_Prefix & str_Daily_Year & "Archive_" & str_Daily_Month & str_Daily_Month_Name & ".zip " & _
+			str_FilePath_New & str_Prefix & str_Daily_Year & str_Report_Title  & str_Daily_Month & str_Daily_Date & ".xls")
+
+		'Delete old files
+		str_File1a.writeline("IF EXIST " & _
+				str_FilePath_New & str_Prefix  & str_Delete1_Year & str_Report_Title   & str_Delete1_Month & str_Delete1_Date & ".xls " & _
+				"DEL " & str_FilePath_New & str_Prefix  & str_Delete1_Year & str_Report_Title & str_Delete1_Month & str_Delete1_Date & ".xls ")
+
+		str_File1a.writeline("IF EXIST " & _
+				str_FilePath_New & str_Prefix  & str_Delete2_Year & str_Report_Title & str_Delete2_Month & str_Delete2_Date & ".xls " & _
+				"DEL " & str_FilePath_New & str_Prefix   & str_Delete2_Year & str_Report_Title & str_Delete2_Month & str_Delete2_Date & ".xls ")
+
+		str_File1a.writeline("IF EXIST " & _
+				str_FilePath_New & str_Prefix  & str_Delete3_Year & str_Report_Title & str_Delete3_Month & str_Delete3_Date & ".xls " & _
+				"DEL " & str_FilePath_New & str_Prefix & str_Delete3_Year & str_Report_Title & str_Delete3_Month & str_Delete3_Date & ".xls ")
+
+		str_File1a.writeline("dir " )
+
+		str_File1a.close
+		
+	End If 	
+
+	'Call Print_Report_AU()
+
+	Set obj_FSO=Nothing
+
+End Function
+'=======================================================================

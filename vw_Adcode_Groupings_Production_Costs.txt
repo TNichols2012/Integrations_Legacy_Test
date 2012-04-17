@@ -1,0 +1,191 @@
+SELECT     
+'Total Ads Produced' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+
+UNION ALL
+
+SELECT     
+'Total Ads Production Cost' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN ad_cost ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN ad_cost ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN ad_cost ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN ad_cost ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN ad_cost ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN ad_cost ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+
+UNION ALL
+
+SELECT     
+'Newspaper Ads Produced' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('Newspaper')
+
+UNION ALL
+
+SELECT     
+'Newspaper Ads Production Cost' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN ad_cost ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN ad_cost ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN ad_cost ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN ad_cost ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN ad_cost ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN ad_cost ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('Newspaper')
+
+UNION ALL
+
+SELECT     
+'TV Ads Produced' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('TV')
+
+UNION ALL
+
+SELECT     
+'TV Ads Production Cost' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN ad_cost ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN ad_cost ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN ad_cost ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN ad_cost ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN ad_cost ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN ad_cost ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('TV')
+
+UNION ALL
+
+SELECT     
+'Magazine Ads Produced' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('Magazine')
+
+UNION ALL
+
+SELECT     
+'Magazine Ads Production Cost' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN ad_cost ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN ad_cost ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN ad_cost ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN ad_cost ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN ad_cost ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN ad_cost ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('Magazine')
+
+UNION ALL
+
+SELECT     
+'Radio Ads Produced' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('Radio')
+
+UNION ALL
+
+SELECT     
+'Radio Ads Production Cost' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN ad_cost ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN ad_cost ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN ad_cost ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN ad_cost ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN ad_cost ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN ad_cost ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('Radio')
+
+UNION ALL
+
+SELECT     
+'DMT Ads Produced' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('DMT')
+
+UNION ALL
+
+SELECT     
+'DMT Ads Production Cost' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN ad_cost ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN ad_cost ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN ad_cost ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN ad_cost ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN ad_cost ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN ad_cost ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('DMT')
+
+UNION ALL
+
+SELECT     
+'Other Ads Produced' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('RMA', 'EMPL', 'Internet', 'Inbound', 'eMail', 'Promo', 'Outbound')
+
+UNION ALL
+
+SELECT     
+'Other Ads Production Cost' AS 'Media_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN ad_Date >= '1/1/2001' AND ad_Date < '1/1/2002' THEN ad_cost ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2002' AND ad_Date < '1/1/2003' THEN ad_cost ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2003' AND ad_Date < '1/1/2004' THEN ad_cost ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2004' AND ad_Date < '1/1/2005' THEN ad_cost ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2005' AND ad_Date < '1/1/2006' THEN ad_cost ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN ad_Date >= '1/1/2006' AND ad_Date < '1/1/2007' THEN ad_cost ELSE 0 END) AS Y2006_Cust
+FROM         dbo.tbl_Ad_Codes
+WHERE     Campaign IN ('RMA', 'EMPL', 'Internet', 'Inbound', 'eMail', 'Promo', 'Outbound')

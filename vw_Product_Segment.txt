@@ -1,0 +1,79 @@
+SELECT     
+ISNULL( ('Coins Shipped: ' + Stock_Type), 'Coins Shipped: Misc') AS Stock_Type, 
+SUM(Quantity_Shipped) AS Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Y2001,
+SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Y2002,
+SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Y2003,
+SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Y2004,
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Y2005,
+SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Order_Date >= '1/1/2007' AND Order_Date < '1/1/2008' THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < DateAdd(year, -1, dbo.Get_TheDate(Getdate())) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS PreviousYTD
+FROM         vw_Sales_Orders
+WHERE Item_State IN ('PS', 'SH', 'RT')
+GROUP BY Stock_Type
+
+UNION ALL
+
+SELECT     
+ISNULL (('Value Shipped: ' + Stock_Type), 'Value Shipped: Misc') AS Stock_Type, 
+SUM(Value_Shipped) AS Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= '1/1/2001' AND Order_Date < '1/1/2002' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2001,
+SUM(CASE WHEN Order_Date >= '1/1/2002' AND Order_Date < '1/1/2003' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2002,
+SUM(CASE WHEN Order_Date >= '1/1/2003' AND Order_Date < '1/1/2004' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2003,
+SUM(CASE WHEN Order_Date >= '1/1/2004' AND Order_Date < '1/1/2005' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2004,
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < '1/1/2006' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2005,
+SUM(CASE WHEN Order_Date >= '1/1/2006' AND Order_Date < '1/1/2007' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Order_Date >= '1/1/2007' AND Order_Date < '1/1/2008' THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Order_Date >= '1/1/2005' AND Order_Date < DateAdd(year, -1, dbo.Get_TheDate(Getdate())) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS PreviousYTD
+FROM         vw_Sales_Orders
+WHERE Item_State IN ('PS', 'SH', 'RT')
+GROUP BY Stock_Type
+
+--***********************************************************
+
+SELECT     
+('Coins Shipped: ' + Stock_Type) AS Stock_Type, 
+SUM(Quantity_Shipped) AS Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_13 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_12 ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_Previous_13,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_12 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_11 ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_Previous_12,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_11 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_10 ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_Previous_11,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_10 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_09 ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_Previous_10,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_09 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_08 ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_Previous_09,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_08 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_07 ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_Previous_08,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_07 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_06 ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_Previous_07,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_06 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_05 ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_Previous_06,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_05 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_04 ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_Previous_05,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_04 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_03 ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_Previous_04,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_03 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_02 ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_Previous_03,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_02 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_01 ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_Previous_02,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_01 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_Previous_01,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth ( GetDate() ) THEN isnull(Quantity_Shipped, 0) ELSE 0 END) AS Month_To_Date
+FROM         vw_Sales_Orders
+WHERE Item_State IN ('PS', 'SH', 'RT')
+AND Order_Date >= dbo.Get_TheMonth_Previous_13 ( GetDate() )
+GROUP BY Stock_Type
+
+UNION ALL
+
+SELECT     
+('Value Shipped: ' + Stock_Type) AS Stock_Type, 
+SUM(Value_Shipped) AS Ttl_Shipped, 
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_13 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_12 ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_Previous_13,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_12 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_11 ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_Previous_12,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_11 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_10 ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_Previous_11,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_10 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_09 ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_Previous_10,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_09 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_08 ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_Previous_09,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_08 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_07 ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_Previous_08,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_07 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_06 ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_Previous_07,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_06 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_05 ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_Previous_06,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_05 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_04 ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_Previous_05,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_04 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_03 ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_Previous_04,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_03 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_02 ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_Previous_03,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_02 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth_Previous_01 ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_Previous_02,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth_Previous_01 ( GetDate() ) AND Order_Date < dbo.Get_TheMonth ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_Previous_01,
+SUM(CASE WHEN Order_Date >= dbo.Get_TheMonth ( GetDate() ) THEN isnull(Value_Shipped, 0) ELSE 0 END) AS Month_To_Date
+FROM         vw_Sales_Orders
+WHERE Item_State IN ('PS', 'SH', 'RT')
+AND Order_Date >= dbo.Get_TheMonth_Previous_13 ( GetDate() )
+GROUP BY Stock_Type

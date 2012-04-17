@@ -1,0 +1,144 @@
+Dim str_Current_Date, str_Current_Month, str_Current_Month_Name, str_Current_Year
+Dim str_Previous_Date, str_Previous_Month, str_Previous_Month_Name, str_Previous_Year
+
+'Daily Variables
+Dim str_Daily_Month, str_Daily_Month_Name, str_Daily_Date, str_Daily_Year, str_Daily_Year_Abbr
+
+'Weekly Variables
+Dim dt_SunDate, str_Weekly_Month, str_Weekly_Date, str_Weekly_Year
+Dim int_Adjust_Day, int_Current_Day
+
+'Monthly Variables
+Dim str_Monthly_Month,  str_Monthly_Date, str_Monthly_Year, str_Monthly_Year_Abbr
+
+'=======================================================================
+Function Main()
+'=======================================================================
+	str_Current_Date = cstr ( Day ( Date ) )
+	str_Previous_Date = cstr ( Day ( Date - 1 ) )
+	str_Current_Month = cstr ( Month ( Date ) )
+	str_Previous_Month = cstr ( Month ( Date-1 ) )
+
+	str_Current_Year =  cstr ( Year ( Date ) )
+	str_Previous_Year =  cstr ( Year ( Date-1 ) )
+
+
+	if ( len ( str_Current_Month ) = 1 ) then
+		str_Current_Month = "0" & str_Current_Month
+	end if
+
+	if ( len ( str_Previous_Month ) = 1 ) then
+		str_Previous_Month = "0" & str_Previous_Month
+	end if
+
+	if ( len ( str_Current_Date ) = 1 ) then
+		str_Current_Date = "0" & str_Current_Date
+	end if
+
+	if ( len ( str_Previous_Date ) = 1 ) then
+		str_Previous_Date = "0" & str_Previous_Date
+	end if
+
+	Select Case str_Current_Month
+		Case "01"  str_Current_Month_Name = "January"
+		Case "02"  str_Current_Month_Name = "February"
+		Case "03"  str_Current_Month_Name = "March"
+		Case "04"  str_Current_Month_Name = "April"
+		Case "05"  str_Current_Month_Name = "May"
+		Case "06"  str_Current_Month_Name = "June"
+		Case "07"  str_Current_Month_Name = "July"
+		Case "08"  str_Current_Month_Name = "August"
+		Case "09"  str_Current_Month_Name = "September"
+		Case "10"  str_Current_Month_Name = "October"
+		Case "11"  str_Current_Month_Name = "November"
+		Case "12"  str_Current_Month_Name = "December"
+	End Select
+
+	Select Case str_Previous_Month
+		Case "01"  str_Previous_Month_Name = "January"
+		Case "02"  str_Previous_Month_Name = "February"
+		Case "03"  str_Previous_Month_Name = "March"
+		Case "04"  str_Previous_Month_Name = "April"
+		Case "05"  str_Previous_Month_Name = "May"
+		Case "06"  str_Previous_Month_Name = "June"
+		Case "07"  str_Previous_Month_Name = "July"
+		Case "08"  str_Previous_Month_Name = "August"
+		Case "09"  str_Previous_Month_Name = "September"
+		Case "10"  str_Previous_Month_Name = "October"
+		Case "11"  str_Previous_Month_Name = "November"
+		Case "12"  str_Previous_Month_Name = "December"
+	End Select
+
+'*********************************************************************************
+'		Daily Report Dates (str_Daily_Suffix)
+'*********************************************************************************
+	str_Daily_Month = str_Previous_Month
+	str_Daily_Month_Name = str_Previous_Month_Name
+	str_Daily_Date = str_Previous_Date
+	str_Daily_Year = str_Previous_Year
+
+'	DTSGlobalVariables("gv_Daily_Month").Value = str_Daily_Month
+'	DTSGlobalVariables("gv_Daily_Date").Value = str_Daily_Date
+'	DTSGlobalVariables("gv_Daily_Year").Value = str_Daily_Year
+'	DTSGlobalVariables("gv_Daily_Year_Abbr").Value = right ( str_Daily_Year, 2 )
+'	DTSGlobalVariables("gv_Daily_Suffix").Value = str_Daily_Month & str_Daily_Date
+
+'*********************************************************************************
+'		Weekly Report Dates (str_Weekly_Suffix)
+'*********************************************************************************
+	int_Current_Day = WeekDay ( Date )
+	
+	If ( int_Current_Day = 1 ) then
+		int_Adjust_Day = 0
+	end if
+
+	If ( int_Current_Day > 1 )  then
+		int_Adjust_Day = WeekDay ( Date-1 )
+	end if
+
+	dt_SunDate = Date - Int_Adjust_Day
+
+	str_Weekly_Month = cstr ( Month ( dt_SunDate ) )
+	str_Weekly_Date = cstr ( Day ( dt_SunDate ) )
+	str_Weekly_Year = cstr ( Year ( dt_SunDate ) )
+
+	if ( len ( str_Weekly_Date ) = 1 ) then
+		str_Weekly_Date = "0" & str_Weekly_Date
+	end if
+
+	if ( len ( str_Weekly_Month ) = 1 ) then
+		str_Weekly_Month = "0" & str_Weekly_Month
+	end if
+
+'	DTSGlobalVariables("gv_Weekly_Month").Value = str_Weekly_Month
+'	DTSGlobalVariables("gv_Weekly_Date").Value = str_Weekly_Date
+'	DTSGlobalVariables("gv_Weekly_Year").Value = str_Weekly_Year
+'	DTSGlobalVariables("gv_Weekly_Year_Abbr").Value = right ( str_Weekly_Year, 2 )
+'	DTSGlobalVariables("gv_Weekly_Suffix").Value = str_Weekly_Month & str_Weekly_Date
+
+'*********************************************************************************
+'		Monthly Report Dates (str_Monthly_Suffix)
+'*********************************************************************************
+
+	str_Monthly_Month = cstr ( Month ( DateAdd ( "m", -1, Date ) ) )
+'	str_Monthly_Date = 
+	str_Monthly_Year =  cstr ( Year ( DateAdd ( "m", -1, Date ) ) )
+
+	if ( len ( str_Monthly_Month ) = 1 ) then
+		str_Monthly_Month = "0" & str_Monthly_Month
+	end if
+
+'	DTSGlobalVariables("gv_Monthly_Month").Value = str_Monthly_Month
+'	DTSGlobalVariables("gv_Monthly_Date").Value = str_Monthly_Date
+'	DTSGlobalVariables("gv_Monthly_Year").Value = str_Monthly_Year
+'	DTSGlobalVariables("gv_Monthly_Year_Abbr").Value = right ( str_Monthly_Year, 2 )
+'	DTSGlobalVariables("gv_Monthly_Suffix").Value = str_Monthly_Month & str_Monthly_Name
+'	DTSGlobalVariables("gv_Monthly_Name").Value = MonthName(str_Monthly_Month)
+'
+	Call Archive_Report()
+
+	Main = DTSTaskExecResult_Success
+
+End Function
+'=======================================================================
+

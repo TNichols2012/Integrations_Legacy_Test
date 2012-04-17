@@ -1,0 +1,88 @@
+USE [Data_Warehouse]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_Loadbook_Creation]    Script Date: 11/08/2011 10:29:25 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [dbo].[usp_Loadbook_Creation] 
+@in_Sales_ID varchar(6),
+@in_Min float, 
+@in_Max float,
+@in_Count float 
+AS 
+BEGIN
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_Loadbook_Creation'
+		)
+DROP TABLE tbl_Loadbook_Creation;
+
+SELECT TOP (100) PERCENT 
+IDENTITY(int, 1,1) AS Group_ID,
+Cust_ID, 
+First_Name, 
+Last_Name, 
+Gross, 
+Sales_ID, 
+Activity_Date,
+'No' AS Reserved
+INTO tbl_Loadbook_Creation
+FROM         dbo.tbl_MOM_Cust
+WHERE Sales_ID = @in_Sales_ID
+AND Gross >= @in_Min
+AND Gross <= @in_Max
+ORDER BY Gross DESC;
+
+DECLARE @tmp_count int;
+DECLARE @int_Leads int;
+DECLARE @int_Increment int;
+
+SET @int_Leads = @in_Count;
+SET @tmp_count = (SELECT COUNT(*) FROM dbo.tbl_Loadbook_Creation);
+SET @int_Increment = round((@tmp_count/@int_Leads), 0);
+
+DECLARE @var int;
+DECLARE @first int;
+DECLARE @second int;
+
+SET @first = 1;
+SET @second = 1;
+
+WHILE @first <= @int_Increment
+	BEGIN
+		SET @second = @first;
+		
+		WHILE @second <= @tmp_count
+			BEGIN
+				UPDATE [dbo].[tbl_Loadbook_Creation]
+				SET Reserved = @first
+				WHERE Group_ID = @second;
+
+				SET	@second =  @second + @int_Increment;
+			END -- WHILE @second<@tmp_count
+		SET @first = @first+1;
+	END; -- WHILE @first<@int_Increment
+
+DECLARE	@str_SQL	varchar(1000)
+
+SET	@str_SQL =	'SELECT TOP ' + CONVERT(varchar(4), @in_Count) + ' ' +
+				'Cust_ID, First_Name, Last_Name, Gross, Sales_ID, Activity_Date, Reserved ' + 
+				'FROM tbl_Loadbook_Creation WHERE Reserved = 1' 
+EXEC (@str_SQL)
+
+SET	@str_SQL =	'SELECT TOP ' + CONVERT(varchar(4), @in_Count) + ' ' +
+				'Cust_ID, First_Name, Last_Name, Gross, Sales_ID, Activity_Date, Reserved ' + 
+				'FROM tbl_Loadbook_Creation WHERE Reserved = 2' 
+EXEC (@str_SQL)
+
+SET	@str_SQL =	'SELECT TOP ' + CONVERT(varchar(4), @in_Count) + ' ' +
+				'Cust_ID, First_Name, Last_Name, Gross, Sales_ID, Activity_Date, Reserved ' + 
+				'FROM tbl_Loadbook_Creation WHERE Reserved = 3' 
+EXEC (@str_SQL)
+
+
+END

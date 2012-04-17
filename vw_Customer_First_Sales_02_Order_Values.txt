@@ -1,0 +1,38 @@
+SELECT     
+vCFS01D.Entry_Date, 
+vCFS01D.Cust_ID, vCFS01D.First_Name, 
+vCFS01D.Last_Name, 
+vCFS01D.Ttl_Order_Count, 
+vCFS01D.Campaign, 
+vCFS01D.Orig_Ad_Code, 
+MIN(vSO.Order_Date) AS Init_Order_Date, 
+MAX(vSO.Order_ID) AS Init_Order_ID, 
+SUM(ISNULL(vSO.Value_Shipped, 0)) AS Init_TB_Merch, 
+SUM(CASE WHEN vSO.stock_Type = 'Bullion' THEN isnull(vSO.value_ordered, 0) ELSE 0 END) AS Init_Bullion_Ordered, 
+SUM(CASE WHEN vSO.stock_Type = 'Bullion' THEN isnull(vSO.value_shipped, 0) ELSE 0 END) AS Init_Bullion_Shipped, 
+SUM(CASE WHEN vSO.stock_Type = 'Bullion' AND vSO.Item_State = 'RT' THEN isnull(vSO.value_ordered, 0) ELSE 0 END) AS Init_Bullion_Returned, 
+SUM(CASE WHEN vSO.stock_Type <> 'Bullion' THEN isnull(vSO.value_ordered, 0) ELSE 0 END) AS Init_nonBullion_Ordered, 
+SUM(CASE WHEN vSO.stock_Type <> 'Bullion' THEN isnull(vSO.value_shipped, 0) ELSE 0 END) AS Init_nonBullion_Shipped, 
+SUM(CASE WHEN vSO.stock_Type <> 'Bullion' AND vSO.Item_State = 'RT' THEN isnull(vSO.value_ordered, 0) ELSE 0 END) AS Init_nonBullion_Returned, 
+MIN(vSONBO.Order_Date) AS Init_NB_Order_Date, 
+MAX(vSONBO.Order_ID) AS Init_NB_Order_ID, 
+SUM(ISNULL(vSONBO.Value_Shipped, 0)) AS Init_NB_TB_Merch, 
+SUM(CASE WHEN vSONBO.stock_Type = 'Bullion' THEN isnull(vSONBO.value_ordered, 0) ELSE 0 END) AS Init_NB_Bullion_Ordered, 
+SUM(CASE WHEN vSONBO.stock_Type = 'Bullion' THEN isnull(vSONBO.value_shipped, 0) ELSE 0 END) AS Init_NB_Bullion_Shipped, 
+SUM(CASE WHEN vSONBO.stock_Type = 'Bullion' AND vSONBO.Item_State = 'RT' THEN isnull(vSONBO.value_ordered, 0) ELSE 0 END) AS Init_NB_Bullion_Returned, 
+SUM(CASE WHEN vSONBO.stock_Type <> 'Bullion' THEN isnull(vSONBO.value_ordered, 0) ELSE 0 END) AS Init_NB_nonBullion_Ordered, 
+SUM(CASE WHEN vSONBO.stock_Type <> 'Bullion' THEN isnull(vSONBO.value_shipped, 0) ELSE 0 END) AS Init_NB_nonBullion_Shipped, 
+SUM(CASE WHEN vSONBO.stock_Type <> 'Bullion' AND vSONBO.Item_State = 'RT' THEN isnull(vSONBO.value_ordered, 0) ELSE 0 END) AS Init_NB_nonBullion_Returned, 
+CASE WHEN MIN(vSO.Stock_ID) LIKE '%CATALOG%' THEN 'CMM' ELSE MIN(vSO.Ship_List) END AS Ship_List
+FROM         	dbo.vw_Customer_First_Sales_01_Dates AS vCFS01D 
+LEFT OUTER JOIN dbo.vw_Sales_Orders AS vSO 
+ON		vCFS01D.First_Order_Date = vSO.Order_Date AND vCFS01D.Cust_ID = vSO.Cust_ID 
+LEFT OUTER JOIN	dbo.vw_Sales_Orders_NonBullion_Only AS vSONBO 
+ON		vCFS01D.First_NB_Order_Date = vSONBO.Order_Date 
+AND             vCFS01D.Cust_ID = vSONBO.Cust_ID
+LEFT OUTER JOIN	dbo.vw_Sales_Orders_Bullion_Only AS vSOBO 
+ON		vCFS01D.First_NB_Order_Date = vSOBO.Order_Date 
+AND             vCFS01D.Cust_ID = vSOBO.Cust_ID
+
+GROUP BY vCFS01D.Entry_Date, vCFS01D.Cust_ID, vCFS01D.First_Name, vCFS01D.Last_Name, vCFS01D.Ttl_Order_Count, vCFS01D.Campaign, 
+                      vCFS01D.Orig_Ad_Code, vCFS01D.Ship_List

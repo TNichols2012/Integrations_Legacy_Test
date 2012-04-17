@@ -1,0 +1,54 @@
+USE [Data_Warehouse]
+GO
+/****** Object:  UserDefinedFunction [dbo].[Get_PayPeriod_Stop]    Script Date: 10/01/2010 13:26:13 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER FUNCTION [dbo].[Get_PayPeriod_Stop](@In_TodaysDate datetime, @In_PayPeriod varchar(15))
+RETURNS date AS
+BEGIN
+	DECLARE @StopDate Date
+	
+	IF @In_PayPeriod = 'Current'
+	BEGIN
+		IF MONTH(@in_TodaysDate) = 12
+			BEGIN
+				IF DAY(@In_TodaysDate) < 16
+				SET @StopDate = CONVERT(Date, (CONVERT(varchar(4), YEAR(@in_TodaysDate))+ '-' + CONVERT(Varchar(2), MONTH(@in_TodaysDate)) + '-16' ))
+				ELSE SET @StopDate = CONVERT(Date, (CONVERT(varchar(4), YEAR(@in_TodaysDate)+1)+ '-01-01' ))			
+			END
+		ELSE
+			BEGIN
+				IF DAY(@In_TodaysDate) < 16
+				SET @StopDate = CONVERT(Date, (CONVERT(varchar(4), YEAR(@in_TodaysDate))+ '-' + CONVERT(Varchar(2), MONTH(@in_TodaysDate)) + '-16' ))
+				ELSE SET @StopDate = CONVERT(Date, (CONVERT(varchar(4), YEAR(@in_TodaysDate))+ '-' + CONVERT(Varchar(2), MONTH(@in_TodaysDate)+1) + '-01' ))
+			END
+	END
+	
+	IF (@In_PayPeriod) = 'Previous'
+	BEGIN
+		IF MONTH(@in_TodaysDate) = 1
+			BEGIN
+				IF DAY(@In_TodaysDate) < 16
+					SET @StopDate = CONVERT(Date, (CONVERT(varchar(4), YEAR(@in_TodaysDate))+ '-01-01' ))	
+				ELSE SET @StopDate = CONVERT(Date, (CONVERT(varchar(4), YEAR(@in_TodaysDate))+ CONVERT(varchar(2), MONTH(@in_TodaysDate)) + '-16' ))	
+			END
+		ELSE
+			BEGIN
+				IF DAY(@In_TodaysDate) < 16
+					SET @StopDate = CONVERT(Date, (CONVERT(varchar(4), YEAR(@in_TodaysDate))+ '-' + CONVERT(Varchar(2), MONTH(@in_TodaysDate)) + '-01' ))	
+				ELSE SET @StopDate = CONVERT(Date, (CONVERT(varchar(4), YEAR(@in_TodaysDate))+ '-' + CONVERT(Varchar(2), MONTH(@in_TodaysDate)) + '-16' ))
+			END
+	END
+	
+	RETURN @StopDate	
+END
+
+
+
+
+
+
+

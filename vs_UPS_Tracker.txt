@@ -1,0 +1,406 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.IO;
+using System.Net;
+
+namespace UPS_Tracking_Details
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // *********** Open connection to database *********** 
+            SqlConnection DB_Conn_1 = new SqlConnection("Server=USRCSQLCLS1;DataBase=Data_Warehouse;Integrated Security=SSPI;Connection Timeout=60");
+            SqlDataAdapter SqlDataAdapter_1_DB_Conn_1 = new SqlDataAdapter();
+            DataSet DataSet_1_SqlDataAdapter_1_DB_Conn_1 = new DataSet();
+            
+            string sProcedureName = "usp_UPS_Tracking_Search";
+
+            // *********** Get Tracking Numbers from DB and fill DB_Conn_1_SqlDataAdapter_1_DataSet_1 *********** 
+            try
+            {
+                SqlDataAdapter_1_DB_Conn_1 = new SqlDataAdapter(sProcedureName, DB_Conn_1);
+                SqlDataAdapter_1_DB_Conn_1.SelectCommand.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter_1_DB_Conn_1.Fill(DataSet_1_SqlDataAdapter_1_DB_Conn_1, sProcedureName);
+            }  //  try
+            catch (SqlException sqlexception)
+            {
+                string[] s = sqlexception.ToString().Split('\n');
+                Console.WriteLine("Error Detected!");
+            }  //  catch
+
+            // *********** For Every Tracking Numbers from DB, Find Shipment Progress *********** 
+            for (int i = 0; i < DataSet_1_SqlDataAdapter_1_DB_Conn_1.Tables[sProcedureName].Rows.Count; i++)
+            {
+                string str_Tracking_Number = "";
+                string str_UPS_Status = "";
+                string str_URL = "http://wwwapps.ups.com/etracking/tracking.cgi?TypeOfInquiryNumber=T&InquiryNumber1=";
+                string str_UPS_Exception = "";
+                Stream Str_URL;
+
+                // Get Tracking Number
+                str_Tracking_Number = DataSet_1_SqlDataAdapter_1_DB_Conn_1.Tables[sProcedureName].Rows[i]["Tracking_Number"].ToString();
+
+                // Append Tracking Number to URL
+                str_URL += str_Tracking_Number;
+
+                // Open WebClient and web stream
+                using (WebClient WC_UPS_Site = new WebClient())
+                {
+                    try
+                    {
+                        // Open URL - will NOT work from Client computer (I put this in \\usrcappsrvr01\SIMS\Tools\Scraper, remoted into usrcappsrvr01 and it worked fine).
+                        Str_URL = WC_UPS_Site.OpenRead(str_URL);
+                    }  //  try
+                    catch (Exception e)
+                    {
+                        string[] sError = e.ToString().Split('\n');
+                        string sErrTxt = "Error connecting to " + str_URL;
+                        Console.WriteLine(sError[0], sErrTxt);
+                        return;
+                    }  //  catch
+                }  //  using (WebClient WC_UPS_Site = new WebClient())
+
+                string str_Line_Data = "";
+                string str_Paragraph_Data = "";
+                string str_Exception_Data = "";
+                string str_Status = "";
+
+                int start_pos = 0;
+                int stop_pos = 0;
+
+                bool bln_StrNotFound = false;
+
+                // With open stream, use stream reader to load/search strings in string array
+                using (StreamReader SR_str_URL = new StreamReader(Str_URL))
+                {
+                    // Read URL source until we find '<div id="ttc_tt_spStatus">', do...while, not while...do
+                    do
+                    {
+                        str_Line_Data = SR_str_URL.ReadLine();
+                        if (str_Line_Data == null)
+                        {
+                            bln_StrNotFound = true;
+                            break;
+                        }
+                    }
+                    while (str_Line_Data.Contains("ttc_tt_spStatus") == false);  // Beginning of the paragraph
+
+
+                    if (bln_StrNotFound == false)
+                    {
+                        str_Paragraph_Data = str_Line_Data + SR_str_URL.ReadLine();
+                        do
+                        {
+                            str_Paragraph_Data = str_Paragraph_Data + SR_str_URL.ReadLine();
+                            if (str_Line_Data == null)
+                            {
+                                bln_StrNotFound = true;
+                                break;
+                            }
+                        }
+                        while (str_Paragraph_Data.Contains("</div>") == false); // Ending of the paragraph
+
+                        str_Paragraph_Data = Remove_Whitespace(str_Paragraph_Data);
+                        str_Paragraph_Data = Add_myHTML_Format(str_Paragraph_Data);
+
+                        str_UPS_Status = Get_String_Within_Phrase("<h3>", str_Paragraph_Data, "</h3>");
+
+                        //start_pos = str_Paragraph_Data.IndexOf("<h3>") + 4;
+                        //stop_pos = str_Paragraph_Data.IndexOf("</h3>");
+                        //str_Status = str_Paragraph_Data.Substring(start_pos, (stop_pos - start_pos));
+
+                        // Manifested 
+                        if (str_UPS_Status == "Billing Information Received")
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Manifested";
+                        }
+                        if (str_UPS_Status == "Order Processed: Ready for UPS")
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Manifested";
+                        }
+                        if (str_UPS_Status == "Order Processed:Ready for UPS")
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Manifested";
+                        }
+                        if (str_UPS_Status == "Billing Information Voided")
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Cancelled";
+                        }
+
+                        // In Transit
+                        if (str_UPS_Status.Contains("Clearance in Progress"))
+                        {
+                            str_UPS_Exception = str_UPS_Status + ": Customs";
+                            str_Status = "In Transit";
+                        };
+                        if (str_UPS_Status.Contains("In Transit"))
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "In Transit";
+                        }
+
+                        // Out for Delivery
+                        if (str_UPS_Status == "On Vehicle for Delivery Today")
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Out for Delivery";
+                        }
+                        if (str_UPS_Status == "First Attempt Made")
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Out for Delivery";
+                        }
+                        if (str_UPS_Status == "Second Attempt Made")
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Out for Delivery";
+                        }
+                        if (str_UPS_Status == "Held for Customer Pickup Requested")
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Out for Delivery";
+                        }
+                        if (str_UPS_Status == "Held for Customer Pickup")
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Out for Delivery";
+                        }
+                        if (str_UPS_Status == "Held for Future Delivery")
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Out for Delivery";
+                        }
+                        
+                        // Exception
+                        if (str_UPS_Status.Contains("Exception"))
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Exception";
+                        }
+                        if (str_UPS_Status.Contains("Adverse Weather"))
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Exception";
+                        }
+                        if (str_UPS_Status.Contains("Address Change"))
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Exception";
+                        }
+
+                        // Returning
+                        if (str_UPS_Status.Contains("Final Attempt Made"))
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Returning";
+                        }
+                        if (str_UPS_Status.Contains("Return to Sender Requested"))
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Returning";
+                        }
+                        if (str_UPS_Status.Contains("Returning to Sender"))
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Returning";
+                        }
+                        if (str_UPS_Status.Contains("Returned to Sender"))
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Returning";
+                        }
+
+                        // Delivered
+                        if (str_UPS_Status.Contains("Delivered"))
+                        {
+                            str_UPS_Exception = str_UPS_Status;
+                            str_Status = "Delivered";
+                        }
+
+
+                        if (str_Status == "Out for Delivery" || str_Status == "In Transit" || str_Status == "Exception" || str_Status == "Returning")  //  Find exception details
+                        {
+
+                            do
+                            {
+                                str_Line_Data = SR_str_URL.ReadLine();
+                                if (str_Line_Data == null)
+                                {
+                                    bln_StrNotFound = true;
+                                    break;
+                                }
+                            }
+                            while (str_Line_Data.Contains("START: Standard 1Z Tracking") == false);  // Beginning of the paragraph
+
+                            str_Exception_Data = str_Line_Data + SR_str_URL.ReadLine();
+
+                            do
+                            {
+                                str_Line_Data = SR_str_URL.ReadLine();
+                                str_Exception_Data = str_Exception_Data + str_Line_Data;
+                                if (str_Line_Data == null)
+                                {
+                                    bln_StrNotFound = true;
+                                    break;
+                                }
+                            }
+                            while (str_Line_Data.Contains("END: Standard 1Z Tracking") == false); // Ending of the paragraph
+
+                            str_Exception_Data = Remove_Whitespace(str_Exception_Data);
+                            str_Exception_Data = Add_myHTML_Format(str_Exception_Data);
+
+                            // Update DB
+                            try
+                            {
+                                SqlDataAdapter SqlDataAdapter_3_DB_Conn_1 = new SqlDataAdapter();
+
+                                string str_Sproc_Call_3 = "usp_UPS_Tracking_Notes_Edit";
+
+                                SqlDataAdapter_3_DB_Conn_1 = new SqlDataAdapter(str_Sproc_Call_3, DB_Conn_1);
+                                SqlDataAdapter_3_DB_Conn_1.SelectCommand.CommandType = CommandType.StoredProcedure;
+                                SqlDataAdapter_3_DB_Conn_1.SelectCommand.Parameters.Add("@in_Tracking_Number", SqlDbType.VarChar).Value = str_Tracking_Number;
+                                SqlDataAdapter_3_DB_Conn_1.SelectCommand.Parameters.Add("@in_Notes", SqlDbType.VarChar).Value = str_Exception_Data;
+
+                                DB_Conn_1.Open();
+                                int iRecs = SqlDataAdapter_3_DB_Conn_1.SelectCommand.ExecuteNonQuery();
+                                DB_Conn_1.Close();
+
+                                //Clear variables
+                                str_Exception_Data = "";
+
+                            } // try
+                            catch (SqlException sqlexception)
+                            {
+                                string[] sExcep = sqlexception.ToString().Split('\n');
+                                Console.WriteLine(sExcep[0], "Error Detected!");
+                            } // catch (SqlException sqlexception)
+
+                        }  //  if (str_Status == 'Exception')  //  Find exception details
+
+
+
+                        if (str_Status != "Exception" && str_Status != "In Transit" && str_Status != "Delivered" && str_Status != "Out for Delivery" && str_Status != "Manifested" && str_Status != "Returning")
+                        {
+                            Console.WriteLine("ERROR -> " + str_Tracking_Number + " " + str_Status + " " + str_UPS_Exception);
+
+                            //using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Public\TestFolder\WriteLines1.txt", true))
+                            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"\\USMRNAS01\SQL_Server\VS_Projects\Error_Reports\UPS_Tracking_Details_Errors.txt", true))
+                            {
+                                file.WriteLine("ERROR -> " + str_Tracking_Number + " " + str_Status + " " + str_UPS_Exception);
+                            } 
+
+                            //MessageBox.Show(sError);
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("UPDATED -> " + str_Tracking_Number + " " + str_Status + " " + str_UPS_Exception);
+                            //show pending 
+
+                            //using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Public\TestFolder\WriteLines2.txt", true))
+                            //{
+                            //    file.WriteLine("UPDATED -> " + str_Tracking_Number + " " + str_Status + " " + str_UPS_Exception);
+                            //}
+
+                        }
+
+
+                    }  //  if (bln_StrNotFound == false)
+
+                    else
+                    {
+                        Console.WriteLine("Tracking Number not found, Tracking Number# " + str_Tracking_Number);
+                        str_UPS_Status = "Pending";
+                        str_UPS_Exception = "";
+                    }
+
+                }  //  using (StreamReader SR_str_URL = new StreamReader(Str_URL))
+
+                // Update DB
+                try
+                {
+                    SqlDataAdapter SqlDataAdapter_2_DB_Conn_1 = new SqlDataAdapter();
+                    
+                    string str_Sproc_Call_2 = "usp_UPS_Tracking_Edit";
+
+                    SqlDataAdapter_2_DB_Conn_1 = new SqlDataAdapter(str_Sproc_Call_2, DB_Conn_1);
+                    SqlDataAdapter_2_DB_Conn_1.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter_2_DB_Conn_1.SelectCommand.Parameters.Add("@in_Tracking_Number", SqlDbType.VarChar).Value = str_Tracking_Number;
+                    SqlDataAdapter_2_DB_Conn_1.SelectCommand.Parameters.Add("@in_Status", SqlDbType.VarChar).Value = str_Status;
+                    SqlDataAdapter_2_DB_Conn_1.SelectCommand.Parameters.Add("@in_Exception", SqlDbType.VarChar).Value = str_UPS_Exception;
+
+                    DB_Conn_1.Open();
+                    int iRecs = SqlDataAdapter_2_DB_Conn_1.SelectCommand.ExecuteNonQuery();
+                    DB_Conn_1.Close();
+
+                    //Clear variables
+                    str_UPS_Exception = "";
+                    str_Status = "";
+                    str_UPS_Status = "";
+
+                } // try
+                catch (SqlException sqlexception)
+                {
+                    string[] sExcep = sqlexception.ToString().Split('\n');
+                    Console.WriteLine(sExcep[0], "Error Detected!");
+                } // catch (SqlException sqlexception)
+
+            }  //  for (int i = 0; i < DataSet_1_SqlDataAdapter_1_DB_Conn_1.Tables[sProcedureName].Rows.Count; i++)
+
+        }  //  static void Main(string[] args)
+
+        private static string Get_String_Within_Phrase(string str_Phrase_Before, string str_Search_Data, string str_Phrase_After)
+        {
+            if (str_Search_Data.Contains(str_Phrase_Before) && str_Search_Data.Contains(str_Phrase_After) )
+                return str_Search_Data.Substring((str_Search_Data.IndexOf(str_Phrase_Before) + str_Phrase_Before.Length), (str_Search_Data.IndexOf(str_Phrase_After) - str_Search_Data.IndexOf(str_Phrase_Before) - str_Phrase_Before.Length));
+            else
+                return "";
+        }  //  private string Get_String_Within_Phrase(string str_Phrase_Before, string str_Search_Data, string str_Phrase_After)
+
+        private static string Remove_Whitespace (string str_phrase)
+        {
+            StringBuilder SB = new StringBuilder(str_phrase);
+            SB.Replace("  ", string.Empty);
+            SB.Replace(Environment.NewLine, string.Empty);
+            SB.Replace("\n", string.Empty);
+            SB.Replace("\r", string.Empty);
+            SB.Replace("\t", string.Empty);
+            SB.Replace(" {", "{");
+            SB.Replace(" :", ":");
+            SB.Replace(": ", ":");
+            SB.Replace("; ", ";");
+            return SB.ToString();
+        }  //  private static string Remove_Whitespace (string str_phrase)
+
+        private static string Add_myHTML_Format(string str_phrase)
+        {
+            StringBuilder SB = new StringBuilder(str_phrase);
+            SB.Replace("<!-- ", System.Environment.NewLine + System.Environment.NewLine + "<!-- ");
+            SB.Replace("<div ", Environment.NewLine + "<div ");
+            SB.Replace("<div>", Environment.NewLine + "<div>");
+            SB.Replace("</div>", Environment.NewLine + "</div>");
+            SB.Replace("<tr ", System.Environment.NewLine + System.Environment.NewLine + "<tr ");
+            SB.Replace("<tr>", System.Environment.NewLine + System.Environment.NewLine + "<tr>");
+            SB.Replace("</tr>", System.Environment.NewLine + "</tr>");
+            SB.Replace("<td ", Environment.NewLine + '\t' + "<td ");
+            SB.Replace("<td>", Environment.NewLine + '\t' + "<td>");
+            SB.Replace("<th ", Environment.NewLine + '\t' + "<th ");
+            SB.Replace("<th>", Environment.NewLine + '\t' + "<th>");
+            SB.Replace("<table ", Environment.NewLine + Environment.NewLine + "<table ");
+            SB.Replace("<table>", Environment.NewLine + Environment.NewLine + "<table>");
+            SB.Replace("</table>", Environment.NewLine + "</table>");
+            return SB.ToString();
+        }  //  private static string Add_myHTML_Format(string str_phrase)
+
+    }  // class Program
+}  // namespace UPS_Tracking_Details

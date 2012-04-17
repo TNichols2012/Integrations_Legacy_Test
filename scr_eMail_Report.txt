@@ -1,0 +1,167 @@
+USE msdb
+GO
+EXEC sp_send_dbmail @profile_name='SQL_Admin',
+@recipients='tony.nichols@peopleadmin.com',
+@subject='Test message',
+@body='This is the body of the test message.
+Congrates Database Mail Received By you Successfully.' 
+
+
+OR
+
+
+Function Main()
+
+Dim obj_FSO
+Dim str_FilePathRoot,  str_FilePathNew
+Dim str_FileName, str_FilePathName, str_FilePathArchive, str_Data_File
+Dim str_File1, str_File2, str_File3, str_File4, str_File5,str_File6,str_File7, str_BatFile, str_FTPfile1
+
+	Set obj_FSO=CreateObject("Scripting.FileSystemObject")
+
+
+'**************************************************************************************
+'	Global Variables used to define the archive parameters
+
+	'str_FilePathRoot= DTSGlobalVariables("gv_FilePathRoot").Value
+	'str_FilePathNew= DTSGlobalVariables("gv_FilePathNew").Value
+
+	'  Report Post-Processing
+
+	str_FileName= "USRCBR_Daily_GR_Report.xls"
+	str_FilePathRoot="\\Usrc_fileserver\SQL_Server\Client_USMR\Work\"
+	str_FilePathNew="\\Usrc_fileserver\Reports\Web_Owner\"
+
+	' Check to see if primary file exists before proceeding  to archive report
+	If obj_FSO.FileExists(str_FilePathRoot & str_FileName) Then
+		Set str_File1 = obj_FSO.GetFile(str_FilePathRoot & str_FileName)
+				
+		' Copies file to subfolder for zipping and network directory for archiving
+		str_File1.Copy(str_FilePathNew & "USRCBR_" & DTSGlobalVariables("gv_Daily_Year").Value & _
+			"Daily_GR_"  & _
+			DTSGlobalVariables("gv_Daily_Suffix").Value & ".xls")
+
+		' Create the Subject for File 1 email
+		DTSGlobalVariables("gv_Email_Subject1").Value = _
+			"USRCBR Daily GR Report for the Period Ending "  & _
+			DTSGlobalVariables("gv_Daily_Month").Value  & "/" & DTSGlobalVariables("gv_Daily_Date").Value  & "/" & DTSGlobalVariables("gv_Daily_Year").Value 
+
+
+	End if
+
+	If obj_FSO.FileExists("\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_GR_Report.txt") Then 
+		obj_FSO.DeleteFile "\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_GR_Report.txt"  
+	End If
+
+	Set str_Data_File= obj_FSO.OpenTextFile("\\Usrc_fileserver\SQL_Server\Client_USMR\Work\USRCBR_Daily_GR_Report.txt", 8, True) 
+
+	str_Data_File.WriteLine("Summary")
+	str_Data_File.WriteLine("GR Bump Count = " & DTSGlobalVariables("gv_GR_Bump_Count").Value)
+	str_Data_File.WriteLine("GR Bump Value = " & FormatCurrency(DTSGlobalVariables("gv_GR_Bump_Value").Value, Groupdigits) )
+	str_Data_File.WriteLine
+
+	Dim int_LO_Count
+	Dim str_LO_Sales	
+	Dim str_LO_Count	
+	Dim rst_LO  
+	Dim rst_LO_Sales
+	Dim Todays_Date
+
+	'Todays_Date = "'9/14/1994'" 	'PUBS comes sales data for this date with default
+	Todays_Date = 	DTSGlobalVariables ("gv_Daily_Month").Value  & "/" & DTSGlobalVariables ("gv_Daily_Date").Value  & "/" & DTSGlobalVariables ("gv_Daily_Year").Value 
+
+	'Get list of Agents with Sales
+	str_LO_Sales =	"SELECT     TOP (100) PERCENT " & _
+			"tCSS.Entry_Date, " & _
+			"tCSS.Sales_ID, " & _
+			"tDBFCMS.Ad_Code, " & _
+			"(tOT.PS_Value_nB + tOT.SH_Value_nB) AS Value_Ordered " & _
+			"FROM         dbo.tbl_Customer_Sales_Statistics tCSS " & _
+			"INNER JOIN  dbo.tbl_DBF_CMS tDBFCMS " & _
+			"ON tCSS.Cust_ID=tDBFCMS.Cust_ID " & _
+			"INNER JOIN dbo.tbl_Order_Type tOT " & _
+			"ON tDBFCMS.Order_ID=tOT.Order_ID "& _
+			"AND tCSS.First_nB_Order_Date=tDBFCMS.Order_Date " & _
+			"WHERE     (tCSS.Entry_Date >= CONVERT(DATETIME, '2006-11-01 00:00:00', 102)) " & _
+			"AND (tCSS.Init_Buyer_Type = 'GR') " & _
+			"AND (First_nB_Order_Date>=dbo.Get_theDate(GetDate()-1)) " & _
+			"AND (tOT.PS_Value_nB + tOT.SH_Value_nB) > 0 "
+	
+	'Get the ADO Recordset
+	Set rst_LO = ExecuteSQL(str_LO_Sales)
+
+	'If the Recordset is not empty then proceed
+	If Not (rst_LO.Eof and rst_LO.Bof ) Then 			
+		str_Data_File.WriteLine("Detail")
+		While Not rst_LO.Eof 'AND int_LO_Count > 0 'Loop through all Sales Agents with sales
+			
+			str_LO_Sales =	"SELECT     TOP (100) PERCENT " & _
+					"tCSS.Entry_Date, " & _
+					"tCSS.Sales_ID, " & _
+					"tDBFCMS.Ad_Code, " & _
+					"(tOT.PS_Value_nB + tOT.SH_Value_nB) AS Value_Ordered " & _
+					"FROM         dbo.tbl_Customer_Sales_Statistics tCSS " & _
+					"INNER JOIN  dbo.tbl_DBF_CMS tDBFCMS " & _
+					"ON tCSS.Cust_ID=tDBFCMS.Cust_ID " & _
+					"INNER JOIN dbo.tbl_Order_Type tOT " & _
+					"ON tDBFCMS.Order_ID=tOT.Order_ID "& _
+					"AND tCSS.First_nB_Order_Date=tDBFCMS.Order_Date " & _
+					"WHERE     (tCSS.Entry_Date >= CONVERT(DATETIME, '2006-11-01 00:00:00', 102)) " & _
+					"AND (tCSS.Init_Buyer_Type = 'GR') " & _
+					"AND (First_nB_Order_Date>=dbo.Get_theDate(GetDate()-1)) " & _
+					"AND (tOT.PS_Value_nB + tOT.SH_Value_nB) > 0 "
+	
+			'ADO Recordset with Authors and Sales for Todays Date with Store Name, Order Number, Quantity, Payment Terms and Title
+			Set rst_LO_Sales = ExecuteSQL(str_LO_Sales )
+
+				str_Data_File.WriteLine("Entry Date:" & vbtab & rst_LO("Entry_Date") )
+				str_Data_File.WriteLine("Sales Rep:" & vbtab & rst_LO("Sales_ID") )
+				str_Data_File.WriteLine("Ad Code:   " & vbtab & rst_LO("Ad_Code") )
+				str_Data_File.WriteLine("Order Value:" & vbtab & FormatCurrency( rst_LO("Value_Ordered"), Groupdigits) )
+				str_Data_File.WriteLine
+
+			'Move on to to the next record
+			rst_LO.MoveNext		
+
+	    Wend
+
+	Else	str_Data_File.WriteLine("Detail")
+		str_Data_File.WriteLine("None")
+	 End If 
+
+	str_Data_File.WriteLine
+	str_Data_File.WriteLine("The report is ready for review at: " & vbCrLf  & "\\Usrc_fileserver\Reports\Web_Owner")
+	str_Data_File.WriteLine
+
+
+	'Clean up variables 
+             Set rst_LO = Nothing
+	Set rst_LO_Sales = Nothing
+
+
+	Set objFSO=Nothing
+
+	Main = DTSTaskExecResult_Success
+End Function
+
+
+
+Function ExecuteSQL(mySQLCmdText)
+
+	'ADO Connection String to the Inventory
+	Const DB_CONNECT_STRING = "Provider=SQLOLEDB.1;Data Source=USRC_Fileserver; Initial Catalog=Data_Warehouse;user id = 'SQL_admin';password='AustinDat@'  "
+
+	' instantiate the ADO objects
+	  Dim myConn
+	  Dim myRecordset
+
+	  set myConn = CreateObject("ADODB.Connection")
+	  set myRecordset = CreateObject("ADODB.Recordset" )
+
+	' set the connection properties to point to the Pubs database using the constant
+	  myConn.Open = DB_CONNECT_STRING
+	  myRecordset.Open mySQLCmdText, myConn
+	  
+	  Set ExecuteSQL = myRecordset
+
+End Function		

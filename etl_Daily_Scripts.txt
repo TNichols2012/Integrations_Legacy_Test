@@ -1,0 +1,220 @@
+-- tbl_Order_Type
+
+IF EXISTS (SELECT TABLE_NAME 
+			FROM Information_Schema.Tables
+			WHERE Table_Name='tbl_Order_Type')
+DROP TABLE tbl_Order_Type
+GO
+
+SELECT 
+Order_ID,
+SUM(CASE WHEN vSO.Item_State IN ('CM') AND vSO.Stock_Type IN ('Bullion') THEN ISNULL(vSO.Quantity_Ordered, 0) ELSE 0 END) AS CM_Quantity_B,
+SUM(CASE WHEN vSO.Item_State IN ('CM') AND vSO.Stock_Type IN ('Bullion') THEN ISNULL(vSO.Value_Ordered, 0) ELSE 0 END) AS CM_Value_B,
+SUM(CASE WHEN vSO.Item_State IN ('CM') AND vSO.Stock_Type NOT IN ('Bullion') THEN ISNULL(vSO.Quantity_Ordered, 0) ELSE 0 END) AS CM_Quantity_nB,
+SUM(CASE WHEN vSO.Item_State IN ('CM') AND vSO.Stock_Type NOT IN ('Bullion') THEN ISNULL(vSO.Value_Ordered, 0) ELSE 0 END) AS CM_Value_nB,
+
+SUM(CASE WHEN vSO.Item_State IN ('PS') AND vSO.Stock_Type IN ('Bullion') THEN ISNULL(vSO.Quantity_Ordered, 0) ELSE 0 END) AS PS_Quantity_B,
+SUM(CASE WHEN vSO.Item_State IN ('PS') AND vSO.Stock_Type IN ('Bullion') THEN ISNULL(vSO.Value_Ordered, 0) ELSE 0 END) AS PS_Value_B,
+SUM(CASE WHEN vSO.Item_State IN ('PS') AND vSO.Stock_Type NOT IN ('Bullion') THEN ISNULL(vSO.Quantity_Ordered, 0) ELSE 0 END) AS PS_Quantity_nB,
+SUM(CASE WHEN vSO.Item_State IN ('PS') AND vSO.Stock_Type NOT IN ('Bullion') THEN ISNULL(vSO.Value_Ordered, 0) ELSE 0 END) AS PS_Value_nB,
+
+SUM(CASE WHEN vSO.Item_State IN ('SH') AND vSO.Stock_Type IN ('Bullion') THEN ISNULL(vSO.Quantity_Ordered, 0) ELSE 0 END) AS SH_Quantity_B,
+SUM(CASE WHEN vSO.Item_State IN ('SH') AND vSO.Stock_Type IN ('Bullion') THEN ISNULL(vSO.Value_Ordered, 0) ELSE 0 END) AS SH_Value_B,
+SUM(CASE WHEN vSO.Item_State IN ('SH') AND vSO.Stock_Type NOT IN ('Bullion') THEN ISNULL(vSO.Quantity_Ordered, 0) ELSE 0 END) AS SH_Quantity_nB,
+SUM(CASE WHEN vSO.Item_State IN ('SH') AND vSO.Stock_Type NOT IN ('Bullion') THEN ISNULL(vSO.Value_Ordered, 0) ELSE 0 END) AS SH_Value_nB,
+
+SUM(CASE WHEN vSO.Item_State IN ('RT') AND vSO.Stock_Type IN ('Bullion') THEN ISNULL(vSO.Quantity_Ordered, 0) ELSE 0 END) AS RT_Quantity_B,
+SUM(CASE WHEN vSO.Item_State IN ('RT') AND vSO.Stock_Type IN ('Bullion') THEN ISNULL(vSO.Value_Ordered, 0) ELSE 0 END) AS RT_Value_B,
+SUM(CASE WHEN vSO.Item_State IN ('RT') AND vSO.Stock_Type NOT IN ('Bullion') THEN ISNULL(vSO.Quantity_Ordered, 0) ELSE 0 END) AS RT_Quantity_nB,
+SUM(CASE WHEN vSO.Item_State IN ('RT') AND vSO.Stock_Type NOT IN ('Bullion') THEN ISNULL(vSO.Value_Ordered, 0) ELSE 0 END) AS RT_Value_nB,
+
+SUM(CASE WHEN vSO.Item_State IN ('PS', 'SH', 'RT') AND vSO.Stock_Type IN ('Bullion') THEN ISNULL(vSO.Quantity_Ordered, 0) ELSE 0 END) AS Net_Quantity_B,
+SUM(CASE WHEN vSO.Item_State IN ('PS', 'SH', 'RT') AND vSO.Stock_Type IN ('Bullion') THEN ISNULL(vSO.Value_Ordered, 0) ELSE 0 END) AS Net_Value_B,
+SUM(CASE WHEN vSO.Item_State IN ('PS', 'SH', 'RT') AND vSO.Stock_Type NOT IN ('Bullion') THEN ISNULL(vSO.Quantity_Ordered, 0) ELSE 0 END) AS Net_Quantity_nB,
+SUM(CASE WHEN vSO.Item_State IN ('PS', 'SH', 'RT') AND vSO.Stock_Type NOT IN ('Bullion') THEN ISNULL(vSO.Value_Ordered, 0) ELSE 0 END) AS Net_Value_nB,
+
+MAX(CASE WHEN vSO.Item_State IN ('PS', 'SH') AND vSO.Stock_Type IN ('Gold_Report') THEN 'GR' 
+WHEN vSO.Item_State IN ('PS', 'SH') AND vSO.Stock_ID LIKE '%GIFT%' THEN 'FB' 
+WHEN vSO.Item_State IN ('PS', 'SH') AND vSO.Stock_ID LIKE '%HOLIDAY%' THEN 'FB' 
+WHEN vSO.Item_State IN ('PS', 'SH') AND vSO.Stock_ID LIKE '%DVD%' THEN 'FB' 
+WHEN vSO.Item_State IN ('PS', 'SH') AND vSO.Stock_ID LIKE '%PCGSCASE%' THEN 'MISC' 
+WHEN vSO.Item_State IN ('PS', 'SH') AND vSO.Stock_ID LIKE '%CMM%' THEN 'B2' 
+ELSE 'Pending' END) AS Order_Category
+INTO tbl_Order_Type
+FROM vw_Sales_Orders vSO
+GROUP By Order_ID
+GO
+
+
+CREATE CLUSTERED INDEX tbl_Order_Type_Order_ID
+ON tbl_Order_Type (Order_ID) 
+GO
+
+CREATE INDEX tbl_Order_Type_Order_Category
+ON tbl_Order_Type (Order_Category) 
+GO
+
+UPDATE tbl_Order_Type
+SET Order_Category = 
+(CASE 
+WHEN Order_Category = 'GR' THEN 'GR'
+WHEN Order_Category = 'Pending' AND Net_Value_B > 0 AND Net_Value_nB <= 0 THEN 'B1'
+WHEN Order_Category = 'Pending' AND Net_Value_B <= 0 AND Net_Value_nB > 0 THEN 'B2'
+WHEN Order_Category = 'Pending' AND Net_Value_B > 0 AND Net_Value_nB > 0 THEN 'B3'
+WHEN Order_Category = 'Pending' AND Net_Value_B <= 0 AND Net_Value_nB <= 0 AND RT_Value_B < 0 AND RT_Value_nB = 0 THEN 'B1_RT'
+WHEN Order_Category = 'Pending' AND Net_Value_B <= 0 AND Net_Value_nB <= 0 AND RT_Value_B = 0 AND RT_Value_nB < 0 THEN 'B2_RT'
+WHEN Order_Category = 'Pending' AND Net_Value_B <= 0 AND Net_Value_nB <= 0 AND RT_Value_B < 0 AND RT_Value_nB < 0 THEN 'B3_RT'
+ELSE Order_Category END) 
+GO
+
+
+
+--tbl_Customer_Sales_Statistics
+IF EXISTS (SELECT TABLE_NAME 
+			FROM Information_Schema.Tables
+			WHERE Table_Name='tbl_Customer_Sales_Statistics')
+DROP TABLE tbl_Customer_Sales_Statistics
+GO
+
+SELECT     
+dbo.vw_Customer_Sales_Initial.Entry_Date, 
+dbo.vw_Customer_Sales_Initial.Cust_ID, 
+dbo.vw_Customer_Sales_Initial.First_Name, 
+dbo.vw_Customer_Sales_Initial.Last_Name, 
+dbo.vw_Customer_Sales_Initial.Ttl_Order_Count, 
+dbo.vw_Customer_Sales_Initial.Campaign, 
+dbo.vw_Customer_Sales_Initial.Orig_Ad_Code, 
+dbo.vw_Customer_Sales_Initial.Init_Buyer_Type, 
+dbo.vw_Customer_Sales_Initial.Init_Order_Date, 
+dbo.vw_Customer_Sales_Initial.Init_Order_ID, 
+dbo.vw_Customer_Sales_Initial.Init_Shipped_B, 
+dbo.vw_Customer_Sales_Initial.Init_Shipped_nB, 
+dbo.vw_Customer_Sales_Initial.Init_Returned_B, 
+dbo.vw_Customer_Sales_Initial.Init_Returned_nB, 
+dbo.vw_Customer_Sales_Initial.First_B_Order_Date, 
+dbo.vw_Customer_Sales_Initial.First_B_Order_ID, 
+dbo.vw_Customer_Sales_Initial.First_B_Value, 
+dbo.vw_Customer_Sales_Initial.First_nB_Order_Date, 
+dbo.vw_Customer_Sales_Initial.First_nB_Order_ID, 
+dbo.vw_Customer_Sales_Initial.First_nB_Value, 
+dbo.vw_Customer_Sales_Trends.Cust_ID AS Cust_ID2,
+dbo.vw_Customer_Sales_Trends.Ttl_Net_Sales_Value, 
+dbo.vw_Customer_Sales_Trends.Ttl_Net_Sales_B, 
+dbo.vw_Customer_Sales_Trends.Ttl_Net_Sales_nB, 
+dbo.vw_Customer_Sales_Trends.Ttl_Shipped_Value, 
+dbo.vw_Customer_Sales_Trends.Ttl_Shipped_B, 
+dbo.vw_Customer_Sales_Trends.Ttl_Shipped_nB, 
+dbo.vw_Customer_Sales_Trends.Ttl_Returned_Value, 
+dbo.vw_Customer_Sales_Trends.Ttl_Returned_B, 
+dbo.vw_Customer_Sales_Trends.Ttl_Returned_nB, 
+dbo.vw_Customer_Sales_Trends.Y2001_Shipped, 
+dbo.vw_Customer_Sales_Trends.Y2001_Shipped_B, 
+dbo.vw_Customer_Sales_Trends.Y2001_Shipped_nB, 
+dbo.vw_Customer_Sales_Trends.Y2001_Returned, 
+dbo.vw_Customer_Sales_Trends.Y2001_Returned_B, 
+dbo.vw_Customer_Sales_Trends.Y2001_Returned_nB, 
+dbo.vw_Customer_Sales_Trends.Y2002_Shipped, 
+dbo.vw_Customer_Sales_Trends.Y2002_Shipped_B, 
+dbo.vw_Customer_Sales_Trends.Y2002_Shipped_nB, 
+dbo.vw_Customer_Sales_Trends.Y2002_Returned, 
+dbo.vw_Customer_Sales_Trends.Y2002_Returned_B, 
+dbo.vw_Customer_Sales_Trends.Y2002_Returned_nB, 
+dbo.vw_Customer_Sales_Trends.Y2003_Shipped, 
+dbo.vw_Customer_Sales_Trends.Y2003_Shipped_B, 
+dbo.vw_Customer_Sales_Trends.Y2003_Shipped_nB, 
+dbo.vw_Customer_Sales_Trends.Y2003_Returned, 
+dbo.vw_Customer_Sales_Trends.Y2003_Returned_B, 
+dbo.vw_Customer_Sales_Trends.Y2003_Returned_nB, 
+dbo.vw_Customer_Sales_Trends.Y2004_Shipped, 
+dbo.vw_Customer_Sales_Trends.Y2004_Shipped_B, 
+dbo.vw_Customer_Sales_Trends.Y2004_Shipped_nB, 
+dbo.vw_Customer_Sales_Trends.Y2004_Returned, 
+dbo.vw_Customer_Sales_Trends.Y2004_Returned_B, 
+dbo.vw_Customer_Sales_Trends.Y2004_Returned_nB, 
+dbo.vw_Customer_Sales_Trends.Y2005_Shipped, 
+dbo.vw_Customer_Sales_Trends.Y2005_Shipped_B, 
+dbo.vw_Customer_Sales_Trends.Y2005_Shipped_nB, 
+dbo.vw_Customer_Sales_Trends.Y2005_Returned, 
+dbo.vw_Customer_Sales_Trends.Y2005_Returned_B, 
+dbo.vw_Customer_Sales_Trends.Y2005_Returned_nB, 
+dbo.vw_Customer_Sales_Trends.Y2006_Shipped, 
+dbo.vw_Customer_Sales_Trends.Y2006_Shipped_B, 
+dbo.vw_Customer_Sales_Trends.Y2006_Shipped_nB, 
+dbo.vw_Customer_Sales_Trends.Y2006_Returned, 
+dbo.vw_Customer_Sales_Trends.Y2006_Returned_B, 
+dbo.vw_Customer_Sales_Trends.Y2006_Returned_nB, 
+dbo.vw_Customer_Sales_Trends.Y2007_Shipped, 
+dbo.vw_Customer_Sales_Trends.Y2007_Shipped_B, 
+dbo.vw_Customer_Sales_Trends.Y2007_Shipped_nB, 
+dbo.vw_Customer_Sales_Trends.Y2007_Returned, 
+dbo.vw_Customer_Sales_Trends.Y2007_Returned_B, 
+dbo.vw_Customer_Sales_Trends.Y2007_Returned_nB, 
+dbo.vw_Customer_Sales_Trends.Y2008_Shipped, 
+dbo.vw_Customer_Sales_Trends.Y2008_Shipped_B, 
+dbo.vw_Customer_Sales_Trends.Y2008_Shipped_nB, 
+dbo.vw_Customer_Sales_Trends.Y2008_Returned, 
+dbo.vw_Customer_Sales_Trends.Y2008_Returned_B, 
+dbo.vw_Customer_Sales_Trends.Y2008_Returned_nB, 
+dbo.vw_Customer_Sales_Trends.Y2009_Shipped, 
+dbo.vw_Customer_Sales_Trends.Y2009_Shipped_B, 
+dbo.vw_Customer_Sales_Trends.Y2009_Shipped_nB, 
+dbo.vw_Customer_Sales_Trends.Y2009_Returned, 
+dbo.vw_Customer_Sales_Trends.Y2009_Returned_B, 
+dbo.vw_Customer_Sales_Trends.Y2009_Returned_nB, 
+dbo.vw_Customer_Sales_Trends.Y2010_Shipped, 
+dbo.vw_Customer_Sales_Trends.Y2010_Shipped_B, 
+dbo.vw_Customer_Sales_Trends.Y2010_Shipped_nB, 
+dbo.vw_Customer_Sales_Trends.Y2010_Returned, 
+dbo.vw_Customer_Sales_Trends.Y2010_Returned_B, 
+dbo.vw_Customer_Sales_Trends.Y2010_Returned_nB, 
+dbo.vw_Customer_Sales_Trends.Y2011_Shipped, 
+dbo.vw_Customer_Sales_Trends.Y2011_Shipped_B, 
+dbo.vw_Customer_Sales_Trends.Y2011_Shipped_nB, 
+dbo.vw_Customer_Sales_Trends.Y2011_Returned, 
+dbo.vw_Customer_Sales_Trends.Y2011_Returned_B, 
+dbo.vw_Customer_Sales_Trends.Y2011_Returned_nB, 
+dbo.vw_Customer_Sales_Trends.Y2012_Shipped, 
+dbo.vw_Customer_Sales_Trends.Y2012_Shipped_B, 
+dbo.vw_Customer_Sales_Trends.Y2012_Shipped_nB, 
+dbo.vw_Customer_Sales_Trends.Y2012_Returned, 
+dbo.vw_Customer_Sales_Trends.Y2012_Returned_B, 
+dbo.vw_Customer_Sales_Trends.Y2012_Returned_nB, 
+dbo.vw_Customer_Sales_Trends.Current_Buyer_Type
+INTO tbl_Customer_Sales_Statistics
+FROM         dbo.vw_Customer_Sales_Initial 
+FULL OUTER JOIN   dbo.vw_Customer_Sales_Trends 
+ON dbo.vw_Customer_Sales_Initial.Cust_ID = dbo.vw_Customer_Sales_Trends.Cust_ID
+
+
+CREATE CLUSTERED INDEX tbl_Customer_Sales_Statistics_Cust_ID
+ON tbl_Customer_Sales_Statistics (Cust_ID) 
+GO
+
+CREATE INDEX tbl_Customer_Sales_Statistics_Entry_Date
+ON tbl_Customer_Sales_Statistics (Entry_Date) 
+GO
+
+CREATE INDEX tbl_Customer_Sales_Statistics_Init_Buyer_Type
+ON tbl_Customer_Sales_Statistics (Init_Buyer_Type) 
+GO
+
+CREATE INDEX tbl_Customer_Sales_Statistics_Current_Buyer_Type
+ON tbl_Customer_Sales_Statistics (Current_Buyer_Type) 
+GO
+
+CREATE INDEX tbl_Customer_Sales_Statistics_First_B_Order_Date
+ON tbl_Customer_Sales_Statistics (First_B_Order_Date) 
+GO
+
+CREATE INDEX tbl_Customer_Sales_Statistics_First_nB_Order_Date
+ON tbl_Customer_Sales_Statistics (First_nB_Order_Date) 
+GO
+
+CREATE INDEX tbl_Customer_Sales_Statistics_Campaign
+ON tbl_Customer_Sales_Statistics (Campaign) 
+GO
+
+CREATE INDEX tbl_Customer_Sales_Statistics_Orig_Ad_Code
+ON tbl_Customer_Sales_Statistics (Orig_Ad_Code) 
+GO
+

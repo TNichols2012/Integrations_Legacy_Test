@@ -1,0 +1,17 @@
+SELECT     
+R.campaign,
+R.adkey, 
+R.addept, 
+R.adcost, 
+R.adcostpr,
+R.adin, 
+R.addate, 
+R.adprod, 
+R.adsize, 
+R.admail,
+R.publisher,
+CONVERT(datetime, LEFT(R.addate, 2) + '/' + SUBSTRING(r.addate, 4, 2) + '/' + SUBSTRING(r.addate, 7, 2)) AS Run_Date
+FROM	dbo.Results_DBF_AdCodes R
+LEFT OUTER JOIN       dbo.tbl_DBF_Ad_Codes T
+ON R.adkey = T.Ad_Code
+WHERE     (T.Ad_Code IS NULL)

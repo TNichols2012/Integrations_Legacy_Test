@@ -1,0 +1,470 @@
+/*
+DECLARE @Start_Date date = '2001-01-01'
+DECLARE @Stop_Date date  = '2012-01-01'
+
+DECLARE @ALL_Orders TABLE (
+Cust_ID varchar(25),
+Order_ID varchar(25),
+Order_Type varchar(25)
+)
+
+INSERT INTO @ALL_Orders (Cust_ID, Order_ID, Order_Type)
+SELECT 
+tSO.Cust_ID,
+tSO.Order_ID,
+tOT.Order_Category
+FROM tbl_Sales_Orders tSO
+INNER JOIN tbl_Order_Type tOT
+ON tSO.Order_ID = tOT.Order_ID
+WHERE  tSO.Item_State IN ('PS', 'SH', 'RT')
+GROUP BY tSO.Cust_ID, tSO.Order_ID, tOT.Order_Category
+HAVING SUM(tSO.Value_Ordered) > 0
+ORDER BY LEN(tSO.Cust_ID), tSO.Cust_ID, LEN(tSO.Order_ID), tSO.Order_ID
+
+--SELECT * FROM @ALL_Orders
+
+DECLARE @ALL_Order_Count TABLE (
+Cust_ID varchar(25),
+Order_Count numeric(8,0)
+)
+
+INSERT INTO @ALL_Order_Count(Cust_ID, Order_Count)
+SELECT
+Cust_ID, 
+COUNT(Cust_ID) AS Order_Count
+FROM @ALL_Orders
+GROUP BY Cust_ID
+HAVING COUNT(Cust_ID) >= 1
+ORDER BY LEN(Cust_ID), Cust_ID 
+
+--SELECT * FROM @ALL_Order_Count
+
+
+DECLARE @CMM_Cust_Order_Count TABLE (
+Cust_ID varchar(25)
+)
+
+INSERT INTO @CMM_Cust_Order_Count (Cust_ID)
+SELECT 
+tmp1.Cust_ID
+FROM @ALL_Order_Count tmp1
+INNER JOIN @ALL_Orders tmp2
+ON tmp1.Cust_ID = tmp2.Cust_ID
+WHERE tmp1.Order_Count = 1
+AND tmp2.Order_Type IN ('B2', 'B3')
+
+--SELECT * FROM @CMM_Cust_Order_Count
+
+DECLARE @Answers1 TABLE (
+Entry_Date date,
+New_Entry_Date date,
+Order_Date date,
+Campaign varchar(25),
+Ad_Code varchar(9),
+Order_ID varchar(15),
+Stock_ID varchar(100),
+Stock_Desc1 varchar(100),
+Quantity_Ordered numeric(8,0),
+Value_Ordered money,
+Quantity_Shipped numeric(8,0),
+Value_Shipped money,
+Stock_Type varchar(50),
+Sales_ID varchar(5),
+Cust_ID varchar(25),
+Stock_Ounces numeric(8,4),
+Buyback_Value_2011_CM money,
+Buyback_Value_2011_MR money,
+Buyback_Value_2011_AG money,
+Buyback_Value_2012_CM money,
+Buyback_Value_2012_MR money,
+Buyback_Value_2012_AG money,
+Buyback_Value_2013_CM money,
+Buyback_Value_2013_MR money,
+Buyback_Value_2013_AG money,
+Buyback_Value_2014_CM money,
+Buyback_Value_2014_MR money,
+Buyback_Value_2014_AG money,
+Buyback_Value_2015_CM money,
+Buyback_Value_2015_MR money,
+Buyback_Value_2015_AG money
+)
+
+INSERT INTO @Answers1 (
+Entry_Date,
+Order_Date, 
+Campaign, 
+Ad_Code, 
+Order_ID, 
+Stock_ID, 
+Stock_Desc1, 
+Quantity_Ordered, 
+Value_Ordered,
+Quantity_Shipped,
+Value_Shipped,
+Stock_Type,
+Sales_ID,
+Cust_ID,
+Stock_Ounces,
+Buyback_Value_2011_CM,
+Buyback_Value_2011_MR,
+Buyback_Value_2011_AG,
+Buyback_Value_2012_CM,
+Buyback_Value_2012_MR,
+Buyback_Value_2012_AG,
+Buyback_Value_2013_CM,
+Buyback_Value_2013_MR,
+Buyback_Value_2013_AG,
+Buyback_Value_2014_CM,
+Buyback_Value_2014_MR,
+Buyback_Value_2014_AG,
+Buyback_Value_2015_CM,
+Buyback_Value_2015_MR,
+Buyback_Value_2015_AG
+)
+SELECT 
+tMC.Entry_Date,
+tSO.Order_Date,
+tSO.Campaign,
+tSO.Ad_Code,
+tSO.Order_ID,
+tSO.Stock_ID,
+tSO.Stock_Desc1,
+tSO.Quantity_Ordered,
+tSO.Value_Ordered,
+tSO.Quantity_Shipped,
+tSO.Value_Shipped,
+tSO.Stock_Type,
+tSO.Sales_ID,
+tSO.Cust_ID,
+tSO.Stock_Ounces,
+tBCM.Bid_2011 * Quantity_Ordered AS Buyback_Value_2011_CM,
+tBMR.Bid_2011 * Quantity_Ordered AS Buyback_Value_2011_MR,
+tBAG.Bid_2011 * Quantity_Ordered AS Buyback_Value_2011_AG,
+tBCM.Bid_2012 * Quantity_Ordered AS Buyback_Value_2012_CM,
+tBMR.Bid_2012 * Quantity_Ordered AS Buyback_Value_2012_MR,
+tBAG.Bid_2012 * Quantity_Ordered AS Buyback_Value_2012_AG,
+tBCM.Bid_2013 * Quantity_Ordered AS Buyback_Value_2013_CM,
+tBMR.Bid_2013 * Quantity_Ordered AS Buyback_Value_2013_MR,
+tBAG.Bid_2013 * Quantity_Ordered AS Buyback_Value_2013_AG,
+tBCM.Bid_2014 * Quantity_Ordered AS Buyback_Value_2014_CM,
+tBMR.Bid_2014 * Quantity_Ordered AS Buyback_Value_2014_MR,
+tBAG.Bid_2014 * Quantity_Ordered AS Buyback_Value_2014_AG,
+tBCM.Bid_2015 * Quantity_Ordered AS Buyback_Value_2015_CM,
+tBMR.Bid_2015 * Quantity_Ordered AS Buyback_Value_2015_MR,
+tBAG.Bid_2015 * Quantity_Ordered AS Buyback_Value_2015_AG
+FROM @CMM_Cust_Order_Count tmp
+INNER JOIN tbl_Sales_Orders tSO
+ON tmp.Cust_ID = tSO.Cust_ID
+LEFT JOIN tbl_MOM_Cust tMC
+ON tmp.Cust_ID = tMC.Cust_ID
+LEFT JOIN tmp_Buybacks_CM tBCM
+ON tSO.Stock_ID = tBCM.Stock_ID
+LEFT JOIN tmp_Buybacks_MR tBMR
+ON tSO.Stock_ID = tBMR.Stock_ID
+LEFT JOIN tmp_Buybacks_AG tBAG
+ON tSO.Stock_ID = tBAG.Stock_ID
+
+WHERE tMC.Entry_Date >= @Start_Date --'2010-01-01'
+AND tMC.Entry_Date < @Stop_Date --'2011-01-01'
+--AND tSO.Order_Date >=@Start_Date
+--AND tSO.Order_Date < @Stop_Date
+--AND tSO.Order_Date < '2008-01-01'
+--AND tSO.Stock_Type LIKE 'Comm%'
+AND tSO.Item_State IN ('PS', 'SH', 'RT')
+AND tSO.Stock_Type <> 'Gold_Report'
+ORDER BY LEN(tSO.Cust_ID), tSO.Cust_ID, LEN(tSO.Order_ID), tSO.Order_ID
+
+--SELECT * FROM @Answers1
+
+UPDATE tmp
+SET
+New_Entry_Date = vw1.New_Entry_Date
+FROM @Answers1 tmp
+INNER JOIN
+(
+SELECT
+Cust_ID, 
+MIN(Order_Date) AS New_Entry_Date
+FROM @Answers1
+WHERE Value_Ordered >0
+--AND Stock_Type LIKE 'Comm%'
+GROUP BY Cust_ID
+) AS vw1
+ON tmp.Cust_ID=vw1.Cust_ID
+WHERE tmp.Cust_ID = vw1.Cust_ID
+
+SELECT * FROM @Answers1
+
+
+--DROP Table tmp_CMM_Query12
+--SELECT * INTO tmp_CMM_Query12 FROM @Answers1
+*/
+
+
+SELECT * FROM tmp_CMM_Query12
+WHERE Stock_Type <> 'Gold_Report'
+AND New_Entry_Date is not null
+--AND Value_Ordered <> 0
+order by new_entry_date
+--AND cust_ID = '58434'
+
+
+--*************************************************************************
+-- Actual Report
+--*************************************************************************
+
+DECLARE @New_CMM_Cust TABLE (
+New_Entry_Date date,
+Cust_ID varchar(15),
+Total_Value money,
+Value_2001 money,
+Value_2002 money,
+Value_2003 money,
+Value_2004 money,
+Value_2005 money,
+Value_2006 money,
+Value_2007 money,
+Value_2008 money,
+Value_2009 money,
+Value_2010 money,
+Value_2011 money,
+Buyback_Value_2011_CM money,
+Profit_Loss_2011_CM money,
+Buyback_Value_2011_MR money,
+Profit_Loss_2011_MR money,
+Buyback_Value_2011_AG money,
+Profit_Loss_2011_AG money,
+Buyback_Value_2012_CM money,
+Profit_Loss_2012_CM money,
+Buyback_Value_2012_MR money,
+Profit_Loss_2012_MR money,
+Buyback_Value_2012_AG money,
+Profit_Loss_2012_AG money,
+Buyback_Value_2013_CM money,
+Profit_Loss_2013_CM money,
+Buyback_Value_2013_MR money,
+Profit_Loss_2013_MR money,
+Buyback_Value_2013_AG money,
+Profit_Loss_2013_AG money,
+Buyback_Value_2014_CM money,
+Profit_Loss_2014_CM money,
+Buyback_Value_2014_MR money,
+Profit_Loss_2014_MR money,
+Buyback_Value_2014_AG money,
+Profit_Loss_2014_AG money,
+Buyback_Value_2015_CM money,
+Profit_Loss_2015_CM money,
+Buyback_Value_2015_MR money,
+Profit_Loss_2015_MR money,
+Buyback_Value_2015_AG money,
+Profit_Loss_2015_AG money
+)
+
+INSERT INTO @New_CMM_Cust (New_Entry_Date, Cust_ID, Total_Value, Value_2001, Value_2002, Value_2003, Value_2004, Value_2005, Value_2006, Value_2007, Value_2008, Value_2009, Value_2010, Value_2011,
+Buyback_Value_2011_CM,
+Profit_Loss_2011_CM,
+Buyback_Value_2011_MR,
+Profit_Loss_2011_MR,
+Buyback_Value_2011_AG,
+Profit_Loss_2011_AG,
+Buyback_Value_2012_CM,
+Profit_Loss_2012_CM,
+Buyback_Value_2012_MR,
+Profit_Loss_2012_MR,
+Buyback_Value_2012_AG,
+Profit_Loss_2012_AG,
+Buyback_Value_2013_CM,
+Profit_Loss_2013_CM,
+Buyback_Value_2013_MR,
+Profit_Loss_2013_MR,
+Buyback_Value_2013_AG,
+Profit_Loss_2013_AG,
+Buyback_Value_2014_CM,
+Profit_Loss_2014_CM,
+Buyback_Value_2014_MR,
+Profit_Loss_2014_MR,
+Buyback_Value_2014_AG,
+Profit_Loss_2014_AG,
+Buyback_Value_2015_CM,
+Profit_Loss_2015_CM,
+Buyback_Value_2015_MR,
+Profit_Loss_2015_MR,
+Buyback_Value_2015_AG,
+Profit_Loss_2015_AG
+)
+SELECT
+New_Entry_Date,
+Cust_ID,
+SUM(Value_Ordered) AS Total_Value,
+SUM(CASE WHEN Order_Date >= '2001-01-01' AND Order_Date < '2002-01-01' THEN Value_Ordered ELSE 0 END) AS Value_2001,
+SUM(CASE WHEN Order_Date >= '2002-01-01' AND Order_Date < '2003-01-01' THEN Value_Ordered ELSE 0 END) AS Value_2002,
+SUM(CASE WHEN Order_Date >= '2003-01-01' AND Order_Date < '2004-01-01' THEN Value_Ordered ELSE 0 END) AS Value_2003,
+SUM(CASE WHEN Order_Date >= '2004-01-01' AND Order_Date < '2005-01-01' THEN Value_Ordered ELSE 0 END) AS Value_2004,
+SUM(CASE WHEN Order_Date >= '2005-01-01' AND Order_Date < '2006-01-01' THEN Value_Ordered ELSE 0 END) AS Value_2005,
+SUM(CASE WHEN Order_Date >= '2006-01-01' AND Order_Date < '2007-01-01' THEN Value_Ordered ELSE 0 END) AS Value_2006,
+SUM(CASE WHEN Order_Date >= '2007-01-01' AND Order_Date < '2008-01-01' THEN Value_Ordered ELSE 0 END) AS Value_2007,
+SUM(CASE WHEN Order_Date >= '2008-01-01' AND Order_Date < '2009-01-01' THEN Value_Ordered ELSE 0 END) AS Value_2008,
+SUM(CASE WHEN Order_Date >= '2009-01-01' AND Order_Date < '2010-01-01' THEN Value_Ordered ELSE 0 END) AS Value_2009,
+SUM(CASE WHEN Order_Date >= '2010-01-01' AND Order_Date < '2011-01-01' THEN Value_Ordered ELSE 0 END) AS Value_2010,
+SUM(CASE WHEN Order_Date >= '2011-01-01' AND Order_Date < '2012-01-01' THEN Value_Ordered ELSE 0 END) AS Value_2011,
+SUM(Buyback_Value_2011_CM) AS Buyback_Value_2011_CM,
+SUM(Buyback_Value_2011_CM) - SUM(Value_Ordered) AS Profit_Loss_2011_CM,
+SUM(Buyback_Value_2011_MR) AS Buyback_Value_2011_MR,
+SUM(Buyback_Value_2011_MR) - SUM(Value_Ordered) AS Profit_Loss_2011_MR,
+SUM(Buyback_Value_2011_AG) AS Buyback_Value_2011_AG,
+SUM(Buyback_Value_2011_AG) - SUM(Value_Ordered) AS Profit_Loss_2011_AG,
+
+SUM(Buyback_Value_2012_CM) AS Buyback_Value_2012_CM,
+SUM(Buyback_Value_2012_CM) - SUM(Value_Ordered) AS Profit_Loss_2012_CM,
+SUM(Buyback_Value_2012_MR) AS Buyback_Value_2012_MR,
+SUM(Buyback_Value_2012_MR) - SUM(Value_Ordered) AS Profit_Loss_2012_MR,
+SUM(Buyback_Value_2012_AG) AS Buyback_Value_2012_AG,
+SUM(Buyback_Value_2012_AG) - SUM(Value_Ordered) AS Profit_Loss_2012_AG,
+
+SUM(Buyback_Value_2013_CM) AS Buyback_Value_2013_CM,
+SUM(Buyback_Value_2013_CM) - SUM(Value_Ordered) AS Profit_Loss_2013_CM,
+SUM(Buyback_Value_2013_MR) AS Buyback_Value_2013_MR,
+SUM(Buyback_Value_2013_MR) - SUM(Value_Ordered) AS Profit_Loss_2013_MR,
+SUM(Buyback_Value_2013_AG) AS Buyback_Value_2013_AG,
+SUM(Buyback_Value_2013_AG) - SUM(Value_Ordered) AS Profit_Loss_2013_AG,
+
+SUM(Buyback_Value_2014_CM) AS Buyback_Value_2014_CM,
+SUM(Buyback_Value_2014_CM) - SUM(Value_Ordered) AS Profit_Loss_2014_CM,
+SUM(Buyback_Value_2014_MR) AS Buyback_Value_2014_MR,
+SUM(Buyback_Value_2014_MR) - SUM(Value_Ordered) AS Profit_Loss_2014_MR,
+SUM(Buyback_Value_2014_AG) AS Buyback_Value_2014_AG,
+SUM(Buyback_Value_2014_AG) - SUM(Value_Ordered) AS Profit_Loss_2014_AG,
+
+SUM(Buyback_Value_2015_CM) AS Buyback_Value_2015_CM,
+SUM(Buyback_Value_2015_CM) - SUM(Value_Ordered) AS Profit_Loss_2015_CM,
+SUM(Buyback_Value_2015_MR) AS Buyback_Value_2015_MR,
+SUM(Buyback_Value_2015_MR) - SUM(Value_Ordered) AS Profit_Loss_2015_MR,
+SUM(Buyback_Value_2015_AG) AS Buyback_Value_2015_AG,
+SUM(Buyback_Value_2015_AG) - SUM(Value_Ordered) AS Profit_Loss_2015_AG
+
+FROM tmp_CMM_Query12
+WHERE New_Entry_Date >='2001-01-01'
+AND New_Entry_Date < '2012-02-01'
+GROUP BY New_Entry_Date, Cust_ID 
+
+
+SELECT * 
+FROM @New_CMM_Cust
+WHERE Total_Value <> 0
+Order By New_Entry_Date, Cust_ID
+
+SELECT
+'Customers' AS Title,
+COUNT(*) AS Total_2011_CM,
+COUNT(*) AS Total_2011_MR,
+COUNT(*) AS Total_2011_AG,
+COUNT(*) AS Total_2012_CM,
+COUNT(*) AS Total_2012_MR,
+COUNT(*) AS Total_2012_AG,
+COUNT(*) AS Total_2013_CM,
+COUNT(*) AS Total_2013_MR,
+COUNT(*) AS Total_2013_AG,
+COUNT(*) AS Total_2014_CM,
+COUNT(*) AS Total_2014_MR,
+COUNT(*) AS Total_2014_AG,
+COUNT(*) AS Total_2015_CM,
+COUNT(*) AS Total_2015_MR,
+COUNT(*) AS Total_2015_AG
+FROM @New_CMM_Cust
+WHERE Total_Value <> 0
+
+UNION ALL
+
+SELECT
+'In Profit' AS Title,
+SUM(CASE WHEN Profit_Loss_2011_CM > 0.00 THEN 1 ELSE 0 END) AS Total_2011_CM,
+SUM(CASE WHEN Profit_Loss_2011_MR > 0.00 THEN 1 ELSE 0 END) AS Total_2011_MR,
+SUM(CASE WHEN Profit_Loss_2011_AG > 0.00 THEN 1 ELSE 0 END) AS Total_2011_AG,
+SUM(CASE WHEN Profit_Loss_2012_CM > 0.00 THEN 1 ELSE 0 END) AS Total_2012_CM,
+SUM(CASE WHEN Profit_Loss_2012_MR > 0.00 THEN 1 ELSE 0 END) AS Total_2012_MR,
+SUM(CASE WHEN Profit_Loss_2012_AG > 0.00 THEN 1 ELSE 0 END) AS Total_2012_AG,
+SUM(CASE WHEN Profit_Loss_2013_CM > 0.00 THEN 1 ELSE 0 END) AS Total_2013_CM,
+SUM(CASE WHEN Profit_Loss_2013_MR > 0.00 THEN 1 ELSE 0 END) AS Total_2013_MR,
+SUM(CASE WHEN Profit_Loss_2013_AG > 0.00 THEN 1 ELSE 0 END) AS Total_2013_AG,
+SUM(CASE WHEN Profit_Loss_2014_CM > 0.00 THEN 1 ELSE 0 END) AS Total_2014_CM,
+SUM(CASE WHEN Profit_Loss_2014_MR > 0.00 THEN 1 ELSE 0 END) AS Total_2014_MR,
+SUM(CASE WHEN Profit_Loss_2014_AG > 0.00 THEN 1 ELSE 0 END) AS Total_2014_AG,
+SUM(CASE WHEN Profit_Loss_2015_CM > 0.00 THEN 1 ELSE 0 END) AS Total_2015_CM,
+SUM(CASE WHEN Profit_Loss_2015_MR > 0.00 THEN 1 ELSE 0 END) AS Total_2015_MR,
+SUM(CASE WHEN Profit_Loss_2015_AG > 0.00 THEN 1 ELSE 0 END) AS Total_2015_AG
+FROM @New_CMM_Cust
+WHERE Total_Value <> 0
+
+UNION ALL
+
+SELECT
+'Loss' AS Title,
+SUM(CASE WHEN Profit_Loss_2011_CM <= 0.00 THEN 1 ELSE 0 END) AS Total_2011_CM,
+SUM(CASE WHEN Profit_Loss_2011_MR <= 0.00 THEN 1 ELSE 0 END) AS Total_2011_MR,
+SUM(CASE WHEN Profit_Loss_2011_AG <= 0.00 THEN 1 ELSE 0 END) AS Total_2011_AG,
+SUM(CASE WHEN Profit_Loss_2012_CM <= 0.00 THEN 1 ELSE 0 END) AS Total_2012_CM,
+SUM(CASE WHEN Profit_Loss_2012_MR <= 0.00 THEN 1 ELSE 0 END) AS Total_2012_MR,
+SUM(CASE WHEN Profit_Loss_2012_AG <= 0.00 THEN 1 ELSE 0 END) AS Total_2012_AG,
+SUM(CASE WHEN Profit_Loss_2013_CM <= 0.00 THEN 1 ELSE 0 END) AS Total_2013_CM,
+SUM(CASE WHEN Profit_Loss_2013_MR <= 0.00 THEN 1 ELSE 0 END) AS Total_2013_MR,
+SUM(CASE WHEN Profit_Loss_2013_AG <= 0.00 THEN 1 ELSE 0 END) AS Total_2013_AG,
+SUM(CASE WHEN Profit_Loss_2014_CM <= 0.00 THEN 1 ELSE 0 END) AS Total_2014_CM,
+SUM(CASE WHEN Profit_Loss_2014_MR <= 0.00 THEN 1 ELSE 0 END) AS Total_2014_MR,
+SUM(CASE WHEN Profit_Loss_2014_AG <= 0.00 THEN 1 ELSE 0 END) AS Total_2014_AG,
+SUM(CASE WHEN Profit_Loss_2015_CM <= 0.00 THEN 1 ELSE 0 END) AS Total_2015_CM,
+SUM(CASE WHEN Profit_Loss_2015_MR <= 0.00 THEN 1 ELSE 0 END) AS Total_2015_MR,
+SUM(CASE WHEN Profit_Loss_2015_AG <= 0.00 THEN 1 ELSE 0 END) AS Total_2015_AG
+FROM @New_CMM_Cust
+WHERE Total_Value <> 0
+
+UNION ALL
+
+SELECT
+'$Profit' AS Title,
+SUM(CASE WHEN Profit_Loss_2011_CM > 0 THEN Profit_Loss_2011_CM ELSE 0 END) AS Total_2011_CM,
+SUM(CASE WHEN Profit_Loss_2011_MR > 0 THEN Profit_Loss_2011_MR ELSE 0 END) AS Total_2011_MR,
+SUM(CASE WHEN Profit_Loss_2011_AG > 0 THEN Profit_Loss_2011_AG ELSE 0 END) AS Total_2011_AG,
+SUM(CASE WHEN Profit_Loss_2012_CM > 0 THEN Profit_Loss_2012_CM ELSE 0 END) AS Total_2012_CM,
+SUM(CASE WHEN Profit_Loss_2012_MR > 0 THEN Profit_Loss_2012_MR ELSE 0 END) AS Total_2012_MR,
+SUM(CASE WHEN Profit_Loss_2012_AG > 0 THEN Profit_Loss_2012_AG ELSE 0 END) AS Total_2012_AG,
+SUM(CASE WHEN Profit_Loss_2013_CM > 0 THEN Profit_Loss_2013_CM ELSE 0 END) AS Total_2013_CM,
+SUM(CASE WHEN Profit_Loss_2013_MR > 0 THEN Profit_Loss_2013_MR ELSE 0 END) AS Total_2013_MR,
+SUM(CASE WHEN Profit_Loss_2013_AG > 0 THEN Profit_Loss_2013_AG ELSE 0 END) AS Total_2013_AG,
+SUM(CASE WHEN Profit_Loss_2014_CM > 0 THEN Profit_Loss_2014_CM ELSE 0 END) AS Total_2014_CM,
+SUM(CASE WHEN Profit_Loss_2014_MR > 0 THEN Profit_Loss_2014_MR ELSE 0 END) AS Total_2014_MR,
+SUM(CASE WHEN Profit_Loss_2014_AG > 0 THEN Profit_Loss_2014_AG ELSE 0 END) AS Total_2014_AG,
+SUM(CASE WHEN Profit_Loss_2015_CM > 0 THEN Profit_Loss_2015_CM ELSE 0 END) AS Total_2015_CM,
+SUM(CASE WHEN Profit_Loss_2015_MR > 0 THEN Profit_Loss_2015_MR ELSE 0 END) AS Total_2015_MR,
+SUM(CASE WHEN Profit_Loss_2015_AG > 0 THEN Profit_Loss_2015_AG ELSE 0 END) AS Total_2015_AG
+FROM @New_CMM_Cust
+WHERE Total_Value <> 0
+
+UNION ALL
+
+SELECT
+'$Loss' AS Title,
+SUM(CASE WHEN Profit_Loss_2011_CM <= 0 THEN Profit_Loss_2011_CM ELSE 0 END) AS Total_2011_CM,
+SUM(CASE WHEN Profit_Loss_2011_MR <= 0 THEN Profit_Loss_2011_MR ELSE 0 END) AS Total_2011_MR,
+SUM(CASE WHEN Profit_Loss_2011_AG <= 0 THEN Profit_Loss_2011_AG ELSE 0 END) AS Total_2011_AG,
+SUM(CASE WHEN Profit_Loss_2012_CM <= 0 THEN Profit_Loss_2012_CM ELSE 0 END) AS Total_2012_CM,
+SUM(CASE WHEN Profit_Loss_2012_MR <= 0 THEN Profit_Loss_2012_MR ELSE 0 END) AS Total_2012_MR,
+SUM(CASE WHEN Profit_Loss_2012_AG <= 0 THEN Profit_Loss_2012_AG ELSE 0 END) AS Total_2012_AG,
+SUM(CASE WHEN Profit_Loss_2013_CM <= 0 THEN Profit_Loss_2013_CM ELSE 0 END) AS Total_2013_CM,
+SUM(CASE WHEN Profit_Loss_2013_MR <= 0 THEN Profit_Loss_2013_MR ELSE 0 END) AS Total_2013_MR,
+SUM(CASE WHEN Profit_Loss_2013_AG <= 0 THEN Profit_Loss_2013_AG ELSE 0 END) AS Total_2013_AG,
+SUM(CASE WHEN Profit_Loss_2014_CM <= 0 THEN Profit_Loss_2014_CM ELSE 0 END) AS Total_2014_CM,
+SUM(CASE WHEN Profit_Loss_2014_MR <= 0 THEN Profit_Loss_2014_MR ELSE 0 END) AS Total_2014_MR,
+SUM(CASE WHEN Profit_Loss_2014_AG <= 0 THEN Profit_Loss_2014_AG ELSE 0 END) AS Total_2014_AG,
+SUM(CASE WHEN Profit_Loss_2015_CM <= 0 THEN Profit_Loss_2015_CM ELSE 0 END) AS Total_2015_CM,
+SUM(CASE WHEN Profit_Loss_2015_MR <= 0 THEN Profit_Loss_2015_MR ELSE 0 END) AS Total_2015_MR,
+SUM(CASE WHEN Profit_Loss_2015_AG <= 0 THEN Profit_Loss_2015_AG ELSE 0 END) AS Total_2015_AG
+FROM @New_CMM_Cust
+WHERE Total_Value <> 0
+
+--SELECT * FROM tbl_MOM_Cust 
+--WHERE Cust_ID IN (
+--SELECT Cust_ID 
+--FROM @New_CMM_Cust
+--WHERE Profit_Loss_2011_CM > 0 
+--AND Total_Value <> 0
+--)

@@ -1,0 +1,19 @@
+
+-- Retrieve MOM_STOCK records for all the items in the Items table that match
+
+insert into @MOM_STOCK
+select assoc, Quantity
+from MOM_STOCK
+inner join @Items as Items
+on MOM_STOCK.number = Items.item
+
+
+
+
+insert into @MOM_STOCK
+select assoc, Sum(Quantity) AS Quantity
+from MOM_STOCK
+inner join @Items as Items
+on MOM_STOCK.number = Items.item
+GROUP BY assoc
+

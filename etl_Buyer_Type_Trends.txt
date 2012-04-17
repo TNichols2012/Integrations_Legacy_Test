@@ -1,0 +1,1089 @@
+SELECT     
+'Customer MOM Entry_Date' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+
+UNION ALL
+
+SELECT     
+'Valid Customers' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE Init_Buyer_Type NOT IN ('FB', 'MISC', 'Pending')
+
+--*********************************************************************************************
+--*********************************************************************************************
+UNION ALL
+
+SELECT     
+'***** GR *****' AS 'Lookup_Value',
+'0' AS Total,
+'0' AS Y2012,
+'0' AS Y2011,
+'0' AS Y2010,
+'0' AS Y2009,
+'0' AS Y2008,
+'0' AS Y2007,
+'0' AS Y2006,
+'0' AS Y2005, 
+'0' AS Y2004, 
+'0' AS Y2003, 
+'0' AS Y2002, 
+'0' AS Y2001
+
+UNION ALL
+
+SELECT     
+'Gold Report Recipients' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('GR')
+
+UNION ALL
+
+SELECT     
+'GR Upgrades Total' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('GR')
+AND Current_Buyer_Type IN ('B1', 'B2', 'B3')
+
+UNION ALL
+
+SELECT     
+'GR Upgrades Total Value' AS 'Lookup_Value', 
+SUM(gross) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN gross ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN gross ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN gross ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN gross ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN gross ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN gross ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN gross ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN gross ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN gross ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN gross ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN gross ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN gross ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('GR')
+AND Current_Buyer_Type IN ('B1', 'B2', 'B3')
+
+UNION ALL
+
+SELECT     
+'GR Upgrades to Bullion' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('GR')
+AND Current_Buyer_Type IN ('B1')
+UNION ALL
+
+SELECT     
+'GR Upgrades to Bullion Value' AS 'Lookup_Value', 
+SUM(gross) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN gross ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN gross ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN gross ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN gross ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN gross ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN gross ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN gross ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN gross ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN gross ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN gross ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN gross ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN gross ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('GR')
+AND Current_Buyer_Type IN ('B1')
+
+UNION ALL
+
+SELECT     
+'GR Upgrades to non-Bullion' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('GR')
+AND Current_Buyer_Type IN ('B2', 'B3')
+
+UNION ALL
+
+SELECT     
+'GR Upgrades to non-Bullion Value' AS 'Lookup_Value', 
+SUM(gross) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN gross ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN gross ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN gross ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN gross ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN gross ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN gross ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN gross ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN gross ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN gross ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN gross ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN gross ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN gross ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('GR')
+AND Current_Buyer_Type IN ('B2', 'B3')
+
+--*********************************************************************************************
+--*********************************************************************************************
+UNION ALL
+
+SELECT     
+'***** B1 *****' AS 'Lookup_Value',
+'0' AS Total,
+'0' AS Y2012,
+'0' AS Y2011,
+'0' AS Y2010,
+'0' AS Y2009,
+'0' AS Y2008,
+'0' AS Y2007,
+'0' AS Y2006,
+'0' AS Y2005, 
+'0' AS Y2004, 
+'0' AS Y2003, 
+'0' AS Y2002, 
+'0' AS Y2001
+
+UNION ALL
+
+SELECT     
+'Bullion Buyer' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B1', 'B1_RT')
+
+UNION ALL
+
+SELECT     
+'Bullion Buyer Value' AS 'Lookup_Value', 
+SUM(gross) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN gross ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN gross ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN gross ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN gross ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN gross ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN gross ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN gross ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN gross ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN gross ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN gross ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN gross ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN gross ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B1', 'B1_RT')
+
+UNION ALL
+
+SELECT     
+'Bullion Buyer Returns' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B1_RT')
+
+UNION ALL
+
+SELECT     
+'B1 Upgrades Total' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B1', 'B1_RT')
+AND 	(Current_Buyer_Type IN ('B2', 'B3') OR (Current_Buyer_Type = 'B1' AND Order_Freq >=2) )
+
+UNION ALL
+
+SELECT     
+'B1 Upgrades Total Value' AS 'Lookup_Value', 
+SUM(gross) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN gross ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN gross ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN gross ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN gross ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN gross ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN gross ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN gross ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN gross ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN gross ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN gross ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN gross ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN gross ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B1', 'B1_RT')
+AND 	(Current_Buyer_Type IN ('B2', 'B3') OR (Current_Buyer_Type = 'B1' AND Order_Freq >=2) )
+
+UNION ALL
+
+SELECT     
+'B1 Upgrades to More Bullion' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B1', 'B1_RT')
+AND 	(Current_Buyer_Type = 'B1' AND Order_Freq >=2)
+
+UNION ALL
+
+SELECT     
+'B1 Upgrades to More Bullion Value' AS 'Lookup_Value', 
+SUM(gross) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN gross ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN gross ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN gross ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN gross ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN gross ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN gross ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN gross ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN gross ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN gross ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN gross ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN gross ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN gross ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B1', 'B1_RT')
+AND 	(Current_Buyer_Type = 'B1' AND Order_Freq >=2)
+
+UNION ALL
+
+SELECT     
+'B1 Upgrades to non-Bullion' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B1', 'B1_RT')
+AND 	Current_Buyer_Type IN ('B2', 'B3')
+
+UNION ALL
+
+SELECT     
+'B1 Upgrades to non-Bullion Value' AS 'Lookup_Value', 
+SUM(gross) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN gross ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN gross ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN gross ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN gross ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN gross ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN gross ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN gross ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN gross ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN gross ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN gross ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN gross ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN gross ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B1', 'B1_RT')
+AND 	Current_Buyer_Type IN ('B2', 'B3')
+
+--*********************************************************************************************
+--*********************************************************************************************
+UNION ALL
+
+
+SELECT     
+'***** B2 *****' AS 'Lookup_Value',
+'0' AS Total,
+'0' AS Y2012,
+'0' AS Y2011,
+'0' AS Y2010,
+'0' AS Y2009,
+'0' AS Y2008,
+'0' AS Y2007,
+'0' AS Y2006,
+'0' AS Y2005, 
+'0' AS Y2004, 
+'0' AS Y2003, 
+'0' AS Y2002, 
+'0' AS Y2001
+
+UNION ALL
+
+SELECT     
+'Non-Bullion Buyer' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B2', 'B2_RT')
+
+UNION ALL
+
+SELECT     
+'Non-Bullion Buyer Value' AS 'Lookup_Value', 
+SUM(gross) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN gross ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN gross ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN gross ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN gross ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN gross ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN gross ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN gross ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN gross ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN gross ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN gross ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN gross ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN gross ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B2', 'B2_RT')
+
+UNION ALL
+
+SELECT     
+'Non-Bullion Buyer Returns' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B2_RT')
+
+--*********************************************************************************************
+--*********************************************************************************************
+UNION ALL
+
+SELECT     
+'***** B3 *****' AS 'Lookup_Value',
+'0' AS Total,
+'0' AS Y2012,
+'0' AS Y2011,
+'0' AS Y2010,
+'0' AS Y2009,
+'0' AS Y2008,
+'0' AS Y2007,
+'0' AS Y2006,
+'0' AS Y2005, 
+'0' AS Y2004, 
+'0' AS Y2003, 
+'0' AS Y2002, 
+'0' AS Y2001
+
+UNION ALL
+
+SELECT     
+'Bullion and Non-Bullion Buyer' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B3', 'B3_RT')
+
+UNION ALL
+
+SELECT     
+'Bullion and Non-Bullion Buyer Value' AS 'Lookup_Value', 
+SUM(gross) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN gross ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN gross ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN gross ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN gross ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN gross ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN gross ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN gross ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN gross ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN gross ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN gross ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN gross ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN gross ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B3', 'B3_RT')
+
+UNION ALL
+
+SELECT     
+'Bullion and Non-Bullion Buyer Returns' AS 'Lookup_Value', 
+COUNT(*) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_DBF_Cust
+WHERE	Init_Buyer_Type IN ('B3_RT')
+
+
+
+
+SELECT     
+'Total Sales' AS 'Lookup_Value', 
+SUM(Ttl_Net_Sales_Value) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN Ttl_Net_Sales_Value ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN Ttl_Net_Sales_Value ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN Ttl_Net_Sales_Value ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN Ttl_Net_Sales_Value ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN Ttl_Net_Sales_Value ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN Ttl_Net_Sales_Value ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN Ttl_Net_Sales_Value ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN Ttl_Net_Sales_Value ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN Ttl_Net_Sales_Value ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN Ttl_Net_Sales_Value ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN Ttl_Net_Sales_Value ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN Ttl_Net_Sales_Value ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+
+UNION ALL
+
+SELECT     
+'Total Customers' AS 'Lookup_Value', 
+COUNT(Entry_Date) AS Total, 
+SUM(CASE WHEN Entry_Date >= '1/1/2012' AND Entry_Date < '1/1/2013' THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Entry_Date >= '1/1/2011' AND Entry_Date < '1/1/2012' THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Entry_Date >= '1/1/2010' AND Entry_Date < '1/1/2011' THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Entry_Date >= '1/1/2009' AND Entry_Date < '1/1/2010' THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Entry_Date >= '1/1/2008' AND Entry_Date < '1/1/2009' THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Entry_Date >= '1/1/2007' AND Entry_Date < '1/1/2008' THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+
+UNION ALL
+
+SELECT     
+'Y2001 Value' AS 'Lookup_Value', 
+SUM(Ttl_Net_Sales_Value) AS Total, 
+SUM(Y2012_Shipped + Y2012_Returned) AS Y2012,
+SUM(Y2011_Shipped + Y2011_Returned) AS Y2011,
+SUM(Y2010_Shipped + Y2010_Returned) AS Y2010,
+SUM(Y2009_Shipped + Y2009_Returned) AS Y2009,
+SUM(Y2008_Shipped + Y2008_Returned) AS Y2008,
+SUM(Y2007_Shipped + Y2007_Returned) AS Y2007,
+SUM(Y2006_Shipped + Y2006_Returned) AS Y2006,
+SUM(Y2005_Shipped + Y2005_Returned) AS Y2005, 
+SUM(Y2004_Shipped + Y2004_Returned) AS Y2004, 
+SUM(Y2003_Shipped + Y2003_Returned) AS Y2003, 
+SUM(Y2002_Shipped + Y2002_Returned) AS Y2002, 
+SUM(Y2001_Shipped + Y2001_Returned) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2001' AND Entry_Date < '1/1/2002'
+
+UNION ALL
+
+SELECT     
+'Y2001 Buyer' AS 'Lookup_Value', 
+COUNT(Ttl_Net_Sales_Value) AS Total, 
+SUM(CASE WHEN Y2012_Shipped + Y2012_Returned > 0 THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Y2011_Shipped + Y2011_Returned > 0 THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Y2010_Shipped + Y2010_Returned > 0 THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Y2009_Shipped + Y2009_Returned > 0 THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Y2008_Shipped + Y2008_Returned > 0 THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Y2007_Shipped + Y2007_Returned > 0 THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Y2006_Shipped + Y2006_Returned > 0 THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Y2005_Shipped + Y2005_Returned > 0 THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Y2004_Shipped + Y2004_Returned > 0 THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Y2003_Shipped + Y2003_Returned > 0 THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Y2002_Shipped + Y2002_Returned > 0 THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Y2001_Shipped + Y2001_Returned > 0 THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2001' AND Entry_Date < '1/1/2002'
+
+UNION ALL
+
+SELECT     
+'Y2002 Value' AS 'Lookup_Value', 
+SUM(Ttl_Net_Sales_Value) AS Total, 
+SUM(Y2012_Shipped + Y2012_Returned) AS Y2012,
+SUM(Y2011_Shipped + Y2011_Returned) AS Y2011,
+SUM(Y2010_Shipped + Y2010_Returned) AS Y2010,
+SUM(Y2009_Shipped + Y2009_Returned) AS Y2009,
+SUM(Y2008_Shipped + Y2008_Returned) AS Y2008,
+SUM(Y2007_Shipped + Y2007_Returned) AS Y2007,
+SUM(Y2006_Shipped + Y2006_Returned) AS Y2006,
+SUM(Y2005_Shipped + Y2005_Returned) AS Y2005, 
+SUM(Y2004_Shipped + Y2004_Returned) AS Y2004, 
+SUM(Y2003_Shipped + Y2003_Returned) AS Y2003, 
+SUM(Y2002_Shipped + Y2002_Returned) AS Y2002, 
+SUM(Y2001_Shipped + Y2001_Returned) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2002' AND Entry_Date < '1/1/2003'
+
+UNION ALL
+
+SELECT     
+'Y2002 Buyer' AS 'Lookup_Value', 
+COUNT(Ttl_Net_Sales_Value) AS Total, 
+SUM(CASE WHEN Y2012_Shipped + Y2012_Returned > 0 THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Y2011_Shipped + Y2011_Returned > 0 THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Y2010_Shipped + Y2010_Returned > 0 THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Y2009_Shipped + Y2009_Returned > 0 THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Y2008_Shipped + Y2008_Returned > 0 THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Y2007_Shipped + Y2007_Returned > 0 THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Y2006_Shipped + Y2006_Returned > 0 THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Y2005_Shipped + Y2005_Returned > 0 THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Y2004_Shipped + Y2004_Returned > 0 THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Y2003_Shipped + Y2003_Returned > 0 THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Y2002_Shipped + Y2002_Returned > 0 THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Y2001_Shipped + Y2001_Returned > 0 THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2002' AND Entry_Date < '1/1/2003'
+
+UNION ALL
+
+SELECT     
+'Y2003 Value' AS 'Lookup_Value', 
+SUM(Ttl_Net_Sales_Value) AS Total, 
+SUM(Y2012_Shipped + Y2012_Returned) AS Y2012,
+SUM(Y2011_Shipped + Y2011_Returned) AS Y2011,
+SUM(Y2010_Shipped + Y2010_Returned) AS Y2010,
+SUM(Y2009_Shipped + Y2009_Returned) AS Y2009,
+SUM(Y2008_Shipped + Y2008_Returned) AS Y2008,
+SUM(Y2007_Shipped + Y2007_Returned) AS Y2007,
+SUM(Y2006_Shipped + Y2006_Returned) AS Y2006,
+SUM(Y2005_Shipped + Y2005_Returned) AS Y2005, 
+SUM(Y2004_Shipped + Y2004_Returned) AS Y2004, 
+SUM(Y2003_Shipped + Y2003_Returned) AS Y2003, 
+SUM(Y2002_Shipped + Y2002_Returned) AS Y2002, 
+SUM(Y2001_Shipped + Y2001_Returned) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2003' AND Entry_Date < '1/1/2004'
+
+UNION ALL
+
+SELECT     
+'Y2003 Buyer' AS 'Lookup_Value', 
+COUNT(Ttl_Net_Sales_Value) AS Total, 
+SUM(CASE WHEN Y2012_Shipped + Y2012_Returned > 0 THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Y2011_Shipped + Y2011_Returned > 0 THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Y2010_Shipped + Y2010_Returned > 0 THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Y2009_Shipped + Y2009_Returned > 0 THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Y2008_Shipped + Y2008_Returned > 0 THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Y2007_Shipped + Y2007_Returned > 0 THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Y2006_Shipped + Y2006_Returned > 0 THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Y2005_Shipped + Y2005_Returned > 0 THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Y2004_Shipped + Y2004_Returned > 0 THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Y2003_Shipped + Y2003_Returned > 0 THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Y2002_Shipped + Y2002_Returned > 0 THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Y2001_Shipped + Y2001_Returned > 0 THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2003' AND Entry_Date < '1/1/2004'
+
+UNION ALL
+
+SELECT     
+'Y2004 Value' AS 'Lookup_Value', 
+SUM(Ttl_Net_Sales_Value) AS Total, 
+SUM(Y2012_Shipped + Y2012_Returned) AS Y2012,
+SUM(Y2011_Shipped + Y2011_Returned) AS Y2011,
+SUM(Y2010_Shipped + Y2010_Returned) AS Y2010,
+SUM(Y2009_Shipped + Y2009_Returned) AS Y2009,
+SUM(Y2008_Shipped + Y2008_Returned) AS Y2008,
+SUM(Y2007_Shipped + Y2007_Returned) AS Y2007,
+SUM(Y2006_Shipped + Y2006_Returned) AS Y2006,
+SUM(Y2005_Shipped + Y2005_Returned) AS Y2005, 
+SUM(Y2004_Shipped + Y2004_Returned) AS Y2004, 
+SUM(Y2003_Shipped + Y2003_Returned) AS Y2003, 
+SUM(Y2002_Shipped + Y2002_Returned) AS Y2002, 
+SUM(Y2001_Shipped + Y2001_Returned) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2004' AND Entry_Date < '1/1/2005'
+
+UNION ALL
+
+SELECT     
+'Y2004 Buyer' AS 'Lookup_Value', 
+COUNT(Ttl_Net_Sales_Value) AS Total, 
+SUM(CASE WHEN Y2012_Shipped + Y2012_Returned > 0 THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Y2011_Shipped + Y2011_Returned > 0 THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Y2010_Shipped + Y2010_Returned > 0 THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Y2009_Shipped + Y2009_Returned > 0 THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Y2008_Shipped + Y2008_Returned > 0 THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Y2007_Shipped + Y2007_Returned > 0 THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Y2006_Shipped + Y2006_Returned > 0 THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Y2005_Shipped + Y2005_Returned > 0 THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Y2004_Shipped + Y2004_Returned > 0 THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Y2003_Shipped + Y2003_Returned > 0 THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Y2002_Shipped + Y2002_Returned > 0 THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Y2001_Shipped + Y2001_Returned > 0 THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2004' AND Entry_Date < '1/1/2005'
+
+UNION ALL
+
+SELECT     
+'Y2005 Value' AS 'Lookup_Value', 
+SUM(Ttl_Net_Sales_Value) AS Total, 
+SUM(Y2012_Shipped + Y2012_Returned) AS Y2012,
+SUM(Y2011_Shipped + Y2011_Returned) AS Y2011,
+SUM(Y2010_Shipped + Y2010_Returned) AS Y2010,
+SUM(Y2009_Shipped + Y2009_Returned) AS Y2009,
+SUM(Y2008_Shipped + Y2008_Returned) AS Y2008,
+SUM(Y2007_Shipped + Y2007_Returned) AS Y2007,
+SUM(Y2006_Shipped + Y2006_Returned) AS Y2006,
+SUM(Y2005_Shipped + Y2005_Returned) AS Y2005, 
+SUM(Y2004_Shipped + Y2004_Returned) AS Y2004, 
+SUM(Y2003_Shipped + Y2003_Returned) AS Y2003, 
+SUM(Y2002_Shipped + Y2002_Returned) AS Y2002, 
+SUM(Y2001_Shipped + Y2001_Returned) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2005' AND Entry_Date < '1/1/2006'
+
+UNION ALL
+
+SELECT     
+'Y2005 Buyer' AS 'Lookup_Value', 
+COUNT(Ttl_Net_Sales_Value) AS Total, 
+SUM(CASE WHEN Y2012_Shipped + Y2012_Returned > 0 THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Y2011_Shipped + Y2011_Returned > 0 THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Y2010_Shipped + Y2010_Returned > 0 THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Y2009_Shipped + Y2009_Returned > 0 THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Y2008_Shipped + Y2008_Returned > 0 THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Y2007_Shipped + Y2007_Returned > 0 THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Y2006_Shipped + Y2006_Returned > 0 THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Y2005_Shipped + Y2005_Returned > 0 THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Y2004_Shipped + Y2004_Returned > 0 THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Y2003_Shipped + Y2003_Returned > 0 THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Y2002_Shipped + Y2002_Returned > 0 THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Y2001_Shipped + Y2001_Returned > 0 THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2005' AND Entry_Date < '1/1/2006'
+
+UNION ALL
+
+SELECT     
+'Y2006 Value' AS 'Lookup_Value', 
+SUM(Ttl_Net_Sales_Value) AS Total, 
+SUM(Y2012_Shipped + Y2012_Returned) AS Y2012,
+SUM(Y2011_Shipped + Y2011_Returned) AS Y2011,
+SUM(Y2010_Shipped + Y2010_Returned) AS Y2010,
+SUM(Y2009_Shipped + Y2009_Returned) AS Y2009,
+SUM(Y2008_Shipped + Y2008_Returned) AS Y2008,
+SUM(Y2007_Shipped + Y2007_Returned) AS Y2007,
+SUM(Y2006_Shipped + Y2006_Returned) AS Y2006,
+SUM(Y2005_Shipped + Y2005_Returned) AS Y2005, 
+SUM(Y2004_Shipped + Y2004_Returned) AS Y2004, 
+SUM(Y2003_Shipped + Y2003_Returned) AS Y2003, 
+SUM(Y2002_Shipped + Y2002_Returned) AS Y2002, 
+SUM(Y2001_Shipped + Y2001_Returned) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2006' AND Entry_Date < '1/1/2007'
+
+UNION ALL
+
+SELECT     
+'Y2006 Buyer' AS 'Lookup_Value', 
+COUNT(Ttl_Net_Sales_Value) AS Total, 
+SUM(CASE WHEN Y2012_Shipped + Y2012_Returned > 0 THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Y2011_Shipped + Y2011_Returned > 0 THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Y2010_Shipped + Y2010_Returned > 0 THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Y2009_Shipped + Y2009_Returned > 0 THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Y2008_Shipped + Y2008_Returned > 0 THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Y2007_Shipped + Y2007_Returned > 0 THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Y2006_Shipped + Y2006_Returned > 0 THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Y2005_Shipped + Y2005_Returned > 0 THEN 1 ELSE 0 END) AS Y2005,
+SUM(CASE WHEN Y2004_Shipped + Y2004_Returned > 0 THEN 1 ELSE 0 END) AS Y2004,
+SUM(CASE WHEN Y2003_Shipped + Y2003_Returned > 0 THEN 1 ELSE 0 END) AS Y2003,
+SUM(CASE WHEN Y2002_Shipped + Y2002_Returned > 0 THEN 1 ELSE 0 END) AS Y2002,
+SUM(CASE WHEN Y2001_Shipped + Y2001_Returned > 0 THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2006' AND Entry_Date < '1/1/2007'
+
+UNION ALL
+
+SELECT     
+'Y2007 Value' AS 'Lookup_Value', 
+SUM(Ttl_Net_Sales_Value) AS Total, 
+SUM(Y2012_Shipped + Y2012_Returned) AS Y2012,
+SUM(Y2011_Shipped + Y2011_Returned) AS Y2011,
+SUM(Y2010_Shipped + Y2010_Returned) AS Y2010,
+SUM(Y2009_Shipped + Y2009_Returned) AS Y2009,
+SUM(Y2008_Shipped + Y2008_Returned) AS Y2008,
+SUM(Y2007_Shipped + Y2007_Returned) AS Y2007,
+SUM(Y2006_Shipped + Y2006_Returned) AS Y2006,
+SUM(Y2005_Shipped + Y2005_Returned) AS Y2005, 
+SUM(Y2004_Shipped + Y2004_Returned) AS Y2004, 
+SUM(Y2003_Shipped + Y2003_Returned) AS Y2003, 
+SUM(Y2002_Shipped + Y2002_Returned) AS Y2002, 
+SUM(Y2001_Shipped + Y2001_Returned) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2007' AND Entry_Date < '1/1/2008'
+
+UNION ALL
+
+SELECT     
+'Y2007 Buyer' AS 'Lookup_Value', 
+COUNT(Ttl_Net_Sales_Value) AS Total, 
+SUM(CASE WHEN Y2012_Shipped + Y2012_Returned > 0 THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Y2011_Shipped + Y2011_Returned > 0 THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Y2010_Shipped + Y2010_Returned > 0 THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Y2009_Shipped + Y2009_Returned > 0 THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Y2008_Shipped + Y2008_Returned > 0 THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Y2007_Shipped + Y2007_Returned > 0 THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Y2006_Shipped + Y2006_Returned > 0 THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Y2005_Shipped + Y2005_Returned > 0 THEN 1 ELSE 0 END) AS Y2005, 
+SUM(CASE WHEN Y2004_Shipped + Y2004_Returned > 0 THEN 1 ELSE 0 END) AS Y2004, 
+SUM(CASE WHEN Y2003_Shipped + Y2003_Returned > 0 THEN 1 ELSE 0 END) AS Y2003, 
+SUM(CASE WHEN Y2002_Shipped + Y2002_Returned > 0 THEN 1 ELSE 0 END) AS Y2002, 
+SUM(CASE WHEN Y2001_Shipped + Y2001_Returned > 0 THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2007' AND Entry_Date < '1/1/2008'
+
+
+UNION ALL
+
+SELECT     
+'Y2008 Value' AS 'Lookup_Value', 
+SUM(Ttl_Net_Sales_Value) AS Total, 
+SUM(Y2012_Shipped + Y2012_Returned) AS Y2012,
+SUM(Y2011_Shipped + Y2011_Returned) AS Y2011,
+SUM(Y2010_Shipped + Y2010_Returned) AS Y2010,
+SUM(Y2009_Shipped + Y2009_Returned) AS Y2009,
+SUM(Y2008_Shipped + Y2008_Returned) AS Y2008,
+SUM(Y2007_Shipped + Y2007_Returned) AS Y2007,
+SUM(Y2006_Shipped + Y2006_Returned) AS Y2006,
+SUM(Y2005_Shipped + Y2005_Returned) AS Y2005, 
+SUM(Y2004_Shipped + Y2004_Returned) AS Y2004, 
+SUM(Y2003_Shipped + Y2003_Returned) AS Y2003, 
+SUM(Y2002_Shipped + Y2002_Returned) AS Y2002, 
+SUM(Y2001_Shipped + Y2001_Returned) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2008' AND Entry_Date < '1/1/2009'
+
+UNION ALL
+
+SELECT     
+'Y2008 Buyer' AS 'Lookup_Value', 
+COUNT(Ttl_Net_Sales_Value) AS Total, 
+SUM(CASE WHEN Y2012_Shipped + Y2012_Returned > 0 THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Y2011_Shipped + Y2011_Returned > 0 THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Y2010_Shipped + Y2010_Returned > 0 THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Y2009_Shipped + Y2009_Returned > 0 THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Y2008_Shipped + Y2008_Returned > 0 THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Y2007_Shipped + Y2007_Returned > 0 THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Y2006_Shipped + Y2006_Returned > 0 THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Y2005_Shipped + Y2005_Returned > 0 THEN 1 ELSE 0 END) AS Y2005,
+SUM(CASE WHEN Y2004_Shipped + Y2004_Returned > 0 THEN 1 ELSE 0 END) AS Y2004,
+SUM(CASE WHEN Y2003_Shipped + Y2003_Returned > 0 THEN 1 ELSE 0 END) AS Y2003,
+SUM(CASE WHEN Y2002_Shipped + Y2002_Returned > 0 THEN 1 ELSE 0 END) AS Y2002,
+SUM(CASE WHEN Y2001_Shipped + Y2001_Returned > 0 THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2008' AND Entry_Date < '1/1/2009'
+
+UNION ALL
+
+SELECT     
+'Y2009 Value' AS 'Lookup_Value', 
+SUM(Ttl_Net_Sales_Value) AS Total, 
+SUM(Y2012_Shipped + Y2012_Returned) AS Y2012,
+SUM(Y2011_Shipped + Y2011_Returned) AS Y2011,
+SUM(Y2010_Shipped + Y2010_Returned) AS Y2010,
+SUM(Y2009_Shipped + Y2009_Returned) AS Y2009,
+SUM(Y2008_Shipped + Y2008_Returned) AS Y2008,
+SUM(Y2007_Shipped + Y2007_Returned) AS Y2007,
+SUM(Y2006_Shipped + Y2006_Returned) AS Y2006,
+SUM(Y2005_Shipped + Y2005_Returned) AS Y2005, 
+SUM(Y2004_Shipped + Y2004_Returned) AS Y2004, 
+SUM(Y2003_Shipped + Y2003_Returned) AS Y2003, 
+SUM(Y2002_Shipped + Y2002_Returned) AS Y2002, 
+SUM(Y2001_Shipped + Y2001_Returned) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2009' AND Entry_Date < '1/1/2010'
+
+UNION ALL
+
+SELECT     
+'Y2009 Buyer' AS 'Lookup_Value', 
+COUNT(Ttl_Net_Sales_Value) AS Total, 
+SUM(CASE WHEN Y2012_Shipped + Y2012_Returned > 0 THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Y2011_Shipped + Y2011_Returned > 0 THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Y2010_Shipped + Y2010_Returned > 0 THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Y2009_Shipped + Y2009_Returned > 0 THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Y2008_Shipped + Y2008_Returned > 0 THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Y2007_Shipped + Y2007_Returned > 0 THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Y2006_Shipped + Y2006_Returned > 0 THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Y2005_Shipped + Y2005_Returned > 0 THEN 1 ELSE 0 END) AS Y2005,
+SUM(CASE WHEN Y2004_Shipped + Y2004_Returned > 0 THEN 1 ELSE 0 END) AS Y2004,
+SUM(CASE WHEN Y2003_Shipped + Y2003_Returned > 0 THEN 1 ELSE 0 END) AS Y2003,
+SUM(CASE WHEN Y2002_Shipped + Y2002_Returned > 0 THEN 1 ELSE 0 END) AS Y2002,
+SUM(CASE WHEN Y2001_Shipped + Y2001_Returned > 0 THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2009' AND Entry_Date < '1/1/2010'
+
+UNION ALL
+
+SELECT     
+'Y2010 Value' AS 'Lookup_Value', 
+SUM(Ttl_Net_Sales_Value) AS Total, 
+SUM(Y2012_Shipped + Y2012_Returned) AS Y2012,
+SUM(Y2011_Shipped + Y2011_Returned) AS Y2011,
+SUM(Y2010_Shipped + Y2010_Returned) AS Y2010,
+SUM(Y2009_Shipped + Y2009_Returned) AS Y2009,
+SUM(Y2008_Shipped + Y2008_Returned) AS Y2008,
+SUM(Y2007_Shipped + Y2007_Returned) AS Y2007,
+SUM(Y2006_Shipped + Y2006_Returned) AS Y2006,
+SUM(Y2005_Shipped + Y2005_Returned) AS Y2005, 
+SUM(Y2004_Shipped + Y2004_Returned) AS Y2004, 
+SUM(Y2003_Shipped + Y2003_Returned) AS Y2003, 
+SUM(Y2002_Shipped + Y2002_Returned) AS Y2002, 
+SUM(Y2001_Shipped + Y2001_Returned) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2010' AND Entry_Date < '1/1/2011'
+
+UNION ALL
+
+SELECT     
+'Y2010 Buyer' AS 'Lookup_Value', 
+COUNT(Ttl_Net_Sales_Value) AS Total, 
+SUM(CASE WHEN Y2012_Shipped + Y2012_Returned > 0 THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Y2011_Shipped + Y2011_Returned > 0 THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Y2010_Shipped + Y2010_Returned > 0 THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Y2009_Shipped + Y2009_Returned > 0 THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Y2008_Shipped + Y2008_Returned > 0 THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Y2007_Shipped + Y2007_Returned > 0 THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Y2006_Shipped + Y2006_Returned > 0 THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Y2005_Shipped + Y2005_Returned > 0 THEN 1 ELSE 0 END) AS Y2005,
+SUM(CASE WHEN Y2004_Shipped + Y2004_Returned > 0 THEN 1 ELSE 0 END) AS Y2004,
+SUM(CASE WHEN Y2003_Shipped + Y2003_Returned > 0 THEN 1 ELSE 0 END) AS Y2003,
+SUM(CASE WHEN Y2002_Shipped + Y2002_Returned > 0 THEN 1 ELSE 0 END) AS Y2002,
+SUM(CASE WHEN Y2001_Shipped + Y2001_Returned > 0 THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2010' AND Entry_Date < '1/1/2011'
+
+UNION ALL
+
+SELECT     
+'Y2011 Value' AS 'Lookup_Value', 
+SUM(Ttl_Net_Sales_Value) AS Total, 
+SUM(Y2012_Shipped + Y2012_Returned) AS Y2012,
+SUM(Y2011_Shipped + Y2011_Returned) AS Y2011,
+SUM(Y2010_Shipped + Y2010_Returned) AS Y2010,
+SUM(Y2009_Shipped + Y2009_Returned) AS Y2009,
+SUM(Y2008_Shipped + Y2008_Returned) AS Y2008,
+SUM(Y2007_Shipped + Y2007_Returned) AS Y2007,
+SUM(Y2006_Shipped + Y2006_Returned) AS Y2006,
+SUM(Y2005_Shipped + Y2005_Returned) AS Y2005, 
+SUM(Y2004_Shipped + Y2004_Returned) AS Y2004, 
+SUM(Y2003_Shipped + Y2003_Returned) AS Y2003, 
+SUM(Y2002_Shipped + Y2002_Returned) AS Y2002, 
+SUM(Y2001_Shipped + Y2001_Returned) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2011' AND Entry_Date < '1/1/2012'
+
+UNION ALL
+
+SELECT     
+'Y2011 Buyer' AS 'Lookup_Value', 
+COUNT(Ttl_Net_Sales_Value) AS Total, 
+SUM(CASE WHEN Y2012_Shipped + Y2012_Returned > 0 THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Y2011_Shipped + Y2011_Returned > 0 THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Y2010_Shipped + Y2010_Returned > 0 THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Y2009_Shipped + Y2009_Returned > 0 THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Y2008_Shipped + Y2008_Returned > 0 THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Y2007_Shipped + Y2007_Returned > 0 THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Y2006_Shipped + Y2006_Returned > 0 THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Y2005_Shipped + Y2005_Returned > 0 THEN 1 ELSE 0 END) AS Y2005,
+SUM(CASE WHEN Y2004_Shipped + Y2004_Returned > 0 THEN 1 ELSE 0 END) AS Y2004,
+SUM(CASE WHEN Y2003_Shipped + Y2003_Returned > 0 THEN 1 ELSE 0 END) AS Y2003,
+SUM(CASE WHEN Y2002_Shipped + Y2002_Returned > 0 THEN 1 ELSE 0 END) AS Y2002,
+SUM(CASE WHEN Y2001_Shipped + Y2001_Returned > 0 THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2011' AND Entry_Date < '1/1/2012'
+
+UNION ALL
+
+SELECT     
+'Y2012 Value' AS 'Lookup_Value', 
+SUM(Ttl_Net_Sales_Value) AS Total, 
+SUM(Y2012_Shipped + Y2012_Returned) AS Y2012,
+SUM(Y2011_Shipped + Y2011_Returned) AS Y2011,
+SUM(Y2010_Shipped + Y2010_Returned) AS Y2010,
+SUM(Y2009_Shipped + Y2009_Returned) AS Y2009,
+SUM(Y2008_Shipped + Y2008_Returned) AS Y2008,
+SUM(Y2007_Shipped + Y2007_Returned) AS Y2007,
+SUM(Y2006_Shipped + Y2006_Returned) AS Y2006,
+SUM(Y2005_Shipped + Y2005_Returned) AS Y2005, 
+SUM(Y2004_Shipped + Y2004_Returned) AS Y2004, 
+SUM(Y2003_Shipped + Y2003_Returned) AS Y2003, 
+SUM(Y2002_Shipped + Y2002_Returned) AS Y2002, 
+SUM(Y2001_Shipped + Y2001_Returned) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2012' AND Entry_Date < '1/1/2013'
+
+UNION ALL
+
+SELECT     
+'Y2012 Buyer' AS 'Lookup_Value', 
+COUNT(Ttl_Net_Sales_Value) AS Total, 
+SUM(CASE WHEN Y2012_Shipped + Y2012_Returned > 0 THEN 1 ELSE 0 END) AS Y2012,
+SUM(CASE WHEN Y2011_Shipped + Y2011_Returned > 0 THEN 1 ELSE 0 END) AS Y2011,
+SUM(CASE WHEN Y2010_Shipped + Y2010_Returned > 0 THEN 1 ELSE 0 END) AS Y2010,
+SUM(CASE WHEN Y2009_Shipped + Y2009_Returned > 0 THEN 1 ELSE 0 END) AS Y2009,
+SUM(CASE WHEN Y2008_Shipped + Y2008_Returned > 0 THEN 1 ELSE 0 END) AS Y2008,
+SUM(CASE WHEN Y2007_Shipped + Y2007_Returned > 0 THEN 1 ELSE 0 END) AS Y2007,
+SUM(CASE WHEN Y2006_Shipped + Y2006_Returned > 0 THEN 1 ELSE 0 END) AS Y2006,
+SUM(CASE WHEN Y2005_Shipped + Y2005_Returned > 0 THEN 1 ELSE 0 END) AS Y2005,
+SUM(CASE WHEN Y2004_Shipped + Y2004_Returned > 0 THEN 1 ELSE 0 END) AS Y2004,
+SUM(CASE WHEN Y2003_Shipped + Y2003_Returned > 0 THEN 1 ELSE 0 END) AS Y2003,
+SUM(CASE WHEN Y2002_Shipped + Y2002_Returned > 0 THEN 1 ELSE 0 END) AS Y2002,
+SUM(CASE WHEN Y2001_Shipped + Y2001_Returned > 0 THEN 1 ELSE 0 END) AS Y2001
+FROM		dbo.tbl_Customer_Sales_Statistics tCSS
+WHERE Entry_Date >='1/1/2012' AND Entry_Date < '1/1/2013'
+

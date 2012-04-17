@@ -1,0 +1,51 @@
+1) Prepare MOM Hot Picks Table
+
+USE [USRC_Main]
+GO
+
+IF  EXISTS 
+(SELECT * FROM sys.objects 
+WHERE object_id = OBJECT_ID(N'[dbo].[MOM_PICKS]') 
+AND type in (N'U'))
+DROP TABLE [dbo].[MOM_PICKS]
+GO
+
+
+2) SELECT Hot Picks INTO new table
+
+USE [USRC_Main]
+GO
+
+SELECT
+StockNumber AS Stock_ID,
+StockDescription AS Stock_Desc,
+'XXXXXX' AS Product_Code
+INTO dbo.MOM_PICKS
+FROM [USRC_SIMSSERVER].SIMS.dbo.MasterTable
+WHERE Tier ='1'
+GO
+
+
+3) UPDATE Hot Picks
+
+USE [USRC_Main]
+GO
+
+UPDATE dbo.MOM_PICKS
+SET Product_Code=CAST(dbo.MOM_STOCK.assoc AS varchar(8))
+FROM         dbo.MOM_STOCK 
+WHERE dbo.MOM_STOCK.number = dbo.MOM_PICKS.Stock_ID
+GO
+
+
+4) CREATE INDEX Product_Code
+
+USE [USRC_Main]
+GO
+CREATE CLUSTERED INDEX MOM_PICKS_Product_Code
+ON MOM_PICKS (Product_Code)
+GO
+
+
+
+

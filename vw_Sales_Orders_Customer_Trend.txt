@@ -1,0 +1,31 @@
+SELECT     
+vw1.Entry_Date, 
+vw1.Cust_ID, 
+vw1.First_Name, 
+vw1.Last_Name, 
+vw1.Ttl_Order_Count, 
+vw1.Init_Order_Date, 
+vw1.Init_Order_ID, 
+vw1.Orig_Ad_Code, 
+dbo.vw_Sales_Orders_By_OrderID_Only.Net_Order_Value AS Init_Order_Value, 
+dbo.vw_Sales_Orders_By_OrderID_Only.Net_Order_Bullion_Value AS Init_Order_Bullion, 
+dbo.vw_Sales_Orders_By_OrderID_Only.Net_Order_Non_Bullion_Value AS Init_Order_Non_Bullion, 
+dbo.vw_Sales_Orders_By_OrderID_Only.Order_Buyer_Type AS Init_Buyer_Type, 
+dbo.vw_Sales_Orders_By_CustID_Only.Ttl_Net_Sales_Value, 
+dbo.vw_Sales_Orders_By_CustID_Only.Ttl_Net_Sales_Bullion, 
+dbo.vw_Sales_Orders_By_CustID_Only.Ttl_Net_Sales_Non_Bullion, 
+dbo.vw_Sales_Orders_By_CustID_Only.Customer_Buyer_Type
+FROM         (SELECT     TOP (100) PERCENT dbo.tbl_DBF_Cust.Entry_Date, dbo.tbl_DBF_Cust.Cust_ID, dbo.tbl_DBF_Cust.First_Name, 
+                                              dbo.tbl_DBF_Cust.Last_Name, COUNT(dbo.tbl_DBF_CMS.Order_Date) AS Ttl_Order_Count, MIN(dbo.tbl_DBF_CMS.Order_Date) 
+                                              AS Init_Order_Date, MIN(dbo.tbl_DBF_CMS.Order_ID) AS Init_Order_ID, dbo.tbl_DBF_Cust.Orig_Ad_Code
+                       FROM          dbo.tbl_DBF_CMS RIGHT OUTER JOIN
+                                              dbo.tbl_DBF_Cust ON dbo.tbl_DBF_CMS.Cust_ID = dbo.tbl_DBF_Cust.Cust_ID
+                       GROUP BY dbo.tbl_DBF_Cust.Cust_ID, dbo.tbl_DBF_Cust.Last_Name, dbo.tbl_DBF_Cust.First_Name, dbo.tbl_DBF_Cust.Orig_Ad_Code, 
+                                              dbo.tbl_DBF_Cust.Entry_Date
+                       HAVING      (MIN(dbo.tbl_DBF_CMS.Order_Date) IS NOT NULL)
+                       ORDER BY dbo.tbl_DBF_Cust.Entry_Date) AS vw1 
+LEFT OUTER JOIN       dbo.vw_Sales_Orders_By_CustID_Only 
+ON vw1.Cust_ID = dbo.vw_Sales_Orders_By_CustID_Only.Cust_ID 
+LEFT OUTER JOIN       dbo.vw_Sales_Orders_By_OrderID_Only 
+ON vw1.Init_Order_Date = dbo.vw_Sales_Orders_By_OrderID_Only.Order_Date 
+AND vw1.Init_Order_ID = dbo.vw_Sales_Orders_By_OrderID_Only.Order_ID

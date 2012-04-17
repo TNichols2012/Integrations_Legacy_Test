@@ -1,0 +1,86 @@
+-- Creates the base table, all dates for every DNIS
+
+IF EXISTS (SELECT TABLE_NAME 
+	FROM Information_Schema.Tables
+	WHERE Table_Name='tbl_Amcat_Call_Volume_IB_Current')
+DROP TABLE tbl_Amcat_Call_Volume_IB_Current;
+GO
+
+SELECT 
+tD.Daily_Date AS Call_Start_Time,
+vw1.DNIS,
+'(' + LEFT(DNIS, 3) + ') ' + SUBSTRING(DNIS, 4, 3) + '-' + SUBSTRING(DNIS, 7, 4) AS Phone,
+0 AS Call_Volume, 
+0 AS Agent_Answered, 
+0 AS Answered_Below_2min, 
+0 AS Answered_Above_2min, 
+0 AS After_Hours, 
+0 AS Overflow,
+0 AS P7_Calls_Total,
+0 AS P7_Calls_Answered,
+0 AS P7_Calls_Answered_Below_2min,
+0 AS P7_Calls_Answered_Above_2min,
+0 AS P15_Calls_Total,
+0 AS P15_Calls_Answered,
+0 AS P15_Calls_Answered_Below_2min,
+0 AS P15_Calls_Answered_Above_2min,
+0 AS P30_Calls_Total,
+0 AS P30_Calls_Answered,
+0 AS P30_Calls_Answered_Below_2min,
+0 AS P30_Calls_Answered_Above_2min
+INTO tbl_Amcat_Call_Volume_IB_Current
+FROM USRC_FILESERVER.Data_Warehouse.dbo.tbl_Dates tD
+CROSS JOIN	(
+				SELECT DNIS
+				FROM dbo.tbl_Amcat_CCS_Call_Results
+				WHERE DNIS <> ''
+				GROUP BY DNIS
+				) as vw1
+WHERE td.Daily_Date >= '1/1/2008'
+AND td.Daily_Date <= dbo.Get_TheDate(GetDate())
+GO
+
+IF EXISTS (SELECT TABLE_NAME 
+	FROM Information_Schema.Tables
+	WHERE Table_Name='tbl_Amcat_Call_Volume_IB_Current')
+CREATE CLUSTERED INDEX tbl_Amcat_Call_Volume_IB_Current_Call_Start_Time
+ON tbl_Amcat_Call_Volume_IB_Current (Call_Start_Time) ;
+GO
+
+IF EXISTS (SELECT TABLE_NAME 
+	FROM Information_Schema.Tables
+	WHERE Table_Name='tbl_Amcat_Call_Volume_IB_Current')
+CREATE NONCLUSTERED INDEX tbl_Amcat_Call_Volume_IB_Current_DNIS
+ON tbl_Amcat_Call_Volume_IB_Current (DNIS) 
+GO
+
+IF EXISTS (SELECT TABLE_NAME 
+	FROM Information_Schema.Tables
+	WHERE Table_Name='tbl_Amcat_Call_Volume_IB_Current')
+CREATE NONCLUSTERED INDEX tbl_Amcat_Call_Volume_IB_Current_Phone
+ON tbl_Amcat_Call_Volume_IB_Current (Phone) 
+GO
+
+IF EXISTS (SELECT TABLE_NAME 
+	FROM Information_Schema.Tables
+	WHERE Table_Name='tbl_Amcat_Call_Volume_IB_Current')
+CREATE NONCLUSTERED INDEX tbl_Amcat_Call_Volume_IB_Current_P7_Calls_Total
+ON tbl_Amcat_Call_Volume_IB_Current (P7_Calls_Total) 
+GO
+
+IF EXISTS (SELECT TABLE_NAME 
+	FROM Information_Schema.Tables
+	WHERE Table_Name='tbl_Amcat_Call_Volume_IB_Current')
+CREATE NONCLUSTERED INDEX tbl_Amcat_Call_Volume_IB_Current_P15_Calls_Total
+ON tbl_Amcat_Call_Volume_IB_Current (P15_Calls_Total) 
+GO
+
+IF EXISTS (SELECT TABLE_NAME 
+	FROM Information_Schema.Tables
+	WHERE Table_Name='tbl_Amcat_Call_Volume_IB_Current')
+CREATE NONCLUSTERED INDEX tbl_Amcat_Call_Volume_IB_Current_P30_Calls_Total
+ON tbl_Amcat_Call_Volume_IB_Current (P30_Calls_Total) 
+GO
+
+******************************************************************************
+

@@ -1,0 +1,14 @@
+Select Publication,
+CASE WHEN (Count(Ratio) >= 1) Then dbo.Media_Run_Avg(Publication) ELSE 0 END As Overall_Run_Avg,
+CASE WHEN (Count(Ratio) >= 1) Then dbo.Media_Run_Freq(Publication) ELSE 0 END As Overall_Run_Freq,
+CASE WHEN (Count(Ratio) >= 3) Then dbo.Media_Run_Avg_03(Publication) ELSE 0 END As Run_Avg_3,
+CASE WHEN (Count(Ratio) >= 3) Then dbo.Media_Run_Freq_03(Publication) ELSE 0 END As Run_Freq_3,
+CASE WHEN (Count(Ratio) >= 6) Then dbo.Media_Run_Avg_06(Publication) ELSE 0 END As Run_Avg_6,
+CASE WHEN (Count(Ratio) >= 6) Then dbo.Media_Run_Freq_06(Publication) ELSE 0 END As Run_Freq_6,
+CASE WHEN (Count(Ratio) >= 12) Then dbo.Media_Run_Avg_12(Publication) ELSE 0 END As Run_Avg_12,
+CASE WHEN (Count(Ratio) >= 12) Then dbo.Media_Run_Freq_12(Publication) ELSE 0 END As Run_Freq_12,
+CASE WHEN (Count(Ratio) >= 18) Then dbo.Media_Run_Avg_18(Publication) ELSE 0 END As Run_Avg_18,
+CASE WHEN (Count(Ratio) >= 18) Then dbo.Media_Run_Freq_18(Publication) ELSE 0 END As Run_Freq_18
+FROM tbl_Publications
+--WHERE Publication = '24 Hours Toronto'
+GROUP BY Publication

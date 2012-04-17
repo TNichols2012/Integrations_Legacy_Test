@@ -1,0 +1,41 @@
+--- GOLD 1986
+EXEC usp_IM_Add_Row 'GOLD', 'MS 69', '1986'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1986', '$5', '86A1M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1986', '$10', '86A2M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1986', '$25', '86A3M9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 69', '1986', '$50', '86A4M9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'MS 70', '1986'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1986', '$5', '86A1M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1986', '$10', '86A2M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1986', '$25', '86A3M0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'MS 70', '1986', '$50', '86A4M0'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 69', '1986'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1986', '$5', '86A1P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1986', '$10', '86A2P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1986', '$25', '86A3P9'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 69', '1986', '$50', '86A4P9'
+
+EXEC usp_IM_Add_Row 'GOLD', 'PR 70', '1986'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1986', '$5', '86A1P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1986', '$10', '86A2P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1986', '$25', '86A3P0'
+EXEC usp_IM_Add_Product_Classification_Code 
+'GOLD', 'PR 70', '1986', '$50', '86A4P0'
+

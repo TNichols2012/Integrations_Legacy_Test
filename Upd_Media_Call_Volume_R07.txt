@@ -1,0 +1,320 @@
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-15
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-1
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-30
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-15
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-60
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-30
+AND P30_Calls_Total=0
+
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-90
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-60
+AND P30_Calls_Total=0
+
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-120
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-90
+AND P30_Calls_Total=0
+
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-150
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-120
+AND P30_Calls_Total=0
+
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-180
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-150
+AND P30_Calls_Total=0
+
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-210
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-180
+AND P30_Calls_Total=0
+
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-240
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-210
+AND P30_Calls_Total=0
+
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-270
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-240
+AND P30_Calls_Total=0
+
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-300
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-270
+AND P30_Calls_Total=0
+
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-330
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-300
+AND P30_Calls_Total=0
+
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-360
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-330
+AND P30_Calls_Total=0
+
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-400
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-360
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-450
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-400
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-500
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-450
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-550
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-500
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-600
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-550
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-650
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-600
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-700
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-650
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-750
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-700
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-800
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-750
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-850
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-800
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-900
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-850
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-950
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-900
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-1000
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-950
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-1050
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-1000
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-1100
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-1050
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-1150
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-1100
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-1200
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-1150
+AND P30_Calls_Total=0
+
+UPDATE tbl_Amcat_Call_Volume_IB
+SET 
+P30_Calls_Total = dbo.Amcat_Calls_Total (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered = dbo.Amcat_Calls_Answered (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Below_2min = dbo.Amcat_Calls_Answered_Below_2min (Call_Start_Time, DNIS, 15),
+P30_Calls_Answered_Above_2min = dbo.Amcat_Calls_Answered_Above_2min (Call_Start_Time, DNIS, 15)
+WHERE Call_Start_Time >= dbo.Get_TheDate(GetDate())-1250
+AND Call_Start_Time < dbo.Get_TheDate(GetDate())-1200
+AND P30_Calls_Total=0

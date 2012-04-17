@@ -1,0 +1,71 @@
+CREATE CLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_Call_Start_Time
+ON tbl_Amcat_Call_Volume_IB_2005 (Call_Start_Time)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_DNIS
+ON tbl_Amcat_Call_Volume_IB_2005 (DNIS)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_Calls_Answered
+ON tbl_Amcat_Call_Volume_IB_2005 (Agent_Answered)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_Calls_Answered_Above_2min
+ON tbl_Amcat_Call_Volume_IB_2005 (Answered_Above_2min)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_Calls_Answered_Below_2min
+ON tbl_Amcat_Call_Volume_IB_2005 (Answered_Below_2min)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_Call_Volume
+ON tbl_Amcat_Call_Volume_IB_2005 (Call_Volume)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_P7_Calls_Total
+ON tbl_Amcat_Call_Volume_IB_2005 (P7_Calls_Total)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_P7_Calls_Answered
+ON tbl_Amcat_Call_Volume_IB_2005 (P7_Calls_Answered)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_P7_Calls_Answered_Above_2min
+ON tbl_Amcat_Call_Volume_IB_2005 (P7_Calls_Answered_Above_2min)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_P7_Calls_Answered_Below_2min
+ON tbl_Amcat_Call_Volume_IB_2005 (P7_Calls_Answered_Below_2min)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_P15_Calls_Total
+ON tbl_Amcat_Call_Volume_IB_2005 (P15_Calls_Total)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_P15_Calls_Answered
+ON tbl_Amcat_Call_Volume_IB_2005 (P15_Calls_Answered)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_P15_Calls_Answered_Above_2min
+ON tbl_Amcat_Call_Volume_IB_2005 (P15_Calls_Answered_Above_2min)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_P15_Calls_Answered_Below_2min
+ON tbl_Amcat_Call_Volume_IB_2005 (P15_Calls_Answered_Below_2min)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_P30_Calls_Total
+ON tbl_Amcat_Call_Volume_IB_2005 (P30_Calls_Total)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_P30_Calls_Answered
+ON tbl_Amcat_Call_Volume_IB_2005 (P30_Calls_Answered)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_P30_Calls_Answered_Above_2min
+ON tbl_Amcat_Call_Volume_IB_2005 (P30_Calls_Answered_Above_2min)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Amcat_Call_Volume_IB_2005_P30_Calls_Answered_Below_2min
+ON tbl_Amcat_Call_Volume_IB_2005 (P30_Calls_Answered_Below_2min)
+GO

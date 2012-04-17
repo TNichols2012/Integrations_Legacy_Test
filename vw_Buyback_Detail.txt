@@ -1,0 +1,20 @@
+SELECT     
+dbo.vw_Buyback_Prep.Sales_ID, 
+dbo.vw_Buyback_Prep.Cust_ID, 
+dbo.vw_Buyback_Prep.Contact_Number, 
+dbo.MOMCustTable.First_Name + ' ' + dbo.MOMCustTable.Last_Name AS Cust_Name, 
+dbo.vw_Buyback_Prep.Stock_Desc, 
+dbo.vw_Buyback_Prep.Year, dbo.vw_Buyback_Prep.Mint, 
+dbo.vw_Buyback_Prep.Denomination, 
+dbo.vw_Buyback_Prep.Type, 
+dbo.vw_Buyback_Prep.Condition, 
+dbo.vw_Buyback_Prep.Grade, 
+dbo.vw_Buyback_Prep.Quantity_Ordered, 
+dbo.vw_Buyback_Prep.Retail_Unit_Price AS Retail, 
+dbo.vw_Buyback_Prep.Buyback_Price, 
+dbo.vw_Buyback_Prep.Buyback_Price - dbo.vw_Buyback_Prep.Retail_Unit_Price AS Dollar_Change, 
+(dbo.vw_Buyback_Prep.Buyback_Price - dbo.vw_Buyback_Prep.Retail_Unit_Price) / dbo.vw_Buyback_Prep.Retail_Unit_Price AS Percent_Change
+FROM		dbo.vw_Buyback_Prep 
+LEFT OUTER JOIN	dbo.MOMCustTable 
+ON dbo.vw_Buyback_Prep.Cust_ID = dbo.MOMCustTable.Cust_ID
+WHERE     ((dbo.vw_Buyback_Prep.Buyback_Price - dbo.vw_Buyback_Prep.Retail_Unit_Price) / dbo.vw_Buyback_Prep.Retail_Unit_Price > 0.3)

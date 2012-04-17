@@ -1,0 +1,66 @@
+1) Empty Rep ID
+
+UPDATE contactinfo
+SET repid = null
+
+
+2) Import MOM Data Revision
+
+SSIS Package:
+\\usrc_fileserver\SQL_Server\Projects\801_Daily_Amcat_MOM_Update\Import_MOM_Tables_Revision.dtsx
+
+
+3) Update Customer Database
+
+\\usrc_fileserver\SQL_Server\Projects\Update Customer Database\Update Customer Database\bin\Update Customer Database.dtsx
+
+
+4) Delete ContactPhoneNumber
+
+DELETE
+FROM ContactPhoneNumbers
+WHERE ContactInfoFK NOT IN (
+	SELECT PKCustomerRecord
+	FROM contactinfo )
+AND pkcontact NOT IN (
+	SELECT ContactNumberFK
+	FROM CallCenterStats.dbo.CallResults )
+
+
+5) Clear ContactInfo
+
+DELETE 
+FROM ContactInfo
+WHERE Custnum IS NULL
+AND RepID IS NULL
+
+
+6) Delete ContactDetails
+
+DELETE
+FROM contactdetails
+WHERE contactinfofk NOT IN (
+	SELECT pkcustomerrecord FROM contactinfo)
+
+
+7) Delete Duplicate ContactInfo Records
+
+DELETE FROM ContactInfo
+WHERE PKCustomerRecord IN (
+	SELECT Max(PKCustomerRecord) AS PKCustomerRecord
+	FROM ContactInfo
+	WHERE CustNum IN (	SELECT     
+			CustNum
+			FROM          ContactInfo AS ContactInfo_1
+			WHERE CustNum <> ''
+			GROUP BY CustNum
+			HAVING      (COUNT(CustNum) > 1)	
+			)
+Group By CustNum
+)
+
+
+
+
+
+

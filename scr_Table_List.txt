@@ -1,0 +1,1 @@
+SELECT TABLE_NAME from information_schema.tables where Table_Type = 'BASE TABLE'

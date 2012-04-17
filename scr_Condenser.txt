@@ -1,0 +1,28 @@
+Function Main()
+
+             Dim obj_ExcelWB
+	Dim str_FileName, str_FilePathRoot
+	
+	Set obj_ExcelWB=CreateObject("Excel.Application")
+
+'**************************************************************************************
+'	 Variables used to call the Condenser
+'**************************************************************************************
+	str_FileName = "USRCBR_Daily_Returns_Template.xls"
+	str_FilePathRoot= "\\Usrc_fileserver\SQL_Server\Client_USMR\Work\"
+	str_FilePathNew="\\Usrc_fileserver\SQL_Server\Client_USMR\Reports\"
+
+'**************************************************************************************
+
+	obj_ExcelWB.Workbooks.Open str_FilePathRoot & str_FileName 
+	
+	obj_ExcelWB.Run  "ThisWorkbook.USRCBR_Daily_Returns_Report_Condenser"
+
+	obj_ExcelWB.Quit
+
+	Set obj_ExcelWB=nothing
+
+	Main = DTSTaskExecResult_Success
+
+End Function
+

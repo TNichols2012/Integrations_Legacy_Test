@@ -1,0 +1,24 @@
+SELECT     TOP (100) PERCENT 
+'Team' + SUBSTRING(tST.Sales_Manager, PATINDEX('% %', tST.Sales_Manager), LEN(tST.Sales_Manager)) AS Team,
+tST.Sales_Manager, 
+tST.Name, 
+tSO.Sales_ID, 
+tSO.Cust_ID,
+dbo.ufn_Campaign_Origin(tSO.Cust_ID) AS Campaign, 
+SUM(CASE WHEN tSO.Campaign = 'Outbound' THEN (tSO.Value_Ordered) ELSE 0 END) AS Total_Value, 
+SUM(CASE WHEN tSO.Stock_Type = 'Bullion' AND tSO.Campaign = 'Outbound' THEN (tSO.Value_Ordered) ELSE 0 END) AS Bullion_Value, 
+SUM(CASE WHEN tSO.Stock_Type <> 'Bullion' AND tSO.Campaign = 'Outbound' THEN (tSO.Value_Ordered) ELSE 0 END) AS Bump_Value, 
+(CASE WHEN SUM(tSO.Value_Ordered * tSO.Quantity_Ordered) = 0 THEN 'GR' 
+WHEN (SUM(CASE WHEN tSO.Stock_Type = 'Bullion' THEN (tSO.Value_Ordered) ELSE 0 END) > 0 AND SUM(CASE WHEN tSO.Stock_Type <> 'Bullion' THEN (tSO.Value_Ordered) ELSE 0 END) = 0) THEN 'Bullion' 
+WHEN (SUM(CASE WHEN tSO.Stock_Type = 'Bullion' THEN (tSO.Value_Ordered) ELSE 0 END) = 0 AND SUM(CASE WHEN tSO.Stock_Type <> 'Bullion' THEN (tSO.Value_Ordered) ELSE 0 END) > 0) THEN 'Bump' 
+WHEN (SUM(CASE WHEN tSO.Stock_Type = 'Bullion' THEN (tSO.Value_Ordered) ELSE 0 END) > 0 AND SUM(CASE WHEN tSO.Stock_Type <> 'Bullion' THEN (tSO.Value_Ordered) ELSE 0 END) > 0) THEN 'Bump' 
+ELSE 'Pending' END) AS Buyer_Type
+FROM         dbo.vw_Sales_Orders_Today AS tSO 
+INNER JOIN   dbo.tbl_Sales_Teams AS tST 
+ON tST.[Login] = tSO.SALES_ID
+WHERE     (tSO.ITEM_STATE IN ('CM')) 
+AND (tSO.Order_Date >= dbo.Get_TheDate(GETDATE())) 
+AND (tST.Name NOT LIKE 'Z-Deleted%')
+GROUP BY tST.Name, tSO.SALES_ID, tSO.Cust_ID, tSO.Campaign, tST.Sales_Manager
+HAVING      (SUM(tSO.Value_Ordered) > 0) AND (tSO.Campaign = 'Outbound')
+ORDER BY tST.Name, tSO.Cust_ID

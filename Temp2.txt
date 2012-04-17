@@ -1,0 +1,272 @@
+
+To update the Percent Buyback Potential
+
+EXEC usp_Upd_tbl_Buyback_Detail < @pct_Buyback =0.30 >
+
+
+To view Buyback Potential customers by Sales Rep
+
+EXEC usp_Buyback <@Sales_ID = all>
+
+To view Buyback Detail by Sales Rep
+
+EXEC usp_Buyback_Detail <@Sales_ID = all>
+
+
+http://www.youtube.com/watch?v=p4ebtj1jR7c
+
+
+
+CREATE FUNCTION [Auxiliary].[Computus]
+(
+@Y INT -- The year we are calculating Easter Sunday for
+)
+RETURNS DATETIME
+AS
+BEGIN
+DECLARE
+@a INT,
+@b INT,
+@c INT,
+@d INT,
+@e INT,
+@f INT,
+@g INT,
+@h INT,
+@i INT,
+@k INT,
+@L INT,
+@m INT
+
+SET @a = @Y % 19
+SET @b = @Y / 100
+SET @c = @Y % 100
+SET @d = @b / 4
+SET @e = @b % 4
+SET @f = (@b + 8) / 25
+SET @g = (@b - @f + 1) / 3
+SET @h = (19 * @a + @b - @d - @g + 15) % 30
+SET @i = @c / 4
+SET @k = @c % 4
+SET @L = (32 + 2 * @e + 2 * @i - @h - @k) % 7
+SET @m = (@a + 11 * @h + 22 * @L) / 451
+RETURN(DATEADD(month, ((@h + @L - 7 * @m + 114) / 31)-1, cast(cast(@Y AS VARCHAR) AS Datetime)) + ((@h + @L - 7 * @m + 114) % 31))
+END
+
+
+CREATE TABLE [Auxiliary].[Calendar] (
+-- This is the calendar table
+[Date] datetime NOT NULL,
+[Year] int NOT NULL,
+[Quarter] int NOT NULL,
+[Month] int NOT NULL,
+[Week] int NOT NULL,
+[Day] int NOT NULL,
+[DayOfYear] int NOT NULL,
+[Weekday] int NOT NULL,
+[Fiscal_Year] int NOT NULL,
+[Fiscal_Quarter] int NOT NULL,
+[Fiscal_Month] int NOT NULL,
+[KindOfDay] varchar(10) NOT NULL,
+[Description] varchar(50) NULL,
+PRIMARY KEY CLUSTERED ([Date])
+)
+GO
+
+ALTER TABLE [Auxiliary].[Calendar]
+-- In Celkoish style I'm manic about constraints (Never use em ;-))
+
+
+ADD CONSTRAINT [Calendar_ck] CHECK ( ([Year] > 1900)
+AND ([Quarter] BETWEEN 1 AND 4)
+AND ([Month] BETWEEN 1 AND 12)
+AND ([Week] BETWEEN 1 AND 53)
+AND ([Day] BETWEEN 1 AND 31)
+AND ([DayOfYear] BETWEEN 1 AND 366)
+AND ([Weekday] BETWEEN 1 AND 7)
+AND ([Fiscal_Year] > 1900)
+AND ([Fiscal_Quarter] BETWEEN 1 AND 4)
+AND ([Fiscal_Month] BETWEEN 1 AND 12)
+AND ([KindOfDay] IN ('HOLIDAY', 'SATURDAY', 'SUNDAY', 'BANKDAY')))
+GO
+
+SET DATEFIRST 1;
+-- I want my table to contain datedata acording to ISO 8601
+-- thus first day of a week is monday
+
+WITH Dates(Date)
+-- A recursive CTE that produce all dates between 1999 and 2020-12-31
+AS
+(
+SELECT cast('1999' AS DateTime) Date -- SQL Server supports the ISO 8601 format so this is an unambigious shortcut for 1999-01-01
+UNION ALL
+SELECT (Date + 1) AS Date
+FROM Dates
+WHERE
+Date < cast('2021' AS DateTime) -1
+),
+
+DatesAndThursdayInWeek(Date, Thursday)
+-- The weeks can be found by counting the thursdays in a year so we find
+-- the thursday in the week for a particular date
+AS
+(
+SELECT
+Date,
+CASE DATEPART(weekday,Date)
+WHEN 1 THEN Date + 3
+WHEN 2 THEN Date + 2
+WHEN 3 THEN Date + 1
+WHEN 4 THEN Date
+WHEN 5 THEN Date - 1
+WHEN 6 THEN Date - 2
+WHEN 7 THEN Date - 3
+END AS Thursday
+FROM Dates
+),
+
+Weeks(Week, Thursday)
+-- Now we produce the weeknumers for the thursdays
+-- ROW_NUMBER is new to SQL Server 2005
+AS
+(
+SELECT ROW_NUMBER() OVER(partition by year(Date) order by Date) Week, Thursday
+FROM DatesAndThursdayInWeek
+WHERE DATEPART(weekday,Date) = 4
+)
+INSERT INTO Auxiliary.Calendar
+SELECT
+d.Date,
+YEAR(d.Date) AS Year,
+DATEPART(Quarter, d.Date) AS Quarter,
+MONTH(d.Date) AS Month,
+w.Week,
+DAY(d.Date) AS Day,
+DATEPART(DayOfYear, d.Date) AS DayOfYear,
+DATEPART(Weekday, d.Date) AS Weekday,
+
+-- Fiscal year may be different to the actual year, in Norway the are the same
+
+YEAR(d.Date) AS Fiscal_Year,
+DATEPART(Quarter, d.Date) AS Fiscal_Quarter,
+MONTH(d.Date) AS Fiscal_Month,
+
+CASE
+-- Holidays in Norway
+-- For other countries and states: Wikipedia - List of holidays by country
+-- I wrote about the computus function here
+
+WHEN (DATEPART(DayOfYear, d.Date) = 1) -- New Year's Day
+OR (d.Date = Auxiliary.Computus(YEAR(Date))-7) -- Palm Sunday
+OR (d.Date = Auxiliary.Computus(YEAR(Date))-3) -- Maundy Thursday
+OR (d.Date = Auxiliary.Computus(YEAR(Date))-2) -- Good Friday
+OR (d.Date = Auxiliary.Computus(YEAR(Date))) -- Easter Sunday
+OR (d.Date = Auxiliary.Computus(YEAR(Date))+39) -- Ascension Day
+OR (d.Date = Auxiliary.Computus(YEAR(Date))+49) -- Pentecost
+OR (d.Date = Auxiliary.Computus(YEAR(Date))+50) -- Whitmonday
+OR (MONTH(d.Date) = 5 AND DAY(d.Date) = 1) -- Labour day
+OR (MONTH(d.Date) = 5 AND DAY(d.Date) = 17) -- Constitution day
+OR (MONTH(d.Date) = 12 AND DAY(d.Date) = 25) -- Cristmas day
+OR (MONTH(d.Date) = 12 AND DAY(d.Date) = 26) -- Boxing day
+THEN 'HOLIDAY'
+WHEN DATEPART(Weekday, d.Date) = 6 THEN 'SATURDAY'
+WHEN DATEPART(Weekday, d.Date) = 7 THEN 'SUNDAY'
+ELSE 'BANKDAY'
+END KindOfDay,
+CASE
+-- Description of holidays in Norway
+WHEN (DATEPART(DayOfYear, d.Date) = 1) THEN 'New Year''s Day'
+WHEN (d.Date = Auxiliary.Computus(YEAR(Date))-7) THEN 'Palm Sunday'
+WHEN (d.Date = Auxiliary.Computus(YEAR(Date))-3) THEN 'Maundy Thursday'
+WHEN (d.Date = Auxiliary.Computus(YEAR(Date))-2) THEN 'Good Friday'
+WHEN (d.Date = Auxiliary.Computus(YEAR(Date))) THEN 'Easter Sunday'
+WHEN (d.Date = Auxiliary.Computus(YEAR(Date))+39) THEN 'Ascension Day'
+WHEN (d.Date = Auxiliary.Computus(YEAR(Date))+49) THEN 'Pentecost'
+WHEN (d.Date = Auxiliary.Computus(YEAR(Date))+50) THEN 'Whitmonday'
+WHEN (MONTH(d.Date) = 5 AND DAY(d.Date) = 1) THEN 'Labour day'
+WHEN (MONTH(d.Date) = 5 AND DAY(d.Date) = 17) THEN 'Constitution day'
+WHEN (MONTH(d.Date) = 12 AND DAY(d.Date) = 25) THEN 'Cristmas day'
+WHEN (MONTH(d.Date) = 12 AND DAY(d.Date) = 26) THEN 'Boxing day'
+END Description
+
+FROM DatesAndThursdayInWeek d
+-- This join is for getting the week into the result set
+inner join Weeks w
+on d.Thursday = w.Thursday
+
+OPTION(MAXRECURSION 0)
+
+
+
+SUM(CASE WHEN AgentExitCode IN (11, 12) THEN 1 ELSE 0 END) AS IB_Abandoned, 
+SUM(CASE WHEN AgentExitCode IN (69) THEN 1 ELSE 0 END) AS Coin_Info, 
+SUM(CASE WHEN AgentExitCode IN (73) THEN 1 ELSE 0 END) AS Hang_Up, 
+SUM(CASE WHEN AgentExitCode IN (91) THEN 1 ELSE 0 END) AS Five_for_$48, 
+SUM(CASE WHEN AgentExitCode IN (78, 81, 82, 104) THEN 1 ELSE 0 END) AS Junk, 
+SUM(CASE WHEN AgentExitCode IN (105) THEN 1 ELSE 0 END) AS Relationship, 
+SUM(CASE WHEN AgentExitCode IN (106) THEN 1 ELSE 0 END) AS Caller_VM,
+
+
+
+
+
+SELECT     TOP (100) PERCENT 
+dbo.tbl_CCS_Data.Call_Start_Time AS Call_Start_Date, 
+dbo.tbl_Sales_Teams.PKUsers AS Amcat_Login, 
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_Sales_Teams.Login AS MOM_Login, 
+SUM(CASE WHEN (Call_Category <> 'Transfer' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) 
+THEN 1 
+ELSE 0 END) AS Ttl_Calls_Handled, 
+
+SUM(CASE WHEN (AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) 
+THEN Call_Talk_Time 
+ELSE 0 END) AS Ttl_Talk_Time, 
+
+SUM(CASE WHEN (AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) 
+THEN Call_Wrap_Time 
+ELSE 0 END) AS Ttl_Wrap_Time, 
+
+SUM(CASE WHEN (AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) 
+THEN Call_Queue_Time ELSE 0 END) AS Ttl_Queue_Time, 
+
+SUM(CASE WHEN (AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12) AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34)) 
+THEN 1 
+ELSE 0 END) AS Ttl_Pres, 
+
+SUM(CASE WHEN (AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12, 34) AND CallResultDescription LIKE 'Sale%') 
+THEN 1 
+ELSE 0 END) AS Ttl_Sales, 
+
+SUM(CASE WHEN (Call_Category = 'Inbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) 
+THEN 1 
+ELSE 0 END) AS IB_Calls_Handled, 
+
+SUM(CASE WHEN (Call_Category = 'Inbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) 
+THEN Call_Talk_Time 
+ELSE 0 END) AS IB_Talk_Time, 
+
+SUM(CASE WHEN (Call_Category = 'Inbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12) AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34)) 
+THEN 1 ELSE 0 END) AS IB_Pres, 
+SUM(CASE WHEN (Call_Category = 'Inbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12, 
+                      34) AND CallResultDescription LIKE 'Sale%') THEN 1 ELSE 0 END) AS IB_Sales, SUM(CASE WHEN (Call_Category = 'Outbound' AND 
+                      AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN 1 ELSE 0 END) AS OB_Calls_Handled, SUM(CASE WHEN (Call_Category = 'Outbound' AND 
+                      AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN Call_Talk_Time ELSE 0 END) AS OB_Talk_Time, 
+                      SUM(CASE WHEN (Call_Category = 'Outbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12) AND (CallResultDescription LIKE 'Pres%' OR
+                      AgentExitCode = 34)) THEN 1 ELSE 0 END) AS OB_Pres, SUM(CASE WHEN (Call_Category = 'Outbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 
+                      12, 34) AND CallResultDescription LIKE 'Sale%') THEN 1 ELSE 0 END) AS OB_Sales, SUM(CASE WHEN (Call_Category = 'Transfer' AND 
+                      AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN 1 ELSE 0 END) AS TR_Calls_Handled, SUM(CASE WHEN (Call_Category = 'Transfer' AND 
+                      AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) THEN Call_Talk_Time ELSE 0 END) AS TR_Talk_Time, SUM(CASE WHEN (Call_Category = 'Transfer' AND
+                       AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12) AND (CallResultDescription LIKE 'Pres%' OR
+                      AgentExitCode = 34)) THEN 1 ELSE 0 END) AS TR_Pres, SUM(CASE WHEN (Call_Category = 'Transfer' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 
+                      12, 34) AND CallResultDescription LIKE 'Sale%') THEN 1 ELSE 0 END) AS TR_Sales, dbo.tbl_Sales_Teams.Sales_Manager, dbo.tbl_Sales_Teams.Site, 
+                      28800 AS Talk_Time_Basis
+FROM         dbo.tbl_CCS_Data INNER JOIN
+                      dbo.tbl_Sales_Teams ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers LEFT OUTER JOIN
+                      dbo.tbl_Lookup_Call_Campaign ON dbo.tbl_CCS_Data.PoolFK = dbo.tbl_Lookup_Call_Campaign.Campaign_ID LEFT OUTER JOIN
+                      dbo.tbl_Lookup_Call_Type ON dbo.tbl_CCS_Data.CallType = dbo.tbl_Lookup_Call_Type.Call_Type_ID LEFT OUTER JOIN
+                      dbo.tbl_Lookup_Call_Disposition ON dbo.tbl_CCS_Data.AgentExitCode = dbo.tbl_Lookup_Call_Disposition.CallResultCode
+GROUP BY dbo.tbl_CCS_Data.Call_Start_Time, dbo.tbl_Sales_Teams.Name, dbo.tbl_Sales_Teams.Sales_Manager, dbo.tbl_Sales_Teams.Site, 
+                      dbo.tbl_Sales_Teams.PKUsers, dbo.tbl_Sales_Teams.Login
+HAVING      (dbo.tbl_Sales_Teams.Site <> '')
+ORDER BY Call_Start_Date DESC

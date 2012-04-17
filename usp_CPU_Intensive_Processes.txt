@@ -1,0 +1,94 @@
+IF EXISTS
+(
+	SELECT 1
+	FROM	INFORMATION_SCHEMA.ROUTINES
+	WHERE	ROUTINE_NAME 	= 'CPUIntensive'
+	AND	ROUTINE_SCHEMA 	= 'dbo'
+	AND	ROUTINE_TYPE 	= 'PROCEDURE'
+)
+DROP PROC dbo.CPUIntensive
+GO
+
+CREATE PROC dbo.CPUIntensive
+(
+	@Table			sysname,
+	@Top			int 		= NULL,
+	@Owner			sysname		= NULL,
+	@LoginName		nvarchar(256)	= NULL,
+	@HostName		nvarchar(256) 	= NULL,
+	@ApplicationName	nvarchar(256) 	= NULL,
+	@NTUserName 		nvarchar(256)	= NULL,
+	@StartTime		datetime	= NULL,
+	@EndTime		datetime	= NULL,
+	@MinCPU			int		= NULL,
+	@MaxCPU			int		= NULL,
+	@Debug			bit		= 0
+)
+AS
+BEGIN
+	SET NOCOUNT ON
+	
+	DECLARE @SELECT nvarchar(25), @ColumnList nvarchar(250), @FROM nvarchar(150), @WHERE nvarchar(250), @ORDERBY nvarchar(250)
+
+	SET @SELECT = 'SELECT ' + CASE WHEN @Top IS NULL OR @Top < 0 THEN 'TOP 150' ELSE 'TOP ' + LTRIM(CAST(@Top AS varchar)) END
+	SET @ColumnList = ' TextData, CAST(Duration/1000. AS decimal(6, 2)) AS [Duration (in Seconds)], CAST(CPU/1000. AS decimal(6, 2)) AS [CPU time (in Seconds)], LoginName, NTUserName, HostName, ApplicationName, SPID, StartTime, EndTime'
+	SET @FROM = ' FROM ' + QUOTENAME(COALESCE(@Owner, 'dbo')) + '.' + QUOTENAME(@Table)
+
+	SET @WHERE = ' WHERE EventClass IN (41, 45)'
+
+	IF @LoginName IS NOT NULL
+	BEGIN
+		SET @WHERE = @WHERE + ' AND LoginName LIKE ' + QUOTENAME(@LoginName, '''')
+	END
+
+	IF @HostName IS NOT NULL
+	BEGIN
+		SET @WHERE = @WHERE + ' AND HostName LIKE ' + QUOTENAME(@HostName, '''')
+	END
+
+	IF @ApplicationName IS NOT NULL
+	BEGIN
+		SET @WHERE = @WHERE + ' AND ApplicationName LIKE ' + QUOTENAME(@ApplicationName, '''')
+	END	
+
+	IF @NTUserName IS NOT NULL
+	BEGIN
+		SET @WHERE = @WHERE + ' AND NTUserName LIKE ' + QUOTENAME(@NTUserName, '''')
+	END	
+
+	IF (@StartTime IS NOT NULL) AND (@EndTime IS NOT NULL)
+	BEGIN
+		SET @WHERE = @WHERE + ' AND StartTime BETWEEN ' + QUOTENAME(CONVERT(varchar, @StartTime, 109), '''') + ' AND ' + QUOTENAME(CONVERT(varchar, @EndTime, 109), '''')
+	END
+	ELSE IF @StartTime IS NOT NULL
+	BEGIN
+		SET @WHERE = @WHERE + ' AND StartTime >= ' + QUOTENAME(CONVERT(varchar, @StartTime, 109), '''') 
+	END
+	ELSE IF @EndTime IS NOT NULL
+	BEGIN
+		SET @WHERE = @WHERE + ' AND StartTime <= ' + QUOTENAME(CONVERT(varchar, @EndTime, 109), '''') 
+	END
+
+	IF (@MinCPU IS NOT NULL) AND (@MaxCPU IS NOT NULL)
+	BEGIN
+		SET @WHERE = @WHERE + ' AND CPU BETWEEN ' + CAST(@MinCPU * 1000 AS varchar) + ' AND ' + CAST(@MaxCPU * 1000 as varchar)
+	END
+	ELSE IF @MinCPU IS NOT NULL
+	BEGIN
+		SET @WHERE = @WHERE + ' AND CPU >= ' + CAST(@MinCPU * 1000 AS varchar)
+	END
+	ELSE IF @MaxCPU IS NOT NULL
+	BEGIN
+		SET @WHERE = @WHERE + ' AND CPU <= ' + CAST(@MaxCPU * 1000 AS varchar)
+	END
+
+	SET @ORDERBY = 'ORDER BY CPU DESC'
+
+	IF @Debug = 1
+	BEGIN
+		SELECT @SELECT + char(13) + @ColumnList + char(13) + @FROM + char(13) + @WHERE + char(13) + @ORDERBY
+	END
+	
+	EXEC(@SELECT + @ColumnList + @FROM + @WHERE + @ORDERBY)
+	
+END

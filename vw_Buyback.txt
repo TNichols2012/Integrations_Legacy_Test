@@ -1,0 +1,19 @@
+SELECT     
+dbo.vw_Buyback_Detail.Sales_ID, 
+dbo.vw_Buyback_Detail.Cust_ID, 
+dbo.MOMCustTable.First_Name, 
+dbo.MOMCustTable.Last_Name, 
+dbo.MOMCustTable.First_Name + ' ' + dbo.MOMCustTable.Last_Name AS Cust_Name, 
+dbo.vw_Buyback_Detail.Contact_Number, 
+SUM(dbo.vw_Buyback_Detail.Quantity_Ordered) AS Buyback_Potential
+FROM		dbo.vw_Buyback_Detail 
+LEFT OUTER JOIN	dbo.MOMCustTable 
+ON dbo.vw_Buyback_Detail.Cust_ID = dbo.MOMCustTable.Cust_ID
+WHERE     (dbo.vw_Buyback_Detail.Percent_Change > 0.3)
+GROUP BY 
+dbo.vw_Buyback_Detail.Cust_ID, 
+dbo.vw_Buyback_Detail.Contact_Number, 
+dbo.MOMCustTable.First_Name, 
+dbo.MOMCustTable.Last_Name, 
+dbo.MOMCustTable.First_Name + ' ' + dbo.MOMCustTable.Last_Name, 
+dbo.vw_Buyback_Detail.Sales_ID

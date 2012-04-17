@@ -1,0 +1,14 @@
+
+
+CREATE/ALTER PROCEDURE [dbo].[usp_InventoryMatrix_GetRows] (@HeaderId int, @SectionId int)
+AS
+SELECT		[Text]
+FROM		InventoryMatrixRows
+INNER JOIN	InventoryMatrixRowMappings
+ON		InventoryMatrixRows.[Id] = InventoryMatrixRowMappings.RowId
+INNER JOIN	InventoryMatrixHeaderSectionMappings
+ON		InventoryMatrixRowMappings.HeaderSectionMappingId = InventoryMatrixHeaderSectionMappings.[Id]
+WHERE		(HeaderId = @HeaderId)
+AND		(SectionId = @SectionId)
+ORDER BY	Position
+

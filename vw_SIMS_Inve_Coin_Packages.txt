@@ -1,0 +1,18 @@
+==========================================
+INVENTORY
+===========================================
+
+SELECT     
+Stock_Number, 
+SUM(Package_Stock) AS Package_Stock
+FROM         (SELECT     
+		dbo.tbl_Coin_Packages.Package AS Coin_Package, 
+		dbo.tbl_Coin_Packages.Stock_ID AS Stock_Number, 
+		(ISNULL(Inventory.dbo.MasterTable.CompanyStock, 0) + ISNULL(Inventory.dbo.MasterTable.InventoryStock, 0)) 
+                                              * dbo.tbl_Coin_Packages.Count AS Package_Stock
+		FROM          Inventory.dbo.MasterTable 
+		INNER JOIN    dbo.tbl_Coin_Packages 
+		ON Inventory.dbo.MasterTable.StockNumber = dbo.tbl_Coin_Packages.Package
+		WHERE      (Inventory.dbo.MasterTable.StockNumber LIKE 'USVC%Package')) AS vw1
+GROUP BY Stock_Number
+

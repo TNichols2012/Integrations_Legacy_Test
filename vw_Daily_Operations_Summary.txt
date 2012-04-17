@@ -1,0 +1,120 @@
+SELECT     TOP (100) PERCENT 
+dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date, 
+dbo.vw_Daily_Date_By_Sales_Agent.Site, 
+dbo.vw_Daily_Date_By_Sales_Agent.Sales_Manager, 
+dbo.vw_Daily_Date_By_Sales_Agent.PKUsers, 
+dbo.vw_Daily_Date_By_Sales_Agent.Name, 
+dbo.vw_Daily_Date_By_Sales_Agent.Login, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Calls_Handled, 0) AS Ttl_Calls_Handled, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Queue_Time, 0) AS Ttl_Queue_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Talk_Time, 0) AS Ttl_Talk_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Wrap_Time, 0) AS Ttl_Wrap_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Agent_Stats.Pause_Time, 0) AS Ttl_Pause_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Agent_Stats.Wait_Time, 0) AS Ttl_Wait_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Pres, 0) AS Ttl_Pres_Made, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Sales, 0) AS Ttl_Sales_Dispositioned, 
+ISNULL(dbo.vw_Daily_Sales_Confirmations.Ttl_Sales_Confirmed, 0) AS Ttl_Gross_Sales, 
+ISNULL(dbo.vw_Daily_MOM_TB_Sales.Ttl_Sales_Orders_Submitted, 0) AS Ttl_Sales_Orders_Submitted, 
+ISNULL(dbo.vw_Daily_MOM_TB_Sales.Ttl_Net_Sales, 0) AS Ttl_Net_Sales, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.IB_Calls_Handled, 0) AS IB_Calls_Handled, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.IB_Talk_Time, 0) AS IB_Talk_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.IB_Pres, 0) AS IB_Pres_Made, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.IB_Sales, 0) AS IB_Sales_Dispositioned, 
+ISNULL(dbo.vw_Daily_Sales_Confirmations.IB_Sales_Confirmed, 0) AS IB_Gross_Sales, 
+ISNULL(dbo.vw_Daily_MOM_TB_Sales.IB_Sales_Orders_Submitted, 0) AS IB_Sales_Orders_Submitted, 
+ISNULL(dbo.vw_Daily_MOM_TB_Sales.IB_Sales_Value, 0) AS IB_Sales_Value, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.OB_Calls_Handled, 0) AS OB_Calls_Handled, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.OB_Calls_Handled_Below_2min, 0) AS OB_Calls_Handled_Below_2min,
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.OB_Talk_Time, 0) AS OB_Talk_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.OB_Pres, 0) AS OB_Pres_Made, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.OB_Sales, 0) AS OB_Sales_Dispositioned, 
+ISNULL(dbo.vw_Daily_Sales_Confirmations.OB_Sales_Confirmed, 0) AS OB_Gross_Sales, 
+ISNULL(dbo.vw_Daily_MOM_TB_Sales.OB_Sales_Orders_Submitted, 0) AS OB_Sales_Orders_Submitted, 
+ISNULL(dbo.vw_Daily_MOM_TB_Sales.OB_Sales_Value, 0) AS OB_Sales_Value, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.TR_Calls_Handled, 0) AS TR_Calls_Handled, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.TR_Talk_Time, 0) AS TR_Talk_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.TR_Pres, 0) AS TR_Pres_Made, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.TR_Sales, 0) AS TR_Sales_Dispositioned, 
+ISNULL(dbo.vw_Daily_RMAs.Return_Value, 0) AS Return_Value, 
+ISNULL(dbo.vw_Daily_RMAs.RT_IB_Value, 0) AS RT_IB_Value, 
+ISNULL(dbo.vw_Daily_RMAs.RT_OB_Value, 0) AS RT_OB_Value
+FROM         dbo.vw_Daily_Date_By_Sales_Agent 
+LEFT OUTER JOIN dbo.vw_Daily_RMAs 
+ON dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date = dbo.vw_Daily_RMAs.Return_Date 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Login = dbo.vw_Daily_RMAs.Login 
+LEFT OUTER JOIN dbo.vw_Daily_Sales_Confirmations 
+ON dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date = dbo.vw_Daily_Sales_Confirmations.Daily_Date 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Name = dbo.vw_Daily_Sales_Confirmations.Username 
+LEFT OUTER JOIN dbo.vw_Daily_Amcat_Agent_Stats 
+ON dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date = dbo.vw_Daily_Amcat_Agent_Stats.Stat_Date 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Name = dbo.vw_Daily_Amcat_Agent_Stats.Name 
+AND dbo.vw_Daily_Date_By_Sales_Agent.PKUsers = dbo.vw_Daily_Amcat_Agent_Stats.UsersFK 
+LEFT OUTER JOIN dbo.vw_Daily_MOM_TB_Sales 
+ON dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date = dbo.vw_Daily_MOM_TB_Sales.Order_Date 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Name = dbo.vw_Daily_MOM_TB_Sales.Name 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Login = dbo.vw_Daily_MOM_TB_Sales.sales_id 
+LEFT OUTER JOIN dbo.vw_Daily_Amcat_Call_Volume 
+ON dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date = dbo.vw_Daily_Amcat_Call_Volume.Call_Start_Date 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Name = dbo.vw_Daily_Amcat_Call_Volume.Name 
+AND dbo.vw_Daily_Date_By_Sales_Agent.PKUsers = dbo.vw_Daily_Amcat_Call_Volume.Amcat_Login
+
+
+
+SELECT     TOP (100) PERCENT 
+dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date, 
+dbo.vw_Daily_Date_By_Sales_Agent.Site, 
+dbo.vw_Daily_Date_By_Sales_Agent.Sales_Manager, 
+dbo.vw_Daily_Date_By_Sales_Agent.PKUsers, 
+dbo.vw_Daily_Date_By_Sales_Agent.Name, 
+dbo.vw_Daily_Date_By_Sales_Agent.Login, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Calls_Handled, 0) AS Ttl_Calls_Handled, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Queue_Time, 0) AS Ttl_Queue_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Talk_Time, 0) AS Ttl_Talk_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Wrap_Time, 0) AS Ttl_Wrap_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Agent_Stats.Pause_Time, 0) AS Ttl_Pause_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Agent_Stats.Wait_Time, 0) AS Ttl_Wait_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Pres, 0) AS Ttl_Pres_Made, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.Ttl_Sales, 0) AS Ttl_Sales_Dispositioned, 
+ISNULL(dbo.vw_Daily_Sales_Confirmations.Ttl_Sales_Confirmed, 0) AS Ttl_Gross_Sales, 
+ISNULL(dbo.vw_Daily_DBF_TB_Sales.Ttl_Sales_Orders_Submitted, 0) AS Ttl_Sales_Orders_Submitted, 
+ISNULL(dbo.vw_Daily_DBF_TB_Sales.Ttl_Net_Sales, 0) AS Ttl_Net_Sales, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.IB_Calls_Handled, 0) AS IB_Calls_Handled, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.IB_Talk_Time, 0) AS IB_Talk_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.IB_Pres, 0) AS IB_Pres_Made, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.IB_Sales, 0) AS IB_Sales_Dispositioned, 
+ISNULL(dbo.vw_Daily_Sales_Confirmations.IB_Sales_Confirmed, 0) AS IB_Gross_Sales, 
+ISNULL(dbo.vw_Daily_DBF_TB_Sales.IB_Sales_Orders_Submitted, 0) AS IB_Sales_Orders_Submitted, 
+ISNULL(dbo.vw_Daily_DBF_TB_Sales.IB_Sales_Value, 0) AS IB_Sales_Value, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.OB_Calls_Handled, 0) AS OB_Calls_Handled, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.OB_Talk_Time, 0) AS OB_Talk_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.OB_Pres, 0) AS OB_Pres_Made, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.OB_Sales, 0) AS OB_Sales_Dispositioned, 
+ISNULL(dbo.vw_Daily_Sales_Confirmations.OB_Sales_Confirmed, 0) AS OB_Gross_Sales, 
+ISNULL(dbo.vw_Daily_DBF_TB_Sales.OB_Sales_Orders_Submitted, 0) AS OB_Sales_Orders_Submitted, 
+ISNULL(dbo.vw_Daily_DBF_TB_Sales.OB_Sales_Value, 0) AS OB_Sales_Value, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.TR_Calls_Handled, 0) AS TR_Calls_Handled, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.TR_Talk_Time, 0) AS TR_Talk_Time, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.TR_Pres, 0) AS TR_Pres_Made, 
+ISNULL(dbo.vw_Daily_Amcat_Call_Volume.TR_Sales, 0) AS TR_Sales_Dispositioned, 
+ISNULL(dbo.vw_Daily_RMAs.Return_Value, 0) AS Return_Value, 
+ISNULL(dbo.vw_Daily_RMAs.RT_IB_Value, 0) AS RT_IB_Value, 
+ISNULL(dbo.vw_Daily_RMAs.RT_OB_Value, 0) AS RT_OB_Value
+FROM         dbo.vw_Daily_Date_By_Sales_Agent 
+LEFT OUTER JOIN dbo.vw_Daily_RMAs 
+ON dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date = dbo.vw_Daily_RMAs.Return_Date 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Login = dbo.vw_Daily_RMAs.Login 
+LEFT OUTER JOIN dbo.vw_Daily_Sales_Confirmations 
+ON dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date = dbo.vw_Daily_Sales_Confirmations.Daily_Date 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Name = dbo.vw_Daily_Sales_Confirmations.Username 
+LEFT OUTER JOIN dbo.vw_Daily_Amcat_Agent_Stats 
+ON dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date = dbo.vw_Daily_Amcat_Agent_Stats.Stat_Date 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Name = dbo.vw_Daily_Amcat_Agent_Stats.Name 
+AND dbo.vw_Daily_Date_By_Sales_Agent.PKUsers = dbo.vw_Daily_Amcat_Agent_Stats.UsersFK 
+LEFT OUTER JOIN dbo.vw_Daily_DBF_TB_Sales 
+ON dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date = dbo.vw_Daily_DBF_TB_Sales.Order_Date 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Name = dbo.vw_Daily_DBF_TB_Sales.Name 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Login = dbo.vw_Daily_DBF_TB_Sales.sales_id 
+LEFT OUTER JOIN dbo.vw_Daily_Amcat_Call_Volume 
+ON dbo.vw_Daily_Date_By_Sales_Agent.Daily_Date = dbo.vw_Daily_Amcat_Call_Volume.Call_Start_Date 
+AND dbo.vw_Daily_Date_By_Sales_Agent.Name = dbo.vw_Daily_Amcat_Call_Volume.Name 
+AND dbo.vw_Daily_Date_By_Sales_Agent.PKUsers = dbo.vw_Daily_Amcat_Call_Volume.Amcat_Login

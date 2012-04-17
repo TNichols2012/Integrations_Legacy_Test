@@ -1,0 +1,252 @@
+SELECT     
+'Customers Entered in MOM' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN EntryDate >= '1/1/2001' AND EntryDate < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN EntryDate >= '1/1/2002' AND EntryDate < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN EntryDate >= '1/1/2003' AND EntryDate < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN EntryDate >= '1/1/2004' AND EntryDate < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN EntryDate >= '1/1/2005' AND EntryDate < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN EntryDate >= '1/1/2006' AND EntryDate < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.Results_MOM_Cust
+
+UNION ALL
+
+SELECT     
+'Valid Customers' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+
+UNION ALL
+
+SELECT     
+'Gold Report Recipients' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'GR'
+
+UNION ALL
+
+SELECT     
+'Bullion Buyers' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'B1'
+
+UNION ALL
+
+SELECT     
+'Non-Bullion Buyers' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'B2'
+
+UNION ALL
+
+SELECT     
+'Bullion and Non-Bullion Buyers' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'B3'
+
+UNION ALL
+
+SELECT     
+'No Bullion and No Non-Bullion Buyers' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'B4'
+
+
+--**************************************************************************************************
+--Bullion Only Breakout
+--**************************************************************************************************
+
+
+SELECT     
+'Bullion Buyers (BB)' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'B1'
+
+UNION ALL
+
+SELECT     
+'Current Bullion Only Buyers' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'B1' AND Ttl_Order_Count =1
+
+UNION ALL
+
+SELECT     
+'BB Upgrades Total' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'B1' AND Ttl_Shipped_Value > Initial_Ttl_Shipped_Value
+
+UNION ALL
+
+SELECT     
+'BB Upgrades to More Bullion' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'B1' AND Buyer_Type = 'B1' AND Ttl_Shipped_Value > Initial_Ttl_Shipped_Value
+
+UNION ALL
+
+SELECT     
+'BB Upgrades to Non-Bullion' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'B1' AND Buyer_Type <> 'B1' AND Ttl_Shipped_Value > Initial_Ttl_Shipped_Value
+
+
+
+
+--**************************************************************************************************
+--Gold Report Breakout
+--**************************************************************************************************
+
+
+SELECT     
+'Gold Report Recipients' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'GR'
+
+UNION ALL
+
+SELECT     
+'Current Gold Reports Only Recipients' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'GR' 
+AND Ttl_Order_Count =1
+
+UNION ALL
+
+SELECT     
+'GR Upgrades Total' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'GR' 
+AND Ttl_Shipped_Value > 0
+
+UNION ALL
+
+SELECT     
+'GR Upgrades to Bullion' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'GR' 
+AND Ttl_Shipped_Value > 0
+AND Buyer_Type = 'B1'
+
+UNION ALL
+
+SELECT     
+'GR Customers Upgraded to Non-Bullion' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'GR' 
+AND Ttl_Shipped_Value > 0
+AND Buyer_Type IN ('B2', 'B3')
+
+
+

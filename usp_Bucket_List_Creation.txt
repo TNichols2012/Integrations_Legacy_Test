@@ -1,0 +1,440 @@
+USE [Data_Warehouse]
+GO
+/****** Object:  StoredProcedure [dbo].[usp_Bucket_Leads_Creation]    Script Date: 12/06/2011 07:41:08 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[usp_Bucket_Leads_Creation]
+AS
+BEGIN
+
+DECLARE @int_Count int
+
+SET @int_Count = (SELECT COUNT(*) FROM tbl_Bucket_List)
+
+IF @int_Count > 0 
+	BEGIN
+		DECLARE @tbl_Bucket_List table (
+		Bucket_ID int identity(1,1),
+		Bucket_Name varchar(15)
+		)
+
+		INSERT INTO @tbl_Bucket_List (Bucket_Name)
+		SELECT Bucket_Name FROM tbl_Bucket_List
+
+		--SELECT * FROM @tbl_Bucket_List
+
+		DECLARE @int_Counter int = 1
+		DECLARE @tbl_Name varchar(15) 
+		
+			WHILE @int_Counter <= @int_Count
+				BEGIN
+
+					SET @tbl_Name = (SELECT Bucket_Name FROM @tbl_Bucket_List WHERE Bucket_ID = @int_Counter)
+					--SELECT @tbl_Name
+					EXEC  dbo.usp_Bucket_Leads_Update @tbl_Name
+
+					SET	@int_Counter = @int_Counter + 1 
+
+				END -- WHILE @int_Counter <= @int_Count
+				
+	END --IF @tmp_Count > 0 
+
+END
+
+--**********************************************************************************************************************************
+--**********************************************************************************************************************************
+--**********************************************************************************************************************************
+
+
+CREATE PROCEDURE [dbo].[usp_Bucket_Leads_Update]
+@Bucket_Name varchar(15)
+AS 
+BEGIN
+SET NOCOUNT ON;
+
+DECLARE @tbl_Bucket_Leads table (
+Table_ID int identity(1,1),
+Cust_ID varchar(15),
+First_Name varchar(50),
+Last_Name varchar(50),
+Full_Name varchar(100),
+Contact_Number1 varchar(25),
+Contact_Number2 varchar(25),
+Contact_Number3 varchar(25),
+Primary_Last_Contact datetime,
+Secondary_Last_Contact datetime,
+Tertiary_Last_Contact datetime,
+Last_OB_Contact_Date datetime,
+Disposition1 varchar(15),
+Disposition2 varchar(15),
+Disposition3 varchar(15)
+)
+
+INSERT INTO @tbl_Bucket_Leads (
+Cust_ID, 
+First_Name, 
+Last_Name, 
+Full_Name, 
+Contact_Number1, 
+Contact_Number2, 
+Contact_Number3, 
+Primary_Last_Contact,
+Secondary_Last_Contact, 
+Tertiary_Last_Contact, 
+Last_OB_Contact_Date, 
+Disposition1, 
+Disposition2, 
+Disposition3
+)
+SELECT     
+Cust_ID, 
+First_Name, 
+Last_Name, 
+First_Name + ' ' + Last_Name AS Full_Name, 
+CASE 
+WHEN LEN(Contact_Number1) >= 10 AND Contact_Number1 <> 'Need_Info' THEN '01' + Contact_Number1
+WHEN Contact_Number1 <> 'Need_Info' THEN Contact_Number1 ELSE '' END AS Contact_Number1, 
+CASE
+WHEN LEN(Contact_Number2) >= 10 AND Contact_Number2 <> 'Need_Info' THEN '01' + Contact_Number2
+WHEN Contact_Number2 <> 'Need_Info' THEN Contact_Number2 ELSE '' END AS Contact_Number2, 
+CASE 
+WHEN LEN(Contact_Number3) >= 10 AND Contact_Number3 <> 'Need_Info' THEN '01' + Contact_Number3
+WHEN Contact_Number3 <> 'Need_Info' THEN Contact_Number3 ELSE '' END AS Contact_Number3, 
+tACI1.Last_OB_Contact_Date AS Primary_Last_Contact,
+tACI2.Last_OB_Contact_Date AS Secondary_Last_Contact,
+tACI3.Last_OB_Contact_Date AS Tertiary_Last_Contact,
+CASE 
+WHEN tACI1.Last_OB_Contact_Date IS NOT NULL AND tACI2.Last_OB_Contact_Date IS NULL AND tACI3.Last_OB_Contact_Date IS NULL THEN tACI1.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date IS NULL AND tACI2.Last_OB_Contact_Date IS NOT NULL AND tACI3.Last_OB_Contact_Date IS NULL THEN tACI2.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date IS NULL AND tACI2.Last_OB_Contact_Date IS NULL AND tACI3.Last_OB_Contact_Date IS NOT NULL THEN tACI3.Last_OB_Contact_Date
+
+WHEN tACI1.Last_OB_Contact_Date > tACI2.Last_OB_Contact_Date THEN tACI1.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date > tACI3.Last_OB_Contact_Date THEN tACI1.Last_OB_Contact_Date
+
+WHEN tACI2.Last_OB_Contact_Date > tACI1.Last_OB_Contact_Date THEN tACI2.Last_OB_Contact_Date
+WHEN tACI2.Last_OB_Contact_Date > tACI3.Last_OB_Contact_Date THEN tACI2.Last_OB_Contact_Date
+
+WHEN tACI3.Last_OB_Contact_Date > tACI1.Last_OB_Contact_Date THEN tACI3.Last_OB_Contact_Date
+WHEN tACI3.Last_OB_Contact_Date > tACI2.Last_OB_Contact_Date THEN tACI3.Last_OB_Contact_Date
+
+ELSE tACI1.Last_OB_Contact_Date END AS Last_OB_Contact_Date,
+tACI1.Last_OB_Disposition AS Disposition_1,
+tACI2.Last_OB_Disposition AS Disposition_2,
+tACI3.Last_OB_Disposition AS Disposition_3
+
+FROM		tbl_MOM_Cust tMC 
+LEFT JOIN	tbl_Amcat_Contact_Info tACI1
+ON			tACI1.ContactNumber = tMC.Contact_Number1
+LEFT JOIN	tbl_Amcat_Contact_Info tACI2
+ON			tACI2.ContactNumber = tMC.Contact_Number2
+LEFT JOIN	tbl_Amcat_Contact_Info tACI3
+ON			tACI3.ContactNumber = tMC.Contact_Number3
+WHERE	Sales_ID IN (@Bucket_Name) 
+AND		tACI1.Last_OB_Contact_Date IS NULL
+AND		tACI2.Last_OB_Contact_Date IS NULL
+AND		tACI3.Last_OB_Contact_Date IS NULL
+AND		(Contact_Number1 <> 'Need_Info' AND Contact_Number2 <> 'Need_Info' AND Contact_Number3 <> 'Need_Info')
+
+INSERT INTO @tbl_Bucket_Leads (
+Cust_ID, 
+First_Name, 
+Last_Name, 
+Full_Name, 
+Contact_Number1, 
+Contact_Number2, 
+Contact_Number3, 
+Primary_Last_Contact,
+Secondary_Last_Contact, 
+Tertiary_Last_Contact, 
+Last_OB_Contact_Date, 
+Disposition1, 
+Disposition2, 
+Disposition3
+)
+SELECT     
+Cust_ID, 
+First_Name, 
+Last_Name, 
+First_Name + ' ' + Last_Name AS Full_Name, 
+CASE 
+WHEN LEN(Contact_Number1) >= 10 AND Contact_Number1 <> 'Need_Info' THEN '01' + Contact_Number1
+WHEN Contact_Number1 <> 'Need_Info' THEN Contact_Number1 ELSE '' END AS Contact_Number1, 
+CASE
+WHEN LEN(Contact_Number2) >= 10 AND Contact_Number2 <> 'Need_Info' THEN '01' + Contact_Number2
+WHEN Contact_Number2 <> 'Need_Info' THEN Contact_Number2 ELSE '' END AS Contact_Number2, 
+CASE 
+WHEN LEN(Contact_Number3) >= 10 AND Contact_Number3 <> 'Need_Info' THEN '01' + Contact_Number3
+WHEN Contact_Number3 <> 'Need_Info' THEN Contact_Number3 ELSE '' END AS Contact_Number3, 
+tACI1.Last_OB_Contact_Date AS Primary_Last_Contact,
+tACI2.Last_OB_Contact_Date AS Secondary_Last_Contact,
+tACI3.Last_OB_Contact_Date AS Tertiary_Last_Contact,
+CASE 
+WHEN tACI1.Last_OB_Contact_Date IS NOT NULL AND tACI2.Last_OB_Contact_Date IS NULL AND tACI3.Last_OB_Contact_Date IS NULL THEN tACI1.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date IS NULL AND tACI2.Last_OB_Contact_Date IS NOT NULL AND tACI3.Last_OB_Contact_Date IS NULL THEN tACI2.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date IS NULL AND tACI2.Last_OB_Contact_Date IS NULL AND tACI3.Last_OB_Contact_Date IS NOT NULL THEN tACI3.Last_OB_Contact_Date
+
+WHEN tACI1.Last_OB_Contact_Date > tACI2.Last_OB_Contact_Date THEN tACI1.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date > tACI3.Last_OB_Contact_Date THEN tACI1.Last_OB_Contact_Date
+
+WHEN tACI2.Last_OB_Contact_Date > tACI1.Last_OB_Contact_Date THEN tACI2.Last_OB_Contact_Date
+WHEN tACI2.Last_OB_Contact_Date > tACI3.Last_OB_Contact_Date THEN tACI2.Last_OB_Contact_Date
+
+WHEN tACI3.Last_OB_Contact_Date > tACI1.Last_OB_Contact_Date THEN tACI3.Last_OB_Contact_Date
+WHEN tACI3.Last_OB_Contact_Date > tACI2.Last_OB_Contact_Date THEN tACI3.Last_OB_Contact_Date
+
+ELSE tACI1.Last_OB_Contact_Date END AS Last_Contact_Date,
+tACI1.Last_OB_Disposition AS Disposition_1,
+tACI2.Last_OB_Disposition AS Disposition_2,
+tACI3.Last_OB_Disposition AS Disposition_3
+FROM		tbl_MOM_Cust tMC 
+LEFT JOIN	tbl_Amcat_Contact_Info tACI1
+ON			tACI1.ContactNumber = tMC.Contact_Number1
+LEFT JOIN	tbl_Amcat_Contact_Info tACI2
+ON			tACI2.ContactNumber = tMC.Contact_Number2
+LEFT JOIN	tbl_Amcat_Contact_Info tACI3
+ON			tACI3.ContactNumber = tMC.Contact_Number3
+WHERE     Sales_ID IN (@Bucket_Name) 
+AND	(	(tACI1.Last_OB_Disposition IN (119, 135) )
+	OR	(tACI2.Last_OB_Disposition IN (119, 135) )
+	OR	(tACI3.Last_OB_Disposition IN (119, 135) )
+	)	/* No Deal, Will Call Back*/ 
+AND (	(tACI1.Last_OB_Contact_Date < dbo.Get_TheDate(GetDate() - 7) )
+	OR	(tACI2.Last_OB_Contact_Date < dbo.Get_TheDate(GetDate() - 7) )
+	OR	(tACI3.Last_OB_Contact_Date < dbo.Get_TheDate(GetDate() - 7) )
+	)	/* 7 Days ago*/ 
+
+UNION ALL
+
+SELECT     
+Cust_ID, 
+First_Name, 
+Last_Name, 
+First_Name + ' ' + Last_Name AS Full_Name, 
+CASE 
+WHEN LEN(Contact_Number1) >= 10 AND Contact_Number1 <> 'Need_Info' THEN '01' + Contact_Number1
+WHEN Contact_Number1 <> 'Need_Info' THEN Contact_Number1 ELSE '' END AS Contact_Number1, 
+CASE
+WHEN LEN(Contact_Number2) >= 10 AND Contact_Number2 <> 'Need_Info' THEN '01' + Contact_Number2
+WHEN Contact_Number2 <> 'Need_Info' THEN Contact_Number2 ELSE '' END AS Contact_Number2, 
+CASE 
+WHEN LEN(Contact_Number3) >= 10 AND Contact_Number3 <> 'Need_Info' THEN '01' + Contact_Number3
+WHEN Contact_Number3 <> 'Need_Info' THEN Contact_Number3 ELSE '' END AS Contact_Number3, 
+tACI1.Last_OB_Contact_Date AS Primary_Last_Contact,
+tACI2.Last_OB_Contact_Date AS Secondary_Last_Contact,
+tACI3.Last_OB_Contact_Date AS Tertiary_Last_Contact,
+CASE 
+WHEN tACI1.Last_OB_Contact_Date IS NOT NULL AND tACI2.Last_OB_Contact_Date IS NULL AND tACI3.Last_OB_Contact_Date IS NULL THEN tACI1.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date IS NULL AND tACI2.Last_OB_Contact_Date IS NOT NULL AND tACI3.Last_OB_Contact_Date IS NULL THEN tACI2.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date IS NULL AND tACI2.Last_OB_Contact_Date IS NULL AND tACI3.Last_OB_Contact_Date IS NOT NULL THEN tACI3.Last_OB_Contact_Date
+
+WHEN tACI1.Last_OB_Contact_Date > tACI2.Last_OB_Contact_Date THEN tACI1.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date > tACI3.Last_OB_Contact_Date THEN tACI1.Last_OB_Contact_Date
+
+WHEN tACI2.Last_OB_Contact_Date > tACI1.Last_OB_Contact_Date THEN tACI2.Last_OB_Contact_Date
+WHEN tACI2.Last_OB_Contact_Date > tACI3.Last_OB_Contact_Date THEN tACI2.Last_OB_Contact_Date
+
+WHEN tACI3.Last_OB_Contact_Date > tACI1.Last_OB_Contact_Date THEN tACI3.Last_OB_Contact_Date
+WHEN tACI3.Last_OB_Contact_Date > tACI2.Last_OB_Contact_Date THEN tACI3.Last_OB_Contact_Date
+
+ELSE tACI1.Last_OB_Contact_Date END AS Last_OB_Contact_Date,
+tACI1.Last_OB_Disposition AS Disposition_1,
+tACI2.Last_OB_Disposition AS Disposition_2,
+tACI3.Last_OB_Disposition AS Disposition_3
+
+FROM		tbl_MOM_Cust tMC 
+LEFT JOIN	tbl_Amcat_Contact_Info tACI1
+ON			tACI1.ContactNumber = tMC.Contact_Number1
+LEFT JOIN	tbl_Amcat_Contact_Info tACI2
+ON			tACI2.ContactNumber = tMC.Contact_Number2
+LEFT JOIN	tbl_Amcat_Contact_Info tACI3
+ON			tACI3.ContactNumber = tMC.Contact_Number3
+WHERE     Sales_ID IN (@Bucket_Name) 
+AND	(	(tACI1.Last_OB_Disposition IN (132) )
+	OR	(tACI2.Last_OB_Disposition IN (132) )
+	OR	(tACI3.Last_OB_Disposition IN (132) )
+	)	/* Left Message*/ 
+AND (	(tACI1.Last_OB_Contact_Date < dbo.Get_TheDate(GetDate() - 2) )
+	OR	(tACI2.Last_OB_Contact_Date < dbo.Get_TheDate(GetDate() - 2) )
+	OR	(tACI3.Last_OB_Contact_Date < dbo.Get_TheDate(GetDate() - 2) )
+	)	/* 2 Days ago*/ 
+
+UNION ALL
+
+SELECT     
+Cust_ID, 
+First_Name, 
+Last_Name, 
+First_Name + ' ' + Last_Name AS Full_Name, 
+CASE 
+WHEN LEN(Contact_Number1) >= 10 AND Contact_Number1 <> 'Need_Info' THEN '01' + Contact_Number1
+WHEN Contact_Number1 <> 'Need_Info' THEN Contact_Number1 ELSE '' END AS Contact_Number1, 
+CASE
+WHEN LEN(Contact_Number2) >= 10 AND Contact_Number2 <> 'Need_Info' THEN '01' + Contact_Number2
+WHEN Contact_Number2 <> 'Need_Info' THEN Contact_Number2 ELSE '' END AS Contact_Number2, 
+CASE 
+WHEN LEN(Contact_Number3) >= 10 AND Contact_Number3 <> 'Need_Info' THEN '01' + Contact_Number3
+WHEN Contact_Number3 <> 'Need_Info' THEN Contact_Number3 ELSE '' END AS Contact_Number3, 
+tACI1.Last_OB_Contact_Date AS Primary_Last_Contact,
+tACI2.Last_OB_Contact_Date AS Secondary_Last_Contact,
+tACI3.Last_OB_Contact_Date AS Tertiary_Last_Contact,
+CASE 
+WHEN tACI1.Last_OB_Contact_Date IS NOT NULL AND tACI2.Last_OB_Contact_Date IS NULL AND tACI3.Last_OB_Contact_Date IS NULL THEN tACI1.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date IS NULL AND tACI2.Last_OB_Contact_Date IS NOT NULL AND tACI3.Last_OB_Contact_Date IS NULL THEN tACI2.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date IS NULL AND tACI2.Last_OB_Contact_Date IS NULL AND tACI3.Last_OB_Contact_Date IS NOT NULL THEN tACI3.Last_OB_Contact_Date
+
+WHEN tACI1.Last_OB_Contact_Date > tACI2.Last_OB_Contact_Date THEN tACI1.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date > tACI3.Last_OB_Contact_Date THEN tACI1.Last_OB_Contact_Date
+
+WHEN tACI2.Last_OB_Contact_Date > tACI1.Last_OB_Contact_Date THEN tACI2.Last_OB_Contact_Date
+WHEN tACI2.Last_OB_Contact_Date > tACI3.Last_OB_Contact_Date THEN tACI2.Last_OB_Contact_Date
+
+WHEN tACI3.Last_OB_Contact_Date > tACI1.Last_OB_Contact_Date THEN tACI3.Last_OB_Contact_Date
+WHEN tACI3.Last_OB_Contact_Date > tACI2.Last_OB_Contact_Date THEN tACI3.Last_OB_Contact_Date
+
+ELSE tACI1.Last_OB_Contact_Date END AS Last_OB_Contact_Date,
+tACI1.Last_OB_Disposition AS Disposition_1,
+tACI2.Last_OB_Disposition AS Disposition_2,
+tACI3.Last_OB_Disposition AS Disposition_3
+
+FROM		tbl_MOM_Cust tMC 
+LEFT JOIN	tbl_Amcat_Contact_Info tACI1
+ON			tACI1.ContactNumber = tMC.Contact_Number1
+LEFT JOIN	tbl_Amcat_Contact_Info tACI2
+ON			tACI2.ContactNumber = tMC.Contact_Number2
+LEFT JOIN	tbl_Amcat_Contact_Info tACI3
+ON			tACI3.ContactNumber = tMC.Contact_Number3
+WHERE     Sales_ID IN (@Bucket_Name) 
+AND (	(tACI1.Last_OB_Disposition IN (131) )
+	OR	(tACI2.Last_OB_Disposition IN (131) )
+	OR	(tACI3.Last_OB_Disposition IN (131) )
+	)	/* No Answer*/ 
+AND (	(tACI1.Last_OB_Contact_Date < dbo.Get_TheDate(GetDate() - 1) )
+	OR	(tACI2.Last_OB_Contact_Date < dbo.Get_TheDate(GetDate() - 1) )
+	OR	(tACI3.Last_OB_Contact_Date < dbo.Get_TheDate(GetDate() - 1) )
+	)	/* 1 Day ago*/ 
+
+UNION ALL
+
+SELECT     
+Cust_ID, 
+First_Name, 
+Last_Name, 
+First_Name + ' ' + Last_Name AS Full_Name, 
+CASE 
+WHEN LEN(Contact_Number1) >= 10 AND Contact_Number1 <> 'Need_Info' THEN '01' + Contact_Number1
+WHEN Contact_Number1 <> 'Need_Info' THEN Contact_Number1 ELSE '' END AS Contact_Number1, 
+CASE
+WHEN LEN(Contact_Number2) >= 10 AND Contact_Number2 <> 'Need_Info' THEN '01' + Contact_Number2
+WHEN Contact_Number2 <> 'Need_Info' THEN Contact_Number2 ELSE '' END AS Contact_Number2, 
+CASE 
+WHEN LEN(Contact_Number3) >= 10 AND Contact_Number3 <> 'Need_Info' THEN '01' + Contact_Number3
+WHEN Contact_Number3 <> 'Need_Info' THEN Contact_Number3 ELSE '' END AS Contact_Number3, 
+tACI1.Last_OB_Contact_Date AS Primary_Last_Contact,
+tACI2.Last_OB_Contact_Date AS Secondary_Last_Contact,
+tACI3.Last_OB_Contact_Date AS Tertiary_Last_Contact,
+CASE 
+WHEN tACI1.Last_OB_Contact_Date IS NOT NULL AND tACI2.Last_OB_Contact_Date IS NULL AND tACI3.Last_OB_Contact_Date IS NULL THEN tACI1.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date IS NULL AND tACI2.Last_OB_Contact_Date IS NOT NULL AND tACI3.Last_OB_Contact_Date IS NULL THEN tACI2.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date IS NULL AND tACI2.Last_OB_Contact_Date IS NULL AND tACI3.Last_OB_Contact_Date IS NOT NULL THEN tACI3.Last_OB_Contact_Date
+
+WHEN tACI1.Last_OB_Contact_Date > tACI2.Last_OB_Contact_Date THEN tACI1.Last_OB_Contact_Date
+WHEN tACI1.Last_OB_Contact_Date > tACI3.Last_OB_Contact_Date THEN tACI1.Last_OB_Contact_Date
+
+WHEN tACI2.Last_OB_Contact_Date > tACI1.Last_OB_Contact_Date THEN tACI2.Last_OB_Contact_Date
+WHEN tACI2.Last_OB_Contact_Date > tACI3.Last_OB_Contact_Date THEN tACI2.Last_OB_Contact_Date
+
+WHEN tACI3.Last_OB_Contact_Date > tACI1.Last_OB_Contact_Date THEN tACI3.Last_OB_Contact_Date
+WHEN tACI3.Last_OB_Contact_Date > tACI2.Last_OB_Contact_Date THEN tACI3.Last_OB_Contact_Date
+
+ELSE tACI1.Last_OB_Contact_Date END AS Last_OB_Contact_Date,
+tACI1.Last_OB_Disposition AS Disposition_1,
+tACI2.Last_OB_Disposition AS Disposition_2,
+tACI3.Last_OB_Disposition AS Disposition_3
+
+FROM		tbl_MOM_Cust tMC 
+LEFT JOIN	tbl_Amcat_Contact_Info tACI1
+ON			tACI1.ContactNumber = tMC.Contact_Number1
+LEFT JOIN	tbl_Amcat_Contact_Info tACI2
+ON			tACI2.ContactNumber = tMC.Contact_Number2
+LEFT JOIN	tbl_Amcat_Contact_Info tACI3
+ON			tACI3.ContactNumber = tMC.Contact_Number3
+WHERE     Sales_ID IN (@Bucket_Name) 
+AND (	(tACI1.Last_OB_Disposition NOT IN (119, 131, 132, 135) )
+	OR	(tACI2.Last_OB_Disposition NOT IN (119, 131, 132, 135) )
+	OR	(tACI3.Last_OB_Disposition NOT IN (119, 131, 132, 135) )
+	)	/* Exclude Previous Criteria*/ 
+AND (	(tACI1.Last_OB_Disposition NOT IN (123, 127, 129, 130) )
+	OR	(tACI2.Last_OB_Disposition NOT IN (123, 127, 129, 130) )
+	OR	(tACI3.Last_OB_Disposition NOT IN (123, 127, 129, 130) )
+	)	/* Deceased, DNC/M, Bad Phone*/ 
+AND (	(tACI1.Last_OB_Contact_Date < dbo.Get_TheDate(GetDate() - 1) )
+	OR	(tACI2.Last_OB_Contact_Date < dbo.Get_TheDate(GetDate() - 1) )
+	OR	(tACI3.Last_OB_Contact_Date < dbo.Get_TheDate(GetDate() - 1) )
+	)	/* 1 Day ago*/ 
+
+ORDER BY [Last_Contact_Date]
+
+--SELECT * FROM @tbl_Bucket_Leads
+
+DELETE 
+FROM @tbl_Bucket_Leads 
+WHERE Disposition1 IN (123, 127, 129, 130)
+OR Disposition2 IN (123, 127, 129, 130)
+OR Disposition3 IN (123, 127, 129, 130)
+
+--SELECT * FROM @tbl_Bucket_Leads
+
+DELETE FROM @tbl_Bucket_Leads 
+WHERE Cust_ID IN (
+SELECT 
+tMC.Cust_ID
+FROM tbl_MOM_Cust tMC
+INNER JOIN Results_MOM_Cust rMC
+ON tMC.Cust_ID = rMC.CUSTNUM
+WHERE tMC.Sales_ID = @Bucket_Name
+AND rMC.NOCALL = 1
+)
+
+--SELECT * FROM @tbl_Bucket_Leads ORDER BY Table_ID
+
+DECLARE @tbl_Name varchar(50) = 'tbl_Bucket_'+ @Bucket_Name
+--SELECT @tbl_Name
+
+IF EXISTS (SELECT TABLE_NAME FROM Information_Schema.Tables WHERE Table_Name = @tbl_Name)
+	BEGIN 
+		EXEC sp_rename @tbl_Name, 'tmp_Bucket_Leads'
+		DROP TABLE tmp_Bucket_Leads
+	END
+
+SELECT
+MIN(Table_ID) AS Table_ID,
+Cust_ID,
+First_Name,
+Last_Name,
+Full_Name,
+Contact_Number1,
+Contact_Number2,
+Contact_Number3,
+Last_OB_Contact_Date
+INTO tmp_Bucket_Leads
+FROM @tbl_Bucket_Leads
+GROUP BY
+Cust_ID,
+First_Name,
+Last_Name,
+Full_Name,
+Contact_Number1,
+Contact_Number2,
+Contact_Number3,
+Last_OB_Contact_Date
+ORDER BY MIN(Table_ID)
+
+--SELECT * FROM tmp_Bucket_Leads 
+
+EXEC sp_rename  'tmp_Bucket_Leads', @tbl_Name
+
+END
+
+

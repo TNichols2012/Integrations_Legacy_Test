@@ -1,0 +1,27 @@
+SELECT     TOP (100) PERCENT 
+dbo.tbl_Media_Ad_Codes.Campaign, 
+dbo.tbl_Media_Ad_Codes.Ad_Run_Date, 
+dbo.tbl_Media_Ad_Codes.Ad_Code, 
+(dbo.tbl_Media_Ad_Codes.Ad_Cost + dbo.tbl_Media_Ad_Codes.Tape_Cost) AS Ad_Cost, 
+dbo.vw_Media_Detail_Daily_Calls.Agent_Answered AS Calls_Daily, 
+dbo.vw_Media_Detail_Daily_Sales.Ttl_Bullion AS Sales_Daily_Bullion, 
+dbo.vw_Media_Detail_Daily_Sales.Ttl_Non_Bullion AS Sales_Daily_Bump, 
+dbo.tbl_Amcat_Call_Volume_IB.P30_Calls_Answered AS Calls_MTD, 
+dbo.tbl_MOM_Media_Sales.Ttl_Bullion_Value AS Sales_MTD_Bullion, 
+dbo.tbl_MOM_Media_Sales.Ttl_Bump_Value AS Sales_MTD_Bump
+FROM		dbo.tbl_Media_Ad_Codes 
+LEFT OUTER JOIN	dbo.tbl_Amcat_Call_Volume_IB 
+LEFT OUTER JOIN	dbo.vw_Media_Detail_Daily_Calls 
+ON		dbo.tbl_Amcat_Call_Volume_IB.DNIS = dbo.vw_Media_Detail_Daily_Calls.DNIS 
+ON		dbo.tbl_Media_Ad_Codes.Ad_Run_Date = dbo.tbl_Amcat_Call_Volume_IB.Call_Start_Time 
+AND		dbo.tbl_Media_Ad_Codes.Amcat_Phone = dbo.tbl_Amcat_Call_Volume_IB.DNIS 
+LEFT OUTER JOIN	dbo.tbl_MOM_Media_Sales 
+LEFT OUTER JOIN	dbo.vw_Media_Detail_Daily_Sales 
+ON		dbo.tbl_MOM_Media_Sales.Ad_Code = dbo.vw_Media_Detail_Daily_Sales.Ad_Code 
+ON		dbo.tbl_Media_Ad_Codes.Ad_Code = dbo.tbl_MOM_Media_Sales.Ad_Code
+WHERE		(dbo.tbl_Media_Ad_Codes.Campaign = 'TV') 
+AND		(dbo.tbl_Media_Ad_Codes.Ad_Run_Date >= dbo.Get_TheMonth(GETDATE()-1)) 
+AND		(dbo.tbl_Media_Ad_Codes.Ad_Run_Date < dbo.Get_TheDate(GETDATE())) 
+AND		(dbo.tbl_Media_Ad_Codes.Ad_Code <> '') 
+AND		(dbo.tbl_Media_Ad_Codes.Hide = 0)
+ORDER BY 	dbo.tbl_Media_Ad_Codes.Ad_Run_Date

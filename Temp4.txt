@@ -1,0 +1,707 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Non-scrolling table header, repeat print header and footer</title>
+
+<link rel="stylesheet" href="basic.css" type="text/css">
+
+<style type="text/css">
+
+.tableContainer {
+	position: relative;	/* to capture the absolutely positioned table header */
+	padding-top: 19px;	/* space for the column heads */
+	width: 500px;		
+	margin: 0 auto;
+	}
+
+/* this enables the table to scroll without scrolling the page */
+.innerframe {
+	overflow: auto;	
+	width: auto;	
+	height: 248px;		/* height is required */
+	}
+
+/* position the row of column heads above the table */
+.tableContainer thead tr {
+	position: absolute;	/* throws the header out of the table */
+	top: 0px;
+	left: 0px;			
+	}
+	
+.tableContainer tfoot tr {
+	position: absolute;	/* throws the footer out of the table */
+	top: 264px;
+	left: 0px;			
+	}
+
+table {
+	border-right: solid 1px slategray;
+	width: auto;
+	}
+	
+thead td	{
+	font-size: 14px;
+	font-weight: bold;
+	text-align: right;
+	background-color: papayawhip;
+	color: steelblue;
+	border-bottom: solid 1pt slategray;
+	width: 116px; /*Firefox needs this*/
+	}
+	
+td	{
+	color: #000;
+	padding-right: 2px;
+	font-size: 12px;
+	text-align: right;
+	font-family: Arial,sans-serif;
+	border-top: solid 1px slategray;
+	border-left: solid 1px slategray;
+	width: 125px; /*Firefox needs this*/
+	}
+
+tfoot td	{
+	text-align: center;
+	font-size: 11px;
+	font-weight: bold;
+	background-color: papayawhip;
+	color: steelblue;
+	border: solid 1px slategray;
+	width: 500px; /*Firefox needs this*/
+	}
+
+select {
+	font-size: 11px; 
+	width: 100%; 
+	background-color: Cornsilk;
+	}
+
+</style>
+
+
+
+<!-- table print style sheet -->
+<style type="text/css" media="print">
+div.innerframe {overflow: visible;	}
+thead td,tfoot td	{font-size: 11pt;}
+	
+.tableContainer thead tr {position: static;}
+.tableContainer tfoot tr {position: static;}
+	
+thead	{display: table-header-group;	}
+tfoot	{display: table-footer-group;	}
+</style>
+
+<script language="JScript">
+function window.onbeforeprint() {
+// This script assumes all form controls are single-select or textbox
+	 var oElement;
+	 // Each time an element is "removed" the remaining shift indices
+	 while (oElement = document.forms[0].elements[0]) {
+      // Capture HTML of each element
+      var sExistingHTML = oElement.outerHTML;
+      // Capture value of each control
+      if (/select/.test(oElement.type))
+	  	{
+			var sValue = oElement.options[oElement.selectedIndex].text;
+		}
+		else
+		{
+			var sValue = oElement.value;
+		}
+		 
+      oElement.outerHTML = "<span class='scrape' sExistingHTML='"
+                         + sExistingHTML + "'>" + sValue + "</span>";
+   }
+}
+function window.onafterprint() {
+   var collScrape = document.getElementsByTagName("SPAN");
+   var oScrape;
+	 while (oScrape = collScrape[0]) {
+      if (oScrape.className == "scrape")
+         oScrape.outerHTML = oScrape.sExistingHTML;
+   }
+}
+</script>
+
+</head>
+
+<body>
+
+<div id="container">
+
+<h2>Scrollable Table with Fixed Header</h2>
+<h3>Handling Form Selects</h3>
+
+
+<p>In this example, windowed elements such as form selects respect the non-scroll table header. In IE, the footer is now visible and behaves as desired. Another advantage is that I am using normal CSS positioning instead of IE-proprietary expressions.  Tables don't need an ID so more non-scroll tables can be added without modifying the style sheet. This version abandons support to IE5.x since IE6 "standards-mode" is used to complete the effect.<br>Prettyprint: the dropdown select options are converted to text when printed from Internet Explorer.</p>
+
+
+<form action="">
+<div class="tableContainer">
+<div class="innerframe">
+  <table cellspacing="0">
+     <thead>
+      <tr> 
+        <td>Station</td>
+        <td>Date</td>
+        <td>Status</td>
+
+        <td style="border-right:solid 1px slategray;">Num.</td>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr> 
+        <td colspan="4">Table footer repeats on print</td>
+      </tr>
+    </tfoot>
+
+    <tbody>
+      <tr> 
+        <td>KBRE</td>
+        <td>06/25/2004</td>
+        <td>Pending</td>
+        <td><select name="asd" size="1">
+		<option value="1" SELECTED>1</option>
+
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		</select></td>
+      </tr>
+      <tr> 
+        <td>KCBS</td>
+
+        <td>09/11/2002</td>
+        <td>Lockdown</td>
+        <td>2</td>
+      </tr>
+      <tr> 
+        <td>WFLA</td>
+        <td>09/11/2002</td>
+
+        <td>Submitted</td>
+        <td><select name="asd3" size="1">
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3" SELECTED>3</option>
+		<option value="4">4</option>
+
+		</select></td>
+      </tr>
+      <tr> 
+        <td>WTSP</td>
+        <td>09/15/2002</td>
+        <td>In-Progress</td>
+        <td>10</td>
+
+      </tr>
+      <tr> 
+        <td>WROC</td>
+        <td>10/11/2002</td>
+        <td>Pending</td>
+        <td><select name="asd4" size="1">
+		<option value="1">1</option>
+
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4" SELECTED>4</option>
+		</select></td>
+      </tr>
+      <tr> 
+        <td>WPPP</td>
+
+        <td>09/16/2002</td>
+        <td>In-Progress</td>
+        <td><select name="asd5" size="1">
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3" SELECTED>3</option>
+
+		<option value="4">4</option>
+		</select></td>
+      </tr>
+      <tr> 
+        <td>WRRR</td>
+        <td>09/06/2002</td>
+        <td>Submitted</td>
+
+        <td>5</td>
+      </tr>
+      <tr> 
+        <td>WTTT</td>
+        <td>09/21/2002</td>
+        <td>In-Progress</td>
+        <td>0</td>
+
+      </tr>
+      <tr> 
+        <td>W000</td>
+        <td>11/11/2002</td>
+        <td>Submitted</td>
+        <td>7</td>
+      </tr>
+
+      <tr> 
+        <td>KABC</td>
+        <td>10/01/2002</td>
+        <td>Submitted</td>
+        <td>10</td>
+      </tr>
+      <tr> 
+        <td>KCBS</td>
+
+        <td>10/18/2002</td>
+        <td>Lockdown</td>
+        <td>2</td>
+      </tr>
+      <tr> 
+        <td>WFLA</td>
+        <td>10/18/2002</td>
+
+        <td>Submitted</td>
+        <td>1</td>
+      </tr>
+      <tr> 
+        <td>WTSP</td>
+        <td>10/19/2002</td>
+        <td>In-Progress</td>
+
+        <td>0</td>
+      </tr>
+      <tr> 
+        <td>WROC</td>
+        <td>07/18/2002</td>
+        <td>Submitted</td>
+        <td>2</td>
+
+      </tr>
+      <tr> 
+        <td>WPPP</td>
+        <td>10/28/2002</td>
+        <td>In-Progress</td>
+        <td>10</td>
+      </tr>
+
+      <tr> 
+        <td>WRRR</td>
+        <td>10/28/2002</td>
+        <td>Submitted</td>
+        <td>5</td>
+      </tr>
+      <tr> 
+        <td>WTTT</td>
+
+        <td>10/08/2002</td>
+        <td>In-Progress</td>
+        <td>0</td>
+      </tr>
+      <tr> 
+        <td>WIL0</td>
+        <td>10/18/2001</td>
+
+        <td>Submitted</td>
+        <td>7</td>
+      </tr>
+      <tr> 
+        <td>KABC</td>
+        <td>04/18/2002</td>
+        <td>Submitted</td>
+
+        <td>0</td>
+      </tr>
+      <tr> 
+        <td>KCBS</td>
+        <td>10/05/2001</td>
+        <td>Lockdown</td>
+        <td>2</td>
+
+      </tr>
+      <tr> 
+        <td>WFLA</td>
+        <td>10/18/2002</td>
+        <td>Submitted</td>
+        <td>1</td>
+      </tr>
+
+      <tr> 
+        <td>WTSP</td>
+        <td>10/19/2002</td>
+        <td>In-Progress</td>
+        <td>0</td>
+      </tr>
+      <tr> 
+        <td>WROC</td>
+
+        <td>12/18/2002</td>
+        <td>Submitted</td>
+        <td>2</td>
+      </tr>
+      <tr> 
+        <td>WPPP</td>
+        <td>12/28/2002</td>
+
+        <td>In-Progress</td>
+        <td>8</td>
+      </tr>
+      <tr> 
+        <td>WRRR</td>
+        <td>12/20/2002</td>
+        <td>Submitted</td>
+
+        <td>5</td>
+      </tr>
+      <tr> 
+        <td>WTTT</td>
+        <td>12/11/2002</td>
+        <td>In-Progress</td>
+        <td>0</td>
+
+      </tr>
+      <tr> 
+        <td>W0VB</td>
+        <td>01/18/2003</td>
+        <td>Submitted</td>
+        <td>17</td>
+      </tr>
+
+      <tr> 
+        <td>KABC</td>
+        <td>12/17/2002</td>
+        <td>Submitted</td>
+        <td>20</td>
+      </tr>
+      <tr> 
+        <td>KCBS</td>
+
+        <td>12/16/2002</td>
+        <td>Lockdown</td>
+        <td>2</td>
+      </tr>
+      <tr> 
+        <td>WFLA</td>
+        <td>12/18/2002</td>
+
+        <td>Submitted</td>
+        <td>1</td>
+      </tr>
+      <tr> 
+        <td>WTSP</td>
+        <td>12/18/2002</td>
+        <td>In-Progress</td>
+
+        <td>0</td>
+      </tr>
+      <tr> 
+        <td>WROC</td>
+        <td>12/19/2002</td>
+        <td>Submitted</td>
+        <td>2</td>
+
+      </tr>
+      <tr> 
+        <td>WPPP</td>
+        <td>12/06/2002</td>
+        <td>In-Progress</td>
+        <td>0</td>
+      </tr>
+
+      <tr> 
+        <td>WRRR</td>
+        <td>12/28/2002</td>
+        <td>Submitted</td>
+        <td>5</td>
+      </tr>
+      <tr> 
+        <td>WTTT</td>
+
+        <td>12/30/2002</td>
+        <td>In-Progress</td>
+        <td>0</td>
+      </tr>
+      <tr> 
+        <td>UMBA</td>
+        <td>12/26/2002</td>
+
+        <td>Submitted</td>
+        <td>7</td>
+      </tr>
+      <tr> 
+        <td>KABC</td>
+        <td>12/18/2002</td>
+        <td>Submitted</td>
+
+        <td>0</td>
+      </tr>
+      <tr> 
+        <td>KCBS</td>
+        <td>12/29/2002</td>
+        <td>Lockdown</td>
+        <td>2</td>
+
+      </tr>
+      <tr> 
+        <td>WFLA</td>
+        <td>12/22/2002</td>
+        <td>Submitted</td>
+        <td>1</td>
+      </tr>
+
+      <tr> 
+        <td>WTSP</td>
+        <td>12/18/2001</td>
+        <td>In-Progress</td>
+        <td>9</td>
+      </tr>
+      <tr> 
+        <td>WROC</td>
+
+        <td>11/19/2001</td>
+        <td>Submitted</td>
+        <td>2</td>
+      </tr>
+      <tr> 
+        <td>WPPP</td>
+        <td>11/20/2001</td>
+
+        <td>In-Progress</td>
+        <td>0</td>
+      </tr>
+      <tr> 
+        <td>WRRR</td>
+        <td>10/19/2001</td>
+        <td>Submitted</td>
+
+        <td>5</td>
+      </tr>
+      <tr> 
+        <td>WTTT</td>
+        <td>11/29/2001</td>
+        <td>In-Progress</td>
+        <td>8</td>
+
+      </tr>
+      <tr> 
+        <td>KPLT</td>
+        <td>11/19/2001</td>
+        <td>Submitted</td>
+        <td>7</td>
+      </tr>
+
+      <tr> 
+        <td>KABC</td>
+        <td>11/19/2001</td>
+        <td>Submitted</td>
+        <td>13</td>
+      </tr>
+      <tr> 
+        <td>KBRE</td>
+
+        <td>11/19/2001</td>
+        <td>Lockdown</td>
+        <td>2</td>
+      </tr>
+      <tr> 
+        <td>WFLA</td>
+        <td>11/19/2001</td>
+
+        <td>Submitted</td>
+        <td>1</td>
+      </tr>
+      <tr> 
+        <td>WTSP</td>
+        <td>02/19/2003</td>
+        <td>In-Progress</td>
+
+        <td>0</td>
+      </tr>
+      <tr> 
+        <td>WROC</td>
+        <td>02/17/2003</td>
+        <td>Submitted</td>
+        <td>2</td>
+
+      </tr>
+      <tr> 
+        <td>WPPP</td>
+        <td>02/16/2003</td>
+        <td>In-Progress</td>
+        <td>16</td>
+      </tr>
+
+      <tr> 
+        <td>WRRR</td>
+        <td>02/29/2003</td>
+        <td>Submitted</td>
+        <td>5</td>
+      </tr>
+      <tr> 
+        <td>WTTT</td>
+
+        <td>03/19/2003</td>
+        <td>In-Progress</td>
+        <td>19</td>
+      </tr>
+      <tr> 
+        <td>KLTR</td>
+        <td>02/10/2003</td>
+
+        <td>Submitted</td>
+        <td>7</td>
+      </tr>
+      <tr> 
+        <td>KABC</td>
+        <td>04/05/2003</td>
+        <td>Submitted</td>
+
+        <td>16</td>
+      </tr>
+      <tr> 
+        <td>KCBS</td>
+        <td>02/19/2003</td>
+        <td>Lockdown</td>
+        <td>2</td>
+
+      </tr>
+      <tr> 
+        <td>WFLA</td>
+        <td>02/16/2003</td>
+        <td>Submitted</td>
+        <td>1</td>
+      </tr>
+
+      <tr> 
+        <td>WTSP</td>
+        <td>02/13/2003</td>
+        <td>In-Progress</td>
+        <td>5</td>
+      </tr>
+      <tr> 
+        <td>WROC</td>
+
+        <td>02/14/2003</td>
+        <td>Submitted</td>
+        <td>2</td>
+      </tr>
+      <tr> 
+        <td>WPPP</td>
+        <td>03/19/2003</td>
+
+        <td>In-Progress</td>
+        <td>0</td>
+      </tr>
+      <tr> 
+        <td>WRRR</td>
+        <td>02/19/2002</td>
+        <td>Submitted</td>
+
+        <td>5</td>
+      </tr>
+      <tr> 
+        <td>WTTT</td>
+        <td>02/19/2002</td>
+        <td>In-Progress</td>
+        <td>0</td>
+
+      </tr>
+      <tr> 
+        <td>WYYD</td>
+        <td>02/11/2002</td>
+        <td>Submitted</td>
+        <td>7</td>
+      </tr>
+
+      <tr> 
+        <td>KABC</td>
+        <td>02/19/2002</td>
+        <td>Submitted</td>
+        <td>11</td>
+      </tr>
+      <tr> 
+        <td>KCBS</td>
+
+        <td>02/19/2002</td>
+        <td>Lockdown</td>
+        <td>12</td>
+      </tr>
+      <tr> 
+        <td>WFLA</td>
+        <td>05/19/2002</td>
+
+        <td>Submitted</td>
+        <td>1</td>
+      </tr>
+      <tr> 
+        <td>WTSP</td>
+        <td>02/20/2002</td>
+        <td>In-Progress</td>
+
+        <td>0</td>
+      </tr>
+      <tr> 
+        <td>WROC</td>
+        <td>05/20/2002</td>
+        <td>Submitted</td>
+        <td>2</td>
+
+      </tr>
+      <tr> 
+        <td>WPPP</td>
+        <td>02/19/2003</td>
+        <td>In-Progress</td>
+        <td>13</td>
+      </tr>
+
+      <tr> 
+        <td>WRRR</td>
+        <td>02/19/2002</td>
+        <td>Submitted</td>
+        <td>5</td>
+      </tr>
+      <tr> 
+        <td>WTTT</td>
+
+        <td>01/22/2002</td>
+        <td>In-Progress</td>
+        <td>16</td>
+      </tr>
+      <tr> 
+        <td>WOMN</td>
+        <td>01/22/2002</td>
+
+        <td>Submitted</td>
+        <td>7</td>
+      </tr>
+      <tr> 
+        <td>KABC</td>
+        <td>01/22/2002</td>
+        <td>Submitted</td>
+
+        <td>14</td>
+      </tr>
+      <tr> 
+        <td>KCBS</td>
+        <td>01/22/2002</td>
+        <td>Lockdown</td>
+        <td>2</td>
+
+      </tr>
+      <tr> 
+        <td>WFLA</td>
+        <td>01/22/2002</td>
+        <td>Submitted</td>
+        <td>1</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</div>
+</div>
+</form>
+
+<p class="noprint"><a href="nonscroll-table-header.html">IE5+ Supported Cross-Browser Version</a></p>
+</div> <!-- end container -->
+</body>
+</html>
+

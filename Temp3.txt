@@ -1,0 +1,49 @@
+SELECT     TOP (100) PERCENT 
+dbo.tbl_CCS_Data.Call_Start_Time AS Call_Start_Date, 
+dbo.tbl_Sales_Teams.PKUsers AS Amcat_Login, 
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_Sales_Teams.Login AS MOM_Login, 
+
+SUM(CASE WHEN (Call_Category = 'Inbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) 
+THEN 1 
+ELSE 0 END) AS IB_Calls_Handled, 
+
+SUM(CASE WHEN (Call_Category = 'Inbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12)) 
+THEN Call_Talk_Time 
+ELSE 0 END) AS IB_Talk_Time, 
+
+SUM(CASE WHEN (Call_Category = 'Inbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12) AND (CallResultDescription LIKE 'Pres%' OR AgentExitCode = 34)) 
+THEN 1 ELSE 0 END) AS IB_Pres, 
+
+SUM(CASE WHEN (Call_Category = 'Inbound' AND AgentExitCode NOT IN (1, 2, 3, 4, 6, 9, 11, 12, 34) AND CallResultDescription LIKE 'Sale%') 
+THEN 1 ELSE 0 END) AS IB_Sales, 
+
+SUM(CASE WHEN AgentExitCode IN (11, 12) THEN 1 ELSE 0 END) AS IB_Abandoned, 
+SUM(CASE WHEN AgentExitCode IN (69) THEN 1 ELSE 0 END) AS Coin_Info, 
+SUM(CASE WHEN AgentExitCode IN (73) THEN 1 ELSE 0 END) AS Hang_Up, 
+SUM(CASE WHEN AgentExitCode IN (91) THEN 1 ELSE 0 END) AS Five_for_$48, 
+SUM(CASE WHEN AgentExitCode IN (78, 81, 82, 104) THEN 1 ELSE 0 END) AS Junk, 
+SUM(CASE WHEN AgentExitCode IN (105) THEN 1 ELSE 0 END) AS Relationship, 
+SUM(CASE WHEN AgentExitCode IN (106) THEN 1 ELSE 0 END) AS Caller_VM,
+
+dbo.tbl_Sales_Teams.Sales_Manager, 
+
+dbo.tbl_Sales_Teams.Site
+
+FROM         dbo.tbl_CCS_Data 
+INNER JOIN   dbo.tbl_Sales_Teams 
+	ON dbo.tbl_CCS_Data.AgentFK = dbo.tbl_Sales_Teams.PKUsers 
+LEFT OUTER JOIN dbo.tbl_Lookup_Call_Campaign 
+	ON dbo.tbl_CCS_Data.PoolFK = dbo.tbl_Lookup_Call_Campaign.Campaign_ID 
+LEFT OUTER JOIN dbo.tbl_Lookup_Call_Type 
+	ON dbo.tbl_CCS_Data.CallType = dbo.tbl_Lookup_Call_Type.Call_Type_ID 
+LEFT OUTER JOIN dbo.tbl_Lookup_Call_Disposition 
+	ON dbo.tbl_CCS_Data.AgentExitCode = dbo.tbl_Lookup_Call_Disposition.CallResultCode
+
+WHERE CallType = 3
+AND PoolFK=-3
+
+GROUP BY dbo.tbl_CCS_Data.Call_Start_Time, dbo.tbl_Sales_Teams.Name, dbo.tbl_Sales_Teams.Sales_Manager, dbo.tbl_Sales_Teams.Site, 
+                      dbo.tbl_Sales_Teams.PKUsers, dbo.tbl_Sales_Teams.Login
+HAVING      (dbo.tbl_Sales_Teams.Site <> '')
+ORDER BY Call_Start_Date DESC

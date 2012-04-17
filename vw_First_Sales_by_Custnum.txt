@@ -1,0 +1,23 @@
+SELECT     TOP 100 PERCENT 
+dbo.vw_First_Sales_Entry_Order_Date.entrydate, 
+dbo.vw_First_Sales_Entry_Order_Date.custnum, 
+dbo.vw_First_Sales_Entry_Order_Date.firstname, 
+dbo.vw_First_Sales_Entry_Order_Date.lastname, 
+dbo.vw_First_Sales_Entry_Order_Date.Order_Count, 
+dbo.vw_First_Sales_Entry_Order_Date.First_Order_Date, 
+dbo.vw_First_Sales_Entry_Order_Date.orig_ad, 
+dbo.vw_Sales_Orders_Shipped.Order_ID, 
+dbo.vw_First_Sales_Entry_Order_Date.tb_merch AS Initial_Billed_Value, 
+dbo.vw_Sales_Orders_Shipped.Ttl_Shipped_Value AS Initial_Ttl_Shipped_Value,
+dbo.vw_Sales_Orders_Shipped.Bullion_Sale AS Initial_Bullion_Sale, 
+dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale AS Initial_Non_Bullion_Sale, 
+(CASE 
+WHEN dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale = 0 THEN 'B1' 
+WHEN dbo.vw_Sales_Orders_Shipped.Bullion_Sale = 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 THEN 'B2' 
+WHEN dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 THEN 'B3' 
+WHEN dbo.vw_Sales_Orders_Shipped.Ttl_Shipped_Value IS NULL AND dbo.vw_First_Sales_Entry_Order_Date.tb_merch >0 THEN 'B4' 
+WHEN dbo.vw_Sales_Orders_Shipped.Ttl_Shipped_Value IS NULL AND dbo.vw_First_Sales_Entry_Order_Date.tb_merch =0 THEN 'GR' 
+ELSE 'BB' END) AS Initial_Buyer_Type
+FROM         dbo.vw_First_Sales_Entry_Order_Date 
+LEFT OUTER JOIN    dbo.vw_Sales_Orders_Shipped ON dbo.vw_First_Sales_Entry_Order_Date.[order] = dbo.vw_Sales_Orders_Shipped.Order_ID
+ORDER BY dbo.vw_First_Sales_Entry_Order_Date.entrydate

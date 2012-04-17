@@ -1,0 +1,9 @@
+-- USRC_FILESERVER
+use [Inventory]
+exec sp_droppullsubscription @publisher = N'USRC_SIMSSERVER', @publisher_db = N'SIMS', @publication = N'SIMS'
+GO
+
+-- USRC_SIMSSERVER
+use [SIMS]
+exec sp_dropsubscription @publication =N'SIMS', @subscriber = N'USRC_FILESERVER', @article = N'all', @destination_db = N'Inventory'
+

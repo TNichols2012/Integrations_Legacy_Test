@@ -1,0 +1,44 @@
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_Buyback'
+		)
+DROP TABLE tbl_Buyback
+GO
+
+SELECT *
+INTO tbl_Buyback
+FROM vw_Buyback
+GO
+
+CREATE CLUSTERED INDEX idx_tbl_Buyback_Sales_ID
+ON tbl_Buyback (Sales_ID)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Buyback_Cust_ID
+ON tbl_Buyback (Cust_ID)
+GO
+
+
+
+
+IF EXISTS	(
+		SELECT TABLE_NAME 
+		FROM Information_Schema.Tables
+		WHERE Table_Name='tbl_Buyback_Detail'
+		)
+DROP TABLE tbl_Buyback_Detail
+GO
+
+SELECT *
+INTO tbl_Buyback_Detail
+FROM vw_Buyback_Detail
+GO
+
+CREATE CLUSTERED INDEX idx_tbl_Buyback_Detail_Sales_ID
+ON tbl_Buyback_Detail (Sales_ID)
+GO
+
+CREATE NONCLUSTERED INDEX idx_tbl_Buyback_Detail_Cust_ID
+ON tbl_Buyback_Detail (Cust_ID)
+GO

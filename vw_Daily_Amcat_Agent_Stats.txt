@@ -1,0 +1,9 @@
+SELECT     TOP (100) PERCENT 
+Stat_Date, 
+UsersFK, 
+Name, 
+SUM(Pause_Seconds) AS Pause_Time, 
+SUM(Wait_Seconds) AS Wait_Time
+FROM         dbo.Results_Agent_Stats
+GROUP BY Stat_Date, UsersFK, Name
+ORDER BY Stat_Date DESC, Name

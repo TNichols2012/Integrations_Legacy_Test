@@ -1,0 +1,192 @@
+1) Prep Voicemail
+
+DROP TABLE [Results_VoiceMail];
+
+CREATE TABLE [Results_VoiceMail] (
+[PKMessage] int NOT NULL, 
+[UserFK] int NOT NULL, 
+[IsNew] bit NOT NULL, 
+[VoiceMailFileName] nvarchar (1024) NULL, 
+[DateTimeMessageCreated] datetime NOT NULL, 
+[Notes] ntext NULL, 
+[CallerID] nvarchar (32) NULL, 
+[ProjectFK] int NOT NULL, 
+[IsDeleted] bit NOT NULL )
+
+
+2) Prep Last Disposition
+
+DROP TABLE Results_Last_OB_Disposition;
+
+CREATE TABLE [Results_Last_OB_Disposition] (
+[ContactNumber] varchar (32) NULL, 
+[Last_Contact_Date] datetime NULL, 
+[AgentExitCode] int NULL, 
+[CallType] int NULL, 
+[Talk_Time_Seconds] int NULL )
+
+
+3) Prep Last Contact
+
+DROP TABLE Results_Last_OB_Contact;
+
+CREATE TABLE [Results_Last_OB_Contact] (
+[ContactNumber] varchar (32) NULL, 
+[Last_Contact_Date] datetime NULL )
+
+4) Drop Voicemail
+
+DROP TABLE `Voicemail_Data` ;
+GO
+
+DROP TABLE `Voicemail_Data_AU` ;
+GO
+
+DROP TABLE `Voicemail_Data_BM` ;
+GO
+
+DROP TABLE `Voicemail_Data_C3` ;
+GO
+
+5) Create Voicemail
+
+CREATE TABLE `Voicemail_Data` (
+`Site` VarChar (50) , 
+`Sales_Manager` VarChar (50) , 
+`Sales_Agent` VarChar (50) , 
+`VoiceMail_Created` DateTime , `Listened` VarChar (5) , 
+`Called_Back` VarChar (5) , 
+`Elapsed_Time` Long , 
+`Caller_Phone` VarChar (32) , 
+`Customer_ID` VarChar (50) , 
+`First_Name` VarChar (15) , 
+`Last_Name` VarChar (20) , 
+`Last_OB_Contact` DateTime,
+`Talk_Time_Seconds` Float , 
+`Last_Contact_Disposition` VarChar (55) ,
+`Report_Time` DateTime ,
+`File_Location` VarChar (255)    )
+GO
+
+CREATE TABLE `Voicemail_Data_AU` (
+`Site` VarChar (50) , 
+`Sales_Manager` VarChar (50) , 
+`Sales_Agent` VarChar (50) , 
+`VoiceMail_Created` DateTime , `Listened` VarChar (5) , 
+`Called_Back` VarChar (5) , 
+`Elapsed_Time` Long , 
+`Caller_Phone` VarChar (32) , 
+`Customer_ID` VarChar (50) , 
+`First_Name` VarChar (15) , 
+`Last_Name` VarChar (20) , 
+`Last_OB_Contact` DateTime,
+`Talk_Time_Seconds` Float , 
+`Last_Contact_Disposition` VarChar (55) ,
+`Report_Time` DateTime ,
+`File_Location` VarChar (255)    )
+GO
+
+CREATE TABLE `Voicemail_Data_BM` (
+`Site` VarChar (50) , 
+`Sales_Manager` VarChar (50) , 
+`Sales_Agent` VarChar (50) , 
+`VoiceMail_Created` DateTime , `Listened` VarChar (5) , 
+`Called_Back` VarChar (5) , 
+`Elapsed_Time` Long , 
+`Caller_Phone` VarChar (32) , 
+`Customer_ID` VarChar (50) , 
+`First_Name` VarChar (15) , 
+`Last_Name` VarChar (20) , 
+`Last_OB_Contact` DateTime,
+`Talk_Time_Seconds` Float , 
+`Last_Contact_Disposition` VarChar (55) ,
+`Report_Time` DateTime ,
+`File_Location` VarChar (255)    )
+GO
+
+CREATE TABLE `Voicemail_Data_C3` (
+`Site` VarChar (50) , 
+`Sales_Manager` VarChar (50) , 
+`Sales_Agent` VarChar (50) , 
+`VoiceMail_Created` DateTime , `Listened` VarChar (5) , 
+`Called_Back` VarChar (5) , 
+`Elapsed_Time` Long , 
+`Caller_Phone` VarChar (32) , 
+`Customer_ID` VarChar (50) , 
+`First_Name` VarChar (15) , 
+`Last_Name` VarChar (20) , 
+`Last_OB_Contact` DateTime,
+`Talk_Time_Seconds` Float , 
+`Last_Contact_Disposition` VarChar (55) ,
+`Report_Time` DateTime ,
+`File_Location` VarChar (255)    )
+GO
+
+
+6) Extract Last Disposition
+
+SELECT     
+ContactNumber, 
+MAX(CallStartTime) AS Last_Contact_Date,
+AgentExitCode,
+CallType,
+Case When CallStartTime < CallEndTime AND CallStartTime > '1/1/1900' THEN DateDiff(ss, CallStartTime, CallEndTime)ELSE 0 End  AS Talk_Time_Seconds
+FROM        usrc_amcatsql.CallCenterStats.dbo.CallResults
+WHERE CallType <>3
+AND PKCallResults >350000
+GROUP BY ContactNumber, AgentExitCode, CallType, CallStartTime, CallEndTime
+
+7) Extract Last Contact Date
+
+SELECT     
+ContactNumber, 
+MAX(CallStartTime) AS Last_Contact_Date--INTO Results_Last_OB_Contact
+FROM        usrc_amcatsql.CallCenterStats.dbo.CallResultsWHERE CallType <>3
+GROUP BY ContactNumber
+
+
+8) Export Voicemail Data
+
+SELECT     TOP 100 PERCENT 
+dbo.tbl_Sales_Teams.Site AS Site, 
+dbo.tbl_Sales_Teams.Sales_Manager, 
+dbo.tbl_Sales_Teams.Name AS Sales_Agent, 
+VM1.DateTimeMessageCreated AS VoiceMail_Created, 
+(CASE WHEN VM1.isNew = 0 THEN 'Yes' WHEN VM1.isNew = 1 THEN 'No' ELSE 'N/A' END)  AS Listened, 
+(CASE WHEN vwLOC.Last_Contact_Date IS NOT NULL AND  vwLOC.Last_Contact_Date > VM1.DateTimeMessageCreated THEN 'Yes' ELSE 'No' END) AS Called_Back, 
+(CASE WHEN vwLOC.Last_Contact_Date IS NULL OR vwLOC.Last_Contact_Date < VM1.DateTimeMessageCreated THEN (DATEDIFF(ss, VM1.DateTimeMessageCreated, GETDATE())) ELSE 0 END)  AS Elapsed_Time, 
+VM1.CallerID AS Caller_Phone, 
+dbo.Results_MOM_CUST.custnum AS Customer_ID, 
+dbo.Results_MOM_CUST.firstname AS Contact_First_Name, 
+dbo.Results_MOM_CUST.lastname AS Contact_Last_Name, 
+vwLOC.Last_Contact_Date AS Last_Outbound_Contact, 
+vwLOC.Talk_Time_Seconds, 
+vwLOC.Last_Disposition AS Last_Contact_Disposition,
+GetDate() AS Report_Time,
+VM1.VoiceMailFileName AS File_Location
+FROM        dbo.Results_VoiceMail VM1 
+LEFT OUTER JOIN dbo.vw_Last_OB_Disposition vwLOC 
+ON VM1.CallerID = vwLOC.ContactNumber 
+LEFT OUTER JOIN dbo.tbl_Sales_Teams 
+ON VM1.UserFK = dbo.tbl_Sales_Teams.PKUsers 
+LEFT OUTER JOIN dbo.Results_MOM_CUST 
+ON VM1.CallerID = dbo.Results_MOM_CUST.Contact_Phone
+AND LEN(RTRIM(dbo.Results_MOM_CUST.firstname))>0
+WHERE     (dbo.tbl_Sales_Teams.Sales_Manager IS NOT NULL) 
+AND (dbo.tbl_Sales_Teams.Sales_Manager <> '') 
+AND (VM1.DateTimeMessageCreated >= GETDATE() - 31)
+AND LEFT(VM1.CallerID, 3) <> 800
+AND LEFT(VM1.CallerID, 3) <> 866
+AND LEFT(VM1.CallerID, 3) <> 877
+AND LEFT(VM1.CallerID, 3) <> 888
+ORDER BY VM1.DateTimeMessageCreated DESC
+
+
+vw_Last_OB_Disposition
+
+SELECT     dbo.Results_Last_OB_Contact.ContactNumber, dbo.Results_Last_OB_Contact.Last_Contact_Date, 
+                      dbo.Results_Last_OB_Disposition.Talk_Time_Seconds, dbo.tbl_Lookup_Call_Disposition.CallResultDescription AS Last_Disposition
+FROM         dbo.Results_Last_OB_Contact INNER JOIN
+                      dbo.Results_Last_OB_Disposition ON dbo.Results_Last_OB_Contact.ContactNumber = dbo.Results_Last_OB_Disposition.ContactNumber AND 
+                      dbo.Results_Last_OB_Contact.Last_Contact_Date = dbo.Results_Last_OB_Disposition.Last_Contact_Date INNER JOIN
+                      dbo.tbl_Lookup_Call_Disposition ON dbo.Results_Last_OB_Disposition.AgentExitCode = dbo.tbl_Lookup_Call_Disposition.CallResultCode

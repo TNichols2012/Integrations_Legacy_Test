@@ -1,0 +1,174 @@
+Sub USRCBR_Daily_Sales_Rep_Summary_Condenser()
+
+ Application.DisplayAlerts = False
+
+'Refresh Pivots
+    Sheets("Pivot_Ref").Select
+    ActiveSheet.PivotTables("Agent_Pivot").PivotCache.Refresh
+
+'Save the template to distributed filename.
+    ActiveWorkbook.Save
+ 
+ ChDir "\\Usrc_fileserver\SQL_Server\Client_USMR\Reports"
+    ActiveWorkbook.SaveAs Filename:= _
+        "\\Usrc_fileserver\SQL_Server\Client_USMR\Reports\1504_USRCBR_Daily_Sales_Rep_Summary_Report.xls", _
+        FileFormat:=xlNormal, Password:="", WriteResPassword:="", _
+        ReadOnlyRecommended:=False, CreateBackup:=False
+
+
+    Sheets("Pivot_Ref").Select
+    int_Agent_Count = Range("B2").Value2
+    int_Count = 0
+    int_Agent_Start = 4
+    
+    'MsgBox "Loaded Count: " & int_Agent_Count
+    
+    While int_Count < int_Agent_Count
+            int_Count = int_Count + 1
+            int_Agent_Start = int_Agent_Start + 1
+            'MsgBox "Agent # " & int_Agent_Start
+            
+            Sheets("Pivot_Ref").Select
+            str_Agent_Report = Range("A" & int_Agent_Start).Text
+            
+            'MsgBox "Looped: " & int_Count & " " & str_Agent_Report, vbInformation
+            
+            Sheets("Template").Select
+            Sheets("Template").Copy After:=Sheets(1)
+            Sheets("Template (2)").Select
+            Sheets("Template (2)").Name = str_Agent_Report
+       
+            'MsgBox "Completed: " & str_Agent_Report
+        
+            Sheets(str_Agent_Report).Select
+            Range("A7").Select
+            ActiveCell.FormulaR1C1 = str_Agent_Report
+            Call Flatten_Page
+            
+       Wend
+    
+    'Delete Data
+    Sheets("Template").Select
+    ActiveWindow.SelectedSheets.Delete
+
+    Sheets("Data").Select
+    ActiveWindow.SelectedSheets.Delete
+
+    Sheets("Data_LB_Leads").Select
+    ActiveWindow.SelectedSheets.Delete
+
+    Sheets("Data_LB_Calls").Select
+    ActiveWindow.SelectedSheets.Delete
+
+    Sheets("Data_LB_Calls_2min").Select
+    ActiveWindow.SelectedSheets.Delete
+
+    Sheets("SIMS_Data").Select
+    ActiveWindow.SelectedSheets.Delete
+
+    Sheets("Alias").Select
+    ActiveWindow.SelectedSheets.Delete
+
+    Sheets("Pivot_Ref").Select
+    ActiveWindow.SelectedSheets.Delete
+
+    Sheets(str_Agent_Report).Select
+    Range("A1").Select
+
+ChDir "\\Usrc_fileserver\SQL_Server\Client_USMR\Reports"
+    ActiveWorkbook.SaveAs Filename:= _
+        "\\Usrc_fileserver\SQL_Server\Client_USMR\Reports\1504_USRCBR_Daily_Sales_Rep_Summary_Report.xls", _
+        FileFormat:=xlNormal, Password:="", WriteResPassword:="", _
+        ReadOnlyRecommended:=False, CreateBackup:=False
+
+
+ Application.DisplayAlerts = True
+
+End Sub
+
+Sub Flatten_Page()
+    'Flattens Sheet
+    Cells.Select
+    Application.CutCopyMode = False
+    Selection.Copy
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+    'Locks Sheet
+    ActiveSheet.Protect DrawingObjects:=True, Contents:=True, Scenarios:=True _
+        , AllowFiltering:=True
+    Range("B1").Select
+
+End Sub
+
+Sub Fill_Borders()
+
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+        .ColorIndex = xlAutomatic
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+        .ColorIndex = xlAutomatic
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+        .ColorIndex = xlAutomatic
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+        .ColorIndex = xlAutomatic
+    End With
+    With Selection.Borders(xlInsideVertical)
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+        .ColorIndex = xlAutomatic
+    End With
+    With Selection.Borders(xlInsideHorizontal)
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+        .ColorIndex = xlAutomatic
+    End With
+
+End Sub
+
+
+Sub Print_Scheduled_AU()
+
+'From Tnichols SQL Admin account
+'Application.ActivePrinter = "\\USRCPRINTSRVR\SHARP AR-M450 PCL6 on Ne06:"
+ '   ActiveWorkbook.PrintOut Copies:=1, ActivePrinter:= _
+  '      "\\USRCPRINTSRVR\SHARP AR-M450 PCL6 on Ne06:", Collate:=True
+        
+'From Fileserver SQL Admin account
+    'Application.ActivePrinter = "\\USMONEY\SHARP AR-M450 PCL6 on Ne06:"
+    'ActiveWindow.SelectedSheets.PrintOut Copies:=1, ActivePrinter:= _
+    '    "\\USMONEY\SHARP AR-M450 PCL6 on Ne06:", Collate:=True
+    
+    Application.ActivePrinter = "\\USMONEY\SHARP AR-M450 PCL6 on Ne01:"
+    ActiveWorkbook.PrintOut Copies:=1, ActivePrinter:= _
+        "\\USMONEY\SHARP AR-M450 PCL6 on Ne01:", Collate:=True
+    
+End Sub
+
+Sub Print_Scheduled_AU_Fileserver()
+    
+    Application.ActivePrinter = "\\USRCPRINTSRVR\SHARP AR-M450 PCL6 on Ne08:"
+    ActiveWorkbook.PrintOut Copies:=1, ActivePrinter:= _
+        "\\USRCPRINTSRVR\SHARP AR-M450 PCL6 on Ne08:", Collate:=True
+
+End Sub
+
+Sub Print_Scheduled_BM_Fileserver()
+    
+    Application.ActivePrinter = "\\BEAUMONT\LANIER LD024c PCL 5c on Ne07:"
+    ActiveWorkbook.PrintOut Copies:=1, ActivePrinter:= _
+        "\\BEAUMONT\LANIER LD024c PCL 5c on Ne07:", Collate:=True
+
+End Sub
+
+
+

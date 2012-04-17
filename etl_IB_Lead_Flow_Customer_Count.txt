@@ -1,0 +1,523 @@
+SELECT 
+"Metric" = 'All Media Gold Report Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'GR'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'All Media Bullion Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B1'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'All Media Bump Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B2'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'All Media Bullion and Bump Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B3'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'DMT Gold Report Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'GR'
+AND Campaign = 'DMT'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'DMT Bullion Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B1'
+AND Campaign = 'DMT'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'DMT Bump Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B2'
+AND Campaign = 'DMT'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'DMT Bullion and Bump Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B3'
+AND Campaign = 'DMT'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'Magazine Gold Report Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'GR'
+AND Campaign = 'Magazine'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'Magazine Bullion Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B1'
+AND Campaign = 'Magazine'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'Magazine Bump Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B2'
+AND Campaign = 'Magazine'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'Magazine Bullion and Bump Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B3'
+AND Campaign = 'Magazine'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'Newspaper Gold Report Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'GR'
+AND Campaign = 'Newspaper'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'Newspaper Bullion Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B1'
+AND Campaign = 'Newspaper'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'Newspaper Bump Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B2'
+AND Campaign = 'Newspaper'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'Newspaper Bullion and Bump Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B3'
+AND Campaign = 'Newspaper'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'TV Gold Report Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'GR'
+AND Campaign = 'TV'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'TV Bullion Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B1'
+AND Campaign = 'TV'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'TV Bump Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B2'
+AND Campaign = 'TV'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'TV Bullion and Bump Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B3'
+AND Campaign = 'TV'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'Spot TV Gold Report Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'GR'
+AND Campaign = 'Spot TV'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'Spot TV Bullion Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B1'
+AND Campaign = 'Spot TV'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'Spot TV Bump Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B2'
+AND Campaign = 'Spot TV'
+
+UNION ALL
+
+SELECT 
+"Metric" = 'Spot TV Bullion and Bump Customer Count',
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_13 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_12 (GetDate()) THEN 1 ELSE 0 END) AS Month_13,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_12 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_11 (GetDate()) THEN 1 ELSE 0 END) AS Month_12,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_11 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_10 (GetDate()) THEN 1 ELSE 0 END) AS Month_11,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_10 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_09 (GetDate()) THEN 1 ELSE 0 END) AS Month_10,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_09 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_08 (GetDate()) THEN 1 ELSE 0 END) AS Month_9,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_08 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_07 (GetDate()) THEN 1 ELSE 0 END) AS Month_8,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_07 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_06 (GetDate()) THEN 1 ELSE 0 END) AS Month_7,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_06 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_05 (GetDate()) THEN 1 ELSE 0 END) AS Month_6,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_05 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_04 (GetDate()) THEN 1 ELSE 0 END) AS Month_5,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_04 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_03 (GetDate()) THEN 1 ELSE 0 END) AS Month_4,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_03 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_02 (GetDate()) THEN 1 ELSE 0 END) AS Month_3,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_02 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_01 (GetDate()) THEN 1 ELSE 0 END) AS Month_2,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_01 (GetDate()) AND Entry_Date < dbo.Get_TheMonth_Previous_00 (GetDate()) THEN 1 ELSE 0 END) AS Month_1,
+SUM (CASE WHEN Entry_Date >= dbo.Get_TheMonth_Previous_00 (GetDate()) AND Entry_Date < dbo.Get_TheDate (GetDate()) THEN 1 ELSE 0 END) AS Month_0
+FROM dbo.tbl_Customer_Sales_Statistics
+WHERE Init_Buyer_Type = 'B3'
+AND Campaign = 'Spot TV'
+
+

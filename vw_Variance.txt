@@ -1,0 +1,118 @@
+
+--Original
+SELECT     ISNULL(vw_MOM_Inventory.Stock_ID, 'Not Entered') AS MOM_Stock_ID, ISNULL(dbo.vw_SIMS_Inventory.SIMS_Stock_Number, 'Not Entered') 
+                      AS SIMS_Stock_Number, ISNULL(vw_MOM_Inventory.Retail_Price, 0) AS MOM_Retail_Price, ISNULL(vw_MOM_Inventory.Units_On_Order, 0) 
+                      AS MOM_Units_On_Order, ISNULL(vw_MOM_Inventory.Units_In_Stock, 0) AS MOM_Units_In_Stock, ISNULL(vw_MOM_Inventory.Units_Committed, 0) 
+                      AS MOM_Units_Committed, ISNULL(vw_MOM_Inventory.Net_On_Shelf, 0) AS MOM_Net_On_Shelf, ISNULL(dbo.vw_SIMS_Inventory.SIMS_Retail_Price, 
+                      0) AS SIMS_Retail_Price, ISNULL(dbo.vw_SIMS_Inventory.Company_Stock, 0) AS SIMS_Company_Stock, 
+                      ISNULL(dbo.vw_SIMS_Inventory.Inventory_Stock, 0) AS SIMS_Inventory_Stock, ISNULL(dbo.vw_SIMS_Inventory.Set_Stock, 0) AS SIMS_Set_Stock, 
+                      ISNULL(dbo.vw_SIMS_Inventory.Quantity_On_Hand, 0) AS SIMS_Quantity_On_Hand, ISNULL(dbo.vw_SIMS_Inventory.Unconfirmed_Stock, 0) 
+                      AS SIMS_Unconfirmed_Stock, ISNULL(dbo.vw_SIMS_Inventory.Net_On_Shelf, 0) AS SIMS_Net_On_Shelf
+FROM         dbo.vw_SIMS_Inventory FULL OUTER JOIN
+                          (SELECT     number AS Stock_ID, [desc] AS Stock_Desc, price1 AS Retail_Price, onorder AS Units_On_Order, units AS Units_In_Stock, 
+                                                   commited AS Units_Committed, onorder + units + commited AS Net_On_Shelf
+                            FROM          dbo.Results_DBF_Stock) AS vw_MOM_Inventory ON dbo.vw_SIMS_Inventory.SIMS_Stock_Number = vw_MOM_Inventory.Stock_ID
+
+
+
+--Revision
+SELECT     ISNULL(vw_MOM_Inventory.Stock_ID, 'Not Entered') AS MOM_Stock_ID, ISNULL(dbo.vw_SIMS_Inventory.SIMS_Stock_Number, 'Not Entered') 
+                      AS SIMS_Stock_Number, ISNULL(vw_MOM_Inventory.Retail_Price, 0) AS MOM_Retail_Price, ISNULL(vw_MOM_Inventory.Units_On_Order, 0) 
+                      AS MOM_Units_On_Order, ISNULL(vw_MOM_Inventory.Units_In_Stock, 0) AS MOM_Units_In_Stock, ISNULL(vw_MOM_Inventory.Units_Committed, 0) 
+                      AS MOM_Units_Committed, ISNULL(vw_MOM_Inventory.Net_On_Shelf, 0) AS MOM_Net_On_Shelf, ISNULL(dbo.vw_SIMS_Inventory.SIMS_Retail_Price, 
+                      0) AS SIMS_Retail_Price, ISNULL(dbo.vw_SIMS_Inventory.Company_Stock, 0) AS SIMS_Company_Stock, 
+                      ISNULL(dbo.vw_SIMS_Inventory.Inventory_Stock, 0) AS SIMS_Inventory_Stock, ISNULL(dbo.vw_SIMS_Inventory.Set_Stock, 0) AS SIMS_Set_Stock, 
+                      ISNULL(dbo.vw_SIMS_Inventory.Quantity_On_Hand, 0) AS SIMS_Quantity_On_Hand, ISNULL(dbo.vw_SIMS_Inventory.Unconfirmed_Stock, 0) 
+                      AS SIMS_Unconfirmed_Stock, ISNULL(dbo.vw_SIMS_Inventory.Net_On_Shelf, 0) AS SIMS_Net_On_Shelf
+FROM         dbo.vw_SIMS_Inventory FULL OUTER JOIN
+                          (SELECT     dbo.Results_DBF_Stock.number AS Stock_ID, dbo.Results_DBF_Stock.[desc] AS Stock_Desc, 
+                                                   dbo.Results_DBF_Stock.price1 AS Retail_Price, dbo.Results_DBF_Stock.onorder AS Units_On_Order, 
+                                                   dbo.Results_DBF_Stock.units AS Units_In_Stock, dbo.Results_DBF_Stock.commited AS Units_Committed, 
+                                                   dbo.Results_DBF_Stock.onorder + dbo.Results_DBF_Stock.units + dbo.Results_DBF_Stock.commited AS Net_On_Shelf, 
+                                                   dbo.tbl_DBF_Stock.Stock_Type
+                            FROM          dbo.Results_DBF_Stock LEFT OUTER JOIN
+                                                   dbo.tbl_DBF_Stock ON dbo.Results_DBF_Stock.number = dbo.tbl_DBF_Stock.Stock_ID
+                            WHERE      (dbo.tbl_DBF_Stock.Stock_Type NOT IN ('Bullion', 'Gold_Report'))) AS vw_MOM_Inventory ON 
+                      dbo.vw_SIMS_Inventory.SIMS_Stock_Number = vw_MOM_Inventory.Stock_ID
+
+
+
+--- Current and correct ==> vw_Variance
+SELECT     ISNULL(vw_MOM_Inventory.Stock_ID, 'Not Entered') AS MOM_Stock_ID, ISNULL(dbo.vw_SIMS_Inventory.SIMS_Stock_Number, 'Not Entered') 
+                      AS SIMS_Stock_Number, ISNULL(vw_MOM_Inventory.Retail_Price, 0) AS MOM_Retail_Price, ISNULL(vw_MOM_Inventory.Units_On_Order, 0) 
+                      AS MOM_Units_On_Order, ISNULL(vw_MOM_Inventory.Units_In_Stock, 0) AS MOM_Units_In_Stock, ISNULL(vw_MOM_Inventory.Units_Committed, 0) 
+                      AS MOM_Units_Committed, ISNULL(vw_MOM_Inventory.Net_On_Shelf, 0) AS MOM_Net_On_Shelf, ISNULL(dbo.vw_SIMS_Inventory.SIMS_Retail_Price, 
+                      0) AS SIMS_Retail_Price, ISNULL(dbo.vw_SIMS_Inventory.Company_Stock, 0) AS SIMS_Company_Stock, 
+                      ISNULL(dbo.vw_SIMS_Inventory.Inventory_Stock, 0) AS SIMS_Inventory_Stock, ISNULL(dbo.vw_SIMS_Inventory.Set_Stock, 0) AS SIMS_Set_Stock, 
+                      ISNULL(dbo.vw_SIMS_Inventory.Quantity_On_Hand, 0) AS SIMS_Quantity_On_Hand, ISNULL(dbo.vw_SIMS_Inventory.Unconfirmed_Stock, 0) 
+                      AS SIMS_Unconfirmed_Stock, ISNULL(dbo.vw_SIMS_Inventory.Unconfirmed_Set_Stock, 0) AS SIMS_Unconfirmed_Set_Stock, 
+                      ISNULL(dbo.vw_SIMS_Inventory.Net_On_Shelf, 0) AS SIMS_Net_On_Shelf
+FROM         dbo.vw_SIMS_Inventory FULL OUTER JOIN
+                          (SELECT     dbo.Results_DBF_Stock.number AS Stock_ID, dbo.Results_DBF_Stock.[desc] AS Stock_Desc, 
+                                                   dbo.Results_DBF_Stock.price1 AS Retail_Price, dbo.Results_DBF_Stock.onorder AS Units_On_Order, 
+                                                   dbo.Results_DBF_Stock.units AS Units_In_Stock, dbo.Results_DBF_Stock.commited AS Units_Committed, 
+                                                   dbo.Results_DBF_Stock.onorder + dbo.Results_DBF_Stock.units + dbo.Results_DBF_Stock.commited AS Net_On_Shelf, 
+                                                   dbo.tbl_DBF_Stock.Stock_Type
+                            FROM          dbo.Results_DBF_Stock LEFT OUTER JOIN
+                                                   dbo.tbl_DBF_Stock ON dbo.Results_DBF_Stock.number = dbo.tbl_DBF_Stock.Stock_ID
+                            WHERE      (dbo.tbl_DBF_Stock.Stock_Type NOT IN ('Bullion', 'Gold_Report'))) AS vw_MOM_Inventory ON 
+                      dbo.vw_SIMS_Inventory.SIMS_Stock_Number = vw_MOM_Inventory.Stock_ID
+
+
+
+--==> vw_SIMS_Inve_Coin_Sets
+SELECT     dbo.tbl_Coin_Sets.Sets AS Coin_Set, dbo.tbl_Coin_Sets.Coins AS Stock_Number, 
+                      Inventory.dbo.MasterTable.CompanyStock + Inventory.dbo.MasterTable.InventoryStock AS Set_Stock
+FROM         Inventory.dbo.MasterTable INNER JOIN
+                      dbo.tbl_Coin_Sets ON Inventory.dbo.MasterTable.StockNumber = dbo.tbl_Coin_Sets.Sets
+WHERE     (Inventory.dbo.MasterTable.CompanyStock + Inventory.dbo.MasterTable.InventoryStock > 0) AND (Inventory.dbo.MasterTable.StockNumber LIKE '%Set')
+
+
+--== vw_SIMS_Inve_On_Hand
+SELECT     ID, StockNumber AS Stock_Number, StockDescription AS Stock_Desc, CompanyStock AS Company_Stock, InventoryStock AS Inventory_Stock, 
+                      CompanyStock + InventoryStock AS Quantity_On_Hand
+FROM         Inventory.dbo.MasterTable
+WHERE     (CompanyStock + InventoryStock > 0) AND (StockNumber NOT LIKE '%Set')
+
+
+--==> vw_Inve_UnConfirmed
+SELECT     TOP (100) PERCENT ID, Object AS Stock_Desc, SUM(Quantity) AS Unconfirmed_Stock
+FROM         Inventory.dbo.TransactionTable
+WHERE     (Object NOT LIKE '%Set')
+GROUP BY Object, Action, Confirmed, ID, Released
+
+--==> vw_SIMS_Inve_UnConfirmed_Sets
+SELECT     TOP (100) PERCENT Inventory.dbo.TransactionTable.ID, Inventory.dbo.MasterTable.StockNumber AS Coin_Set, 
+                      Inventory.dbo.TransactionTable.Object AS Stock_Desc, dbo.tbl_Coin_Sets.Coins AS Stock_Number, SUM(Inventory.dbo.TransactionTable.Quantity) 
+                      AS UnConfirmed_Stock
+FROM         Inventory.dbo.TransactionTable INNER JOIN
+                      Inventory.dbo.MasterTable ON Inventory.dbo.TransactionTable.ID = Inventory.dbo.MasterTable.ID INNER JOIN
+                      dbo.tbl_Coin_Sets ON Inventory.dbo.MasterTable.StockNumber = dbo.tbl_Coin_Sets.Sets
+WHERE     (Inventory.dbo.TransactionTable.Object LIKE '%Set')
+GROUP BY Inventory.dbo.TransactionTable.Object, Inventory.dbo.TransactionTable.Action, Inventory.dbo.TransactionTable.Confirmed, 
+                      Inventory.dbo.TransactionTable.ID, Inventory.dbo.TransactionTable.Released, Inventory.dbo.MasterTable.StockNumber, 
+                      dbo.tbl_Coin_Sets.Coins
+HAVING      (Inventory.dbo.TransactionTable.Action = 'Acquired') AND (Inventory.dbo.TransactionTable.Confirmed = 'False') AND 
+                      (Inventory.dbo.TransactionTable.ID > 0) AND (Inventory.dbo.TransactionTable.Released = 'False')
+ORDER BY Inventory.dbo.TransactionTable.ID
+
+--==> vw_SIMS_Inventory
+SELECT     TOP (100) PERCENT Inventory.dbo.MasterTable.StockNumber AS SIMS_Stock_Number, Inventory.dbo.MasterTable.Retail AS SIMS_Retail_Price, 
+                      ISNULL(dbo.vw_SIMS_Inve_On_Hand.Company_Stock, 0) AS Company_Stock, ISNULL(dbo.vw_SIMS_Inve_On_Hand.Inventory_Stock, 0) 
+                      AS Inventory_Stock, ISNULL(dbo.vw_SIMS_Inve_Coin_Sets.Set_Stock, 0) AS Set_Stock, ISNULL(dbo.vw_SIMS_Inve_Coin_Sets.Set_Stock, 0) 
+                      + ISNULL(dbo.vw_SIMS_Inve_On_Hand.Quantity_On_Hand, 0) AS Quantity_On_Hand, ISNULL(dbo.vw_SIMS_Inve_UnConfirmed.Unconfirmed_Stock, 0) 
+                      AS Unconfirmed_Stock, ISNULL(dbo.vw_SIMS_Inve_UnConfirmed_Sets.UnConfirmed_Stock, 0) AS Unconfirmed_Set_Stock, 
+                      ISNULL(dbo.vw_SIMS_Inve_Coin_Sets.Set_Stock, 0) + ISNULL(dbo.vw_SIMS_Inve_On_Hand.Quantity_On_Hand, 0) 
+                      + ISNULL(dbo.vw_SIMS_Inve_UnConfirmed.Unconfirmed_Stock, 0) + ISNULL(dbo.vw_SIMS_Inve_UnConfirmed_Sets.UnConfirmed_Stock, 0) 
+                      AS Net_On_Shelf
+FROM         Inventory.dbo.MasterTable LEFT OUTER JOIN
+                      dbo.vw_SIMS_Inve_UnConfirmed_Sets ON 
+                      Inventory.dbo.MasterTable.StockNumber = dbo.vw_SIMS_Inve_UnConfirmed_Sets.Stock_Number LEFT OUTER JOIN
+                      dbo.vw_SIMS_Inve_Coin_Sets ON Inventory.dbo.MasterTable.StockNumber = dbo.vw_SIMS_Inve_Coin_Sets.Stock_Number LEFT OUTER JOIN
+                      dbo.vw_SIMS_Inve_On_Hand ON Inventory.dbo.MasterTable.ID = dbo.vw_SIMS_Inve_On_Hand.ID LEFT OUTER JOIN
+                      dbo.vw_SIMS_Inve_UnConfirmed ON Inventory.dbo.MasterTable.ID = dbo.vw_SIMS_Inve_UnConfirmed.ID
+WHERE     (Inventory.dbo.MasterTable.StockNumber NOT LIKE '%Set')
+ORDER BY SIMS_Stock_Number
+
+HAVING      (Action = 'Acquired') AND (Confirmed = 'False') AND (ID > 0) AND (Released = 'False')
+ORDER BY ID

@@ -1,0 +1,25 @@
+SELECT     TOP (100) PERCENT 
+Call_Start_Time, 
+DNIS, 
+COUNT(DNIS) AS Call_Volume,
+'(' + LEFT(DNIS, 3) + ') ' + SUBSTRING(DNIS, 4, 3) + '-' + SUBSTRING(DNIS, 7, 4) AS Phone
+FROM         dbo.tbl_CCS_Data
+WHERE     (AgentFK IS NOT NULL)
+GROUP BY CallType, DNIS, Call_Start_Time
+HAVING      (CallType = 3)
+ORDER BY Call_Volume DESC, Call_Start_Time
+
+
+
+SELECT     TOP (100) PERCENT 
+Call_Start_Time, 
+DNIS, 
+COUNT(DNIS) AS Call_Volume,
+'(' + LEFT(DNIS, 3) + ') ' + SUBSTRING(DNIS, 4, 3) + '-' + SUBSTRING(DNIS, 7, 4) AS Phone,
+SUM (CASE WHEN AgentFK IS NOT NULL THEN 1 ELSE 0 END) AS Agent_Answered,
+SUM (CASE WHEN AgentFK IS NULL AND AgentExitCode <> 98 THEN 1 ELSE 0 END) AS Overflow,
+SUM (CASE WHEN AgentFK IS NULL AND AgentExitCode = 98 THEN 1 ELSE 0 END) AS After_Hours
+FROM         dbo.tbl_CCS_Data
+GROUP BY CallType, DNIS, Call_Start_Time
+HAVING      (CallType = 3)
+ORDER BY Call_Volume DESC, Call_Start_Time

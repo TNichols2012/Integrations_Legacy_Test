@@ -1,0 +1,38 @@
+SELECT     TOP (100) PERCENT 
+dbo.Results_DBF_CMS.odr_date AS Order_Date, 
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_DBF_Cust.First_Name, 
+dbo.tbl_DBF_Cust.Last_Name, 
+dbo.Results_DBF_CMS.ordertype AS Order_Type, 
+dbo.Results_DBF_CMS.[order] AS Order_ID, 
+(dbo.Results_DBF_CMS.ord_total-dbo.Results_DBF_CMS.shipping-dbo.Results_DBF_CMS.tax) AS Order_Total, 
+dbo.vw_Sales_Orders_By_Order_Only.Value_Ordered AS Ttl_Billed_Merch, 
+dbo.tbl_Sales_Teams.Sales_Manager, 
+dbo.tbl_Sales_Teams.Site, dbo.Results_DBF_CMS.cl_key AS Ad_Code
+dbo.Results_DBF_CMS.shipping AS Ttl_Shipping,
+dbo.Results_DBF_CMS.tax AS Ttl_Tax
+FROM         dbo.Results_DBF_CMS 
+INNER JOIN   dbo.tbl_Sales_Teams ON dbo.Results_DBF_CMS.sales_id = dbo.tbl_Sales_Teams.Login 
+INNER JOIN   dbo.tbl_DBF_Cust 
+ON dbo.Results_DBF_CMS.custnum = dbo.tbl_DBF_Cust.Cust_ID 
+LEFT OUTER JOIN dbo.vw_Sales_Orders_By_Order_Only 
+ON dbo.Results_DBF_CMS.[order] = dbo.vw_Sales_Orders_By_Order_Only.Order_ID
+GROUP BY 
+dbo.tbl_Sales_Teams.Name, 
+dbo.tbl_DBF_Cust.First_Name, 
+dbo.tbl_DBF_Cust.Last_Name, 
+dbo.Results_DBF_CMS.ordertype, 
+dbo.Results_DBF_CMS.perm_hold, 
+dbo.Results_DBF_CMS.[order], 
+dbo.Results_DBF_CMS.odr_date, 
+dbo.Results_DBF_CMS.order_st2, 
+dbo.Results_DBF_CMS.ord_total,
+dbo.Results_DBF_CMS.shipping,
+dbo.Results_DBF_CMS.tax, 
+dbo.tbl_Sales_Teams.Sales_Manager, 
+dbo.tbl_Sales_Teams.Site, 
+dbo.Results_DBF_CMS.cl_key, 
+dbo.vw_Sales_Orders_By_Order_Only.Value_Ordered
+HAVING      (dbo.Results_DBF_CMS.ordertype <> 'CXL') AND (dbo.Results_DBF_CMS.perm_hold = 1) AND (dbo.Results_DBF_CMS.order_st2 <> 'CN') AND 
+                      (dbo.Results_DBF_CMS.ord_total > 0)
+ORDER BY dbo.tbl_Sales_Teams.Name

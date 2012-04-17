@@ -1,0 +1,55 @@
+
+--	Used to update the TransactionTable. 
+--	Needs Parameters to be enclosed in ' '
+--	example: 
+--	EXEC dbo.usp_Upd_Transaction_Sales_ID [Remmy Castillo (RBC)], [Brad Remington (RBC)]
+--	OR
+--	EXEC dbo.usp_Upd_Transaction_Sales_ID 'Remmy Castillo (RBC)', 'Brad Remington (RBC)'
+--	
+--		will update all transactions made by 'Remmy Castillo (RBC)' to 'Brad Remington (RBC)'
+
+CREATE PROCEDURE [dbo].[usp_Upd_Transaction_Sales_ID]
+	( @in_From_Sales_ID varchar(250), @in_To_Sales_ID varchar(250) )
+	AS
+BEGIN
+	
+	SET NOCOUNT ON;
+
+	UPDATE CoinRequestsTable
+	SET Username = @in_To_Sales_ID
+	WHERE Username = @in_From_Sales_ID
+
+	UPDATE CustomerServiceRequestsTable
+	SET Username = @in_To_Sales_ID
+	WHERE Username = @in_From_Sales_ID
+
+	UPDATE CustomerServiceRequestsTable
+	SET LastPerson = @in_To_Sales_ID
+	WHERE LastPerson = @in_From_Sales_ID
+
+	UPDATE InventoryReturnsTable
+	SET SalesName = @in_To_Sales_ID
+	WHERE SalesName = @in_From_Sales_ID
+
+	UPDATE LoginTable
+	SET RealName= @in_To_Sales_ID
+	WHERE RealName = @in_From_Sales_ID
+
+	UPDATE TransactionTable
+	SET Username = @in_To_Sales_ID,
+	Destination = @in_To_Sales_ID
+	WHERE Username = @in_From_Sales_ID
+	
+	UPDATE TransactionTable
+	SET Source = @in_To_Sales_ID
+	WHERE Source = @in_From_Sales_ID
+
+	UPDATE VaultReturnsTable
+	SET Username = @in_To_Sales_ID
+	WHERE Username = @in_From_Sales_ID
+
+END
+
+
+
+

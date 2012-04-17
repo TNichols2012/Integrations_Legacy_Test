@@ -1,0 +1,31 @@
+IF EXISTS (SELECT TABLE_NAME 
+	FROM Information_Schema.Tables
+	WHERE Table_Name='tbl_Amcat_Call_Volume_IB')
+DROP TABLE tbl_Amcat_Call_Volume_IB
+GO
+
+SELECT     TOP (100) PERCENT 
+Call_Start_Time, 
+DNIS, 
+'(' + LEFT(DNIS, 3) + ') ' + SUBSTRING(DNIS, 4, 3) + '-' + SUBSTRING(DNIS, 7, 4) AS Phone, 
+COUNT(DNIS) AS Call_Volume, 
+SUM(CASE WHEN AgentFK IS NOT NULL THEN 1 ELSE 0 END) AS Agent_Answered, 
+SUM(CASE WHEN (AgentFK IS NOT NULL AND Call_Talk_Time < 120 )THEN 1 ELSE 0 END) AS Answered_Below_2min, 
+SUM(CASE WHEN (AgentFK IS NOT NULL AND Call_Talk_Time >= 120 )THEN 1 ELSE 0 END) AS Answered_Above_2min, 
+SUM(CASE WHEN AgentFK IS NULL AND AgentExitCode = 98 THEN 1 ELSE 0 END) AS After_Hours, 
+SUM(CASE WHEN AgentFK IS NULL AND AgentExitCode <> 98 THEN 1 ELSE 0 END) AS Overflow
+INTO tbl_Amcat_Call_Volume_IB
+FROM         dbo.tbl_CCS_Data
+WHERE DNIS <>''
+GROUP BY CallType, DNIS, Call_Start_Time
+HAVING      (CallType = 3)
+ORDER BY DNIS
+GO
+
+CREATE CLUSTERED INDEX tbl_Amcat_Call_Volume_IB_DNIS
+ON tbl_Amcat_Call_Volume_IB (DNIS) 
+GO
+
+CREATE NONCLUSTERED INDEX tbl_Amcat_Call_Volume_IB_Call_Start_Time
+ON tbl_Amcat_Call_Volume_IB (Call_Start_Time) 
+GO

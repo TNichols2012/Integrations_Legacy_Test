@@ -1,0 +1,109 @@
+SELECT     
+'Customers Entered in MOM' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN EntryDate >= '1/1/2001' AND EntryDate < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN EntryDate >= '1/1/2002' AND EntryDate < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN EntryDate >= '1/1/2003' AND EntryDate < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN EntryDate >= '1/1/2004' AND EntryDate < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN EntryDate >= '1/1/2005' AND EntryDate < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN EntryDate >= '1/1/2006' AND EntryDate < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.Results_MOM_Cust
+
+UNION ALL
+
+SELECT     
+'Valid Customers' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+
+UNION ALL
+
+SELECT     
+'Gold Report Recipients' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type IN ('GR', 'GR_B0', 'GR_B1', 'GR_B1c', 'GR_B2', 'GR_B2c', 'GR_B3', 'GR_B3c')
+
+UNION ALL
+
+SELECT     
+'Bullion Buyers' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type IN ('B1', 'B1c')
+
+UNION ALL
+
+SELECT     
+'Non-Bullion Buyers' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type IN ('B2', 'B2c')
+
+UNION ALL
+
+SELECT     
+'Bullion and Non-Bullion Buyers' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type IN ('B3', 'B3c')
+
+UNION ALL
+
+SELECT     
+'Buyers with Cancelled Orders' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'CO'
+
+UNION ALL
+
+SELECT     
+'Buyers with Pending Orders' AS 'Buyer_Type', 
+COUNT(*) AS Total_Customers, 
+SUM(CASE WHEN Entry_Date >= '1/1/2001' AND Entry_Date < '1/1/2002' THEN 1 ELSE 0 END) AS Y2001_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2002' AND Entry_Date < '1/1/2003' THEN 1 ELSE 0 END) AS Y2002_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2003' AND Entry_Date < '1/1/2004' THEN 1 ELSE 0 END) AS Y2003_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2004' AND Entry_Date < '1/1/2005' THEN 1 ELSE 0 END) AS Y2004_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2005' AND Entry_Date < '1/1/2006' THEN 1 ELSE 0 END) AS Y2005_Cust, 
+SUM(CASE WHEN Entry_Date >= '1/1/2006' AND Entry_Date < '1/1/2007' THEN 1 ELSE 0 END) AS Y2006_Cust
+FROM         dbo.vw_First_Sales_04_Buyer_Status
+WHERE     Initial_Buyer_Type = 'Pending'
+
+

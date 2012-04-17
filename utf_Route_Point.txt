@@ -1,0 +1,82 @@
+CREATE FUNCTION [dbo].[utf_Route_Point] (@in_Call_Table_ID varchar(25)) 
+RETURNS @rtn_Table TABLE
+(
+Call_Table_ID varchar(25), 
+Campaign varchar(50),
+PoolFK varchar(25)
+)
+AS 
+BEGIN
+
+DECLARE @tbl_Route_Point TABLE (
+Call_Table_ID varchar(25), 
+Campaign varchar(50),
+PoolFK varchar(25)
+)
+
+INSERT INTO @tbl_Route_Point
+SELECT TOP 1
+CallTableID,
+PortName,
+PartyID
+FROM dbo.tbl_ShoreTel_Connect
+WHERE  (PortName LIKE 'RP%')
+AND (CallTableID=@in_Call_Table_ID)
+ORDER BY ID DESC
+
+
+INSERT INTO @rtn_Table
+SELECT Call_Table_ID, Campaign, PoolFK FROM @tbl_Route_Point
+
+RETURN
+
+END
+
+
+
+CREATE PROCEDURE [dbo].[usp_Route_Point] AS
+BEGIN
+
+DECLARE @tbl_CTID_List TABLE (
+PKID numeric(8,0) IDENTITY(1,1),
+Call_Table_ID varchar(25)
+)
+
+INSERT INTO @tbl_CTID_List (Call_Table_ID)
+SELECT 
+CallTableID
+FROM Results_ShoreTel_Connect
+GROUP BY CallTableID
+
+--SELECT * FROM @tbl_CTID_List
+
+DECLARE @int_CTID_Count int
+DECLARE @int_Incr_Count int 
+DECLARE @in_Call_Table_ID varchar(25) 
+
+SET @int_Incr_Count = 1
+SET @int_CTID_Count = (SELECT Count(*) AS C FROM @tbl_CTID_List) 
+
+-- ***************************************************************************
+-- Populate Call Table IDs with Route Points
+-- ***************************************************************************
+
+WHILE @int_Incr_Count <= @int_CTID_Count
+	BEGIN
+		SET @in_Call_Table_ID = (SELECT Call_Table_ID FROM @tbl_CTID_List WHERE PKID = @int_Incr_Count)
+
+		INSERT INTO dbo.tbl_ShoreTel_Connect_Route_Point (Call_Table_ID, Campaign, PoolFK)
+		SELECT 
+		tmp.Call_Table_ID,
+		tmp.Campaign,
+		tmp.PoolFK
+		FROM dbo.utf_Route_Point(@in_Call_Table_ID) tmp
+		LEFT JOIN dbo.tbl_ShoreTel_Connect_Route_Point tbl
+		ON tmp.Call_Table_ID=tbl.Call_Table_ID
+		WHERE tbl.Call_Table_ID IS NULL
+		
+		SET @int_Incr_Count = @int_Incr_Count + 1
+
+	END
+
+END

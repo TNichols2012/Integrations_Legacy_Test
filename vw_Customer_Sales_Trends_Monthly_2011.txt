@@ -1,0 +1,62 @@
+SELECT     TOP 100 PERCENT 
+Cust_ID, 
+"Year" = '2011',
+SUM(CASE WHEN Order_Date >= '1/1/2011' AND Order_Date < '2/1/2011' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS January_Ordered, 
+SUM(CASE WHEN Order_Date >= '1/1/2011' AND Order_Date < '2/1/2011' AND Stock_Type = 'Bullion' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS January_Ordered_B, 
+SUM(CASE WHEN Order_Date >= '1/1/2011' AND Order_Date < '2/1/2011' AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL OR Stock_Type ='') THEN isnull(Value_Ordered, 0) ELSE 0 END) AS January_Ordered_nB,
+ 
+SUM(CASE WHEN Order_Date >= '2/1/2011' AND Order_Date < '3/1/2011' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS February_Ordered, 
+SUM(CASE WHEN Order_Date >= '2/1/2011' AND Order_Date < '3/1/2011' AND Stock_Type = 'Bullion' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS February_Ordered_B, 
+SUM(CASE WHEN Order_Date >= '2/1/2011' AND Order_Date < '3/1/2011' AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL OR Stock_Type ='') THEN isnull(Value_Ordered, 0) ELSE 0 END) AS February_Ordered_nB,
+
+SUM(CASE WHEN Order_Date >= '3/1/2011' AND Order_Date < '4/1/2011' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS March_Ordered, 
+SUM(CASE WHEN Order_Date >= '3/1/2011' AND Order_Date < '4/1/2011' AND Stock_Type = 'Bullion' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS March_Ordered_B, 
+SUM(CASE WHEN Order_Date >= '3/1/2011' AND Order_Date < '4/1/2011' AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL OR Stock_Type ='') THEN isnull(Value_Ordered, 0) ELSE 0 END) AS March_Ordered_nB,
+
+SUM(CASE WHEN Order_Date >= '4/1/2011' AND Order_Date < '5/1/2011' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS April_Ordered, 
+SUM(CASE WHEN Order_Date >= '4/1/2011' AND Order_Date < '5/1/2011' AND Stock_Type = 'Bullion' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS April_Ordered_B, 
+SUM(CASE WHEN Order_Date >= '4/1/2011' AND Order_Date < '5/1/2011' AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL OR Stock_Type ='') THEN isnull(Value_Ordered, 0) ELSE 0 END) AS April_Ordered_nB,
+
+SUM(CASE WHEN Order_Date >= '5/1/2011' AND Order_Date < '6/1/2011' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS May_Ordered, 
+SUM(CASE WHEN Order_Date >= '5/1/2011' AND Order_Date < '6/1/2011' AND Stock_Type = 'Bullion' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS May_Ordered_B, 
+SUM(CASE WHEN Order_Date >= '5/1/2011' AND Order_Date < '6/1/2011' AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL OR Stock_Type ='') THEN isnull(Value_Ordered, 0) ELSE 0 END) AS May_Ordered_nB,
+
+SUM(CASE WHEN Order_Date >= '6/1/2011' AND Order_Date < '7/1/2011' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS June_Ordered, 
+SUM(CASE WHEN Order_Date >= '6/1/2011' AND Order_Date < '7/1/2011' AND Stock_Type = 'Bullion' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS June_Ordered_B, 
+SUM(CASE WHEN Order_Date >= '6/1/2011' AND Order_Date < '7/1/2011' AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL OR Stock_Type ='') THEN isnull(Value_Ordered, 0) ELSE 0 END) AS June_Ordered_nB,
+
+SUM(CASE WHEN Order_Date >= '7/1/2011' AND Order_Date < '8/1/2011' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS July_Ordered, 
+SUM(CASE WHEN Order_Date >= '7/1/2011' AND Order_Date < '8/1/2011' AND Stock_Type = 'Bullion' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS July_Ordered_B, 
+SUM(CASE WHEN Order_Date >= '7/1/2011' AND Order_Date < '8/1/2011' AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL OR Stock_Type ='') THEN isnull(Value_Ordered, 0) ELSE 0 END) AS July_Ordered_nB,
+
+SUM(CASE WHEN Order_Date >= '8/1/2011' AND Order_Date < '9/1/2011' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS August_Ordered, 
+SUM(CASE WHEN Order_Date >= '8/1/2011' AND Order_Date < '9/1/2011' AND Stock_Type = 'Bullion' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS August_Ordered_B, 
+SUM(CASE WHEN Order_Date >= '8/1/2011' AND Order_Date < '9/1/2011' AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL OR Stock_Type ='') THEN isnull(Value_Ordered, 0) ELSE 0 END) AS August_Ordered_nB,
+
+SUM(CASE WHEN Order_Date >= '9/1/2011' AND Order_Date < '10/1/2011' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS September_Ordered, 
+SUM(CASE WHEN Order_Date >= '9/1/2011' AND Order_Date < '10/1/2011' AND Stock_Type = 'Bullion' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS September_Ordered_B, 
+SUM(CASE WHEN Order_Date >= '9/1/2011' AND Order_Date < '10/1/2011' AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL OR Stock_Type ='') THEN isnull(Value_Ordered, 0) ELSE 0 END) AS September_Ordered_nB,
+
+SUM(CASE WHEN Order_Date >= '10/1/2011' AND Order_Date < '11/1/2011' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS October_Ordered, 
+SUM(CASE WHEN Order_Date >= '10/1/2011' AND Order_Date < '11/1/2011' AND Stock_Type = 'Bullion' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS October_Ordered_B, 
+SUM(CASE WHEN Order_Date >= '10/1/2011' AND Order_Date < '11/1/2011' AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL OR Stock_Type ='') THEN isnull(Value_Ordered, 0) ELSE 0 END) AS October_Ordered_nB,
+
+SUM(CASE WHEN Order_Date >= '11/1/2011' AND Order_Date < '12/1/2011' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS November_Ordered, 
+SUM(CASE WHEN Order_Date >= '11/1/2011' AND Order_Date < '12/1/2011' AND Stock_Type = 'Bullion' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS November_Ordered_B, 
+SUM(CASE WHEN Order_Date >= '11/1/2011' AND Order_Date < '12/1/2011' AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL OR Stock_Type ='') THEN isnull(Value_Ordered, 0) ELSE 0 END) AS November_Ordered_nB,
+
+SUM(CASE WHEN Order_Date >= '12/1/2011' AND Order_Date < '1/1/2012' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS December_Ordered, 
+SUM(CASE WHEN Order_Date >= '12/1/2011' AND Order_Date < '1/1/2012' AND Stock_Type = 'Bullion' THEN isnull(Value_Ordered, 0) ELSE 0 END) AS December_Ordered_B, 
+SUM(CASE WHEN Order_Date >= '12/1/2011' AND Order_Date < '1/1/2012' AND (Stock_Type <> 'Bullion' OR Stock_Type IS NULL OR Stock_Type ='') THEN isnull(Value_Ordered, 0) ELSE 0 END) AS December_Ordered_nB
+
+FROM         dbo.vw_Sales_Orders
+WHERE     (dbo.vw_Sales_Orders.Item_State IN ('PS','SH', 'RT' ))
+AND Order_Date >= '1/1/2011' AND Order_Date < '1/1/2012'
+GROUP BY Cust_ID
+ORDER BY Cust_ID
+
+
+
+
+
+

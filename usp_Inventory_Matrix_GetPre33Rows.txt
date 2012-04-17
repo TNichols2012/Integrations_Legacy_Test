@@ -1,0 +1,63 @@
+ALTER PROCEDURE [dbo].[usp_InventoryMatrix_GetPre33Rows] 
+(
+@custnum decimal(8, 0)
+)
+AS
+declare @MOM_CMS table ([order] decimal(8, 0))
+declare @MOM_ITEMS table (item nvarchar(20), item_state nvarchar(2), quanto decimal(7, 2))
+declare @ShippedItems table (item nvarchar(20), ShippedQuantity int)
+declare @ReturnedItems table (item nvarchar(20), ReturnedQuantity int)
+declare @Items table (item nvarchar(20), Quantity int)
+
+-- Retrieve mom_cms records based on customer number passed
+insert into @MOM_CMS
+select [order]
+from mom_cms
+where (custnum = @custnum)
+
+-- Retrieve mom_items records based on order numbers for the selected customers and making sure the trans_id field is
+-- not 0
+insert into @MOM_ITEMS
+select item, item_state, quanto
+from mom_items
+where ([order] in 
+
+(
+select [order]
+from @MOM_CMS
+)
+
+)
+and (trans_id <> 0)
+
+-- Retrieve ShippedItems records based on item_state field being 'SH' or 'PS'
+insert into @ShippedItems
+select item, sum(quanto)
+from @MOM_ITEMS
+where (item_state = 'PS')
+or (item_state = 'SH')
+group by item
+
+-- Retrieve ReturnedItems records based on item_state field being 'RT'
+insert into @ReturnedItems
+select item, sum(quanto)
+from @MOM_ITEMS
+where (item_state = 'RT')
+group by item
+
+-- Retrieve Items records which is all items from the ShippedQuantity table with a quantity of ShippedQuantity -
+-- ReturnedQuantity
+insert into @Items
+select ShippedItems.item, ShippedQuantity - isnull(ReturnedQuantity, 0)
+from @ShippedItems as ShippedItems
+left outer join @ReturnedItems as ReturnedItems
+on ShippedItems.item = ReturnedItems.item
+
+-- Retrieve MOM_STOCK records for all the items in the Items table that match
+select [desc], Quantity
+from MOM_STOCK
+inner join @Items as Items
+on MOM_STOCK.number = Items.item
+where ((assoc='PRE-33')
+and (Quantity <> 0))
+order by [desc]

@@ -1,0 +1,40 @@
+SELECT     
+dbo.Results_CCS_Call_Results.PKCallResults, 
+dbo.Results_CCS_Call_Results.ContactNumber AS Contact_Number,
+dbo.Results_CCS_Call_Results.CallStartTime AS Call_Start_Time, 
+RTRIM(dbo.tbl_Lookup_Call_Disposition.CallResultDescription) AS Call_Disposition, 
+RTRIM(dbo.tbl_Lookup_Call_Sales_Agent.[Name]) AS Sales_Rep,
+DATEDIFF(s,dbo.Results_CCS_Call_Results.CallSentToAgentTime, dbo.Results_CCS_Call_Results.CallEndTime) AS Call_Seconds,
+dbo.Results_CCS_Call_Results.RecordingFileName AS Orig_File_Name, 
+
+RTRIM('\\Usrc_fileserver\Amcat_Recordings\' + 
+LEFT(RIGHT(dbo.Results_CCS_Call_Results.RecordingFileName, (27+LEN(dbo.Results_CCS_Call_Results.ContactNumber))), 8) + '\' +
+SUBSTRING(dbo.Results_CCS_Call_Results.RecordingFileName, 15, (LEN(dbo.Results_CCS_Call_Results.RecordingFileName)-( 15+ 27+LEN(dbo.Results_CCS_Call_Results.ContactNumber)) ) ) + '\'+
+RIGHT(dbo.Results_CCS_Call_Results.RecordingFileName, (27+LEN(dbo.Results_CCS_Call_Results.ContactNumber)))) AS New_File_Name,
+
+RTRIM('\\Usrc_fileserver\Amcat_Recordings\' + 
+LEFT(RIGHT(dbo.Results_CCS_Call_Results.RecordingFileName, (27+LEN(dbo.Results_CCS_Call_Results.ContactNumber))), 8) + '\' +
+SUBSTRING(dbo.Results_CCS_Call_Results.RecordingFileName, 15, (LEN(dbo.Results_CCS_Call_Results.RecordingFileName)-( 15+ 27+LEN(dbo.Results_CCS_Call_Results.ContactNumber)) ) ) + 
+SUBSTRING(dbo.Results_CCS_Call_Results.RecordingFileName, (LEN(dbo.Results_CCS_Call_Results.RecordingFileName)-(27+LEN(dbo.Results_CCS_Call_Results.ContactNumber)) ), (24+LEN(dbo.Results_CCS_Call_Results.ContactNumber)) ) + '.mp3') AS MP3_File_Name,
+Null AS Converted
+FROM         dbo.tbl_Lookup_Call_Disposition 
+INNER JOIN dbo.Results_CCS_Call_Results 
+ON dbo.tbl_Lookup_Call_Disposition.CallResultCode = dbo.Results_CCS_Call_Results.AgentExitCode 
+INNER JOIN dbo.tbl_Lookup_Call_Sales_Agent 
+ON dbo.Results_CCS_Call_Results.AgentFK = dbo.tbl_Lookup_Call_Sales_Agent.PKUsers 
+INNER JOIN dbo.tbl_Lookup_Call_Campaign 
+ON dbo.Results_CCS_Call_Results.PoolFK = dbo.tbl_Lookup_Call_Campaign.Campaign_ID
+LEFT OUTER JOIN dbo.tbl_Survey_Calls
+ON dbo.Results_CCS_Call_Results.PKCallResults = dbo.tbl_Survey_Calls.PKCallResults
+WHERE     (LEN(dbo.Results_CCS_Call_Results.RecordingFileName) > 1)
+AND CallStartTime >= GetDate()-300
+--AND (LEN (dbo.Results_CCS_Call_Results.ContactNumber)>10)
+AND dbo.tbl_Survey_Calls.PKCallResults IS NULL
+GROUP BY 
+dbo.tbl_Lookup_Call_Campaign.Campaign, 
+dbo.tbl_Lookup_Call_Disposition.CallResultDescription, dbo.tbl_Lookup_Call_Sales_Agent.Name, 
+dbo.Results_CCS_Call_Results.PKCallResults, 
+dbo.Results_CCS_Call_Results.RecordingFileName, dbo.Results_CCS_Call_Results.ContactNumber, 
+dbo.Results_CCS_Call_Results.CallSentToAgentTime, 
+dbo.Results_CCS_Call_Results.CallEndTime,
+dbo.Results_CCS_Call_Results.CallStartTime

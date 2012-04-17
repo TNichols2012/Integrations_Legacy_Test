@@ -1,0 +1,130 @@
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'Newspaper'
+WHERE     (campaign LIKE '%NEW%') 
+OR (campaign LIKE '%NWSP%')
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'TV'
+WHERE     (campaign LIKE 'TV%') 
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'Magazine'
+WHERE     (campaign LIKE 'MAG%') 
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'DMT'
+WHERE     (campaign LIKE 'MAIL%') 
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'Outbound'
+WHERE     (campaign LIKE 'OB%') 
+OR (campaign LIKE 'OUTB%') 
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'Missing'
+WHERE     campaign IS NULL 
+OR campaign =''
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'Radio'
+WHERE     campaign = 'Missing'
+AND	adkey LIKE 'RWJCR1A'
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'Outbound'
+WHERE     campaign = 'Missing'
+AND	adkey LIKE 'OB%'
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'Inbound'
+WHERE     campaign = 'Missing'
+AND	adkey LIKE 'IBWOM'
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'Internet'
+WHERE     campaign = 'Missing'
+AND	adkey LIKE 'WEB%'
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'Internet'
+WHERE     campaign = 'Missing'
+AND	adkey LIKE 'W[0-9][0-9][0-9][0-9]%'
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'TV'
+WHERE     campaign = 'Missing'
+AND	adkey <> '2005GIFT%'
+AND	adkey LIKE '[23456789]%'
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'Newspaper'
+WHERE     campaign = 'Missing'
+AND	adkey <> '2005GIFT%'
+AND	adkey LIKE '[A-Z][A-Z][A-Z][A-Z][1-9]%'
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'Newspaper'
+WHERE     campaign = 'Missing'
+AND	adkey <> '2005GIFT%'
+AND	adkey LIKE '[A-Z][A-Z][A-Z][A-Z][A-Z][1-9]%'
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'Magazine'
+WHERE     campaign = 'Missing'
+AND	adkey LIKE '[A-Z][A-Z][A-Z][1-9]%'
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'DMT'
+WHERE     campaign = 'Missing'
+AND	adkey <> '2005GIFT%'
+AND	adkey LIKE '[A-Z][A-Z][0-9][0-9][0-9][0-9]%'
+
+UPDATE    Results_DBF_AdCodes
+SET              campaign = 'DMT'
+WHERE     campaign = 'Missing'
+AND	adkey <> '2005GIFT%'
+AND	adkey LIKE 'DMT%'
+
+UPDATE    Results_DBF_AdCodes
+SET              publisher = 'ABC'
+WHERE     publisher LIKE 'ABC%'
+
+UPDATE    Results_DBF_AdCodes
+SET              publisher = 'CBS'
+WHERE     publisher LIKE 'CBS%'
+
+UPDATE    Results_DBF_AdCodes
+SET              publisher = 'FOX'
+WHERE     publisher LIKE 'FOX%'
+
+UPDATE    Results_DBF_AdCodes
+SET              publisher = 'NBC'
+WHERE     publisher LIKE 'NBC%'
+
+UPDATE    Results_DBF_AdCodes
+SET              publisher = 'WB'
+WHERE     publisher LIKE 'WB%'
+
+UPDATE    Results_DBF_AdCodes
+SET              publisher = 'ABC'
+WHERE     publisher LIKE 'ABC%'
+
+UPDATE    Results_DBF_AdCodes
+SET              publisher = 'UPN'
+WHERE     publisher LIKE 'UPN%'
+
+
+UPDATE    Results_DBF_AdCodes
+SET addate=rtrim(addate)
+
+TRUNCATE TABLE [tbl_DBF_Ad_Codes]
+
+TRUNCATE TABLE [tbl_DBF_CMS]
+
+TRUNCATE TABLE [tbl_DBF_Cust]
+
+TRUNCATE TABLE [tbl_DBF_Items]
+
+TRUNCATE TABLE [tbl_DBF_Stock]
+
+

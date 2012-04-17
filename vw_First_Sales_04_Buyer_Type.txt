@@ -1,0 +1,37 @@
+SELECT     TOP 100 PERCENT 
+dbo.vw_First_Sales_02_Order_Date.Entry_Date, 
+dbo.vw_First_Sales_02_Order_Date.Cust_ID, 
+dbo.vw_First_Sales_02_Order_Date.First_Name, 
+dbo.vw_First_Sales_02_Order_Date.Last_Name, 
+dbo.vw_First_Sales_02_Order_Date.Ttl_Order_Count, 
+dbo.vw_First_Sales_02_Order_Date.First_Order_Date, 
+dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch, 
+dbo.vw_First_Sales_02_Order_Date.First_Order_ID, 
+dbo.vw_First_Sales_02_Order_Date.Original_Ad_Code, 
+dbo.vw_Sales_Orders_Shipped.Ttl_Shipped_Value AS Initial_Ttl_Shipped_Value, 
+dbo.vw_Sales_Orders_Shipped.Bullion_Sale AS Initial_Bullion_Sale, 
+dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale AS Initial_Non_Bullion_Sale, 
+ (CASE 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale = 0 THEN 'B1' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale = 0 THEN 'B1c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale = 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 THEN 'B2' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale = 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 THEN 'B2c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 THEN 'B3' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 THEN 'B3c' 
+
+
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Ttl_Shipped_Value IS NULL THEN 'GR' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Ttl_Shipped_Value = 0 THEN 'GR' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist <> 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch = 0 AND dbo.vw_Sales_Orders_Shipped.Ttl_Shipped_Value = 0 THEN 'GR_B0' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale = 0 THEN 'GR_B1' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale = 0 THEN 'GR_B1c' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale = 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 THEN 'GR_B2'
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale = 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 THEN 'GR_B2c'
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch > 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 THEN 'GR_B3' 
+WHEN dbo.vw_First_Sales_02_Order_Date.shiplist = 'USF' AND dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Bullion_Sale > 0 AND dbo.vw_Sales_Orders_Shipped.Non_Bullion_Sale > 0 THEN 'GR_B3c' 
+
+WHEN dbo.vw_First_Sales_02_Order_Date.Init_TB_Merch <= 0 AND dbo.vw_Sales_Orders_Shipped.Ttl_Shipped_Value IS NULL THEN 'CO' 
+
+ELSE 'Pending' END) AS Initial_Buyer_Type
+FROM         dbo.vw_Sales_Orders_Shipped RIGHT OUTER JOIN
+                      dbo.vw_First_Sales_02_Order_Date ON dbo.vw_Sales_Orders_Shipped.Order_ID = dbo.vw_First_Sales_02_Order_Date.First_Order_ID

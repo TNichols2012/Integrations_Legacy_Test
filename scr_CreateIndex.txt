@@ -1,0 +1,4 @@
+CREATE [NON]CLUSTERED INDEX <index_name...tblname+field>
+ON <tbl_Name> (field [ASC | DESC])
+[INCLUDE]
+GO
