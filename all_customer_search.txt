@@ -1,4 +1,6 @@
 Rep ID
+Rep ID
+Rep ID
 First name
 Last Name
 Address Line 1
